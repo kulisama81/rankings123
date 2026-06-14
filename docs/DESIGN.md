@@ -40,10 +40,16 @@ edge if we nail exact draw points.
 ## 2. Architecture
 
 - **Framework:** Next.js (App Router) on **Vercel**. Server-rendered for SEO + freshness.
-- **Data:** ESPN public site API — `/sports/tennis/{atp|wta}/rankings` (official weekly
-  rankings: rank, points, bio) and `/scoreboard` (this week's draws, rounds, results).
-  No API key; unofficial — so we keep a bundled **mock fallback** and a `source: espn|mock`
-  flag surfaced in the UI.
+- **Data (dual-source):**
+  - **Full ranking (1–1000+):** Jeff Sackmann GitHub CSVs — `tennis_atp/atp_rankings_current.csv`
+    (2,265 players) + `tennis_wta/wta_rankings_current.csv` (1,547) + `*_players.csv` for
+    name/country/DOB. No auth; updated weekly (Mondays), which matches official ranking cadence.
+    This is the authoritative base. *(v1 today still uses ESPN top-150; migration tracked in
+    `top-1000`.)*
+  - **Live overlay:** ESPN public site API `/sports/tennis/{atp|wta}/scoreboard` — this week's
+    draws/rounds/results, for the ~128 players in current tournaments. Joined to the Sackmann
+    base by **normalized name** (no shared id between Sackmann `player_id` and ESPN `guid`).
+  - No API key on either; we keep a bundled **mock fallback** and a `source` flag in the UI.
 - **Live computation:** merge rankings + scoreboard by athlete GUID; estimate points earned
   this week from round-reached × per-tier points table; re-sort to a live rank with movement
   vs official. (v1 estimate today → exact draw points in `data-accuracy`.)
