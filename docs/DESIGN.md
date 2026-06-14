@@ -174,12 +174,19 @@ Phase 4 — **Self-improve & deepen:** `improve-loop`, `points-defend`, `data-ac
 
 ---
 
-## 8. Decisions to confirm
+## 8. Decisions — CONFIRMED (2026-06-14)
 
-1. **Analytics:** Vercel Web Analytics (privacy-friendly, zero-config, no cookie banner) —
-   OK, or do you want GA4/Plausible?
-2. **Daily-report channel:** email to loic.deniel@gmail.com — OK, or file/push?
-3. **Autonomy:** Loop A fully autonomous (commit each verified feature, pause only at the §6
-   handoffs) — OK, or checkpoint per feature for review?
-4. **Loop B cadence:** weekly deep strategy run + daily light report — OK?
-5. **Domain:** ship on `*.vercel.app` for now, or buy a custom domain up front for SEO/brand?
+1. **Analytics: Google Analytics 4.** ⇒ `gdpr-consent` is now a **prerequisite** of
+   `analytics` (GA4 must not load in the EU before consent). Pair GA4 ↔ AdSense for revenue.
+2. **Daily-report channel: email** to loic.deniel@gmail.com (via Gmail integration).
+3. **Autonomy: Loop A fully autonomous** — commit each verified feature, pause only at §6
+   handoffs.
+4. **Loop B cadence: weekly deep strategy run + daily light report.**
+5. **Domain: custom domain up front.** Loic purchases; we wire DNS on Vercel. Name TBD
+   (candidates: livetennisrankings.com, tennislive.app, atplive.app, courtside.live).
+
+### Sequencing impact
+- Consent banner moves earlier (before analytics & ads): Phase 3 order becomes
+  `gdpr-consent` → `analytics` → `ad-inventory` → `daily-report`.
+- Launch (`deploy-vercel`) is gated on two handoffs: **Vercel login** + **domain purchase**.
+  Local build of all features proceeds in parallel meanwhile.

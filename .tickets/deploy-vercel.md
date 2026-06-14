@@ -1,7 +1,7 @@
 ---
 id: deploy-vercel
 status: open
-deps: []
+deps: [domain]
 links: []
 created: 2026-06-14T22:50:48Z
 type: task
