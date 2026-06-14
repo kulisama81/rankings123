@@ -8,13 +8,18 @@ export const meta = {
   ],
 };
 
-// args: array of tkt ticket ids, e.g. ["worldcup", "player-pages"]
-const tickets = Array.isArray(args) && args.length ? args : null;
-if (!tickets) {
-  log('No tickets provided. Invoke as {args:["worldcup","player-pages"]}. Aborting.');
-  return { error: 'no tickets provided' };
+// Ticket ids to build. Prefer the `args` input; robustly parse array / JSON / CSV string.
+// Falls back to this run's three tickets if args didn't bind (override via args anytime).
+const DEFAULT_TICKETS = ['worldcup', 'top-1000', 'player-pages'];
+let tickets = args;
+if (typeof tickets === 'string') {
+  try { tickets = JSON.parse(tickets); }
+  catch { tickets = tickets.split(/[\s,]+/).filter(Boolean); }
 }
-log(`Fanning out ${tickets.length} ticket(s): ${tickets.join(', ')}`);
+if (!Array.isArray(tickets)) tickets = tickets ? [tickets] : [];
+tickets = tickets.filter(Boolean);
+if (tickets.length === 0) tickets = DEFAULT_TICKETS;
+log(`Fanning out ${tickets.length} ticket(s): ${tickets.join(', ')} (args type: ${typeof args})`);
 
 const BUILD_SCHEMA = {
   type: 'object',
@@ -51,6 +56,12 @@ const results = await pipeline(
    Keep the ESPN-with-mock-fallback + source flag discipline.
 3. Verify mechanically: \`npm run build\` (must be green) and \`npx eslint src --max-warnings=0\`
    (must be clean). Fix until both pass.
+3b. SHARED-FILE DISCIPLINE — other agents are editing this repo in parallel branches.
+   Minimize merge conflicts: prefer creating NEW files over editing existing ones; do NOT
+   change the public exports/signatures of \`src/lib/liveFeed.ts\` (extend it additively); make
+   only small ADDITIVE edits to shared files (\`src/components/Nav.tsx\`,
+   \`src/components/LiveRankingTable.tsx\`, \`src/types/index.ts\`). Keep the ESPN+mock fallback
+   and \`source\` flag discipline.
 4. Commit your work to a NEW branch named \`feat/${id}\`:
    \`git switch -c feat/${id} && git add -A && git commit -m "<msg>"\`.
    Do NOT commit to main. Do NOT merge.

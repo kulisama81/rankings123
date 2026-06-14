@@ -49,6 +49,25 @@ These tickets wait on Loic and are skipped by the loop until done:
 `gdpr-consent` then `analytics` (GA4 needs consent) · `ad-inventory`/`daily-report`
 (AdSense id, Gmail auth). Everything else builds locally meanwhile.
 
+## Ticket lifecycle — always maintained (so the human can track)
+
+Every loop action keeps the `tkt` board current; the board + the daily email are how Loic
+follows progress without reading code.
+
+- **Create:** Loop B (and any newly-discovered work) files tickets with acceptance criteria
+  and priority before building.
+- **Update:** a ticket moves to `in_progress` when work starts. In a **sequential**
+  `/build-next` run the building agent owns this. In a **parallel** `build-features` run the
+  **main loop owns status** (builders work on throwaway branches): mark all fan-out tickets
+  `in_progress` at launch, and on completion `closed` for merged PASS branches / back to
+  `open` with a note for FAILs.
+- **Close:** only after an independent verifier PASS + merge to `main`, via a commit ending
+  `Closes: [id]` and `tkt edit <id> --status closed`. Never close unverified work.
+- **Daily email** (`daily-report`) summarizes the churn: tickets created, status changes, and
+  closures (with commit refs) since the last report — plus traffic/revenue once live. This is
+  the human-facing heartbeat; it ships from day one (build/ticket progress) even before
+  analytics exist.
+
 ## Definition of done (every feature)
 
 Green `npm run build` + clean `eslint` + exercised for real + an independent verifier **PASS** +

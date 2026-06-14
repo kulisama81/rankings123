@@ -15,4 +15,4 @@ Scheduled routine that emails Loic a daily summary: unique visitors (24h/7d tren
 
 ## Acceptance Criteria
 
-A daily message/email arrives with visitors, ad revenue, shipped work, and 1-3 recommendations. Numbers sourced from real analytics + AdSense where available; clearly marked when estimated.
+Daily EMAIL to loic.deniel@gmail.com containing: (1) tkt activity since last report — tickets CREATED, status changes (open/in_progress/closed), and CLOSED with commit refs; (2) unique visitors 24h/7d + pageviews (once analytics live); (3) ad revenue + RPM (once AdSense live, flagged estimated until then); (4) 1-3 ROI recommendations from Loop B; (5) anomalies. Until deploy/analytics exist, the email still ships with build + ticket progress so the human can track from day one.

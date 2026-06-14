@@ -1,6 +1,6 @@
 ---
 id: worldcup
-status: open
+status: in_progress
 deps: []
 links: []
 created: 2026-06-14T23:04:23Z
