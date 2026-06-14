@@ -124,10 +124,14 @@ export interface AtpLivePlayer {
   tournament?: AtpTournamentStatus;
 }
 
+export type Tour = "atp" | "wta";
+
 export interface AtpLiveSnapshot {
   lastUpdated: string; // ISO timestamp
   weekLabel: string; // e.g., "Week of June 8, 2026"
   source?: "espn" | "mock";
+  tour?: Tour;
+  tourLabel?: string; // "ATP" | "WTA"
   players: AtpLivePlayer[];
 }
 

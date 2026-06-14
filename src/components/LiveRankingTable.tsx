@@ -1,12 +1,14 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import type { AtpLivePlayer, AtpLiveSnapshot } from "@/types";
+import Link from "next/link";
+import type { AtpLivePlayer, AtpLiveSnapshot, Tour } from "@/types";
 import FlagName from "./FlagName";
 
 const REFRESH_INTERVAL_S = 20;
 
-interface AtpLiveTableProps {
+interface LiveRankingTableProps {
+  tour: Tour;
   initialSnapshot: AtpLiveSnapshot;
 }
 
@@ -26,11 +28,7 @@ function TournamentStatus({ player }: { player: AtpLivePlayer }) {
   const t = player.tournament;
   if (!t) return <span className="text-xs text-gray-300">—</span>;
   if (!t.active) {
-    return (
-      <span className="text-xs text-gray-400">
-        {t.name} · out
-      </span>
-    );
+    return <span className="text-xs text-gray-400">{t.name} · out</span>;
   }
   return (
     <span className="inline-flex items-center gap-1.5 text-xs text-gray-700">
@@ -43,7 +41,31 @@ function TournamentStatus({ player }: { player: AtpLivePlayer }) {
   );
 }
 
-export default function AtpLiveTable({ initialSnapshot }: AtpLiveTableProps) {
+function TourSwitcher({ tour }: { tour: Tour }) {
+  const tabs: { key: Tour; label: string; href: string }[] = [
+    { key: "atp", label: "ATP", href: "/atp-live" },
+    { key: "wta", label: "WTA", href: "/wta-live" },
+  ];
+  return (
+    <div className="inline-flex overflow-hidden rounded-lg border border-gray-300">
+      {tabs.map((t) => (
+        <Link
+          key={t.key}
+          href={t.href}
+          className={
+            t.key === tour
+              ? "bg-green-600 px-4 py-1.5 text-sm font-semibold text-white"
+              : "bg-white px-4 py-1.5 text-sm font-medium text-gray-600 hover:bg-gray-50"
+          }
+        >
+          {t.label}
+        </Link>
+      ))}
+    </div>
+  );
+}
+
+export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingTableProps) {
   const [snapshot, setSnapshot] = useState(initialSnapshot);
   const [query, setQuery] = useState("");
   const [country, setCountry] = useState("all");
@@ -56,7 +78,7 @@ export default function AtpLiveTable({ initialSnapshot }: AtpLiveTableProps) {
     if (fetching.current) return;
     fetching.current = true;
     try {
-      const res = await fetch("/api/atp/live", { cache: "no-store" });
+      const res = await fetch(`/api/${tour}/live`, { cache: "no-store" });
       if (res.ok) setSnapshot(await res.json());
     } catch {
       // keep showing the last good snapshot
@@ -64,7 +86,7 @@ export default function AtpLiveTable({ initialSnapshot }: AtpLiveTableProps) {
       fetching.current = false;
       setSecondsLeft(REFRESH_INTERVAL_S);
     }
-  }, []);
+  }, [tour]);
 
   useEffect(() => {
     const tick = setInterval(() => {
@@ -96,10 +118,12 @@ export default function AtpLiveTable({ initialSnapshot }: AtpLiveTableProps) {
 
   const liveCount = snapshot.players.filter((p) => p.tournament?.active).length;
   const updatedAt = new Date(snapshot.lastUpdated).toLocaleTimeString();
+  const tourLabel = snapshot.tourLabel ?? tour.toUpperCase();
 
   return (
     <div>
       <div className="mb-4 flex flex-wrap items-center gap-3">
+        <TourSwitcher tour={tour} />
         <input
           type="search"
           value={query}
@@ -132,9 +156,7 @@ export default function AtpLiveTable({ initialSnapshot }: AtpLiveTableProps) {
               Demo data — live feed unavailable
             </span>
           )}
-          <span>
-            Updated {updatedAt} · refresh in {secondsLeft}s
-          </span>
+          <span>Updated {updatedAt} · refresh in {secondsLeft}s</span>
           <button
             onClick={() => void refresh()}
             className="rounded-lg border border-gray-300 px-2.5 py-1 font-medium text-gray-700 hover:bg-gray-50"
@@ -164,9 +186,7 @@ export default function AtpLiveTable({ initialSnapshot }: AtpLiveTableProps) {
               <tr
                 key={p.name}
                 onClick={() => setPinned(pinned === p.name ? null : p.name)}
-                className={`cursor-pointer ${
-                  pinned === p.name ? "bg-amber-50" : "hover:bg-gray-50"
-                }`}
+                className={`cursor-pointer ${pinned === p.name ? "bg-amber-50" : "hover:bg-gray-50"}`}
               >
                 <td className="px-3 py-2.5 text-right font-semibold text-gray-900">{p.liveRank}</td>
                 <td className="px-3 py-2.5 text-center text-xs">
@@ -204,8 +224,8 @@ export default function AtpLiveTable({ initialSnapshot }: AtpLiveTableProps) {
 
       <p className="mt-3 text-xs text-gray-400">
         Live = projected ranking including points earned at this week&apos;s tournaments,
-        estimated from completed match results and the ATP points table for each tournament tier.
-        Official = last published ATP ranking. Click a row to pin it.
+        estimated from completed match results and the {tourLabel} points table for each
+        tournament tier. Official = last published {tourLabel} ranking. Click a row to pin it.
         {snapshot.source === "espn" && " Rankings and results via ESPN."}
       </p>
     </div>
