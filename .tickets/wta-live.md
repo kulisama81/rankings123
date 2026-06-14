@@ -1,6 +1,6 @@
 ---
 id: wta-live
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-14T22:50:48Z

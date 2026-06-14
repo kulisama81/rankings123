@@ -6,6 +6,7 @@ links: []
 created: 2026-06-14T22:50:32Z
 type: epic
 priority: 1
+parent: rankings123
 tags: []
 ---
 # Tennis live-rankings site to rival & surpass live-tennis.eu

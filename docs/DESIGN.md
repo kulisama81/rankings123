@@ -1,7 +1,10 @@
-# Tennis Live-Rankings — System Design
+# Rankings123 — System Design
 
-**Goal:** Build a live ATP/WTA rankings site that **rivals live-tennis.eu in quality** and
-**surpasses it in ad revenue.**
+**Brand:** rankings123.com — a multi-sport rankings & live-standings hub (§9).
+
+**Goal (beachhead):** Build a live ATP/WTA tennis rankings site that **rivals live-tennis.eu
+in quality** and **surpasses it in ad revenue** — then expand the same live-data engine to
+other sports (World Cup now, cycling, Olympics).
 
 **Status (2026-06-14):** v1 of the core feature shipped — `/atp-live` renders the real ATP
 top-100 live ranking from ESPN data (commit `fb42e77`). Build green, lint clean, not yet
@@ -182,11 +185,50 @@ Phase 4 — **Self-improve & deepen:** `improve-loop`, `points-defend`, `data-ac
 3. **Autonomy: Loop A fully autonomous** — commit each verified feature, pause only at §6
    handoffs.
 4. **Loop B cadence: weekly deep strategy run + daily light report.**
-5. **Domain: custom domain up front.** Loic purchases; we wire DNS on Vercel. Name TBD
-   (candidates: livetennisrankings.com, tennislive.app, atplive.app, courtside.live).
+5. **Domain: rankings123.com** (custom, up front). Loic purchases; we wire DNS on Vercel.
+   A sport-neutral brand on purpose — it carries the multi-sport expansion (§9).
 
 ### Sequencing impact
 - Consent banner moves earlier (before analytics & ads): Phase 3 order becomes
   `gdpr-consent` → `analytics` → `ad-inventory` → `daily-report`.
 - Launch (`deploy-vercel`) is gated on two handoffs: **Vercel login** + **domain purchase**.
   Local build of all features proceeds in parallel meanwhile.
+
+---
+
+## 9. Multi-sport strategy (rankings123.com)
+
+Tennis is the **beachhead**, not the ceiling. The same engine — fetch a sport's official
+data + live event feed, merge, render fast SEO pages, run the two loops — generalizes to any
+ranked/standings sport. The sport-neutral `rankings123.com` brand is chosen for exactly this.
+
+**Why expand (the success thesis):**
+- **Seasonal smoothing.** Tennis traffic dips between Slams. A portfolio (World Cup in
+  summer, Tour de France in July, Olympics every 2 yrs, year-round tennis) keeps traffic and
+  ad revenue from cratering off-season.
+- **Compounding ad inventory.** Each sport adds pages, sessions, and impressions on the same
+  ad/consent/analytics infrastructure built once. Marginal cost of a new sport ≈ a data
+  adapter + tables.
+- **Cross-sport traffic + brand.** One destination fans return to; internal linking and a
+  recognizable brand lift SEO authority faster than single-sport sites.
+- **Event spikes are cheap to capture.** Live events (World Cup, Olympics) drive huge
+  short-term search traffic; being live with real data during the event is the whole game.
+
+**Engine reuse:** the tennis `liveFeed` (ESPN rankings + scoreboard → merge by id → live
+table) is the template. Each sport = a new adapter implementing {official table, live event
+feed, tier/points or standings rules}. World Cup feasibility confirmed via ESPN
+`soccer/fifa.world` scoreboard (live 2026 fixtures returned).
+
+**Expansion roadmap:**
+1. **Tennis (ATP/WTA)** — live now, the quality bar vs live-tennis.eu.
+2. **FIFA World Cup 2026 (PARALLEL, now)** — live group standings + fixtures/results. The
+   tournament is on *right now* (epic `worldcup`); time-boxed traffic spike to capture
+   immediately, in parallel with tennis depth work.
+3. **Cycling — Tour de France (July)** — GC/stage standings; repo already has cycling mock
+   pages to evolve.
+4. **Olympics** — medal table + event results; repo already has an Olympics mock to evolve.
+
+**Sequencing note:** World Cup runs as a parallel build track (Loop A can fan out: one stream
+deepens tennis, another builds World Cup) because the event window is open now and won't wait.
+Shared infra (deploy, ads, consent, analytics, the two loops) is built once and serves all
+sports.
