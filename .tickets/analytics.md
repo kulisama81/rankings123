@@ -1,6 +1,6 @@
 ---
 id: analytics
-status: in_progress
+status: closed
 deps: [gdpr-consent]
 links: []
 created: 2026-06-14T22:53:14Z
