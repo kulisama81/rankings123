@@ -44,11 +44,25 @@ acceptance criteria + `docs/DESIGN.md` at the start so the goal can't erode).
    - FAIL → fix the cited issues and re-verify (max 3 rounds). Still failing → stop and
      report to the user; do not commit.
 
-6. **COMMIT (only on PASS).** Stop background servers. `git commit` with a clear message whose
-   last line is `Closes: [<id>]`. Then `tkt edit <id> --status closed`.
+6. **COMMIT & PUSH (only on PASS).** Stop background servers. `git commit` with a clear message
+   whose last line is `Closes: [<id>]`, then `git push origin main`. (Pushes auto-deploy to
+   Vercel — the GitHub repo is git-connected to the production project.)
 
-7. **REPORT.** One concise paragraph: what shipped, the verifier verdict, and the next
-   unblocked ticket. **One iteration per run — then stop** (the `/loop` driver re-invokes you).
+7. **POST-DEPLOY VERIFY (do not skip — local green ≠ live).** Confirm the change actually
+   shipped before closing:
+   - **Build:** poll the Vercel deploy result via GitHub —
+     `gh api repos/kulisama81/rankings123/commits/<sha>/status --jq '.statuses[]|select(.context=="Vercel")|.state'`.
+     It starts `pending`; wait for `success`. If `failure`/`error`, the cloud build broke
+     (env/Node/import differences local didn't catch) — open the inspector (`target_url`), fix,
+     re-push. **Do not close.**
+   - **Live smoke test:** `curl` the production site `https://rankings123.com` for the feature's
+     key routes — expect HTTP 200 **and** expected content (e.g. API `source`, player/group
+     counts), not just a 200 shell. The deployment's live URL is also at
+     `gh api repos/kulisama81/rankings123/deployments/<id>/statuses --jq '.[0].environment_url'`.
+
+8. **CLOSE & REPORT.** Only after build=`success` AND the live smoke test passes:
+   `tkt edit <id> --status closed`. Then one concise paragraph: what shipped, verifier verdict,
+   live-verify result, next unblocked ticket. **One iteration per run — then stop.**
 
 ## Notes
 - Pause and surface to the user only at: a human handoff (🔑), a verifier FAIL you can't fix

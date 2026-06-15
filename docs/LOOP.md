@@ -71,4 +71,7 @@ follows progress without reading code.
 ## Definition of done (every feature)
 
 Green `npm run build` + clean `eslint` + exercised for real + an independent verifier **PASS** +
-a commit ending `Closes: [id]` + ticket moved to `closed`.
+a commit ending `Closes: [id]` + `git push` + **Vercel build = success** (via
+`gh api .../commits/<sha>/status`) + **live smoke test passes** on https://rankings123.com
+(key routes 200 + expected content) + ticket moved to `closed`. Local green ≠ live: closure
+requires the change to be confirmed serving in production.
