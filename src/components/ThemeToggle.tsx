@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [theme, setTheme] = useState<"dark" | "light">("light");
 
   useEffect(() => {
-    const current = (document.documentElement.dataset.theme as "dark" | "light") || "dark";
+    const current = (document.documentElement.dataset.theme as "dark" | "light") || "light";
     // eslint-disable-next-line react-hooks/set-state-in-effect -- sync state from the DOM theme set pre-paint
     setTheme(current);
   }, []);
