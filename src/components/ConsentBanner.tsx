@@ -47,8 +47,8 @@ export default function ConsentBanner() {
     <div className="fixed inset-x-0 bottom-0 z-50 border-t border-edge bg-surface/95 px-4 py-4 shadow-lg backdrop-blur sm:px-6">
       <div className="mx-auto flex max-w-6xl flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-muted">
-          We use cookies for analytics to understand how the site is used. You can accept or
-          decline — declining keeps analytics off.
+          We use cookies for analytics to improve the site (on by default). You can opt out
+          anytime, or accept to also allow ads.
         </p>
         <div className="flex shrink-0 gap-2">
           <button

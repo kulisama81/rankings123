@@ -21,11 +21,14 @@ export default function Analytics() {
             ad_storage: 'denied',
             ad_user_data: 'denied',
             ad_personalization: 'denied',
-            analytics_storage: 'denied',
+            analytics_storage: 'granted',
             wait_for_update: 500
           });
           try {
-            if (localStorage.getItem('cookie-consent') === 'granted') {
+            var c = localStorage.getItem('cookie-consent');
+            if (c === 'denied') {
+              gtag('consent', 'update', { ad_storage: 'denied', analytics_storage: 'denied' });
+            } else if (c === 'granted') {
               gtag('consent', 'update', {
                 ad_storage: 'granted',
                 ad_user_data: 'granted',
