@@ -18,10 +18,19 @@ work to ship.
 - **Rotate your focus** so runs stay fresh and don't repeat: cycle the lens day to day —
   competitor feature gaps → new data sources/sports → SEO & content opportunities →
   monetization/RPM → UX/engagement → loop/process health. Note today's lens in the report.
-- **Quality over quantity:** add ~2–5 *genuinely high-ROI, non-duplicate* tickets per run, each
-  with concrete acceptance criteria and an explicit impact-vs-effort (ROI) justification. Do NOT
-  pad the backlog. Aggressively **dedupe** against existing open tickets and **reprioritize**
-  existing ones when the analysis says so.
+- **Scale to backlog depth (never let the planner run dry):** first count the open, *unblocked*
+  tickets the planner can actually build now (`tkt ready` / `tkt ls`, excluding handoff-blocked
+  ones like AdSense/GA/email-gated). The planner ships ~5–15/day, so:
+  - **Healthy backlog (≳ 12 buildable):** stay lean — add ~2–5 of the very best tickets.
+  - **Running low (< 12 buildable):** **ramp up** — generate more (up to ~10–15) this run,
+    heavily weighted toward the **revenue growth strategy**: traffic-driving features first
+    (new sports/data, more pages, SEO, shareable embeds), then monetization (ad inventory,
+    higher-RPM placements like betting affiliates). Keep at least a few days of buildable work
+    queued at all times.
+- **Quality bar always holds:** every ticket is *genuinely high-ROI, non-duplicate*, with
+  concrete acceptance criteria and an explicit impact-vs-effort (ROI) justification — even when
+  ramping up. Aggressively **dedupe** against existing open tickets and **reprioritize** when the
+  analysis says so. Ramp the *count*, never lower the bar.
 - **Be ambitious + specific:** mine the best sports/ranking products (ESPN, FlashScore,
   SofaScore, ATP/WTA, betting/odds sites) and proven growth tactics (SEO long-tail, shareable
   embeds, more sports, richer stats, faster live data) — turn the highest-leverage ideas into
