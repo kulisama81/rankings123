@@ -26,3 +26,10 @@ next-env.d.ts
 
 # workflow worktrees (transient)
 .claude/worktrees/
+
+# cron / reporting (secrets + generated data + logs)
+.ga-credentials.json
+*-secrets.env
+/src/data/analytics-report.json
+/src/data/digest-history.json
+.claude/*.log
