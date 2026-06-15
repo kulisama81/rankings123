@@ -16,3 +16,9 @@ Surface top predictions / win probabilities / odds for upcoming World Cup matche
 ## Acceptance Criteria
 
 Upcoming fixtures show predicted outcome / odds from a real source (or clearly-flagged placeholder until an odds API key is added); designed so an affiliate/ad slot for the odds provider can slot in; tokens-themed.
+
+## Notes
+
+**2026-06-15T05:52:46Z**
+
+UX guardrail: at most ONE tasteful, clearly-labeled affiliate/odds slot per page; never intrusive; geo/age-gated; don't degrade the core experience. A good UX beats short-term revenue.

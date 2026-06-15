@@ -74,6 +74,11 @@ base, vibrant per-sport accents, score/rank-forward, subtle motion. Installed sk
 `frontend-design`, `theme-factory`, `brand-guidelines`, `webapp-testing`. Ticket: `design-revamp`.
 
 ## Conventions
+- **Ads UX (never overwhelm users):** keep ad density LOW and non-intrusive. Max ~1 leaderboard
+  + 1 in-content/sidebar unit per page (no ad walls/stacking); NO pop-ups, interstitials,
+  auto-play-with-sound, or content-blocking formats (follow the Better Ads Standards); the
+  rankings/data stay the hero; below-the-fold ads lazy-load; mobile ads never cover content.
+  A good experience beats short-term ad revenue.
 - **Git authorship: do NOT add `Co-Authored-By` trailers** to commits. Loic is sole author.
 - Match existing code style; prefer extending the feed/table patterns over new architectures.
 - Branch off `main` for risky work; routine improvements commit to `main` (auto-deploys).

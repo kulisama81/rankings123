@@ -15,4 +15,4 @@ Ad slot components (top leaderboard, in-table, sidebar), AdSense integration, la
 
 ## Acceptance Criteria
 
-Ad slots render in layout without CLS; AdSense script gated on consent; placeholders when no publisher ID.
+Ad slots render without CLS; AdSense gated on consent; placeholders when no publisher ID. UX GUARDRAIL (do not overwhelm users): low, non-intrusive ad density — at most ~1 leaderboard + 1 in-content/sidebar unit per page, no stacking/ad-walls; NO pop-ups, interstitials, auto-play-with-sound or content-blocking formats (Better Ads Standards); rankings tables stay the hero; below-the-fold ads lazy-load; mobile ads never cover content; site stays pleasant + fast (no LCP/CLS regression).
