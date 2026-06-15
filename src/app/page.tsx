@@ -1,6 +1,21 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { allEvents } from "@/data";
 import EventCard from "@/components/EventCard";
+
+export const metadata: Metadata = {
+  title: "Rankings123 — Live Sports Rankings",
+  description:
+    "Live ATP & WTA tennis rankings during tournaments, FIFA World Cup 2026 standings, cycling, and more. Updated in real time.",
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: "Rankings123 — Live Sports Rankings",
+    description:
+      "Live ATP & WTA tennis rankings during tournaments, FIFA World Cup 2026 standings, cycling, and more.",
+    url: "/",
+    type: "website",
+  },
+};
 
 export default function HomePage() {
   return (

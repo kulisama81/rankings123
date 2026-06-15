@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getRankings } from "@/data";
 import type { OlympicsRankings, CyclingRankings, RugbyRankings, TennisRankings } from "@/types";
@@ -8,6 +9,26 @@ import TennisTable from "@/components/TennisTable";
 
 interface EventPageProps {
   params: Promise<{ eventId: string }>;
+}
+
+export async function generateMetadata({ params }: EventPageProps): Promise<Metadata> {
+  const { eventId } = await params;
+  const data = getRankings(eventId);
+  if (!data) return { title: "Event Rankings" };
+  const { event } = data;
+  const title = `${event.name} Results & Rankings`;
+  const description = `${event.name} — final results, standings and rankings. ${event.location}, ${event.startDate}.`;
+  return {
+    title,
+    description,
+    alternates: { canonical: `/events/${eventId}` },
+    openGraph: {
+      title: `${title} | Rankings123`,
+      description,
+      url: `/events/${eventId}`,
+      type: "website",
+    },
+  };
 }
 
 export default async function EventPage({ params }: EventPageProps) {

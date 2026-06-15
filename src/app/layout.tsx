@@ -16,8 +16,21 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Rankings123",
-  description: "Sports event rankings — Olympics, Cycling, Rugby",
+  metadataBase: new URL("https://rankings123.com"),
+  title: {
+    default: "Rankings123 — Live Sports Rankings",
+    template: "%s | Rankings123",
+  },
+  description:
+    "Live sports rankings: real-time ATP & WTA tennis rankings during tournaments, FIFA World Cup 2026 group standings, cycling, and more.",
+  openGraph: {
+    type: "website",
+    siteName: "Rankings123",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 export default function RootLayout({
