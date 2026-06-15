@@ -129,9 +129,23 @@ export type Tour = "atp" | "wta";
 export interface AtpLiveSnapshot {
   lastUpdated: string; // ISO timestamp
   weekLabel: string; // e.g., "Week of June 8, 2026"
-  source?: "espn" | "mock";
+  source?: "espn" | "mock" | "uts" | "uts+espn";
   tour?: Tour;
   tourLabel?: string; // "ATP" | "WTA"
+  players: AtpLivePlayer[];
+}
+
+// --- ATP Deep Ranking (top ~1000) ---
+// Full ATP ranking extended well beyond ESPN's ~150-player feed, sourced from
+// Ultimate Tennis Statistics, with this week's live points overlaid (joined to
+// the ESPN scoreboard by normalized name) where a player is in a current draw.
+export interface AtpDeepRankingSnapshot {
+  lastUpdated: string; // ISO timestamp
+  weekLabel: string;
+  total: number; // total players available in the source ranking
+  // espn = ESPN-only (deep source unavailable); uts = deep, no overlay;
+  // uts+espn = deep + ESPN live overlay; mock = bundled demo fallback.
+  source: "uts" | "uts+espn" | "espn" | "mock";
   players: AtpLivePlayer[];
 }
 

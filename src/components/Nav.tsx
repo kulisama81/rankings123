@@ -17,6 +17,9 @@ export default function Nav() {
               </span>
               ATP Live
             </Link>
+            <Link href="/atp-rankings" className="font-medium text-gray-900 hover:text-green-700">
+              Top 1000
+            </Link>
             <Link href="/wta-live" className="inline-flex items-center gap-1.5 font-medium text-gray-900 hover:text-green-700">
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75" />
