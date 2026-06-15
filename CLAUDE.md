@@ -1,17 +1,62 @@
-# Rankings123
+# Rankings123 — rankings123.com
 
-Sports event rankings site (Olympic Games, etc.) built with Next.js + Tailwind CSS + TypeScript.
+A **live multi-sport rankings hub**. Beachhead: live ATP/WTA tennis rankings to rival and
+surpass live-tennis.eu in **quality and ad revenue**; expanding to World Cup (live now),
+cycling, Olympics. Live in production at **https://rankings123.com**.
 
-## Plan
-See `.claude/plans/rankings123.md` for the implementation plan.
+> New here (new session or a scheduled cloud routine)? Read this file, then `docs/DESIGN.md`
+> (full design + strategy), `docs/LOOP.md` (how the build loop runs), and
+> `.claude/commands/build-next.md` (the one-iteration contract). Don't re-derive or duplicate
+> what those already capture.
 
-## Tech Stack
-- Next.js 14 (App Router)
-- TypeScript
-- Tailwind CSS
+## Tech stack
+- **Next.js 16 (App Router)** · TypeScript · Tailwind CSS v4
+- Deployed on **Vercel**, git-connected: **`git push origin main` auto-deploys to production**
+  (rankings123.com). No manual deploy step.
 
-## Project Structure
-- `/src/app` — Pages (App Router)
-- `/src/components` — Reusable UI components
-- `/src/data` — Mock data / data layer
-- `/src/app/api` — API routes
+## Data (dynamic, keyless, with mock fallback)
+- **Tennis live (ATP/WTA top ~100):** ESPN site API `/sports/tennis/{atp|wta}/rankings` +
+  `/scoreboard`, merged by athlete GUID; live points estimated from round reached × per-tier
+  points table. Core: `src/lib/liveFeed.ts`, table `src/components/LiveRankingTable.tsx`.
+- **ATP deep ranking (top ~1000):** Ultimate Tennis Statistics `rankingsTableTable`, ESPN live
+  overlay joined by normalized name. `src/lib/atpDeepFeed.ts` + `atpDeepRanking.ts`.
+- **WTA full ranking:** official `api.wtatennis.com/tennis/players/ranked`.
+- **World Cup:** ESPN `soccer/fifa.world`. `src/lib/worldCupFeed.ts`.
+- **Discipline (keep it):** every feed degrades to a bundled mock on failure and surfaces a
+  `source` flag (`espn`/`uts`/`uts+espn`/`mock`) in the UI. Never hard-fail; never fabricate.
+- Analytics: GA4 (`G-GDM8YNM3SM`) via `src/components/Analytics.tsx` with Consent Mode v2
+  (default denied) + `ConsentBanner.tsx`.
+
+## The build loop (Loop A) — how all work ships
+Per iteration: pick top unblocked ticket → implement → **mechanical verify** (`npm run build`
+green + `npx eslint src --max-warnings=0` clean + run/curl) → **independent adversarial
+verifier subagent** (the author never judges its own work) → commit `Closes: [id]` →
+`git push` → **post-deploy verify** (Vercel build = success via `gh api .../commits/<sha>/status`
++ smoke-test https://rankings123.com routes: 200 + expected content) → close ticket.
+Local-green ≠ live: closure requires production confirmation. Full contract in
+`.claude/commands/build-next.md` and `docs/LOOP.md`.
+
+## Tickets — ALWAYS keep current (the human tracks via these)
+Tickets live as markdown in **`.tickets/`** (YAML frontmatter: `status`
+open|in_progress|needs_testing|closed, `priority` 0=highest, `parent`). Use the **`tkt`** CLI
+when available (`tkt ls`, `tkt edit <id> --status ...`, `tkt create ...`); in environments
+without it (e.g. cloud routines) **edit the `.tickets/*.md` files directly**. Every loop action
+**creates / updates / closes** tickets: mark `in_progress` at start, `closed` only after an
+independent verifier PASS + merged + live-verified. Loop B files new tickets.
+
+## Autonomy (scheduled cloud routines)
+- **rankings123-daily-improve** (daily) — runs one build-loop iteration, ships one verified
+  improvement to production.
+- **rankings123-weekly-strategy** (Mondays) — researches competitors + data + metrics, creates
+  ROI-ranked tickets, writes a growth summary to `docs/reports/`.
+- Manage at https://claude.ai/code/routines. These start cold — that's why this file exists.
+
+## Design direction
+**Apple Sports app** aesthetic: clean/premium, bold type, rounded high-contrast cards, dark
+base, vibrant per-sport accents, score/rank-forward, subtle motion. Installed skills to use:
+`frontend-design`, `theme-factory`, `brand-guidelines`, `webapp-testing`. Ticket: `design-revamp`.
+
+## Conventions
+- **Git authorship: do NOT add `Co-Authored-By` trailers** to commits. Loic is sole author.
+- Match existing code style; prefer extending the feed/table patterns over new architectures.
+- Branch off `main` for risky work; routine improvements commit to `main` (auto-deploys).
