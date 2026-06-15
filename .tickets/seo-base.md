@@ -1,6 +1,6 @@
 ---
 id: seo-base
-status: in_progress
+status: closed
 deps: []
 links: []
 created: 2026-06-14T22:50:48Z
