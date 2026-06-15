@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { AtpDeepRankingSnapshot, AtpLivePlayer } from "@/types";
+import AnimatedNumber from "./AnimatedNumber";
 
 const REFRESH_INTERVAL_S = 30;
 const PAGE_SIZE = 50;
@@ -179,8 +180,8 @@ export default function AtpDeepRankingTable({ initialSnapshot, band }: AtpDeepRa
                 <td className="px-3 py-2.5 text-right text-xs tabular-nums text-muted">
                   {p.careerHigh ? `#${p.careerHigh}` : "—"}
                 </td>
-                <td className="px-4 py-2.5 text-right font-bold tabular-nums text-fg">
-                  {p.livePoints.toLocaleString()}
+                <td className="px-4 py-2.5 text-right font-bold text-fg">
+                  <AnimatedNumber value={p.livePoints} />
                 </td>
                 <td className="px-2 py-2.5 text-right"><PointsDelta value={p.pointsDelta} /></td>
                 <td className="px-3 py-2.5 text-right tabular-nums text-muted">

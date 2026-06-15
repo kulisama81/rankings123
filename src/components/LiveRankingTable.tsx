@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import type { AtpLivePlayer, AtpLiveSnapshot, Tour } from "@/types";
+import AnimatedNumber from "./AnimatedNumber";
 
 const REFRESH_INTERVAL_S = 20;
 
@@ -139,16 +140,14 @@ export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingT
     <div>
       {/* Controls */}
       <div className="mb-4 flex flex-wrap items-center gap-2.5">
-        <div className="inline-flex overflow-hidden rounded-lg border border-edge">
+        <div className="inline-flex gap-1 rounded-xl bg-surface2 p-1">
           {tabs.map((t) => (
             <Link
               key={t.key}
               href={t.href}
-              className={
-                t.key === tour
-                  ? "bg-accent px-3.5 py-1.5 text-sm font-bold text-accentfg"
-                  : "bg-surface px-3.5 py-1.5 text-sm font-medium text-muted hover:text-fg"
-              }
+              className={`rounded-lg px-4 py-1.5 text-sm font-semibold transition ${
+                t.key === tour ? "bg-accent text-accentfg shadow-sm" : "text-muted hover:text-fg"
+              }`}
             >
               {t.label}
             </Link>
@@ -232,8 +231,8 @@ export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingT
                   </span>
                 </td>
                 <td className="px-2 py-2 text-center text-muted">{p.age}</td>
-                <td className="px-3 py-2 text-right font-bold tabular-nums text-fg">
-                  {p.livePoints.toLocaleString()}
+                <td className="px-3 py-2 text-right text-[15px] font-bold text-fg">
+                  <AnimatedNumber value={p.livePoints} />
                 </td>
                 <td className="px-2 py-2 text-right"><Delta value={p.pointsDelta} /></td>
                 <td className="px-3 py-2 text-right tabular-nums text-muted">
@@ -261,7 +260,7 @@ export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingT
               <Movement value={p.movement} />
               <span className="text-base leading-none">{p.flag}</span>
               <span className="flex-1 font-semibold text-fg">{p.name}</span>
-              <span className="font-bold tabular-nums text-fg">{p.livePoints.toLocaleString()}</span>
+              <AnimatedNumber value={p.livePoints} className="font-bold text-fg" />
             </div>
             <div className="mt-2 flex items-center justify-between pl-[38px] text-xs text-muted">
               <Tournament player={p} />
