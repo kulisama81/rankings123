@@ -9,6 +9,23 @@ cycling, Olympics. Live in production at **https://rankings123.com**.
 > `.claude/commands/build-next.md` (the one-iteration contract). Don't re-derive or duplicate
 > what those already capture.
 
+## CURRENT PRIORITY — growth phases
+
+**⏱ TIME-SENSITIVE (overrides the split below): the FIFA World Cup 2026 is LIVE**
+(through ~July 19, 2026) — a short-lived traffic spike we must capture now. The **planner
+spends ≥ half its capacity on World Cup** (`worldcup`-tagged tickets) every run until the
+tournament ends; **autoresearch keeps the World Cup backlog stocked**. The remaining capacity
+goes to the phases below.
+
+1. **Phase 1 — PARITY (now): match and then exceed live-tennis.eu's feature set ASAP** so we are
+   a credible competitive product. Parity features outrank everything else until done.
+2. **Phase 2 — Differentiate:** build what competitors lack (advanced stats, more sports/events,
+   shareable embeds, cross-sport views, faster/deeper live data).
+3. **Phase 3 — Revenue streams:** display ads (AdSense → Ezoic → Mediavine as traffic grows)
+   **plus sports betting/odds affiliates** (highest RPM for a sports audience).
+
+Autoresearch + planner should drive Phase 1 to done first, then weight Phase 2/3.
+
 ## Tech stack
 - **Next.js 16 (App Router)** · TypeScript · Tailwind CSS v4
 - Deployed on **Vercel**, git-connected: **`git push origin main` auto-deploys to production**

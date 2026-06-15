@@ -14,6 +14,18 @@ sports sites in traffic and ad revenue — and improve the loop itself. There is
 up on; keep the pipeline of high-ROI features full so the planner always has the most valuable
 work to ship.
 
+**CURRENT PHASE: PHASE 1 — reach (then exceed) live-tennis.eu feature parity ASAP.** Until
+parity is reached, weight ticket generation AND prioritization toward closing the competitor's
+feature gaps first (full WTA depth, race rankings, points-to-defend, player breakdowns,
+head-to-head, doubles, live match scores, historical rankings, etc.). Then Phase 2
+(differentiation) and Phase 3 (revenue: AdSense/Ezoic/Mediavine + betting-odds affiliates).
+See CLAUDE.md "CURRENT PRIORITY".
+
+**World Cup (while live, through ~July 19, 2026):** the planner spends **≥ half its capacity**
+on World Cup, so keep the `worldcup`-tagged backlog well stocked every run — leaders/top
+scorers, knockout bracket, per-match detail pages, team & player pages, odds/predictions, group
+views, advanced stats. Never let the World Cup queue run dry while the tournament is on.
+
 **Daily-run discipline (since you run every day):**
 - **Rotate your focus** so runs stay fresh and don't repeat: cycle the lens day to day —
   competitor feature gaps → new data sources/sports → SEO & content opportunities →

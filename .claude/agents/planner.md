@@ -59,7 +59,12 @@ service-account/email. Prefer p0/p1.
   `next.config`/`vercel`/build config, `.claude/**` (agents, commands, workflows), `.tickets`
   schema changes, or anything that could break the build pipeline.
 - Never bypass build/lint; never `--no-verify`; never force-push or destructive git ops.
-- Ship **1–3 tickets** per run (~60 min budget), then stop. Don't fabricate data or verifier results.
+- Ship **4–6 tickets** per run (~90 min budget), then stop. Don't fabricate data or verifier results.
+- **World Cup carve-out (time-sensitive):** while the FIFA World Cup 2026 is live
+  (through ~July 19, 2026), **at least HALF of each run's tickets must be `worldcup`-tagged
+  work** — it's a live traffic spike we must capture now. Split the remaining tickets across
+  Phase-1 tennis parity (see CLAUDE.md "CURRENT PRIORITY"). If the `worldcup` queue is empty,
+  note it so autoresearch refills it, then use the freed slots on parity.
 - Do NOT create new tickets (that's the strategist's job) — work the existing backlog.
 - Do NOT add `Co-Authored-By` trailers.
 

@@ -5,7 +5,7 @@ deps: []
 links: []
 created: 2026-06-15T05:16:29Z
 type: feature
-priority: 2
+priority: 1
 parent: rankings123
 tags: [worldcup, engagement, revenue]
 ---

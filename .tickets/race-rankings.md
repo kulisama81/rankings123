@@ -5,7 +5,7 @@ deps: []
 links: []
 created: 2026-06-14T22:51:04Z
 type: feature
-priority: 2
+priority: 1
 parent: tennis-site
 tags: [feature, data]
 ---
