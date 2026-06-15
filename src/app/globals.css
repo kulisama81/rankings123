@@ -89,6 +89,57 @@ body {
   padding-left: 1.25rem;
 }
 
+/* ===================== Design variants (data-design) ===================== */
+/* Court = default — uses the dark/light theme tokens above (modern premium). */
+
+/* Broadcast — live-TV scoreboard: dark, high-contrast, condensed uppercase, sharp corners. */
+[data-design="broadcast"] {
+  --bg: #06080c;
+  --surface: #0e1217;
+  --surface-2: #161c24;
+  --border: #242c37;
+  --text: #ffffff;
+  --text-muted: #8b97a4;
+  --bg-elevate: rgba(255, 255, 255, 0.05);
+  --font-display: var(--font-oswald);
+}
+[data-design="broadcast"] .font-display {
+  text-transform: uppercase;
+  letter-spacing: 0.015em;
+}
+[data-design="broadcast"] .rounded-3xl,
+[data-design="broadcast"] .rounded-2xl,
+[data-design="broadcast"] .rounded-xl,
+[data-design="broadcast"] .rounded-lg {
+  border-radius: 3px;
+}
+
+/* Classic — sports almanac: warm paper, serif headlines, hairline rules. */
+[data-design="classic"] {
+  --bg: #f3f1ea;
+  --surface: #fbfaf5;
+  --surface-2: #ece8dc;
+  --border: #dcd6c6;
+  --text: #1b1a16;
+  --text-muted: #6c6759;
+  --bg-elevate: rgba(30, 50, 35, 0.05);
+  --font-display: var(--font-serif);
+  --accent: #4d7c0f;
+  --accent-contrast: #ffffff;
+}
+[data-design="classic"] .font-display {
+  letter-spacing: -0.01em;
+}
+[data-design="classic"] .rounded-3xl,
+[data-design="classic"] .rounded-2xl,
+[data-design="classic"] .rounded-xl {
+  border-radius: 5px;
+}
+/* Classic is light — use darker per-sport accents so they read on paper. */
+[data-design="classic"] [data-sport="atp"] { --accent: #4d7c0f; --accent-contrast: #ffffff; }
+[data-design="classic"] [data-sport="wta"] { --accent: #c0246a; --accent-contrast: #ffffff; }
+[data-design="classic"] [data-sport="worldcup"] { --accent: #15803d; --accent-contrast: #ffffff; }
+
 @keyframes pulse-dot {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.35; }

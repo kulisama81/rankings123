@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Archivo } from "next/font/google";
+import { Geist, Geist_Mono, Archivo, Oswald, Source_Serif_4 } from "next/font/google";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import ConsentBanner from "@/components/ConsentBanner";
@@ -22,6 +22,18 @@ const archivo = Archivo({
   variable: "--font-archivo",
   subsets: ["latin"],
   weight: ["600", "700", "800", "900"],
+});
+
+// Display faces for the alternate designs: Oswald (Broadcast, condensed) + a serif (Classic).
+const oswald = Oswald({
+  variable: "--font-oswald",
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+});
+const sourceSerif = Source_Serif_4({
+  variable: "--font-serif",
+  subsets: ["latin"],
+  weight: ["600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -48,16 +60,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="light" suppressHydrationWarning>
+    <html lang="en" data-theme="light" data-design="court" suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `try{document.documentElement.dataset.theme=localStorage.getItem('theme')||'light'}catch(e){}`,
+            __html: `try{var e=document.documentElement;e.dataset.theme=localStorage.getItem('theme')||'light';e.dataset.design=localStorage.getItem('design')||'court';}catch(e){}`,
           }}
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${archivo.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${archivo.variable} ${oswald.variable} ${sourceSerif.variable} antialiased`}
       >
         <Nav />
         <main>{children}</main>

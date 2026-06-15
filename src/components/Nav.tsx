@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import ThemeToggle from "./ThemeToggle";
+import DesignSwitcher from "./DesignSwitcher";
 
 const tabs = [
   { href: "/atp-live", label: "ATP" },
@@ -45,6 +46,7 @@ export default function Nav() {
             );
           })}
         </div>
+        <DesignSwitcher />
         <ThemeToggle />
       </div>
     </nav>
