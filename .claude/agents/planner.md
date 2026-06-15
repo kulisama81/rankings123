@@ -59,7 +59,7 @@ service-account/email. Prefer p0/p1.
   `next.config`/`vercel`/build config, `.claude/**` (agents, commands, workflows), `.tickets`
   schema changes, or anything that could break the build pipeline.
 - Never bypass build/lint; never `--no-verify`; never force-push or destructive git ops.
-- Stop after **1–2 tickets** or ~45 min. Don't fabricate data or verifier results.
+- Ship **1–3 tickets** per run (~60 min budget), then stop. Don't fabricate data or verifier results.
 - Do NOT create new tickets (that's the strategist's job) — work the existing backlog.
 - Do NOT add `Co-Authored-By` trailers.
 
