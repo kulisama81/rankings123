@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getAtpDeepRankingData } from "@/lib/atpDeepRanking";
 import AtpDeepRankingTable from "@/components/AtpDeepRankingTable";
+import HeroBanner from "@/components/HeroBanner";
 import { RANK_BANDS, bandBySlug } from "../bands";
 
 export const dynamic = "force-dynamic";
@@ -58,25 +59,13 @@ export default async function AtpRankingBandPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <div data-sport="atp" className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-        <div className="mb-6 flex items-center gap-3">
-          <span className="text-3xl" aria-hidden="true">🎾</span>
-          <div>
-            <div className="flex flex-wrap items-center gap-2.5">
-              <h1 className="text-2xl font-bold tracking-tight text-fg sm:text-3xl">
-                ATP Rankings {b.from}–{b.to}
-              </h1>
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-accent/15 px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-accent">
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full rounded-full bg-accent opacity-60" style={{ animation: "pulse-dot 1.6s ease-in-out infinite" }} />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
-                </span>
-                Live
-              </span>
-            </div>
-            <p className="mt-1 text-sm text-muted">{snapshot.weekLabel}</p>
-          </div>
-        </div>
+      <div data-sport="atp" className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+        <HeroBanner
+          icon="🎾"
+          title={`ATP Rankings ${b.from}–${b.to}`}
+          subtitle={snapshot.weekLabel}
+          stats={[{ label: "Positions", value: `#${b.from}–${b.to}` }]}
+        />
 
         <nav className="mb-5 flex flex-wrap gap-2 text-xs" aria-label="Rank bands">
           <Link

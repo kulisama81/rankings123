@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { allEvents } from "@/data";
 import EventCard from "@/components/EventCard";
+import HeroBanner from "@/components/HeroBanner";
 
 export const metadata: Metadata = {
   title: "Rankings123 — Live Sports Rankings",
@@ -26,12 +27,16 @@ const liveLinks = [
 export default function HomePage() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-      <h1 className="mb-2 text-3xl font-bold tracking-tight text-fg sm:text-4xl">
-        Live Sports Rankings
-      </h1>
-      <p className="mb-8 text-muted">
-        Real-time ATP and WTA tennis, FIFA World Cup, cycling, and more — updated live.
-      </p>
+      <HeroBanner
+        icon="🏆"
+        title="Live Sports Rankings"
+        subtitle="Real-time ATP & WTA tennis, FIFA World Cup, cycling, and more — updated live."
+        live={false}
+        stats={[
+          { label: "Sports", value: "Tennis · Football · Cycling" },
+          { label: "Updated", value: "Live" },
+        ]}
+      />
 
       <div className="mb-10 grid gap-4 sm:grid-cols-3">
         {liveLinks.map((l) => (
