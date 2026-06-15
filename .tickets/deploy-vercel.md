@@ -1,6 +1,6 @@
 ---
 id: deploy-vercel
-status: open
+status: in_progress
 deps: [domain]
 links: []
 created: 2026-06-14T22:50:48Z

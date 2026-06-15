@@ -135,6 +135,55 @@ export interface AtpLiveSnapshot {
   players: AtpLivePlayer[];
 }
 
+// --- World Cup (FIFA) live ---
+export interface WorldCupTeam {
+  rank: number; // position within the group
+  name: string;
+  code: string; // 3-letter code, e.g. "MEX"
+  flag: string; // emoji
+  played: number;
+  won: number;
+  drawn: number;
+  lost: number;
+  goalsFor: number;
+  goalsAgainst: number;
+  goalDiff: number;
+  points: number;
+  // Advancement status from the live feed (e.g. "Advance to Round of 32").
+  status?: string;
+  // "advanced" = qualified, "alive" = can still qualify, "out" = eliminated.
+  outlook?: "advanced" | "alive" | "out";
+}
+
+export interface WorldCupGroup {
+  name: string; // e.g. "Group A"
+  teams: WorldCupTeam[];
+}
+
+export interface WorldCupMatch {
+  id: string;
+  date: string; // ISO kickoff
+  state: "pre" | "in" | "post";
+  statusDetail: string; // e.g. "FT", "38'", "Scheduled"
+  homeName: string;
+  homeCode: string;
+  homeFlag: string;
+  homeScore: number | null;
+  awayName: string;
+  awayCode: string;
+  awayFlag: string;
+  awayScore: number | null;
+  venue?: string;
+}
+
+export interface WorldCupSnapshot {
+  lastUpdated: string; // ISO timestamp
+  stageLabel: string; // e.g. "Group Stage"
+  source?: "espn" | "mock";
+  groups: WorldCupGroup[];
+  matches: WorldCupMatch[];
+}
+
 // --- Rankings data for an event ---
 export interface OlympicsRankings {
   event: Event;
