@@ -34,8 +34,11 @@ service-account/email. Prefer p0/p1.
 1. `tkt edit <id> --status in_progress`.
 2. Implement fully to the acceptance criteria. Match existing patterns (the `src/lib` feed +
    `src/components` table architecture; keep ESPN/UTS data + mock fallback + `source` flag).
-3. Mechanical verify: `npm run build` green **and** `npx eslint src --max-warnings=0` clean;
-   then run (`npm run start -- -p 3123 &`) and `curl` the affected routes. Fix until green.
+3. Mechanical verify: `npm run build` green, `npx eslint src --max-warnings=0` clean, **and
+   `npm run check:readability` clean** (use design tokens — never raw `text-gray-*`/`bg-white`/
+   `text-white`, which break in dark or light mode). Then run (`npm run start -- -p 3123 &`),
+   `curl` the affected routes, and for UI changes confirm readability in BOTH dark and light
+   themes. Fix until all green.
 4. **Independent verify:** spawn a verifier subagent (Agent tool) to adversarially check the
    work against the acceptance criteria — try to break it, find regressions / stale refs /
    half-done or faked work; it must re-run build+lint and return PASS/FAIL with evidence.

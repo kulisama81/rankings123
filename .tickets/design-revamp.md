@@ -1,6 +1,6 @@
 ---
 id: design-revamp
-status: in_progress
+status: closed
 deps: []
 links: []
 created: 2026-06-15T00:36:47Z

@@ -32,8 +32,12 @@ acceptance criteria + `docs/DESIGN.md` at the start so the goal can't erode).
 4. **MECHANICAL VERIFY.** All must pass before step 5:
    - `npm run build` → green
    - `npx eslint src --max-warnings=0` → clean
-   - actually exercise it: `npm run start -- -p 3123` (kill stale servers first) and
-     `curl` the real routes / inspect output. Fix until genuinely working.
+   - `npm run check:readability` → clean (no theme-unaware colors; use the design tokens
+     `text-fg/text-muted/bg-surface/border-edge/text-accent/text-up/text-down`, never raw
+     `text-gray-*`/`bg-white`/`text-white` — they go dark-on-dark or light-on-light)
+   - actually exercise it: `npm run start -- -p 3123` (kill stale servers first) and `curl` the
+     real routes / inspect output. **If the change touches UI, confirm it reads clearly in BOTH
+     dark and light themes** (toggle `data-theme`). Fix until genuinely working.
 
 5. **ADVERSARIAL VERIFY (do not skip).** Spawn an **independent** verifier subagent
    (`Agent`, subagent_type general-purpose) and give it: the ticket id + acceptance criteria,
