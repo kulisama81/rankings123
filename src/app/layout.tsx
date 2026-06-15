@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Archivo } from "next/font/google";
 import Nav from "@/components/Nav";
-import Analytics from "@/components/Analytics";
 import ConsentBanner from "@/components/ConsentBanner";
+import { GoogleAnalytics } from "@next/third-parties/google";
+import { GA_ID } from "@/lib/gtag";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -57,10 +58,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${archivo.variable} antialiased`}
       >
-        <Analytics />
         <Nav />
         <main>{children}</main>
         <ConsentBanner />
+        <GoogleAnalytics gaId={GA_ID} />
       </body>
     </html>
   );
