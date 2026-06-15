@@ -7,7 +7,6 @@ import ThemeToggle from "./ThemeToggle";
 const tabs = [
   { href: "/atp-live", label: "ATP" },
   { href: "/wta-live", label: "WTA" },
-  { href: "/atp-rankings", label: "Top 1000" },
   { href: "/world-cup", label: "World Cup" },
 ];
 

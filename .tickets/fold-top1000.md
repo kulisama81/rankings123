@@ -1,6 +1,6 @@
 ---
 id: fold-top1000
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-15T01:40:30Z

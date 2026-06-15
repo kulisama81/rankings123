@@ -1,6 +1,6 @@
 import type { AtpLivePlayer, AtpLiveSnapshot, AtpTournamentStatus, Tour } from "@/types";
 import { flagEmoji } from "./flags";
-import { getAtpLiveSnapshot as getAtpMockSnapshot } from "@/data/atpLive";
+import { getAtpDeepRankingData } from "./atpDeepRanking";
 
 // Real tennis data from ESPN's public site API, for either tour:
 // - rankings: official weekly ranking (rank, previous rank, points, athlete bio)
@@ -303,10 +303,16 @@ function wtaMockSnapshot(): AtpLiveSnapshot {
 // Real data with graceful degradation: if the ESPN feed is unreachable,
 // serve a bundled demo snapshot so the site keeps working offline.
 export async function getLiveData(tour: Tour): Promise<AtpLiveSnapshot> {
+  // ATP live ranking is the FULL ~1000-player ranking (UTS) with the ESPN live
+  // overlay — folded in here so /atp-live is the single ATP view (no separate
+  // Top-1000 page). getAtpDeepRankingData already degrades gracefully on failure.
+  if (tour === "atp") {
+    const deep = await getAtpDeepRankingData();
+    return { ...deep, tour: "atp", tourLabel: "ATP" };
+  }
   try {
     return await fetchLiveSnapshot(tour);
   } catch {
-    if (tour === "wta") return wtaMockSnapshot();
-    return { ...getAtpMockSnapshot(), source: "mock", tour: "atp", tourLabel: "ATP" };
+    return wtaMockSnapshot();
   }
 }
