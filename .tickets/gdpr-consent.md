@@ -1,6 +1,6 @@
 ---
 id: gdpr-consent
-status: open
+status: in_progress
 deps: []
 links: []
 created: 2026-06-14T22:50:48Z
