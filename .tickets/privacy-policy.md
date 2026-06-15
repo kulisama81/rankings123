@@ -1,6 +1,6 @@
 ---
 id: privacy-policy
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-15T05:51:32Z

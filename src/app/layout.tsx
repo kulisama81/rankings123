@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Archivo } from "next/font/google";
 import Nav from "@/components/Nav";
+import Footer from "@/components/Footer";
 import ConsentBanner from "@/components/ConsentBanner";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { GA_ID } from "@/lib/gtag";
@@ -60,6 +61,7 @@ export default function RootLayout({
       >
         <Nav />
         <main>{children}</main>
+        <Footer />
         <ConsentBanner />
         <GoogleAnalytics gaId={GA_ID} />
       </body>
