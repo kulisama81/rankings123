@@ -25,9 +25,12 @@ acceptance criteria + `docs/DESIGN.md` at the start so the goal can't erode).
 
 2. **START.** `tkt edit <id> --status in_progress`.
 
-3. **IMPLEMENT.** Build the feature to fully meet the acceptance criteria. Match the existing
-   code style and patterns (the live-feed/table architecture in `src/lib/liveFeed.ts` is the
-   template for new sports/data). Keep the ESPN mock-fallback + `source` flag discipline.
+3. **IMPLEMENT.** First **check the available skills and use any that fit** (especially
+   `frontend-design` for UI work, `theme-factory` for tokens, `webapp-testing` for visual QA) —
+   don't hand-roll what a skill does better. Then build the feature to fully meet the acceptance
+   criteria. Match the existing code style and patterns (the live-feed/table architecture in
+   `src/lib/liveFeed.ts` is the template for new sports/data). Keep the ESPN mock-fallback +
+   `source` flag discipline.
 
 4. **MECHANICAL VERIFY.** All must pass before step 5:
    - `npm run build` → green

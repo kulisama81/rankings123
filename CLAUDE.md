@@ -74,6 +74,13 @@ base, vibrant per-sport accents, score/rank-forward, subtle motion. Installed sk
 `frontend-design`, `theme-factory`, `brand-guidelines`, `webapp-testing`. Ticket: `design-revamp`.
 
 ## Conventions
+- **Use skills first (check before every task):** before starting any task, inspect the available
+  skills and use the relevant one instead of hand-rolling. In particular: **`frontend-design`** for
+  ANY UI/visual work (it enforces strong aesthetic choices — use it on every design/UI ticket),
+  **`theme-factory`** for design tokens/palettes, **`brand-guidelines`** for branding,
+  **`webapp-testing`** for rendered/visual QA, and **`skill-creator`** to capture reusable project
+  workflows as new skills. (Installed via the `example-skills` plugin; more in the Anthropic skills
+  repo.) Don't reinvent what a skill does better.
 - **Ads UX (never overwhelm users):** keep ad density LOW and non-intrusive. Max ~1 leaderboard
   + 1 in-content/sidebar unit per page (no ad walls/stacking); NO pop-ups, interstitials,
   auto-play-with-sound, or content-blocking formats (follow the Better Ads Standards); the

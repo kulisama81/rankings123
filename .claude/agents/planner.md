@@ -32,7 +32,9 @@ service-account/email. Prefer p0/p1.
 
 ## Ship it (the loop — do not skip step 4)
 1. `tkt edit <id> --status in_progress`.
-2. Implement fully to the acceptance criteria. Match existing patterns (the `src/lib` feed +
+2. **Check available skills first** — use the relevant one instead of hand-rolling, especially
+   **`frontend-design`** for any UI/visual ticket and **`theme-factory`** for design tokens.
+   Then implement fully to the acceptance criteria. Match existing patterns (the `src/lib` feed +
    `src/components` table architecture; keep ESPN/UTS data + mock fallback + `source` flag).
 3. Mechanical verify: `npm run build` green, `npx eslint src --max-warnings=0` clean, **and
    `npm run check:readability` clean** (use design tokens — never raw `text-gray-*`/`bg-white`/
