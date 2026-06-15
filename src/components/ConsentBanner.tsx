@@ -44,22 +44,22 @@ export default function ConsentBanner() {
   if (!visible) return null;
 
   return (
-    <div className="fixed inset-x-0 bottom-0 z-50 border-t border-gray-200 bg-white/95 px-4 py-4 shadow-lg backdrop-blur sm:px-6">
+    <div className="fixed inset-x-0 bottom-0 z-50 border-t border-edge bg-surface/95 px-4 py-4 shadow-lg backdrop-blur sm:px-6">
       <div className="mx-auto flex max-w-6xl flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-muted">
           We use cookies for analytics to understand how the site is used. You can accept or
           decline — declining keeps analytics off.
         </p>
         <div className="flex shrink-0 gap-2">
           <button
             onClick={() => decide(false)}
-            className="rounded-lg border border-gray-300 px-4 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50"
+            className="rounded-lg border border-edge px-4 py-1.5 text-sm font-medium text-fg transition hover:bg-surface2"
           >
             Decline
           </button>
           <button
             onClick={() => decide(true)}
-            className="rounded-lg bg-green-600 px-4 py-1.5 text-sm font-semibold text-white hover:bg-green-700"
+            className="rounded-lg bg-accent px-4 py-1.5 text-sm font-semibold text-accentfg transition hover:opacity-90"
           >
             Accept
           </button>

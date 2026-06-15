@@ -38,21 +38,21 @@ export default async function AtpRankingsPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+      <div data-sport="atp" className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
         <div className="mb-6 flex items-center gap-3">
           <span className="text-3xl" aria-hidden="true">🎾</span>
           <div>
-            <div className="flex items-center gap-2">
-              <h1 className="text-2xl font-bold text-gray-900">ATP Rankings — Top 1000</h1>
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-semibold text-green-700">
+            <div className="flex flex-wrap items-center gap-2.5">
+              <h1 className="text-2xl font-bold tracking-tight text-fg sm:text-3xl">ATP Rankings — Top 1000</h1>
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-accent/15 px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-accent">
                 <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
+                  <span className="absolute inline-flex h-full w-full rounded-full bg-accent opacity-60" style={{ animation: "pulse-dot 1.6s ease-in-out infinite" }} />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
                 </span>
-                LIVE
+                Live
               </span>
             </div>
-            <p className="text-sm text-gray-500">{snapshot.weekLabel}</p>
+            <p className="mt-1 text-sm text-muted">{snapshot.weekLabel}</p>
           </div>
         </div>
 
@@ -61,7 +61,7 @@ export default async function AtpRankingsPage() {
             <Link
               key={b.slug}
               href={`/atp-rankings/${b.slug}`}
-              className="rounded-full border border-gray-200 px-3 py-1 font-medium text-gray-600 hover:border-green-300 hover:text-green-700"
+              className="rounded-full border border-edge px-3 py-1 font-medium text-muted transition hover:border-accent/50 hover:text-accent"
             >
               {b.label}
             </Link>
