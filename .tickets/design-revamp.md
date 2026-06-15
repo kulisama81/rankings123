@@ -1,6 +1,6 @@
 ---
 id: design-revamp
-status: open
+status: in_progress
 deps: []
 links: []
 created: 2026-06-15T00:36:47Z
@@ -22,3 +22,7 @@ Cohesive design system applied across home + live tables + player pages; distinc
 **2026-06-15T00:44:14Z**
 
 Design direction (Loic): Apple Sports app aesthetic (apps.apple.com/us/app/apple-sports/id6446788829) — clean premium, bold typography, rounded high-contrast cards, dark base, vibrant per-sport accent colors, score/rank-forward, smooth subtle motion. Apply across home + live tables + player pages.
+
+**2026-06-15T01:44:00Z**
+
+Approved direction (Loic): Apple Sports aesthetic. Per-sport dynamic accent (ATP=lime #B6F23C, WTA=magenta #F472B6, World Cup=green #22C55E). Dark default + light toggle (both maintained). Hybrid table: dense grid desktop / card-rows mobile. Tabular-nums, medal-tinted top-3 rank badges, colored movement chips, pulsing live dots, count-up/flash on refresh. Building preview on branch design-proposal.

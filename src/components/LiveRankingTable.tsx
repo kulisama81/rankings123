@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import type { AtpLivePlayer, AtpLiveSnapshot, Tour } from "@/types";
-import FlagName from "./FlagName";
 
 const REFRESH_INTERVAL_S = 20;
 
@@ -13,56 +12,67 @@ interface LiveRankingTableProps {
 }
 
 function Movement({ value }: { value: number }) {
-  if (value > 0) return <span className="font-semibold text-green-600">▲ {value}</span>;
-  if (value < 0) return <span className="font-semibold text-red-500">▼ {Math.abs(value)}</span>;
-  return <span className="text-gray-300">—</span>;
-}
-
-function PointsDelta({ value }: { value: number }) {
-  if (value > 0) return <span className="font-medium text-green-600">+{value}</span>;
-  if (value < 0) return <span className="font-medium text-red-500">{value}</span>;
-  return <span className="text-gray-300">—</span>;
-}
-
-function TournamentStatus({ player }: { player: AtpLivePlayer }) {
-  const t = player.tournament;
-  if (!t) return <span className="text-xs text-gray-300">—</span>;
-  if (!t.active) {
-    return <span className="text-xs text-gray-400">{t.name} · out</span>;
-  }
-  return (
-    <span className="inline-flex items-center gap-1.5 text-xs text-gray-700">
-      <span className="relative flex h-2 w-2">
-        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75" />
-        <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
+  if (value > 0)
+    return (
+      <span className="inline-flex items-center gap-0.5 rounded-md bg-up/15 px-1.5 py-0.5 text-xs font-semibold tabular-nums text-up">
+        ▲{value}
       </span>
+    );
+  if (value < 0)
+    return (
+      <span className="inline-flex items-center gap-0.5 rounded-md bg-down/15 px-1.5 py-0.5 text-xs font-semibold tabular-nums text-down">
+        ▼{Math.abs(value)}
+      </span>
+    );
+  return <span className="text-xs text-muted/50">—</span>;
+}
+
+function RankBadge({ rank }: { rank: number }) {
+  const tint =
+    rank === 1
+      ? "bg-[#f2c14e]/20 text-[#f2c14e]"
+      : rank === 2
+        ? "bg-[#c7cdd6]/20 text-[#c7cdd6]"
+        : rank === 3
+          ? "bg-[#d08b5b]/25 text-[#d99b6c]"
+          : "text-muted";
+  return (
+    <span
+      className={`inline-flex h-7 min-w-[28px] items-center justify-center rounded-lg px-1.5 text-sm font-bold tabular-nums ${tint}`}
+    >
+      {rank}
+    </span>
+  );
+}
+
+function LiveDot() {
+  return (
+    <span className="relative flex h-1.5 w-1.5">
+      <span
+        className="absolute inline-flex h-full w-full rounded-full bg-accent opacity-60"
+        style={{ animation: "pulse-dot 1.6s ease-in-out infinite" }}
+      />
+      <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
+    </span>
+  );
+}
+
+function Tournament({ player }: { player: AtpLivePlayer }) {
+  const t = player.tournament;
+  if (!t) return <span className="text-xs text-muted/40">—</span>;
+  if (!t.active) return <span className="text-xs text-muted/70">{t.name} · out</span>;
+  return (
+    <span className="inline-flex items-center gap-1.5 text-xs text-fg/80">
+      <LiveDot />
       {t.name} · {t.round}
     </span>
   );
 }
 
-function TourSwitcher({ tour }: { tour: Tour }) {
-  const tabs: { key: Tour; label: string; href: string }[] = [
-    { key: "atp", label: "ATP", href: "/atp-live" },
-    { key: "wta", label: "WTA", href: "/wta-live" },
-  ];
-  return (
-    <div className="inline-flex overflow-hidden rounded-lg border border-gray-300">
-      {tabs.map((t) => (
-        <Link
-          key={t.key}
-          href={t.href}
-          className={
-            t.key === tour
-              ? "bg-green-600 px-4 py-1.5 text-sm font-semibold text-white"
-              : "bg-white px-4 py-1.5 text-sm font-medium text-gray-600 hover:bg-gray-50"
-          }
-        >
-          {t.label}
-        </Link>
-      ))}
-    </div>
-  );
+function Delta({ value }: { value: number }) {
+  if (value > 0) return <span className="text-xs font-medium tabular-nums text-up">+{value}</span>;
+  if (value < 0) return <span className="text-xs font-medium tabular-nums text-down">{value}</span>;
+  return <span className="text-xs text-muted/40">—</span>;
 }
 
 export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingTableProps) {
@@ -81,7 +91,7 @@ export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingT
       const res = await fetch(`/api/${tour}/live`, { cache: "no-store" });
       if (res.ok) setSnapshot(await res.json());
     } catch {
-      // keep showing the last good snapshot
+      /* keep last good snapshot */
     } finally {
       fetching.current = false;
       setSecondsLeft(REFRESH_INTERVAL_S);
@@ -118,115 +128,163 @@ export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingT
 
   const liveCount = snapshot.players.filter((p) => p.tournament?.active).length;
   const updatedAt = new Date(snapshot.lastUpdated).toLocaleTimeString();
-  const tourLabel = snapshot.tourLabel ?? tour.toUpperCase();
+  const tabs: { key: Tour; label: string; href: string }[] = [
+    { key: "atp", label: "ATP", href: "/atp-live" },
+    { key: "wta", label: "WTA", href: "/wta-live" },
+  ];
+  const inputCls =
+    "rounded-lg border border-edge bg-surface px-3 py-1.5 text-sm text-fg placeholder:text-muted/60 focus:border-accent focus:outline-none";
 
   return (
     <div>
-      <div className="mb-4 flex flex-wrap items-center gap-3">
-        <TourSwitcher tour={tour} />
+      {/* Controls */}
+      <div className="mb-4 flex flex-wrap items-center gap-2.5">
+        <div className="inline-flex overflow-hidden rounded-lg border border-edge">
+          {tabs.map((t) => (
+            <Link
+              key={t.key}
+              href={t.href}
+              className={
+                t.key === tour
+                  ? "bg-accent px-3.5 py-1.5 text-sm font-bold text-accentfg"
+                  : "bg-surface px-3.5 py-1.5 text-sm font-medium text-muted hover:text-fg"
+              }
+            >
+              {t.label}
+            </Link>
+          ))}
+        </div>
         <input
           type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search player or country…"
-          className="w-56 rounded-lg border border-gray-300 px-3 py-1.5 text-sm focus:border-green-500 focus:outline-none"
+          className={`w-48 ${inputCls}`}
         />
-        <select
-          value={country}
-          onChange={(e) => setCountry(e.target.value)}
-          className="rounded-lg border border-gray-300 bg-white px-2 py-1.5 text-sm focus:border-green-500 focus:outline-none"
-        >
+        <select value={country} onChange={(e) => setCountry(e.target.value)} className={inputCls}>
           <option value="all">All countries</option>
           {countries.map((c) => (
             <option key={c} value={c}>{c}</option>
           ))}
         </select>
-        <label className="flex cursor-pointer items-center gap-1.5 text-sm text-gray-600">
+        <label className="flex cursor-pointer items-center gap-1.5 text-sm text-muted">
           <input
             type="checkbox"
             checked={liveOnly}
             onChange={(e) => setLiveOnly(e.target.checked)}
-            className="accent-green-600"
+            className="accent-accent"
           />
-          In play only ({liveCount})
+          In play ({liveCount})
         </label>
-        <div className="ml-auto flex items-center gap-3 text-xs text-gray-500">
+        <div className="ml-auto flex items-center gap-3 text-xs text-muted">
           {snapshot.source === "mock" && (
-            <span className="rounded-full bg-amber-100 px-2 py-0.5 font-medium text-amber-700">
-              Demo data — live feed unavailable
-            </span>
+            <span className="rounded-full bg-down/15 px-2 py-0.5 font-medium text-down">Demo data</span>
           )}
-          <span>Updated {updatedAt} · refresh in {secondsLeft}s</span>
+          <span className="hidden sm:inline">
+            updated {updatedAt} · {secondsLeft}s
+          </span>
           <button
             onClick={() => void refresh()}
-            className="rounded-lg border border-gray-300 px-2.5 py-1 font-medium text-gray-700 hover:bg-gray-50"
+            className="rounded-lg border border-edge px-2.5 py-1 font-medium text-fg transition hover:bg-surface2"
           >
-            Refresh now
+            Refresh
           </button>
         </div>
       </div>
 
-      <div className="overflow-x-auto rounded-xl border border-gray-200">
+      {/* Desktop: dense table */}
+      <div className="hidden overflow-hidden rounded-2xl border border-edge bg-surface md:block">
         <table className="min-w-full text-sm">
-          <thead className="bg-gray-50 text-xs uppercase text-gray-500">
+          <thead className="bg-surface2 text-[11px] uppercase tracking-wide text-muted">
             <tr>
-              <th className="px-3 py-3 text-right">Live</th>
-              <th className="px-3 py-3 text-center">+/-</th>
-              <th className="px-4 py-3 text-left">Player</th>
-              <th className="px-3 py-3 text-center">Age</th>
-              <th className="px-3 py-3 text-center">Country</th>
-              <th className="px-4 py-3 text-right">Live Pts</th>
-              <th className="px-3 py-3 text-right">+/- Pts</th>
-              <th className="px-3 py-3 text-right">Official</th>
-              <th className="px-4 py-3 text-left">Tournament</th>
+              <th className="px-3 py-2.5 text-right">#</th>
+              <th className="px-2 py-2.5 text-center">+/-</th>
+              <th className="px-3 py-2.5 text-left">Player</th>
+              <th className="px-2 py-2.5 text-center">Age</th>
+              <th className="px-3 py-2.5 text-right">Live Pts</th>
+              <th className="px-2 py-2.5 text-right">Δ</th>
+              <th className="px-3 py-2.5 text-right">Official</th>
+              <th className="px-3 py-2.5 text-left">Tournament</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-100 bg-white">
+          <tbody>
             {filtered.map((p) => (
               <tr
                 key={p.name}
                 onClick={() => setPinned(pinned === p.name ? null : p.name)}
-                className={`cursor-pointer ${pinned === p.name ? "bg-amber-50" : "hover:bg-gray-50"}`}
+                className={`cursor-pointer border-t border-edge transition ${
+                  pinned === p.name
+                    ? "bg-accent/10"
+                    : p.tournament?.active
+                      ? "bg-accent/[0.035] hover:bg-surface2"
+                      : "hover:bg-surface2"
+                }`}
               >
-                <td className="px-3 py-2.5 text-right font-semibold text-gray-900">{p.liveRank}</td>
-                <td className="px-3 py-2.5 text-center text-xs">
-                  <Movement value={p.movement} />
+                <td className="px-3 py-2 text-right">
+                  <RankBadge rank={p.liveRank} />
                 </td>
-                <td className="px-4 py-2.5 font-medium text-gray-800">
-                  <FlagName flag={p.flag} name={p.name} />
+                <td className="px-2 py-2 text-center"><Movement value={p.movement} /></td>
+                <td className="px-3 py-2">
+                  <span className="flex items-center gap-2">
+                    <span className="text-base leading-none">{p.flag}</span>
+                    <span className="font-semibold text-fg">{p.name}</span>
+                    <span className="text-xs text-muted">{p.countryCode}</span>
+                  </span>
                 </td>
-                <td className="px-3 py-2.5 text-center text-gray-500">{p.age}</td>
-                <td className="px-3 py-2.5 text-center text-xs text-gray-500">{p.countryCode}</td>
-                <td className="px-4 py-2.5 text-right font-mono font-semibold text-gray-900">
+                <td className="px-2 py-2 text-center text-muted">{p.age}</td>
+                <td className="px-3 py-2 text-right font-bold tabular-nums text-fg">
                   {p.livePoints.toLocaleString()}
                 </td>
-                <td className="px-3 py-2.5 text-right font-mono text-xs">
-                  <PointsDelta value={p.pointsDelta} />
-                </td>
-                <td className="px-3 py-2.5 text-right font-mono text-xs text-gray-500">
+                <td className="px-2 py-2 text-right"><Delta value={p.pointsDelta} /></td>
+                <td className="px-3 py-2 text-right tabular-nums text-muted">
                   {p.officialPoints.toLocaleString()}
                 </td>
-                <td className="px-4 py-2.5">
-                  <TournamentStatus player={p} />
-                </td>
+                <td className="px-3 py-2"><Tournament player={p} /></td>
               </tr>
             ))}
-            {filtered.length === 0 && (
-              <tr>
-                <td colSpan={9} className="px-4 py-8 text-center text-sm text-gray-400">
-                  No players match your filters.
-                </td>
-              </tr>
-            )}
           </tbody>
         </table>
       </div>
 
-      <p className="mt-3 text-xs text-gray-400">
-        Live = projected ranking including points earned at this week&apos;s tournaments,
-        estimated from completed match results and the {tourLabel} points table for each
-        tournament tier. Official = last published {tourLabel} ranking. Click a row to pin it.
-        {snapshot.source === "espn" && " Rankings and results via ESPN."}
+      {/* Mobile: card rows */}
+      <div className="space-y-2 md:hidden">
+        {filtered.map((p) => (
+          <div
+            key={p.name}
+            onClick={() => setPinned(pinned === p.name ? null : p.name)}
+            className={`rounded-xl border p-3 transition ${
+              pinned === p.name ? "border-accent bg-accent/10" : "border-edge bg-surface"
+            }`}
+          >
+            <div className="flex items-center gap-2.5">
+              <RankBadge rank={p.liveRank} />
+              <Movement value={p.movement} />
+              <span className="text-base leading-none">{p.flag}</span>
+              <span className="flex-1 font-semibold text-fg">{p.name}</span>
+              <span className="font-bold tabular-nums text-fg">{p.livePoints.toLocaleString()}</span>
+            </div>
+            <div className="mt-2 flex items-center justify-between pl-[38px] text-xs text-muted">
+              <Tournament player={p} />
+              <span className="flex items-center gap-2">
+                <Delta value={p.pointsDelta} />
+                <span className="tabular-nums">{p.countryCode} · {p.age}y</span>
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {filtered.length === 0 && (
+        <p className="rounded-2xl border border-edge bg-surface px-4 py-10 text-center text-sm text-muted">
+          No players match your filters.
+        </p>
+      )}
+
+      <p className="mt-3 text-xs text-muted/70">
+        Live = projected ranking including points earned at this week&apos;s tournaments, estimated
+        from completed results and the {snapshot.tourLabel ?? tour.toUpperCase()} points table.
+        Official = last published ranking. Tap a row to pin it.
+        {snapshot.source === "espn" && " Data via ESPN."}
       </p>
     </div>
   );

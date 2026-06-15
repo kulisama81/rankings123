@@ -9,22 +9,24 @@ interface LiveRankingViewProps {
 export default function LiveRankingView({ tour, snapshot }: LiveRankingViewProps) {
   const tourLabel = snapshot.tourLabel ?? tour.toUpperCase();
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-      <div className="mb-6 flex items-center gap-3">
-        <span className="text-3xl" aria-hidden="true">🎾</span>
-        <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-bold text-gray-900">{tourLabel} Live Ranking</h1>
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-semibold text-green-700">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
-              </span>
-              LIVE
+    <div data-sport={tour} className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mb-5">
+        <div className="flex flex-wrap items-center gap-2.5">
+          <h1 className="text-2xl font-bold tracking-tight text-fg sm:text-3xl">
+            {tourLabel} Live Ranking
+          </h1>
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-accent/15 px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-accent">
+            <span className="relative flex h-2 w-2">
+              <span
+                className="absolute inline-flex h-full w-full rounded-full bg-accent opacity-60"
+                style={{ animation: "pulse-dot 1.6s ease-in-out infinite" }}
+              />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
             </span>
-          </div>
-          <p className="text-sm text-gray-500">{snapshot.weekLabel}</p>
+            Live
+          </span>
         </div>
+        <p className="mt-1.5 text-sm text-muted">{snapshot.weekLabel}</p>
       </div>
       <LiveRankingTable tour={tour} initialSnapshot={snapshot} />
     </div>

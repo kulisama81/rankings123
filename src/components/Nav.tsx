@@ -1,41 +1,52 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import ThemeToggle from "./ThemeToggle";
+
+const tabs = [
+  { href: "/atp-live", label: "ATP" },
+  { href: "/wta-live", label: "WTA" },
+  { href: "/atp-rankings", label: "Top 1000" },
+  { href: "/world-cup", label: "World Cup" },
+];
 
 export default function Nav() {
+  const pathname = usePathname();
   return (
-    <nav className="border-b border-gray-200 bg-white">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-14 items-center justify-between">
-          <Link href="/" className="text-lg font-bold text-gray-900 hover:text-gray-600">
-            Rankings123
-          </Link>
-          <div className="flex items-center gap-6 text-sm text-gray-600">
-            <Link href="/" className="hover:text-gray-900">Events</Link>
-            <Link href="/atp-live" className="inline-flex items-center gap-1.5 font-medium text-gray-900 hover:text-green-700">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
-              </span>
-              ATP Live
-            </Link>
-            <Link href="/atp-rankings" className="font-medium text-gray-900 hover:text-green-700">
-              Top 1000
-            </Link>
-            <Link href="/wta-live" className="inline-flex items-center gap-1.5 font-medium text-gray-900 hover:text-green-700">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
-              </span>
-              WTA Live
-            </Link>
-            <Link href="/world-cup" className="inline-flex items-center gap-1.5 font-medium text-gray-900 hover:text-green-700">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
-              </span>
-              World Cup
-            </Link>
-          </div>
+    <nav className="sticky top-0 z-40 border-b border-edge bg-bg/80 backdrop-blur-md">
+      <div className="mx-auto flex h-14 max-w-6xl items-center gap-3 px-4 sm:px-6 lg:px-8">
+        <Link href="/" className="flex shrink-0 items-center gap-2 font-bold tracking-tight text-fg">
+          <span className="relative flex h-2 w-2">
+            <span
+              className="absolute inline-flex h-full w-full rounded-full bg-accent opacity-60"
+              style={{ animation: "pulse-dot 1.6s ease-in-out infinite" }}
+            />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
+          </span>
+          <span className="hidden sm:inline">RANKINGS</span>
+          <span className="sm:hidden">R</span>
+          <span className="text-accent">123</span>
+        </Link>
+        <div className="flex flex-1 items-center gap-1 overflow-x-auto text-sm">
+          {tabs.map((t) => {
+            const active = pathname.startsWith(t.href);
+            return (
+              <Link
+                key={t.href}
+                href={t.href}
+                className={`whitespace-nowrap rounded-full px-3 py-1.5 font-medium transition ${
+                  active
+                    ? "bg-accent text-accentfg"
+                    : "text-muted hover:bg-surface2 hover:text-fg"
+                }`}
+              >
+                {t.label}
+              </Link>
+            );
+          })}
         </div>
+        <ThemeToggle />
       </div>
     </nav>
   );
