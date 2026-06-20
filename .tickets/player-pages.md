@@ -1,6 +1,6 @@
 ---
 id: player-pages
-status: in_progress
+status: open
 deps: []
 links: []
 created: 2026-06-14T22:50:48Z
