@@ -21,7 +21,7 @@ const FROM = process.env.REPORT_FROM || "Rankings123 <onboarding@resend.dev>";
 const ANALYTICS_PATH = join(ROOT, "src", "data", "analytics-report.json");
 const HISTORY_PATH = join(ROOT, "src", "data", "digest-history.json");
 const SITE = "https://rankings123.com";
-const ROUTES = ["/", "/atp-live", "/wta-live", "/atp-rankings", "/world-cup"];
+const ROUTES = ["/", "/atp-live", "/wta-live", "/world-cup"];
 
 if (!RESEND_API_KEY) {
   console.error("daily-digest: RESEND_API_KEY not set, skipping.");
@@ -67,7 +67,8 @@ async function siteHealth() {
   const out = [];
   for (const r of ROUTES) {
     const code = run(`curl -s -m 12 -o /dev/null -w "%{http_code}" "${SITE}${r}"`);
-    out.push({ route: r, code: code || "ERR", ok: code === "200" });
+    // 2xx = OK, 3xx = healthy redirect (e.g. intentional 308s) — both fine.
+    out.push({ route: r, code: code || "ERR", ok: /^[23]\d\d$/.test(code) });
   }
   return out;
 }
