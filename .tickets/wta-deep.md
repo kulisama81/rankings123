@@ -1,6 +1,6 @@
 ---
 id: wta-deep
-status: open
+status: in_progress
 deps: []
 links: []
 created: 2026-06-15T02:06:32Z
