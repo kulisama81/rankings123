@@ -66,9 +66,14 @@ function GroupCard({ group }: { group: WorldCupGroup }) {
                 title={t.status}
               >
                 <td className="px-3 py-2 text-right tabular-nums text-muted">{t.rank}</td>
-                <td className="px-3 py-2 font-semibold text-fg">
-                  <span className="mr-2 text-base leading-none" aria-hidden="true">{t.flag}</span>
-                  {t.name}
+                <td className="px-3 py-2 font-semibold">
+                  <Link
+                    href={`/world-cup/team/${t.code.toLowerCase()}`}
+                    className="inline-flex items-center text-fg hover:text-accent transition-colors"
+                  >
+                    <span className="mr-2 text-base leading-none" aria-hidden="true">{t.flag}</span>
+                    {t.name}
+                  </Link>
                 </td>
                 <td className="px-2 py-2 text-center tabular-nums text-muted">{t.played}</td>
                 <td className="px-2 py-2 text-center tabular-nums text-muted">{t.won}</td>

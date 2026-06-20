@@ -16,7 +16,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/terms`, lastModified: now, changeFrequency: "yearly", priority: 0.2 },
   ];
 
-  // Add World Cup match pages (SEO long-tail)
+  // Add World Cup match and team pages (SEO long-tail)
   try {
     const snapshot = await getWorldCupData();
     const matchRoutes: MetadataRoute.Sitemap = snapshot.matches.map((match) => ({
@@ -25,7 +25,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "daily" as const,
       priority: 0.7,
     }));
-    return [...staticRoutes, ...matchRoutes];
+
+    // Extract all unique teams from all groups
+    const allTeams = snapshot.groups.flatMap((group) => group.teams);
+    const teamRoutes: MetadataRoute.Sitemap = allTeams.map((team) => ({
+      url: `${BASE}/world-cup/team/${team.code.toLowerCase()}`,
+      lastModified: now,
+      changeFrequency: "daily" as const,
+      priority: 0.7,
+    }));
+
+    return [...staticRoutes, ...matchRoutes, ...teamRoutes];
   } catch {
     // If World Cup data fails, still return static routes
     return staticRoutes;
