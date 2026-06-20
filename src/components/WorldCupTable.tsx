@@ -166,6 +166,27 @@ export default function WorldCupTable({ initialSnapshot }: WorldCupTableProps) {
   const updatedAt = new Date(snapshot.lastUpdated).toLocaleTimeString();
   const liveMatches = snapshot.matches.filter((m) => m.state === "in").length;
 
+  // Group matches by date
+  const today = new Date();
+  const todayStr = today.toDateString();
+  const todaysMatches = snapshot.matches.filter((m) => new Date(m.date).toDateString() === todayStr);
+
+  // Group remaining matches (excluding today's) by date for the full schedule
+  const matchesByDate = new Map<string, WorldCupMatch[]>();
+  snapshot.matches
+    .filter((m) => new Date(m.date).toDateString() !== todayStr)
+    .forEach((match) => {
+      const dateKey = new Date(match.date).toLocaleDateString([], {
+        weekday: 'long',
+        month: 'long',
+        day: 'numeric'
+      });
+      if (!matchesByDate.has(dateKey)) {
+        matchesByDate.set(dateKey, []);
+      }
+      matchesByDate.get(dateKey)!.push(match);
+    });
+
   return (
     <div>
       <div className="mb-4 flex flex-wrap items-center gap-3 text-xs text-muted">
@@ -188,14 +209,37 @@ export default function WorldCupTable({ initialSnapshot }: WorldCupTableProps) {
         </div>
       </div>
 
+      {todaysMatches.length > 0 && (
+        <section className="mb-8">
+          <div className="mb-3 flex items-center gap-2">
+            <h2 className="text-lg font-bold text-fg">Today&apos;s Matches</h2>
+            <span className="rounded-full bg-accent/20 px-2 py-0.5 text-xs font-semibold text-accent">
+              {todaysMatches.length}
+            </span>
+          </div>
+          <div className="grid gap-2">
+            {todaysMatches.map((m) => (
+              <MatchRow key={m.id} match={m} />
+            ))}
+          </div>
+        </section>
+      )}
+
       {snapshot.matches.length > 0 && (
         <section className="mb-8">
           <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted">
-            Fixtures &amp; results
+            Full Schedule
           </h2>
-          <div className="grid gap-2">
-            {snapshot.matches.map((m) => (
-              <MatchRow key={m.id} match={m} />
+          <div className="space-y-6">
+            {Array.from(matchesByDate.entries()).map(([dateKey, matches]) => (
+              <div key={dateKey}>
+                <h3 className="mb-2 text-sm font-semibold text-muted">{dateKey}</h3>
+                <div className="grid gap-2">
+                  {matches.map((m) => (
+                    <MatchRow key={m.id} match={m} />
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
         </section>
