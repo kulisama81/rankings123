@@ -36,6 +36,10 @@ service-account/email. Prefer p0/p1.
    **`frontend-design`** for any UI/visual ticket and **`theme-factory`** for design tokens.
    Then implement fully to the acceptance criteria. Match existing patterns (the `src/lib` feed +
    `src/components` table architecture; keep ESPN/UTS data + mock fallback + `source` flag).
+   **When building stat features, always look for the richest source available** — beyond ESPN/UTS,
+   consider advanced providers (soccer: **Opta / Stats Perform**, FotMob, SofaScore, FBref,
+   Understat; tennis: UTS) as source options; prefer keyless/public, always keep mock-fallback +
+   `source` flag. New differentiating stats are core to the product — see ticket `opta-soccer-stats`.
 3. Mechanical verify: `npm run build` green, `npx eslint src --max-warnings=0` clean, **and
    `npm run check:readability` clean** (use design tokens — never raw `text-gray-*`/`bg-white`/
    `text-white`, which break in dark or light mode). Then run (`npm run start -- -p 3123 &`),

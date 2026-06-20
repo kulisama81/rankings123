@@ -63,6 +63,12 @@ Orient: read `CLAUDE.md`, `docs/DESIGN.md` (§3 Loop B, §9 strategy), `docs/LOO
   records, biggest movers, "what-if"/projection scenarios, milestones, upcoming matchups. These
   distinctive stats are core to our identity and a key reason users return — file the best as
   engagement tickets.
+  - **Stat source options to keep scanning (always consider new ones):** ESPN, Ultimate Tennis
+    Statistics, the WTA API — and for soccer/World Cup, evaluate richer providers: **Opta /
+    Stats Perform** (xG, possession, pass & shot maps, player ratings — mostly licensed/paid),
+    and the best free alternatives (FotMob, SofaScore, FBref/StatsBomb, Understat, ESPN advanced
+    endpoints). Prefer keyless+public where possible; always keep the mock-fallback + `source`
+    flag pattern. See ticket `opta-soccer-stats`.
 - **Metrics:** read `src/data/analytics-report.json` if present (traffic/top pages/searches).
   Ad revenue is pending AdSense. Read recent `git log` for what shipped.
 - **Revenue (constant focus — do NOT defer entirely to Phase 3):** monetization has long lead
