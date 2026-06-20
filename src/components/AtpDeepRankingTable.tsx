@@ -10,6 +10,7 @@ const PAGE_SIZE = 50;
 interface AtpDeepRankingTableProps {
   initialSnapshot: AtpDeepRankingSnapshot;
   band?: { from: number; to: number };
+  apiEndpoint?: string;
 }
 
 function Movement({ value }: { value: number }) {
@@ -41,7 +42,7 @@ function TournamentStatus({ player }: { player: AtpLivePlayer }) {
   );
 }
 
-export default function AtpDeepRankingTable({ initialSnapshot, band }: AtpDeepRankingTableProps) {
+export default function AtpDeepRankingTable({ initialSnapshot, band, apiEndpoint = "/api/atp/rankings" }: AtpDeepRankingTableProps) {
   const [snapshot, setSnapshot] = useState(initialSnapshot);
   const [query, setQuery] = useState("");
   const [country, setCountry] = useState("all");
@@ -54,7 +55,7 @@ export default function AtpDeepRankingTable({ initialSnapshot, band }: AtpDeepRa
     if (fetching.current) return;
     fetching.current = true;
     try {
-      const res = await fetch("/api/atp/rankings", { cache: "no-store" });
+      const res = await fetch(apiEndpoint, { cache: "no-store" });
       if (res.ok) setSnapshot(await res.json());
     } catch {
       /* keep last good snapshot */
@@ -62,7 +63,7 @@ export default function AtpDeepRankingTable({ initialSnapshot, band }: AtpDeepRa
       fetching.current = false;
       setSecondsLeft(REFRESH_INTERVAL_S);
     }
-  }, []);
+  }, [apiEndpoint]);
 
   useEffect(() => {
     const tick = setInterval(() => {
