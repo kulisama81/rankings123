@@ -2,6 +2,7 @@ import type {
   WorldCupGroup,
   WorldCupMatch,
   WorldCupSnapshot,
+  WorldCupStats,
   WorldCupTeam,
 } from "@/types";
 import { soccerFlag } from "@/lib/worldCupFlags";
@@ -120,5 +121,68 @@ export function getWorldCupSnapshot(now: number = Date.now()): WorldCupSnapshot 
     stageLabel: "Group Stage",
     groups,
     matches,
+  };
+}
+
+export function getMockWorldCupStats(now: number = Date.now()): WorldCupStats {
+  return {
+    lastUpdated: new Date(now).toISOString(),
+    source: "mock",
+    topScorers: [
+      {
+        playerId: "1",
+        playerName: "Max Müller",
+        playerShortName: "M. Müller",
+        jersey: "10",
+        teamName: "Germany",
+        teamCode: "GER",
+        teamColor: "000000",
+        value: 3,
+        appearances: 1,
+        goals: 3,
+        assists: 0,
+      },
+      {
+        playerId: "2",
+        playerName: "Emma Dupont",
+        playerShortName: "E. Dupont",
+        jersey: "9",
+        teamName: "France",
+        teamCode: "FRA",
+        teamColor: "001e63",
+        value: 2,
+        appearances: 1,
+        goals: 2,
+        assists: 1,
+      },
+    ],
+    topAssisters: [
+      {
+        playerId: "3",
+        playerName: "Carlos Silva",
+        playerShortName: "C. Silva",
+        jersey: "7",
+        teamName: "Brazil",
+        teamCode: "BRA",
+        teamColor: "009739",
+        value: 2,
+        appearances: 1,
+        goals: 0,
+        assists: 2,
+      },
+      {
+        playerId: "2",
+        playerName: "Emma Dupont",
+        playerShortName: "E. Dupont",
+        jersey: "9",
+        teamName: "France",
+        teamCode: "FRA",
+        teamColor: "001e63",
+        value: 1,
+        appearances: 1,
+        goals: 2,
+        assists: 1,
+      },
+    ],
   };
 }

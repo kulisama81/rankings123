@@ -2,18 +2,26 @@ import type {
   WorldCupGroup,
   WorldCupMatch,
   WorldCupSnapshot,
+  WorldCupStats,
+  WorldCupPlayerStat,
   WorldCupTeam,
 } from "@/types";
 import { soccerFlag } from "./worldCupFlags";
-import { getWorldCupSnapshot as getMockSnapshot } from "@/data/worldCup";
+import {
+  getWorldCupSnapshot as getMockSnapshot,
+  getMockWorldCupStats,
+} from "@/data/worldCup";
 
 // Real FIFA World Cup 2026 data from ESPN's public site API:
 // - standings: per-group tables (played/W/D/L/GF/GA/GD/points + advancement note)
 // - scoreboard: this matchday's fixtures, live scores and results
+// - statistics: tournament leaders (top scorers, assists, etc.)
 const STANDINGS_URL =
   "https://site.api.espn.com/apis/v2/sports/soccer/fifa.world/standings";
 const SCOREBOARD_URL =
   "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard";
+const STATISTICS_URL =
+  "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/statistics";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -166,5 +174,58 @@ export async function getWorldCupData(): Promise<WorldCupSnapshot> {
     return await fetchWorldCupSnapshot();
   } catch {
     return { ...getMockSnapshot(), source: "mock" };
+  }
+}
+
+function parseStats(data: any): WorldCupStats {
+  const stats = data?.stats ?? [];
+  const goalsLeaders = stats.find((s: any) => s?.name === "goalsLeaders");
+  const assistsLeaders = stats.find((s: any) => s?.name === "assistsLeaders");
+
+  const parseLeaders = (leaders: any[]): WorldCupPlayerStat[] => {
+    return (leaders ?? []).map((leader: any) => {
+      const athlete = leader?.athlete ?? {};
+      const team = athlete?.team ?? {};
+      const athleteStats = athlete?.statistics ?? [];
+
+      const getStat = (name: string): number => {
+        const stat = athleteStats.find((s: any) => s?.name === name);
+        return Math.round(Number(stat?.value ?? 0));
+      };
+
+      return {
+        playerId: String(athlete.id ?? ""),
+        playerName: athlete.displayName ?? "Unknown",
+        playerShortName: athlete.shortName ?? athlete.displayName ?? "Unknown",
+        jersey: String(athlete.jersey ?? ""),
+        teamName: team.displayName ?? team.name ?? "Unknown",
+        teamCode: String(team.abbreviation ?? ""),
+        teamColor: String(team.color ?? "000000"),
+        value: Math.round(Number(leader.value ?? 0)),
+        appearances: getStat("appearances"),
+        goals: getStat("totalGoals"),
+        assists: getStat("goalAssists"),
+      };
+    });
+  };
+
+  return {
+    lastUpdated: new Date().toISOString(),
+    source: "espn",
+    topScorers: parseLeaders(goalsLeaders?.leaders ?? []),
+    topAssisters: parseLeaders(assistsLeaders?.leaders ?? []),
+  };
+}
+
+export async function fetchWorldCupStats(): Promise<WorldCupStats> {
+  const data = await fetchJson(`${STATISTICS_URL}?limit=10`, 180);
+  return parseStats(data);
+}
+
+export async function getWorldCupStats(): Promise<WorldCupStats> {
+  try {
+    return await fetchWorldCupStats();
+  } catch {
+    return getMockWorldCupStats();
   }
 }

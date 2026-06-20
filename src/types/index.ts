@@ -225,6 +225,27 @@ export interface WorldCupMatchDetail {
   source: "espn" | "mock";
 }
 
+export interface WorldCupPlayerStat {
+  playerId: string;
+  playerName: string;
+  playerShortName: string;
+  jersey: string;
+  teamName: string;
+  teamCode: string;
+  teamColor: string;
+  value: number;
+  appearances: number;
+  goals?: number;
+  assists?: number;
+}
+
+export interface WorldCupStats {
+  lastUpdated: string;
+  source: "espn" | "mock";
+  topScorers: WorldCupPlayerStat[];
+  topAssisters: WorldCupPlayerStat[];
+}
+
 // --- Rankings data for an event ---
 export interface OlympicsRankings {
   event: Event;

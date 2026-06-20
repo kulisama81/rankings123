@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { getWorldCupData } from "@/lib/worldCupFeed";
+import { getWorldCupData, getWorldCupStats } from "@/lib/worldCupFeed";
 import WorldCupTable from "@/components/WorldCupTable";
+import WorldCupStats from "@/components/WorldCupStats";
 import HeroBanner from "@/components/HeroBanner";
 
 export const metadata: Metadata = {
@@ -30,7 +31,10 @@ const jsonLd = {
 };
 
 export default async function WorldCupPage() {
-  const snapshot = await getWorldCupData();
+  const [snapshot, stats] = await Promise.all([
+    getWorldCupData(),
+    getWorldCupStats(),
+  ]);
   return (
     <>
       <script
@@ -49,6 +53,7 @@ export default async function WorldCupPage() {
           ]}
         />
         <WorldCupTable initialSnapshot={snapshot} />
+        <WorldCupStats stats={stats} />
       </div>
     </>
   );
