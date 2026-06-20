@@ -11,6 +11,7 @@ import {
   getWorldCupSnapshot as getMockSnapshot,
   getMockWorldCupStats,
 } from "@/data/worldCup";
+import { getMatchOdds, getOddsSource } from "./worldCupOdds";
 
 // Real FIFA World Cup 2026 data from ESPN's public site API:
 // - standings: per-group tables (played/W/D/L/GF/GA/GD/points + advancement note)
@@ -170,12 +171,23 @@ export async function fetchWorldCupSnapshot(): Promise<WorldCupSnapshot> {
     standingsData?.seasons?.[0]?.types?.[0]?.name ||
     "Group Stage";
 
+  // Attach odds to upcoming matches (pre-match only — never show odds as "predictions"
+  // for live or finished matches, which would present unconfirmed outcomes as fact).
+  const oddsSource = getOddsSource();
+  const matchesWithOdds = matches.map((match) => {
+    if (match.state === "pre") {
+      return { ...match, odds: getMatchOdds(match.id, match.homeCode, match.awayCode) };
+    }
+    return match;
+  });
+
   return {
     lastUpdated: new Date().toISOString(),
     stageLabel: stageName,
     source: "espn",
+    oddsSource,
     groups,
-    matches,
+    matches: matchesWithOdds,
   };
 }
 
@@ -185,7 +197,16 @@ export async function getWorldCupData(): Promise<WorldCupSnapshot> {
   try {
     return await fetchWorldCupSnapshot();
   } catch {
-    return { ...getMockSnapshot(), source: "mock" };
+    const mockSnapshot = getMockSnapshot();
+    // Add odds to mock data as well (clearly flagged)
+    const oddsSource = getOddsSource();
+    const matchesWithOdds = mockSnapshot.matches.map((match) => {
+      if (match.state === "pre") {
+        return { ...match, odds: getMatchOdds(match.id, match.homeCode, match.awayCode) };
+      }
+      return match;
+    });
+    return { ...mockSnapshot, source: "mock", oddsSource, matches: matchesWithOdds };
   }
 }
 

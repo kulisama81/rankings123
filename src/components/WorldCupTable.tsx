@@ -95,9 +95,10 @@ function GroupCard({ group }: { group: WorldCupGroup }) {
   );
 }
 
-function MatchRow({ match }: { match: WorldCupMatch }) {
+function MatchRow({ match, showOdds }: { match: WorldCupMatch; showOdds: boolean }) {
   const live = match.state === "in";
   const finished = match.state === "post";
+  const upcoming = match.state === "pre";
   const kickoff = new Date(match.date).toLocaleString([], {
     weekday: "short",
     hour: "2-digit",
@@ -107,36 +108,67 @@ function MatchRow({ match }: { match: WorldCupMatch }) {
   const homeWon = showScore && (match.homeScore ?? 0) > (match.awayScore ?? 0);
   const awayWon = showScore && (match.awayScore ?? 0) > (match.homeScore ?? 0);
 
+  // Determine favorite based on odds (lower odds = favorite)
+  const homeFavored = match.odds && match.odds.homeWin < match.odds.awayWin;
+  const awayFavored = match.odds && match.odds.awayWin < match.odds.homeWin;
+
   return (
     <Link
       href={`/world-cup/match/${match.id}`}
-      className={`flex items-center gap-3 rounded-xl border px-3 py-2.5 text-sm transition hover:border-accent/60 ${
+      className={`flex flex-col gap-2 rounded-xl border px-3 py-2.5 text-sm transition hover:border-accent/60 ${
         live ? "border-accent/40 bg-accent/[0.04]" : "border-edge bg-surface"
       }`}
     >
-      <div className="w-20 shrink-0 text-xs">
-        {live ? (
-          <span className="inline-flex items-center gap-1.5 font-bold text-accent">
-            <LiveDot />
-            {match.statusDetail}
-          </span>
-        ) : finished ? (
-          <span className="font-medium text-muted">{match.statusDetail}</span>
-        ) : (
-          <span className="text-muted">{kickoff}</span>
-        )}
+      <div className="flex items-center gap-3">
+        <div className="w-20 shrink-0 text-xs">
+          {live ? (
+            <span className="inline-flex items-center gap-1.5 font-bold text-accent">
+              <LiveDot />
+              {match.statusDetail}
+            </span>
+          ) : finished ? (
+            <span className="font-medium text-muted">{match.statusDetail}</span>
+          ) : (
+            <span className="text-muted">{kickoff}</span>
+          )}
+        </div>
+        <div className="flex flex-1 items-center justify-end gap-2">
+          <span className={homeWon ? "font-bold text-fg" : "text-fg/80"}>{match.homeName}</span>
+          <span className="text-base leading-none" aria-hidden="true">{match.homeFlag}</span>
+        </div>
+        <div className="w-14 shrink-0 text-center font-bold tabular-nums text-fg">
+          {showScore ? `${match.homeScore} – ${match.awayScore}` : "v"}
+        </div>
+        <div className="flex flex-1 items-center gap-2">
+          <span className="text-base leading-none" aria-hidden="true">{match.awayFlag}</span>
+          <span className={awayWon ? "font-bold text-fg" : "text-fg/80"}>{match.awayName}</span>
+        </div>
       </div>
-      <div className="flex flex-1 items-center justify-end gap-2">
-        <span className={homeWon ? "font-bold text-fg" : "text-fg/80"}>{match.homeName}</span>
-        <span className="text-base leading-none" aria-hidden="true">{match.homeFlag}</span>
-      </div>
-      <div className="w-14 shrink-0 text-center font-bold tabular-nums text-fg">
-        {showScore ? `${match.homeScore} – ${match.awayScore}` : "v"}
-      </div>
-      <div className="flex flex-1 items-center gap-2">
-        <span className="text-base leading-none" aria-hidden="true">{match.awayFlag}</span>
-        <span className={awayWon ? "font-bold text-fg" : "text-fg/80"}>{match.awayName}</span>
-      </div>
+
+      {showOdds && upcoming && match.odds && (
+        <div className="flex items-center gap-2 border-t border-edge/50 pt-2 text-[11px]">
+          <span className="text-muted uppercase tracking-wide">Prediction:</span>
+          <div className="flex flex-1 gap-2">
+            <div
+              className={`rounded px-2 py-0.5 ${
+                homeFavored ? "bg-accent/15 font-semibold text-accent" : "bg-surface2 text-muted"
+              }`}
+            >
+              {match.homeName.split(" ").pop()} {match.odds.homeProbability}%
+            </div>
+            <div className="rounded bg-surface2 px-2 py-0.5 text-muted">
+              Draw {match.odds.drawProbability}%
+            </div>
+            <div
+              className={`rounded px-2 py-0.5 ${
+                awayFavored ? "bg-accent/15 font-semibold text-accent" : "bg-surface2 text-muted"
+              }`}
+            >
+              {match.awayName.split(" ").pop()} {match.odds.awayProbability}%
+            </div>
+          </div>
+        </div>
+      )}
     </Link>
   );
 }
@@ -175,6 +207,7 @@ export default function WorldCupTable({ initialSnapshot }: WorldCupTableProps) {
 
   const updatedAt = new Date(snapshot.lastUpdated).toLocaleTimeString();
   const liveMatches = snapshot.matches.filter((m) => m.state === "in").length;
+  const showOdds = snapshot.oddsSource !== undefined;
 
   // Group matches by date
   const today = new Date();
@@ -229,7 +262,7 @@ export default function WorldCupTable({ initialSnapshot }: WorldCupTableProps) {
           </div>
           <div className="grid gap-2">
             {todaysMatches.map((m) => (
-              <MatchRow key={m.id} match={m} />
+              <MatchRow key={m.id} match={m} showOdds={showOdds} />
             ))}
           </div>
         </section>
@@ -246,11 +279,37 @@ export default function WorldCupTable({ initialSnapshot }: WorldCupTableProps) {
                 <h3 className="mb-2 text-sm font-semibold text-muted">{dateKey}</h3>
                 <div className="grid gap-2">
                   {matches.map((m) => (
-                    <MatchRow key={m.id} match={m} />
+                    <MatchRow key={m.id} match={m} showOdds={showOdds} />
                   ))}
                 </div>
               </div>
             ))}
+          </div>
+        </section>
+      )}
+
+      {showOdds && (
+        <section className="mb-8">
+          <div className="rounded-2xl border border-edge bg-surface p-4">
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex-1">
+                <h3 className="mb-1 text-sm font-bold text-fg">Match Predictions</h3>
+                <p className="text-xs text-muted">
+                  Win probabilities are predictions, not guaranteed outcomes. Compare odds across platforms
+                  for the best value.
+                  {snapshot.oddsSource === "mock" && (
+                    <span className="ml-1 rounded bg-down/15 px-1.5 py-0.5 font-medium text-down">
+                      Demo data
+                    </span>
+                  )}
+                </p>
+              </div>
+              <div className="shrink-0 rounded-lg border border-edge bg-surface2 px-3 py-2 text-center">
+                <div className="text-[10px] uppercase tracking-wide text-muted">Affiliate Partner</div>
+                <div className="mt-0.5 text-xs font-semibold text-fg">Placeholder</div>
+                <div className="mt-1 text-[10px] text-muted">Future: betting site link</div>
+              </div>
+            </div>
           </div>
         </section>
       )}
@@ -274,6 +333,9 @@ export default function WorldCupTable({ initialSnapshot }: WorldCupTableProps) {
           <span className="inline-block h-3 w-1 rounded bg-down/60" /> Eliminated
         </span>
         {snapshot.source === "espn" && <span>Standings &amp; results via ESPN.</span>}
+        {showOdds && snapshot.oddsSource === "mock" && (
+          <span>Predictions are demo data only.</span>
+        )}
       </p>
     </div>
   );

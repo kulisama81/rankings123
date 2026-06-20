@@ -174,6 +174,15 @@ export interface WorldCupGroup {
   teams: WorldCupTeam[];
 }
 
+export interface WorldCupMatchOdds {
+  homeWin: number; // decimal odds, e.g. 2.5
+  draw: number;
+  awayWin: number;
+  homeProbability: number; // 0–100
+  drawProbability: number;
+  awayProbability: number;
+}
+
 export interface WorldCupMatch {
   id: string;
   date: string; // ISO kickoff
@@ -188,12 +197,14 @@ export interface WorldCupMatch {
   awayFlag: string;
   awayScore: number | null;
   venue?: string;
+  odds?: WorldCupMatchOdds;
 }
 
 export interface WorldCupSnapshot {
   lastUpdated: string; // ISO timestamp
   stageLabel: string; // e.g. "Group Stage"
   source?: "espn" | "mock";
+  oddsSource?: "mock" | "api"; // separate source flag for odds/predictions
   groups: WorldCupGroup[];
   matches: WorldCupMatch[];
 }
