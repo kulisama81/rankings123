@@ -57,6 +57,12 @@ Orient: read `CLAUDE.md`, `docs/DESIGN.md` (§3 Loop B, §9 strategy), `docs/LOO
 - **Data:** scan ESPN, Ultimate Tennis Statistics, the WTA API, and other public sources for
   tennis/multi-sport data we don't yet surface (doubles, race rankings, head-to-head,
   points-to-defend, more sports/events).
+- **Always hunt for cool, differentiating stats (every run):** actively look for novel,
+  engaging stats and angles that set our rankings apart — the kind ESPN / SofaScore / FlashScore /
+  BBC Sport surface but traditional ranking sites don't: streaks, current form, head-to-head,
+  records, biggest movers, "what-if"/projection scenarios, milestones, upcoming matchups. These
+  distinctive stats are core to our identity and a key reason users return — file the best as
+  engagement tickets.
 - **Metrics:** read `src/data/analytics-report.json` if present (traffic/top pages/searches).
   Ad revenue is pending AdSense. Read recent `git log` for what shipped.
 
