@@ -198,6 +198,33 @@ export interface WorldCupSnapshot {
   matches: WorldCupMatch[];
 }
 
+export interface WorldCupMatchDetail {
+  id: string;
+  homeName: string;
+  awayName: string;
+  homeScore: number | null;
+  awayScore: number | null;
+  status: string; // e.g., "FT", "Live", "Scheduled"
+  venue: string;
+  city: string;
+  attendance: number | null;
+  homeLineup: { name: string; position: string; jersey: string }[];
+  awayLineup: { name: string; position: string; jersey: string }[];
+  keyEvents: {
+    type: string; // "Goal", "Yellow Card", "Red Card", etc.
+    clock: string; // e.g., "45'+2"
+    team: string;
+    player: string;
+    description: string;
+    isRedCard: boolean;
+    isYellowCard: boolean;
+    isPenalty: boolean;
+  }[];
+  homeStats: Record<string, string>;
+  awayStats: Record<string, string>;
+  source: "espn" | "mock";
+}
+
 // --- Rankings data for an event ---
 export interface OlympicsRankings {
   event: Event;

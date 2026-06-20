@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import type {
   WorldCupGroup,
   WorldCupMatch,
@@ -99,8 +100,9 @@ function MatchRow({ match }: { match: WorldCupMatch }) {
   const awayWon = showScore && (match.awayScore ?? 0) > (match.homeScore ?? 0);
 
   return (
-    <div
-      className={`flex items-center gap-3 rounded-xl border px-3 py-2.5 text-sm ${
+    <Link
+      href={`/world-cup/match/${match.id}`}
+      className={`flex items-center gap-3 rounded-xl border px-3 py-2.5 text-sm transition hover:border-accent/60 ${
         live ? "border-accent/40 bg-accent/[0.04]" : "border-edge bg-surface"
       }`}
     >
@@ -127,7 +129,7 @@ function MatchRow({ match }: { match: WorldCupMatch }) {
         <span className="text-base leading-none" aria-hidden="true">{match.awayFlag}</span>
         <span className={awayWon ? "font-bold text-fg" : "text-fg/80"}>{match.awayName}</span>
       </div>
-    </div>
+    </Link>
   );
 }
 
