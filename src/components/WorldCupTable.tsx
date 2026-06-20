@@ -207,7 +207,11 @@ export default function WorldCupTable({ initialSnapshot }: WorldCupTableProps) {
 
   const updatedAt = new Date(snapshot.lastUpdated).toLocaleTimeString();
   const liveMatches = snapshot.matches.filter((m) => m.state === "in").length;
-  const showOdds = snapshot.oddsSource !== undefined;
+  // Only surface predictions when backed by a REAL odds source. We never show
+  // fabricated/demo odds or placeholder affiliate UI to users — that hurts CX and
+  // trust. The feature lights up automatically once a real provider is connected
+  // (getOddsSource() returns "api").
+  const showOdds = snapshot.oddsSource === "api";
 
   // Group matches by date
   const today = new Date();
@@ -291,25 +295,11 @@ export default function WorldCupTable({ initialSnapshot }: WorldCupTableProps) {
       {showOdds && (
         <section className="mb-8">
           <div className="rounded-2xl border border-edge bg-surface p-4">
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex-1">
-                <h3 className="mb-1 text-sm font-bold text-fg">Match Predictions</h3>
-                <p className="text-xs text-muted">
-                  Win probabilities are predictions, not guaranteed outcomes. Compare odds across platforms
-                  for the best value.
-                  {snapshot.oddsSource === "mock" && (
-                    <span className="ml-1 rounded bg-down/15 px-1.5 py-0.5 font-medium text-down">
-                      Demo data
-                    </span>
-                  )}
-                </p>
-              </div>
-              <div className="shrink-0 rounded-lg border border-edge bg-surface2 px-3 py-2 text-center">
-                <div className="text-[10px] uppercase tracking-wide text-muted">Affiliate Partner</div>
-                <div className="mt-0.5 text-xs font-semibold text-fg">Placeholder</div>
-                <div className="mt-1 text-[10px] text-muted">Future: betting site link</div>
-              </div>
-            </div>
+            <h3 className="mb-1 text-sm font-bold text-fg">Match Predictions</h3>
+            <p className="text-xs text-muted">
+              Win probabilities are predictions, not guaranteed outcomes. Compare odds across
+              platforms for the best value.
+            </p>
           </div>
         </section>
       )}
@@ -333,9 +323,6 @@ export default function WorldCupTable({ initialSnapshot }: WorldCupTableProps) {
           <span className="inline-block h-3 w-1 rounded bg-down/60" /> Eliminated
         </span>
         {snapshot.source === "espn" && <span>Standings &amp; results via ESPN.</span>}
-        {showOdds && snapshot.oddsSource === "mock" && (
-          <span>Predictions are demo data only.</span>
-        )}
       </p>
     </div>
   );
