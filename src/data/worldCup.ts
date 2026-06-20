@@ -4,6 +4,8 @@ import type {
   WorldCupSnapshot,
   WorldCupStats,
   WorldCupTeam,
+  WorldCupBracket,
+  KnockoutStage,
 } from "@/types";
 import { soccerFlag } from "@/lib/worldCupFlags";
 
@@ -184,5 +186,78 @@ export function getMockWorldCupStats(now: number = Date.now()): WorldCupStats {
         assists: 1,
       },
     ],
+  };
+}
+
+// Mock knockout bracket - demonstrates structure when ESPN feed is unavailable
+export function getMockWorldCupBracket(): WorldCupBracket {
+  const stages: WorldCupBracket["stages"] = [
+    {
+      name: "Round of 32" as KnockoutStage,
+      startDate: "2026-06-28T07:00Z",
+      endDate: "2026-07-04T06:59Z",
+      matches: [
+        {
+          id: "mock-r32-1",
+          date: "2026-06-28T19:00Z",
+          state: "pre" as const,
+          statusDetail: "Jun 28, 3:00 PM",
+          homeName: "TBD (Group A Winner)",
+          homeCode: "TBD",
+          homeFlag: "🏆",
+          homeScore: null,
+          awayName: "TBD (Group B Runner-up)",
+          awayCode: "TBD",
+          awayFlag: "🏆",
+          awayScore: null,
+          venue: "Stadium TBD",
+        },
+        {
+          id: "mock-r32-2",
+          date: "2026-06-28T22:00Z",
+          state: "pre" as const,
+          statusDetail: "Jun 28, 6:00 PM",
+          homeName: "TBD",
+          homeCode: "TBD",
+          homeFlag: "🏆",
+          homeScore: null,
+          awayName: "TBD",
+          awayCode: "TBD",
+          awayFlag: "🏆",
+          awayScore: null,
+          venue: "Stadium TBD",
+        },
+      ],
+    },
+    {
+      name: "Rd of 16" as KnockoutStage,
+      startDate: "2026-07-04T07:00Z",
+      endDate: "2026-07-09T06:59Z",
+      matches: [],
+    },
+    {
+      name: "Quarterfinals" as KnockoutStage,
+      startDate: "2026-07-09T07:00Z",
+      endDate: "2026-07-14T06:59Z",
+      matches: [],
+    },
+    {
+      name: "Semifinals" as KnockoutStage,
+      startDate: "2026-07-14T07:00Z",
+      endDate: "2026-07-19T06:59Z",
+      matches: [],
+    },
+    {
+      name: "Final" as KnockoutStage,
+      startDate: "2026-07-19T07:00Z",
+      endDate: "2026-08-01T06:59Z",
+      matches: [],
+    },
+  ];
+
+  return {
+    lastUpdated: new Date().toISOString(),
+    source: "mock",
+    stages,
   };
 }

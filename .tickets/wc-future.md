@@ -1,6 +1,6 @@
 ---
 id: wc-future
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-20T21:55:40Z

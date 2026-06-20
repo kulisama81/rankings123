@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { getWorldCupData, getWorldCupStats } from "@/lib/worldCupFeed";
+import { getWorldCupBracket } from "@/lib/worldCupBracketFeed";
 import WorldCupTable from "@/components/WorldCupTable";
 import WorldCupStats from "@/components/WorldCupStats";
+import WorldCupBracket from "@/components/WorldCupBracket";
 import HeroBanner from "@/components/HeroBanner";
 
 export const metadata: Metadata = {
@@ -31,9 +33,10 @@ const jsonLd = {
 };
 
 export default async function WorldCupPage() {
-  const [snapshot, stats] = await Promise.all([
+  const [snapshot, stats, bracket] = await Promise.all([
     getWorldCupData(),
     getWorldCupStats(),
+    getWorldCupBracket(),
   ]);
   return (
     <>
@@ -53,6 +56,9 @@ export default async function WorldCupPage() {
           ]}
         />
         <WorldCupTable initialSnapshot={snapshot} />
+        <div className="my-12">
+          <WorldCupBracket bracket={bracket} />
+        </div>
         <WorldCupStats stats={stats} />
       </div>
     </>

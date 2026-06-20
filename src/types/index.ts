@@ -198,6 +198,26 @@ export interface WorldCupSnapshot {
   matches: WorldCupMatch[];
 }
 
+// Knockout stage types
+export type KnockoutStage =
+  | "Round of 32"
+  | "Rd of 16"
+  | "Quarterfinals"
+  | "Semifinals"
+  | "3rd-Place Match"
+  | "Final";
+
+export interface WorldCupBracket {
+  lastUpdated: string;
+  source: "espn" | "mock";
+  stages: {
+    name: KnockoutStage;
+    startDate: string;
+    endDate: string;
+    matches: WorldCupMatch[];
+  }[];
+}
+
 export interface WorldCupMatchDetail {
   id: string;
   homeName: string;
