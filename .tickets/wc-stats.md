@@ -1,6 +1,6 @@
 ---
 id: wc-stats
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-15T05:16:29Z
