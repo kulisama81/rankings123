@@ -22,6 +22,7 @@ const ANALYTICS_PATH = join(ROOT, "src", "data", "analytics-report.json");
 const HISTORY_PATH = join(ROOT, "src", "data", "digest-history.json");
 const SITE = "https://rankings123.com";
 const ROUTES = ["/", "/atp-live", "/wta-live", "/world-cup"];
+const REVENUE_GOAL = Number(process.env.REVENUE_GOAL_MONTHLY || 1000); // monthly $ target
 
 if (!RESEND_API_KEY) {
   console.error("daily-digest: RESEND_API_KEY not set, skipping.");
@@ -134,9 +135,20 @@ async function main() {
     s.push(`<p style="color:#999;font-style:italic;font-size:13px;">No analytics yet — add GA4 .ga-credentials.json and run scripts/pull-analytics.mjs.</p>`);
   }
 
-  // Revenue
-  s.push(`<h3 style="margin:16px 0 8px;color:#0b1020;">Ad Revenue</h3>`);
-  s.push(`<p style="color:#999;font-style:italic;font-size:13px;">Pending AdSense approval + API. (Site is live and eligible to apply.)</p>`);
+  // Revenue — track progress toward the monthly goal + stream readiness.
+  const revenue = analytics?.revenue?.total || 0; // wired once AdSense/affiliate APIs report
+  const goalPct = REVENUE_GOAL > 0 ? Math.round((revenue / REVENUE_GOAL) * 100) : 0;
+  s.push(`<h3 style="margin:16px 0 8px;color:#0b1020;">Revenue — goal $${REVENUE_GOAL.toLocaleString()}/mo</h3>`);
+  s.push(`<table style="width:100%;border-collapse:collapse;margin-bottom:8px;"><tr>`);
+  s.push(box(`$${revenue.toLocaleString()}`, "this month", "#eef7f0"));
+  s.push(box(`${goalPct}%`, "of goal", "#eef0fa"));
+  s.push(box(`$${REVENUE_GOAL.toLocaleString()}`, "monthly goal", "#fceef5"));
+  s.push(`</tr></table>`);
+  s.push(
+    `<div style="font-size:12px;color:#666;margin-bottom:12px;"><strong>Streams:</strong> ` +
+      `AdSense — not yet applied · Betting affiliate — not set up · Odds API — not connected. ` +
+      `<em>Highest-ROI next step: apply to AdSense + a betting affiliate (sports = high CPA).</em></div>`
+  );
 
   // Site health
   s.push(`<h3 style="margin:16px 0 8px;color:#0b1020;">Site Health</h3>`);

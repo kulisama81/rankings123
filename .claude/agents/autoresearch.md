@@ -65,6 +65,12 @@ Orient: read `CLAUDE.md`, `docs/DESIGN.md` (§3 Loop B, §9 strategy), `docs/LOO
   engagement tickets.
 - **Metrics:** read `src/data/analytics-report.json` if present (traffic/top pages/searches).
   Ad revenue is pending AdSense. Read recent `git log` for what shipped.
+- **Revenue (constant focus — do NOT defer entirely to Phase 3):** monetization has long lead
+  times (AdSense approval + affiliate signups take weeks), so keep revenue ENABLEMENT moving in
+  parallel with parity every run: AdSense (ad-inventory, ads-txt, privacy), **betting/odds
+  affiliates** (highest RPM for a sports audience), the odds API, and the Ezoic→Mediavine path.
+  Report progress toward the monthly revenue goal. Revenue is a primary objective, not an
+  afterthought.
 
 ## 2. Self-improvement (the loop)
 Review how the autonomous loop is performing and fix its weak spots:
