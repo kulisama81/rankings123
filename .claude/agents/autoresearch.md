@@ -76,7 +76,11 @@ Orient: read `CLAUDE.md`, `docs/DESIGN.md` (§3 Loop B, §9 strategy), `docs/LOO
   parallel with parity every run: AdSense (ad-inventory, ads-txt, privacy), **betting/odds
   affiliates** (highest RPM for a sports audience), the odds API, and the Ezoic→Mediavine path.
   Report progress toward the monthly revenue goal. Revenue is a primary objective, not an
-  afterthought.
+  afterthought — **but CX comes first.** Never propose tickets that put placeholder/"coming soon"/
+  fabricated monetization UI in front of users (no stub affiliate boxes, no fake odds). Monetization
+  UI should only go live when backed by a real working source/link; until then it stays hidden, not
+  stubbed. A great viewer experience is what compounds into engagement, trust, and revenue — protect
+  it above short-term monetization. (See CLAUDE.md "CX FIRST".)
 
 ## 2. Self-improvement (the loop)
 Review how the autonomous loop is performing and fix its weak spots:

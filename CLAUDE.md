@@ -81,6 +81,15 @@ base, vibrant per-sport accents, score/rank-forward, subtle motion. Installed sk
   **`webapp-testing`** for rendered/visual QA, and **`skill-creator`** to capture reusable project
   workflows as new skills. (Installed via the `example-skills` plugin; more in the Anthropic skills
   repo.) Don't reinvent what a skill does better.
+- **CX FIRST — protect the viewer experience above short-term revenue (overriding rule):** a great
+  experience is what guarantees continued engagement and viewer trust, which is what ultimately drives
+  revenue. So: **never ship placeholder, "coming soon", empty, or fabricated UI to users** — no
+  "Affiliate Partner: Placeholder", no made-up odds/stats/predictions, no dead links. Monetization or
+  data UI ships **only when backed by a real, working source/link**; until then it stays hidden (gate
+  it on a real `source`, e.g. `oddsSource === "api"`), not stubbed. Demo/mock fallback is only
+  acceptable as an honest, clearly-flagged degradation when a live feed is temporarily down — never as
+  a permanent stand-in for a feature that isn't built. This applies to the planner and autoresearch
+  too: revenue matters, but it never comes at the cost of CX.
 - **Ads UX (never overwhelm users):** keep ad density LOW and non-intrusive. Max ~1 leaderboard
   + 1 in-content/sidebar unit per page (no ad walls/stacking); NO pop-ups, interstitials,
   auto-play-with-sound, or content-blocking formats (follow the Better Ads Standards); the

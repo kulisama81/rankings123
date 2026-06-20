@@ -1,6 +1,6 @@
 ---
 id: wc-odds
-status: closed
+status: open
 deps: []
 links: []
 created: 2026-06-15T05:16:29Z
@@ -22,3 +22,9 @@ Upcoming fixtures show predicted outcome / odds from a real source (or clearly-f
 **2026-06-15T05:52:46Z**
 
 UX guardrail: at most ONE tasteful, clearly-labeled affiliate/odds slot per page; never intrusive; geo/age-gated; don't degrade the core experience. A good UX beats short-term revenue.
+
+## Reopened (CX fix)
+Predictions shipped on 100% fabricated mock odds + a placeholder affiliate box — removed for CX/trust.
+The predictions UI is now gated on a REAL odds source (`oddsSource === "api"`) and stays hidden until
+one is connected. To truly close this: integrate a real odds provider (see `odds-api` /
+`betting-affiliate`) so real, sourced predictions can show — no fabricated data, no placeholders.

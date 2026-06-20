@@ -66,6 +66,13 @@ service-account/email. Prefer p0/p1.
   schema changes, or anything that could break the build pipeline.
 - Never bypass build/lint; never `--no-verify`; never force-push or destructive git ops.
 - Ship **4–6 tickets** per run (~90 min budget), then stop. Don't fabricate data or verifier results.
+- **CX FIRST (hard rule — overrides revenue):** never ship placeholder, "coming soon", empty, or
+  fabricated UI to users (no "Affiliate Partner: Placeholder", no made-up odds/stats, no dead links).
+  Monetization/data UI ships only when backed by a real working source/link; otherwise keep it hidden
+  (gate on a real `source` flag), not stubbed. Mock is only an honest, flagged fallback for a
+  temporarily-down live feed — never a permanent stand-in. The verifier must FAIL any ticket that puts
+  placeholder/fake content in front of users. A great experience drives engagement, trust, and thus
+  revenue — protect it above short-term monetization.
 - **World Cup carve-out (time-sensitive):** while the FIFA World Cup 2026 is live
   (through ~July 19, 2026), **at least HALF of each run's tickets must be `worldcup`-tagged
   work** — it's a live traffic spike we must capture now. Split the remaining tickets across
