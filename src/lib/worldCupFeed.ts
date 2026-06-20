@@ -39,15 +39,24 @@ function statNumber(stats: any[], name: string): number {
   return Math.round(Number(stat?.value ?? 0));
 }
 
-// Map ESPN's advancement note to a simple outlook bucket for colour-coding.
-function outlookFrom(description?: string): WorldCupTeam["outlook"] {
-  if (!description) return "alive";
+// FIFA group teams each play 3 matches. ESPN flags "Advance"/"Eliminated" as a
+// PROJECTION after only 1–2 games (e.g. a team on 0 pts after a single match is
+// shown "Eliminated"), which is NOT mathematically confirmed. To avoid publishing
+// wrong info, we only surface a confirmed advanced/eliminated state once a team has
+// completed all its group games; until then everyone is "alive" (still in contention).
+const GROUP_GAMES = 3;
+
+function outlookFrom(
+  description: string | undefined,
+  played: number
+): WorldCupTeam["outlook"] {
+  // Not confirmed until the group games are done — ignore ESPN's early projections.
+  if (played < GROUP_GAMES || !description) return "alive";
   const d = description.toLowerCase();
   if (d.includes("eliminat")) return "out";
-  // "Advance to Round of 32" = qualified; "Best 8 advance" = still in contention.
-  if (d.includes("round of") || d.includes("qualif")) return "advanced";
-  if (d.includes("best") || d.includes("contention") || d.includes("play")) return "alive";
-  if (d.includes("advance")) return "advanced";
+  // "Best 8 advance" = third-place contention rule, not a confirmed berth.
+  if (d.includes("best")) return "alive";
+  if (d.includes("advance") || d.includes("qualif") || d.includes("clinch")) return "advanced";
   return "alive";
 }
 
@@ -64,12 +73,13 @@ function parseStandings(data: any): WorldCupGroup[] {
       const gf = statNumber(stats, "pointsFor");
       const ga = statNumber(stats, "pointsAgainst");
       const code: string = team.abbreviation ?? "—";
+      const played = statNumber(stats, "gamesPlayed");
       return {
         rank: statNumber(stats, "rank"),
         name: team.displayName ?? team.name ?? "Unknown",
         code,
         flag: soccerFlag(code),
-        played: statNumber(stats, "gamesPlayed"),
+        played,
         won: statNumber(stats, "wins"),
         drawn: statNumber(stats, "ties"),
         lost: statNumber(stats, "losses"),
@@ -77,8 +87,10 @@ function parseStandings(data: any): WorldCupGroup[] {
         goalsAgainst: ga,
         goalDiff: statNumber(stats, "pointDifferential") || gf - ga,
         points: statNumber(stats, "points"),
-        status: note?.description,
-        outlook: outlookFrom(note?.description),
+        // Only show ESPN's note once it's actually confirmed (group games complete),
+        // so we never display a premature "Eliminated"/"Advanced" projection.
+        status: played >= GROUP_GAMES ? note?.description : undefined,
+        outlook: outlookFrom(note?.description, played),
       };
     });
 

@@ -15,31 +15,18 @@ interface WorldCupTableProps {
   initialSnapshot: WorldCupSnapshot;
 }
 
+// Advancement shows only as a vertical accent bar on the row — green = confirmed
+// through, red = confirmed eliminated. Set only once a group is actually decided
+// (see outlookFrom in worldCupFeed.ts); mid-group, every team is "alive" (no bar).
 function outlookClasses(outlook: WorldCupTeam["outlook"]): string {
   switch (outlook) {
     case "advanced":
       return "border-l-2 border-up";
     case "out":
-      return "border-l-2 border-down/50 text-muted";
+      return "border-l-2 border-down";
     default:
       return "border-l-2 border-transparent";
   }
-}
-
-// Explicit, scannable advancement badge — so eliminated/qualified teams are obvious
-// at a glance (not just a faint row tint + hover tooltip). Decisive states only,
-// to keep the standings the hero.
-function StatusBadge({ team }: { team: WorldCupTeam }) {
-  if (team.outlook !== "advanced" && team.outlook !== "out") return null;
-  const label = team.status || (team.outlook === "advanced" ? "Qualified" : "Eliminated");
-  const cls = team.outlook === "advanced" ? "bg-up/10 text-up" : "bg-down/10 text-down";
-  return (
-    <span
-      className={`ml-2 inline-block align-middle rounded px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide whitespace-nowrap ${cls}`}
-    >
-      {label}
-    </span>
-  );
 }
 
 function LiveDot() {
@@ -90,7 +77,6 @@ function GroupCard({ group }: { group: WorldCupGroup }) {
                     <span className="mr-2 text-base leading-none" aria-hidden="true">{t.flag}</span>
                     {t.name}
                   </Link>
-                  <StatusBadge team={t} />
                 </td>
                 <td className="px-2 py-2 text-center tabular-nums text-muted">{t.played}</td>
                 <td className="px-2 py-2 text-center tabular-nums text-muted">{t.won}</td>
