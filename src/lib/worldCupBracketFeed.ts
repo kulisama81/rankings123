@@ -78,13 +78,32 @@ function parseStandings(data: any): WorldCupGroup[] {
 // Project Round of 32 matchups from current group standings
 // FIFA 2026: 12 groups → top 2 (24 teams) + 8 best 3rd-placed teams (32 total)
 function projectRoundOf32(groups: WorldCupGroup[]): WorldCupMatch[] {
-  // Extract group winners (rank 1) and runners-up (rank 2)
-  const winners = groups.map((g) => g.teams.find((t) => t.rank === 1)).filter(Boolean);
-  const runnersUp = groups.map((g) => g.teams.find((t) => t.rank === 2)).filter(Boolean);
+  // Extract group winners (rank 1) and runners-up (rank 2) with group metadata
+  type TeamWithSeed = WorldCupTeam & { seedLabel: string };
+
+  const winners: TeamWithSeed[] = groups
+    .map((g) => {
+      const team = g.teams.find((t) => t.rank === 1);
+      if (!team) return null;
+      return { ...team, seedLabel: `1st ${g.name}` };
+    })
+    .filter(Boolean) as TeamWithSeed[];
+
+  const runnersUp: TeamWithSeed[] = groups
+    .map((g) => {
+      const team = g.teams.find((t) => t.rank === 2);
+      if (!team) return null;
+      return { ...team, seedLabel: `2nd ${g.name}` };
+    })
+    .filter(Boolean) as TeamWithSeed[];
 
   // Best 3rd-placed teams: rank all 3rd-place teams by points, GD, GF
-  const thirds = groups
-    .map((g) => g.teams.find((t) => t.rank === 3))
+  const thirds: TeamWithSeed[] = groups
+    .map((g) => {
+      const team = g.teams.find((t) => t.rank === 3);
+      if (!team) return null;
+      return { ...team, seedLabel: `3rd ${g.name}` };
+    })
     .filter(Boolean)
     .sort(
       (a, b) =>
@@ -92,11 +111,11 @@ function projectRoundOf32(groups: WorldCupGroup[]): WorldCupMatch[] {
         b!.goalDiff - a!.goalDiff ||
         b!.goalsFor - a!.goalsFor
     )
-    .slice(0, 8);
+    .slice(0, 8) as TeamWithSeed[];
 
   // Simplified bracket slot assignment (approximation of FIFA rules)
   // Real FIFA bracket has complex group-position-to-slot mapping
-  const qualified = [...winners, ...runnersUp, ...thirds] as WorldCupTeam[];
+  const qualified = [...winners, ...runnersUp, ...thirds];
 
   if (qualified.length < 32) {
     // Not enough teams projected yet — return empty
@@ -110,8 +129,8 @@ function projectRoundOf32(groups: WorldCupGroup[]): WorldCupMatch[] {
   baseDate.setDate(baseDate.getDate() + 7); // Approx 1 week from now
 
   for (let i = 0; i < 16; i++) {
-    const home = qualified[i] ?? { name: "TBD", code: "—", flag: "🏳️" };
-    const away = qualified[31 - i] ?? { name: "TBD", code: "—", flag: "🏳️" };
+    const home = qualified[i] ?? { name: "TBD", code: "—", flag: "🏳️", seedLabel: "" };
+    const away = qualified[31 - i] ?? { name: "TBD", code: "—", flag: "🏳️", seedLabel: "" };
     const matchDate = new Date(baseDate);
     matchDate.setHours(baseDate.getHours() + i * 3); // Stagger matches
 
@@ -124,10 +143,12 @@ function projectRoundOf32(groups: WorldCupGroup[]): WorldCupMatch[] {
       homeCode: home.code,
       homeFlag: home.flag,
       homeScore: null,
+      homeSeedLabel: home.seedLabel,
       awayName: away.name,
       awayCode: away.code,
       awayFlag: away.flag,
       awayScore: null,
+      awaySeedLabel: away.seedLabel,
     });
   }
 

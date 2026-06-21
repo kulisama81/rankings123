@@ -1,6 +1,6 @@
 ---
 id: wc-bracket-seeding
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-21T06:16:47Z

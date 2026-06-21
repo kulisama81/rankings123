@@ -54,17 +54,24 @@ function MatchCard({ match, compact = false }: { match: WorldCupMatch; compact?:
       <div className="space-y-2">
         {/* Home team */}
         <div className="flex items-center justify-between gap-3">
-          <div className="flex min-w-0 flex-1 items-center gap-2">
-            <span className="text-xl leading-none" aria-hidden="true">
-              {match.homeFlag}
-            </span>
-            <span
-              className={`truncate font-bold ${
-                homeWon ? "text-fg" : finished ? "text-muted" : "text-fg"
-              }`}
-            >
-              {match.homeName}
-            </span>
+          <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+            <div className="flex min-w-0 items-center gap-2">
+              <span className="text-xl leading-none" aria-hidden="true">
+                {match.homeFlag}
+              </span>
+              <span
+                className={`truncate font-bold ${
+                  homeWon ? "text-fg" : finished ? "text-muted" : "text-fg"
+                }`}
+              >
+                {match.homeName}
+              </span>
+            </div>
+            {isProjected && match.homeSeedLabel && (
+              <span className="ml-8 text-[11px] font-medium text-muted">
+                {match.homeSeedLabel}
+              </span>
+            )}
           </div>
           {showScore && (
             <span
@@ -79,17 +86,24 @@ function MatchCard({ match, compact = false }: { match: WorldCupMatch; compact?:
 
         {/* Away team */}
         <div className="flex items-center justify-between gap-3">
-          <div className="flex min-w-0 flex-1 items-center gap-2">
-            <span className="text-xl leading-none" aria-hidden="true">
-              {match.awayFlag}
-            </span>
-            <span
-              className={`truncate font-bold ${
-                awayWon ? "text-fg" : finished ? "text-muted" : "text-fg"
-              }`}
-            >
-              {match.awayName}
-            </span>
+          <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+            <div className="flex min-w-0 items-center gap-2">
+              <span className="text-xl leading-none" aria-hidden="true">
+                {match.awayFlag}
+              </span>
+              <span
+                className={`truncate font-bold ${
+                  awayWon ? "text-fg" : finished ? "text-muted" : "text-fg"
+                }`}
+              >
+                {match.awayName}
+              </span>
+            </div>
+            {isProjected && match.awaySeedLabel && (
+              <span className="ml-8 text-[11px] font-medium text-muted">
+                {match.awaySeedLabel}
+              </span>
+            )}
           </div>
           {showScore && (
             <span

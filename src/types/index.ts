@@ -192,10 +192,12 @@ export interface WorldCupMatch {
   homeCode: string;
   homeFlag: string;
   homeScore: number | null;
+  homeSeedLabel?: string; // e.g. "1st Group A" (projected matches only)
   awayName: string;
   awayCode: string;
   awayFlag: string;
   awayScore: number | null;
+  awaySeedLabel?: string; // e.g. "2nd Group D" (projected matches only)
   venue?: string;
   odds?: WorldCupMatchOdds;
 }
