@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import type { WorldCupBracket, WorldCupMatch, KnockoutStage } from "@/types";
+import WorldCupBracketTree from "./WorldCupBracketTree";
 
 interface WorldCupBracketProps {
   bracket: WorldCupBracket;
@@ -252,6 +253,7 @@ function StageView({ stage, matches }: { stage: KnockoutStage; matches: WorldCup
 }
 
 export default function WorldCupBracket({ bracket }: WorldCupBracketProps) {
+  const [viewMode, setViewMode] = useState<"tree" | "stages">("tree");
   const [selectedStage, setSelectedStage] = useState<KnockoutStage>(
     bracket.stages[0]?.name ?? "Round of 32"
   );
@@ -272,33 +274,68 @@ export default function WorldCupBracket({ bracket }: WorldCupBracketProps) {
   return (
     <div id="knockout-bracket">
       <div className="mb-6">
-        <h2 className="mb-4 text-2xl font-bold text-fg">Knockout Stage</h2>
-        {/* Stage tabs */}
-        <div className="scrollbar-hide -mx-4 flex gap-2 overflow-x-auto px-4 sm:mx-0 sm:px-0">
-          {bracket.stages.map((stage) => {
-            const isSelected = stage.name === selectedStage;
-            const hasMatches = stage.matches.length > 0;
-            return (
-              <button
-                key={stage.name}
-                onClick={() => setSelectedStage(stage.name)}
-                className={`shrink-0 rounded-lg px-4 py-2 text-sm font-bold transition-all ${
-                  isSelected
-                    ? "bg-trophy text-base shadow-md shadow-trophy/20"
-                    : hasMatches
-                      ? "border border-surface2 bg-surface text-fg hover:border-trophy/30"
-                      : "border border-surface2 bg-surface/50 text-muted"
-                }`}
-              >
-                {stage.name === "Rd of 16" ? "R16" : stage.name.replace(/^(.+)s$/, "$1")}
-              </button>
-            );
-          })}
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="text-2xl font-bold text-fg">Knockout Stage</h2>
+          {/* View mode toggle */}
+          <div className="flex gap-2">
+            <button
+              onClick={() => setViewMode("tree")}
+              className={`rounded-lg px-3 py-1.5 text-sm font-bold transition-all ${
+                viewMode === "tree"
+                  ? "bg-trophy text-base shadow-md shadow-trophy/20"
+                  : "border border-surface2 bg-surface text-fg hover:border-trophy/30"
+              }`}
+              aria-label="Bracket tree view"
+            >
+              Bracket Tree
+            </button>
+            <button
+              onClick={() => setViewMode("stages")}
+              className={`rounded-lg px-3 py-1.5 text-sm font-bold transition-all ${
+                viewMode === "stages"
+                  ? "bg-trophy text-base shadow-md shadow-trophy/20"
+                  : "border border-surface2 bg-surface text-fg hover:border-trophy/30"
+              }`}
+              aria-label="Stage-by-stage view"
+            >
+              By Stage
+            </button>
+          </div>
         </div>
+
+        {/* Stage tabs - only show in stages view mode */}
+        {viewMode === "stages" && (
+          <div className="scrollbar-hide -mx-4 flex gap-2 overflow-x-auto px-4 sm:mx-0 sm:px-0">
+            {bracket.stages.map((stage) => {
+              const isSelected = stage.name === selectedStage;
+              const hasMatches = stage.matches.length > 0;
+              return (
+                <button
+                  key={stage.name}
+                  onClick={() => setSelectedStage(stage.name)}
+                  className={`shrink-0 rounded-lg px-4 py-2 text-sm font-bold transition-all ${
+                    isSelected
+                      ? "bg-trophy text-base shadow-md shadow-trophy/20"
+                      : hasMatches
+                        ? "border border-surface2 bg-surface text-fg hover:border-trophy/30"
+                        : "border border-surface2 bg-surface/50 text-muted"
+                  }`}
+                >
+                  {stage.name === "Rd of 16" ? "R16" : stage.name.replace(/^(.+)s$/, "$1")}
+                </button>
+              );
+            })}
+          </div>
+        )}
       </div>
 
-      {/* Selected stage view */}
-      {currentStage && <StageView stage={currentStage.name} matches={currentStage.matches} />}
+      {/* Bracket tree view (default) */}
+      {viewMode === "tree" && <WorldCupBracketTree bracket={bracket} />}
+
+      {/* Stage-by-stage view (fallback) */}
+      {viewMode === "stages" && currentStage && (
+        <StageView stage={currentStage.name} matches={currentStage.matches} />
+      )}
     </div>
   );
 }
