@@ -1,91 +1,7 @@
-export type SportType = "olympics" | "cycling" | "rugby" | "tennis";
+// Fabricated mock event types (Olympics, cycling, rugby) removed.
+// Only real, live-sourced data types remain.
 
-// --- Common ---
-export interface Event {
-  id: string;
-  name: string;
-  sport: SportType;
-  year: number;
-  location: string;
-  startDate: string;
-  endDate: string;
-  icon: string; // emoji
-  status?: "completed" | "upcoming";
-}
-
-// --- Olympics ---
-export interface OlympicCountry {
-  rank: number;
-  code: string;
-  name: string;
-  flag: string;
-  gold: number;
-  silver: number;
-  bronze: number;
-  total: number;
-  disciplines: OlympicDiscipline[];
-}
-
-export interface OlympicDiscipline {
-  name: string;
-  gold: number;
-  silver: number;
-  bronze: number;
-  total: number;
-  events: OlympicEventResult[];
-}
-
-export interface OlympicEventResult {
-  name: string;
-  athlete: string;
-  medal: "gold" | "silver" | "bronze";
-}
-
-// --- Cycling ---
-export interface CyclingRider {
-  rank: number;
-  name: string;
-  team: string;
-  nationality: string;
-  flag: string;
-  time: string; // e.g., "82h 45' 12\"" or gap like "+3' 25\""
-  points?: number;
-  stages: CyclingStageResult[];
-}
-
-export interface CyclingStageResult {
-  stage: string; // e.g., "Stage 1", "Prologue"
-  position: number;
-  time: string;
-}
-
-// --- Rugby ---
-export interface RugbyTeam {
-  rank: number;
-  name: string;
-  flag: string;
-  played: number;
-  won: number;
-  drawn: number;
-  lost: number;
-  pointsFor: number;
-  pointsAgainst: number;
-  bonusPoints: number;
-  points: number;
-  matches: RugbyMatch[];
-}
-
-export interface RugbyMatch {
-  opponent: string;
-  opponentFlag: string;
-  homeAway: "home" | "away";
-  scoreFor: number;
-  scoreAgainst: number;
-  date: string;
-  venue: string;
-}
-
-// --- Tennis ---
+// --- Tennis (historic/static data - kept for TennisTable component) ---
 export interface TennisPlayer {
   rank: number;
   name: string;
@@ -94,11 +10,6 @@ export interface TennisPlayer {
   points: number;
   movement: number; // positive = up, negative = down, 0 = same
   age: number;
-}
-
-export interface TennisRankings {
-  event: Event;
-  rankings: TennisPlayer[];
 }
 
 // --- ATP Live Ranking ---
@@ -279,26 +190,5 @@ export interface WorldCupStats {
   topAssisters: WorldCupPlayerStat[];
 }
 
-// --- Rankings data for an event ---
-export interface OlympicsRankings {
-  event: Event;
-  rankings: OlympicCountry[];
-}
-
-export interface CyclingRankings {
-  event: Event;
-  rankings: CyclingRider[];
-}
-
-export interface RugbyRankings {
-  event: Event;
-  rankings: RugbyTeam[];
-}
-
-export type Rankings = OlympicsRankings | CyclingRankings | RugbyRankings | TennisRankings;
-
-// --- Landing page summary ---
-export interface EventSummary {
-  event: Event;
-  topEntries: { name: string; flag: string; value: string }[];
-}
+// Fabricated event types removed (OlympicsRankings, CyclingRankings, RugbyRankings, EventSummary).
+// Only real sourced data remains (ATP/WTA/World Cup).

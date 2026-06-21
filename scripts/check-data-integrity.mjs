@@ -58,6 +58,17 @@ const PLACEHOLDER = [
   { re: /todo:\s*replace with real/i, msg: "stub left in user-facing code" },
 ];
 
+// 3) No fabricated mock event data (regression guard for purge-mock-events).
+//    These exports/datasets were removed because they contained fabricated cross-sport
+//    data (e.g. tennis player Carlos Alcaraz listed as a cyclist).
+const MOCK_EVENTS_BANNED = [
+  { re: /export\s+(const|function)\s+getRankings/, msg: "getRankings export — fabricated event data removed in purge-mock-events" },
+  { re: /export\s+const\s+allEvents/, msg: "allEvents export — fabricated event data removed in purge-mock-events" },
+  { re: /const\s+paris2024\s*:/, msg: "paris2024 Olympics mock data — fabricated, removed in purge-mock-events" },
+  { re: /const\s+rwc2023\s*:/, msg: "rwc2023 rugby mock data — fabricated, removed in purge-mock-events" },
+  { re: /const\s+(tdf|giro|vuelta|parisNice|stradeBianche|tirrenoAdriatico|parisRoubaix|milanSanRemo|tourOfFlanders|liegeBastogneLiege|ilLombardia)\d{4}\s*:/, msg: "cycling event mock data — fabricated, removed in purge-mock-events" },
+];
+
 const violations = [];
 
 for (const file of walk(SRC)) {
@@ -68,6 +79,8 @@ for (const file of walk(SRC)) {
     if (line.includes(ALLOW)) return; // explicit, reviewed exception
     if (isData) {
       for (const r of FABRICATION) if (r.re.test(line)) violations.push({ file: rel(file), n: i + 1, msg: r.msg });
+      // Check for banned mock event exports
+      for (const r of MOCK_EVENTS_BANNED) if (r.re.test(line)) violations.push({ file: rel(file), n: i + 1, msg: r.msg });
     }
     if (isUi) {
       // Skip the HTML attribute and the Tailwind class form of "placeholder".

@@ -1,18 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { allEvents } from "@/data";
-import EventCard from "@/components/EventCard";
 import HeroBanner from "@/components/HeroBanner";
 
 export const metadata: Metadata = {
   title: "Rankings123 — Live Sports Rankings",
   description:
-    "Live ATP & WTA tennis rankings, FIFA World Cup 2026 standings, cycling Grand Tours & classics results. Updated in real time.",
+    "Live ATP & WTA tennis rankings, FIFA World Cup 2026 standings. Updated in real time.",
   alternates: { canonical: "/" },
   openGraph: {
     title: "Rankings123 — Live Sports Rankings",
     description:
-      "Live ATP & WTA tennis rankings, FIFA World Cup 2026 standings, cycling Grand Tours & classics results.",
+      "Live ATP & WTA tennis rankings, FIFA World Cup 2026 standings.",
     url: "/",
     type: "website",
   },
@@ -26,12 +24,6 @@ const tennisLinks = [
 
 const worldCupLinks = [
   { href: "/world-cup", label: "FIFA 2026", sub: "Live standings & schedule", sport: "worldcup", isLive: true },
-];
-
-const cyclingLinks = [
-  { href: "/events/giro-2026", label: "Giro d'Italia", sub: "Grand Tour 2026", sport: "cycling", isLive: false },
-  { href: "/events/tdf-2026", label: "Tour de France", sub: "Grand Tour 2026", sport: "cycling", isLive: false },
-  { href: "/events/tour-of-flanders-2026", label: "Tour of Flanders", sub: "Monument 2026", sport: "cycling", isLive: false },
 ];
 
 function SportCard({
@@ -74,24 +66,15 @@ function SportCard({
 }
 
 export default function HomePage() {
-  // Group and sort events
-  const upcomingEvents = allEvents
-    .filter((s) => s.event.status === "upcoming")
-    .sort((a, b) => new Date(a.event.startDate).getTime() - new Date(b.event.startDate).getTime());
-
-  const pastEvents = allEvents
-    .filter((s) => s.event.status === "completed")
-    .sort((a, b) => new Date(b.event.endDate || b.event.startDate).getTime() - new Date(a.event.endDate || a.event.startDate).getTime());
-
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
       <HeroBanner
         icon="🏆"
         title="Live Sports Rankings"
-        subtitle="Real-time ATP & WTA tennis, FIFA World Cup standings, cycling Grand Tours & classics."
+        subtitle="Real-time ATP & WTA tennis, FIFA World Cup standings."
         live={false}
         stats={[
-          { label: "Sports", value: "Tennis · Football · Cycling" },
+          { label: "Sports", value: "Tennis · Football" },
           { label: "Updated", value: "Live" },
         ]}
       />
@@ -118,53 +101,6 @@ export default function HomePage() {
             <SportCard key={link.href} {...link} />
           ))}
         </div>
-      </section>
-
-      {/* Cycling Section */}
-      <section className="mb-12">
-        <h2 className="mb-4 font-display text-sm font-bold uppercase tracking-wide text-muted">
-          Cycling
-        </h2>
-        <div className="grid gap-4 sm:grid-cols-3">
-          {cyclingLinks.map((link) => (
-            <SportCard key={link.href} {...link} />
-          ))}
-        </div>
-      </section>
-
-      {/* Events & Archives */}
-      <section>
-        <h2 className="mb-6 text-sm font-semibold uppercase tracking-wide text-muted">
-          Events &amp; archives
-        </h2>
-
-        {/* Upcoming Events */}
-        {upcomingEvents.length > 0 && (
-          <div className="mb-10">
-            <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted opacity-75">
-              Upcoming
-            </h3>
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {upcomingEvents.map((summary) => (
-                <EventCard key={summary.event.id} summary={summary} />
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Past Events */}
-        {pastEvents.length > 0 && (
-          <div>
-            <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted opacity-75">
-              Past
-            </h3>
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {pastEvents.map((summary) => (
-                <EventCard key={summary.event.id} summary={summary} />
-              ))}
-            </div>
-          </div>
-        )}
       </section>
     </div>
   );
