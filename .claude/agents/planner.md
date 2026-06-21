@@ -56,6 +56,12 @@ service-account/email. Prefer p0/p1.
      structures faithfully (e.g. the official FIFA bracket template, not invented pairings).
      Projections are allowed **only** when explicitly labelled as projections. The independent
      verifier MUST reject anything fabricated or presented as more certain than the source supports.
+   - **Regression test for EVERY bug fix (required):** whenever a ticket fixes a bug, ADD a test that
+     fails before your fix and passes after, so the bug can never silently come back. Put it where it
+     belongs: a `node --test` unit test under `tests/` (run via `npm test`) for logic bugs, or a new
+     invariant in `scripts/check-data-sanity.mjs` for data bugs. **Add "a regression test that guards
+     this bug" to the ticket's acceptance criteria**, run `npm test`, and the independent verifier must
+     confirm the test exists and genuinely covers the bug. No bug closes without a guard against its regression.
 4. **Independent verify:** spawn a verifier subagent (Agent tool) to adversarially check the
    work against the acceptance criteria — try to break it, find regressions / stale refs /
    half-done or faked work; it must re-run build+lint and return PASS/FAIL with evidence.

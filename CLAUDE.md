@@ -53,7 +53,9 @@ Autoresearch + planner should drive Phase 1 to done first, then weight Phase 2/3
 
 ## The build loop (Loop A) — how all work ships
 Per iteration: pick top unblocked ticket → implement → **mechanical verify** (`npm run build`
-green + `npx eslint src --max-warnings=0` clean + run/curl) → **independent adversarial
+green + `npx eslint src --max-warnings=0` clean + run/curl; **bug fixes ship a regression test** —
+`node --test` under `tests/` via `npm test`, or a new `check:data-sanity` invariant for data bugs)
+→ **independent adversarial
 verifier subagent** (the author never judges its own work) → commit `Closes: [id]` →
 `git push` → **post-deploy verify** (Vercel build = success via `gh api .../commits/<sha>/status`
 + smoke-test https://rankings123.com routes: 200 + expected content) → close ticket.

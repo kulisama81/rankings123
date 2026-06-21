@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "node scripts/check-data-integrity.mjs && next build",
     "start": "next start",
+    "test": "node --test",
     "lint": "eslint",
     "check:readability": "node scripts/check-readability.mjs",
     "check:data-integrity": "node scripts/check-data-integrity.mjs",
