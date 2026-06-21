@@ -1,7 +1,7 @@
 ---
 id: cycling-section
 status: open
-deps: []
+deps: [cycling-page]
 links: []
 created: 2026-06-15T02:06:32Z
 type: feature
@@ -26,3 +26,33 @@ is available yet, keep it honest (clearly-flagged) or hold the tab until a real 
    `source` flag (never fabricated; mock only as honest, flagged degradation).
 3) Reuses the table/feed patterns + design tokens (works dark+light); SEO metadata + sitemap entry.
 4) build + eslint + check:readability green; live-verified on rankings123.com.
+
+## Notes
+
+**2026-06-21T07:55:21Z**
+
+**UPDATE (June 21, 2026) - CURRENT CYCLING LANDSCAPE:**
+
+The cycling world is ACTIVE RIGHT NOW with major events:
+
+COMPLETED (need results):
+- Giro d'Italia 2026 (May 9-31) - Jonas Vingegaard won (1st Giro, completes Grand Tour set), beat Felix Gall by 5:22, Jai Hindley 3rd
+- Critérium du Dauphiné 2026 (June 7-14) - Isaac del Toro won, Luke Tuckwell 2nd at +54s
+
+ONGOING (need live standings):
+- Tour de Suisse 2026 (June 17-21) - Tadej Pogačar leading, Richard Carapaz 2nd at +4:22, final stage tomorrow
+
+UPCOMING (huge traffic opportunity):
+- **Tour de France 2026 (June 27 - July 19)** - STARTS IN 6 DAYS! One of world's biggest sporting events
+
+UCI RANKINGS (June 2026):
+1. Tadej Pogačar (10,865 pts)
+2. Jonas Vingegaard (8,625 pts)
+3. Isaac del Toro (5,339 pts)
+
+**DEPENDENCIES:**
+See new tickets filed today:
+- cycling-dynamic-feed (wire FirstCycling/scraping feed)
+- cycling-page (create /cycling route)
+
+These should be built BEFORE this nav promotion ticket.
