@@ -264,7 +264,7 @@ export default function WorldCupTable({ initialSnapshot }: WorldCupTableProps) {
       </div>
 
       {todaysMatches.length > 0 && (
-        <section className="mb-8">
+        <section id="todays-matches" className="mb-8">
           <div className="mb-3 flex items-center gap-2">
             <h2 className="text-lg font-bold text-fg">Today&apos;s Matches</h2>
             <span className="rounded-full bg-accent/20 px-2 py-0.5 text-xs font-semibold text-accent">
@@ -280,7 +280,7 @@ export default function WorldCupTable({ initialSnapshot }: WorldCupTableProps) {
       )}
 
       {/* Group standings kept high — the rankings are the hero, not buried under the schedule. */}
-      <section className="mb-8">
+      <section id="group-standings" className="mb-8">
         <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted">
           Group standings
         </h2>
@@ -301,8 +301,9 @@ export default function WorldCupTable({ initialSnapshot }: WorldCupTableProps) {
       </section>
 
       {/* Full schedule tucked behind Upcoming / Results tabs so it doesn't dominate the page. */}
-      {(upcomingMatches.length > 0 || resultMatches.length > 0) && (
-        <section className="mb-8">
+      <section id="schedule" className="mb-8">
+        {(upcomingMatches.length > 0 || resultMatches.length > 0) && (
+          <>
           <div className="mb-3 flex flex-wrap items-center gap-3">
             <h2 className="text-sm font-semibold uppercase tracking-wide text-muted">Schedule</h2>
             <div className="ml-auto inline-flex rounded-lg border border-edge p-0.5 text-xs font-medium">
@@ -342,8 +343,9 @@ export default function WorldCupTable({ initialSnapshot }: WorldCupTableProps) {
               No {scheduleTab === "upcoming" ? "upcoming fixtures" : "results"} yet.
             </p>
           )}
-        </section>
-      )}
+          </>
+        )}
+      </section>
 
       {showOdds && (
         <section className="mb-8">

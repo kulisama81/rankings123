@@ -260,7 +260,7 @@ export default function WorldCupBracket({ bracket }: WorldCupBracketProps) {
 
   if (bracket.stages.length === 0) {
     return (
-      <div className="rounded-xl border border-surface2 bg-surface p-8 text-center">
+      <div id="knockout-bracket" className="rounded-xl border border-surface2 bg-surface p-8 text-center">
         <h3 className="mb-2 text-xl font-bold text-fg">Knockout Stage</h3>
         <p className="text-muted">
           The knockout bracket will appear once the group stage concludes and teams advance.
@@ -270,7 +270,7 @@ export default function WorldCupBracket({ bracket }: WorldCupBracketProps) {
   }
 
   return (
-    <div>
+    <div id="knockout-bracket">
       <div className="mb-6">
         <h2 className="mb-4 text-2xl font-bold text-fg">Knockout Stage</h2>
         {/* Stage tabs */}

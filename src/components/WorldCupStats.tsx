@@ -78,7 +78,7 @@ export default function WorldCupStats({ stats }: WorldCupStatsProps) {
   if (!hasData) return null;
 
   return (
-    <section className="mt-12">
+    <section id="tournament-leaders" className="mt-12">
       <h2 className="mb-6 text-2xl font-bold tracking-tight text-fg">
         Tournament Leaders
       </h2>

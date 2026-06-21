@@ -1,6 +1,6 @@
 ---
 id: wc-section-nav
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-21T06:17:03Z
