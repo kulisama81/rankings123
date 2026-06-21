@@ -1,0 +1,6 @@
+#!/bin/sh
+# Project rule: Loïc is sole author — never keep Co-Authored-By / Claude trailers.
+# Strip them from the commit message in place (so commits succeed without them).
+F="$1"
+grep -viE '^Co-Authored-By:|Generated with \[?Claude|^🤖' "$F" > "$F.tmp" && mv "$F.tmp" "$F"
+exit 0

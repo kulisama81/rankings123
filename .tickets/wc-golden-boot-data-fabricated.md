@@ -1,6 +1,6 @@
 ---
 id: wc-golden-boot-data-fabricated
-status: in_progress
+status: closed
 deps: []
 links: [wc-golden-boot-page]
 created: 2026-06-21T20:00:00Z

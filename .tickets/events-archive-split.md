@@ -1,6 +1,6 @@
 ---
 id: events-archive-split
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-20T23:11:11Z
