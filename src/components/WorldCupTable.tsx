@@ -176,6 +176,7 @@ function MatchRow({ match, showOdds }: { match: WorldCupMatch; showOdds: boolean
 export default function WorldCupTable({ initialSnapshot }: WorldCupTableProps) {
   const [snapshot, setSnapshot] = useState(initialSnapshot);
   const [secondsLeft, setSecondsLeft] = useState(REFRESH_INTERVAL_S);
+  const [scheduleTab, setScheduleTab] = useState<"upcoming" | "results">("upcoming");
   const fetching = useRef(false);
 
   const refresh = useCallback(async () => {
@@ -213,26 +214,32 @@ export default function WorldCupTable({ initialSnapshot }: WorldCupTableProps) {
   // (getOddsSource() returns "api").
   const showOdds = snapshot.oddsSource === "api";
 
-  // Group matches by date
+  // Today's matches stay prominent up top; everything else is split into past
+  // results vs upcoming fixtures and tucked behind tabs so the standings stay near
+  // the top (ESPN-style) rather than being buried under the full 100-match schedule.
   const today = new Date();
   const todayStr = today.toDateString();
   const todaysMatches = snapshot.matches.filter((m) => new Date(m.date).toDateString() === todayStr);
+  const nonToday = snapshot.matches.filter((m) => new Date(m.date).toDateString() !== todayStr);
+  // snapshot.matches is pre-sorted (live, then upcoming asc, then finished desc).
+  const upcomingMatches = nonToday.filter((m) => m.state !== "post");
+  const resultMatches = nonToday.filter((m) => m.state === "post");
 
-  // Group remaining matches (excluding today's) by date for the full schedule
-  const matchesByDate = new Map<string, WorldCupMatch[]>();
-  snapshot.matches
-    .filter((m) => new Date(m.date).toDateString() !== todayStr)
-    .forEach((match) => {
-      const dateKey = new Date(match.date).toLocaleDateString([], {
-        weekday: 'long',
-        month: 'long',
-        day: 'numeric'
+  const groupByDate = (ms: WorldCupMatch[]) => {
+    const map = new Map<string, WorldCupMatch[]>();
+    for (const m of ms) {
+      const key = new Date(m.date).toLocaleDateString([], {
+        weekday: "long",
+        month: "long",
+        day: "numeric",
       });
-      if (!matchesByDate.has(dateKey)) {
-        matchesByDate.set(dateKey, []);
-      }
-      matchesByDate.get(dateKey)!.push(match);
-    });
+      if (!map.has(key)) map.set(key, []);
+      map.get(key)!.push(m);
+    }
+    return map;
+  };
+  const activeMatches = scheduleTab === "upcoming" ? upcomingMatches : resultMatches;
+  const activeByDate = groupByDate(activeMatches);
 
   return (
     <div>
@@ -272,23 +279,69 @@ export default function WorldCupTable({ initialSnapshot }: WorldCupTableProps) {
         </section>
       )}
 
-      {snapshot.matches.length > 0 && (
+      {/* Group standings kept high — the rankings are the hero, not buried under the schedule. */}
+      <section className="mb-8">
+        <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted">
+          Group standings
+        </h2>
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {snapshot.groups.map((g) => (
+            <GroupCard key={g.name} group={g} />
+          ))}
+        </div>
+        <p className="mt-4 flex flex-wrap items-center gap-4 text-xs text-muted">
+          <span className="inline-flex items-center gap-1.5">
+            <span className="inline-block h-3 w-1 rounded bg-up" /> Advancing
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <span className="inline-block h-3 w-1 rounded bg-down/60" /> Eliminated
+          </span>
+          {snapshot.source === "espn" && <span>Standings &amp; results via ESPN.</span>}
+        </p>
+      </section>
+
+      {/* Full schedule tucked behind Upcoming / Results tabs so it doesn't dominate the page. */}
+      {(upcomingMatches.length > 0 || resultMatches.length > 0) && (
         <section className="mb-8">
-          <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted">
-            Full Schedule
-          </h2>
-          <div className="space-y-6">
-            {Array.from(matchesByDate.entries()).map(([dateKey, matches]) => (
-              <div key={dateKey}>
-                <h3 className="mb-2 text-sm font-semibold text-muted">{dateKey}</h3>
-                <div className="grid gap-2">
-                  {matches.map((m) => (
-                    <MatchRow key={m.id} match={m} showOdds={showOdds} />
-                  ))}
-                </div>
-              </div>
-            ))}
+          <div className="mb-3 flex flex-wrap items-center gap-3">
+            <h2 className="text-sm font-semibold uppercase tracking-wide text-muted">Schedule</h2>
+            <div className="ml-auto inline-flex rounded-lg border border-edge p-0.5 text-xs font-medium">
+              {([
+                ["upcoming", "Upcoming", upcomingMatches.length],
+                ["results", "Results", resultMatches.length],
+              ] as const).map(([key, label, count]) => (
+                <button
+                  key={key}
+                  onClick={() => setScheduleTab(key)}
+                  className={`rounded-md px-3 py-1 transition ${
+                    scheduleTab === key
+                      ? "bg-surface2 text-fg"
+                      : "text-muted hover:text-fg"
+                  }`}
+                >
+                  {label} <span className="tabular-nums opacity-70">{count}</span>
+                </button>
+              ))}
+            </div>
           </div>
+          {activeByDate.size > 0 ? (
+            <div className="space-y-6">
+              {Array.from(activeByDate.entries()).map(([dateKey, matches]) => (
+                <div key={dateKey}>
+                  <h3 className="mb-2 text-sm font-semibold text-muted">{dateKey}</h3>
+                  <div className="grid gap-2">
+                    {matches.map((m) => (
+                      <MatchRow key={m.id} match={m} showOdds={showOdds} />
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-sm text-muted">
+              No {scheduleTab === "upcoming" ? "upcoming fixtures" : "results"} yet.
+            </p>
+          )}
         </section>
       )}
 
@@ -303,27 +356,6 @@ export default function WorldCupTable({ initialSnapshot }: WorldCupTableProps) {
           </div>
         </section>
       )}
-
-      <section>
-        <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted">
-          Group standings
-        </h2>
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {snapshot.groups.map((g) => (
-            <GroupCard key={g.name} group={g} />
-          ))}
-        </div>
-      </section>
-
-      <p className="mt-4 flex flex-wrap items-center gap-4 text-xs text-muted">
-        <span className="inline-flex items-center gap-1.5">
-          <span className="inline-block h-3 w-1 rounded bg-up" /> Advancing
-        </span>
-        <span className="inline-flex items-center gap-1.5">
-          <span className="inline-block h-3 w-1 rounded bg-down/60" /> Eliminated
-        </span>
-        {snapshot.source === "espn" && <span>Standings &amp; results via ESPN.</span>}
-      </p>
     </div>
   );
 }
