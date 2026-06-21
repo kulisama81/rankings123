@@ -69,6 +69,11 @@ service-account/email. Prefer p0/p1.
    with a note, move on.
 5. On PASS: `tkt edit <id> --status closed`, commit specific files (not `git add -A`) with a
    message ending `Closes: [<id>]`.
+   - **Keep docs current in the SAME commit:** (a) if the ticket added/changed something **major**
+     (new sport, new page/feature, data source, architecture), update `README.md`; (b) for any
+     **customer-facing** change, append a one-line entry to the site changelog
+     (`src/data/changelog.ts` — date, title, short blurb, area/sport) so the public "What's new" page
+     (linked in the footer) stays current. Skip the changelog only for purely internal/infra changes.
 6. **Push policy** (see Guardrails) → if allowed, `git push origin main` (auto-deploys).
 7. **Post-deploy verify:** wait ~120s; check the Vercel build succeeded
    (`gh api repos/kulisama81/rankings123/commits/<sha>/status --jq '.statuses[]|select(.context=="Vercel")|.state'` → `success`)

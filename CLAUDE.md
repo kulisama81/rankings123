@@ -70,12 +70,22 @@ without it (e.g. cloud routines) **edit the `.tickets/*.md` files directly**. Ev
 **creates / updates / closes** tickets: mark `in_progress` at start, `closed` only after an
 independent verifier PASS + merged + live-verified. Loop B files new tickets.
 
-## Autonomy (scheduled cloud routines)
-- **rankings123-daily-improve** (daily) — runs one build-loop iteration, ships one verified
-  improvement to production.
-- **rankings123-weekly-strategy** (Mondays) — researches competitors + data + metrics, creates
-  ROI-ranked tickets, writes a growth summary to `docs/reports/`.
-- Manage at https://claude.ai/code/routines. These start cold — that's why this file exists.
+## Autonomy (local cron agents — `.claude/agents/*.md`, run via `claude -p`)
+- **planner** (5×/day) — builds the top tickets through the verified loop and ships them.
+- **autoresearch** (daily) — strategy + backlog: keeps the planner stocked (≥2 days buildable,
+  weighted CX + revenue, World Cup ≥half while live); files ROI tickets + a report.
+- **design-research** (weekly) — distinctive visual identity: mines Clay/Awwwards, maintains
+  `docs/DESIGN-IDENTITY.md`, files `design` tickets.
+- **inspector** (2×/day) — live QA: hunts functional/visual/data/consistency bugs on
+  rankings123.com and files reproducible `bug` tickets (regression test required in their criteria).
+- **data-sanity monitor** (5×/day) — `check:data-sanity`; auto-files a `data-anomaly` ticket on bad data.
+- **analytics pull** (daily) + **daily digest email** (daily).
+These start cold — that's why this file exists. Research/QA agents touch only `.tickets/` + `docs/`.
+
+## Docs to keep current (every ship)
+- **README.md** — update when something **major** ships (new sport/page/feature/data source).
+- **Site changelog** — `src/data/changelog.ts` drives a public "What's new" page linked in the
+  footer; append a one-line **customer-facing** entry for each user-visible change (see `site-changelog`).
 
 ## Design direction
 **Apple Sports app** aesthetic: clean/premium, bold type, rounded high-contrast cards, dark
