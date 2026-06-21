@@ -1,5 +1,6 @@
 import type { WorldCupStats, WorldCupPlayerStat } from "@/types";
 import { soccerFlag } from "@/lib/worldCupFlags";
+import Link from "next/link";
 
 interface GoldenBootRaceProps {
   stats: WorldCupStats;
@@ -70,8 +71,15 @@ function GoldenBootTable({ scorers }: { scorers: WorldCupPlayerStat[] }) {
                     </span>
                   </td>
                   <td className="px-4 py-3">
-                    <div className="font-semibold text-fg">{player.playerShortName}</div>
-                    <div className="text-xs text-muted">#{player.jersey}</div>
+                    <Link
+                      href={`/world-cup/player/${player.playerId}`}
+                      className="group block"
+                    >
+                      <div className="font-semibold text-fg group-hover:text-accent transition-colors">
+                        {player.playerShortName}
+                      </div>
+                      <div className="text-xs text-muted">#{player.jersey}</div>
+                    </Link>
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2">

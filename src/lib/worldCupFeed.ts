@@ -256,7 +256,8 @@ function parseStats(data: any): WorldCupStats {
 }
 
 export async function fetchWorldCupStats(): Promise<WorldCupStats> {
-  const data = await fetchJson(`${STATISTICS_URL}?limit=10`, 180);
+  // Fetch top 50 scorers/assisters to populate player pages (SEO long-tail).
+  const data = await fetchJson(`${STATISTICS_URL}?limit=50`, 180);
   return parseStats(data);
 }
 

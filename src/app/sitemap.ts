@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getWorldCupData } from "@/lib/worldCupFeed";
+import { getWorldCupData, getWorldCupStats } from "@/lib/worldCupFeed";
 
 const BASE = "https://rankings123.com";
 
@@ -17,9 +17,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/terms`, lastModified: now, changeFrequency: "yearly", priority: 0.2 },
   ];
 
-  // Add World Cup match and team pages (SEO long-tail)
+  // Add World Cup match, team, and player pages (SEO long-tail)
   try {
-    const snapshot = await getWorldCupData();
+    const [snapshot, stats] = await Promise.all([getWorldCupData(), getWorldCupStats()]);
+
     const matchRoutes: MetadataRoute.Sitemap = snapshot.matches.map((match) => ({
       url: `${BASE}/world-cup/match/${match.id}`,
       lastModified: now,
@@ -36,7 +37,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
     }));
 
-    return [...staticRoutes, ...matchRoutes, ...teamRoutes];
+    // Player pages for top scorers and assisters (SEO long-tail: "Messi World Cup stats", etc.)
+    const allPlayers = [...stats.topScorers, ...stats.topAssisters];
+    const uniquePlayers = Array.from(
+      new Map(allPlayers.map((p) => [p.playerId, p])).values()
+    );
+    const playerRoutes: MetadataRoute.Sitemap = uniquePlayers.map((player) => ({
+      url: `${BASE}/world-cup/player/${player.playerId}`,
+      lastModified: now,
+      changeFrequency: "daily" as const,
+      priority: 0.7,
+    }));
+
+    return [...staticRoutes, ...matchRoutes, ...teamRoutes, ...playerRoutes];
   } catch {
     // If World Cup data fails, still return static routes
     return staticRoutes;
