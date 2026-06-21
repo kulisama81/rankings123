@@ -18,7 +18,11 @@ First, orient: read `CLAUDE.md`, `docs/DESIGN.md`, `docs/LOOP.md`, and
 Use `tkt ls` / `tkt ready` (tkt IS installed here). Within priority, choose by ROI (impact ÷ effort):
 
 - **Tier 1 — Broken:** site/route down, build red, a data feed returning `source: mock` when it
-  shouldn't, visibly wrong rankings. Always first.
+  shouldn't, visibly wrong rankings, **or an open `data-anomaly` ticket** (filed automatically by
+  `npm run check:data-sanity` when served data fails real-world invariants — wrong football maths,
+  out-of-order ranks, same-group teams meeting in the projected bracket, etc.). For a `data-anomaly`:
+  fix the underlying feed/parse logic, re-run `npm run check:data-sanity` until clean, **log the
+  resolution in the ticket's Log**, then close it (never close while the check still errors). Always first.
 - **Tier 2 — Traffic:** SEO (metadata, internal links, more indexable pages), new ranking
   views/sports, player/entity pages — anything that adds indexable pages or pages-per-session.
 - **Tier 3 — Quality & retention:** the `design-revamp` (Apple Sports look), mobile UX, speed,
