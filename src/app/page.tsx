@@ -74,6 +74,15 @@ function SportCard({
 }
 
 export default function HomePage() {
+  // Group and sort events
+  const upcomingEvents = allEvents
+    .filter((s) => s.event.status === "upcoming")
+    .sort((a, b) => new Date(a.event.startDate).getTime() - new Date(b.event.startDate).getTime());
+
+  const pastEvents = allEvents
+    .filter((s) => s.event.status === "completed")
+    .sort((a, b) => new Date(b.event.endDate || b.event.startDate).getTime() - new Date(a.event.endDate || a.event.startDate).getTime());
+
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
       <HeroBanner
@@ -125,14 +134,37 @@ export default function HomePage() {
 
       {/* Events & Archives */}
       <section>
-        <h2 className="mb-4 text-sm font-semibold uppercase tracking-wide text-muted">
+        <h2 className="mb-6 text-sm font-semibold uppercase tracking-wide text-muted">
           Events &amp; archives
         </h2>
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {allEvents.map((summary) => (
-            <EventCard key={summary.event.id} summary={summary} />
-          ))}
-        </div>
+
+        {/* Upcoming Events */}
+        {upcomingEvents.length > 0 && (
+          <div className="mb-10">
+            <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted opacity-75">
+              Upcoming
+            </h3>
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {upcomingEvents.map((summary) => (
+                <EventCard key={summary.event.id} summary={summary} />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Past Events */}
+        {pastEvents.length > 0 && (
+          <div>
+            <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted opacity-75">
+              Past
+            </h3>
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {pastEvents.map((summary) => (
+                <EventCard key={summary.event.id} summary={summary} />
+              ))}
+            </div>
+          </div>
+        )}
       </section>
     </div>
   );
