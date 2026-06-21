@@ -1,6 +1,6 @@
 ---
 id: wc-bracket-visual
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-21T07:49:22Z
