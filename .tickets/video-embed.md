@@ -9,25 +9,39 @@ priority: 1
 parent: rankings123
 tags: [ui, engagement]
 ---
-# Embedded YouTube highlights (engagement)
+# Per-player inline highlights — last round played (like live-tennis.eu)
 
-Like live-tennis.eu, surface a curated, inline **embedded YouTube highlights player** on the live
-ranking pages (official ATP / WTA highlights) — not a per-match summary (no free reliably-embeddable
-per-match source exists), just one tasteful curated player to boost dwell time/engagement. Place it
-below the table (or in a sidebar) so it never pushes the rankings down. Lazy-load (facade thumbnail →
-iframe on click) to protect Core Web Vitals; use `youtube-nocookie.com` and gate the iframe behind
-consent. The video source (channel/playlist/video id) lives in one easily-updatable config constant.
+REPLACE the single curated page-level highlights embed (shipped in 7560f14) with **per-player inline
+highlights**, like live-tennis.eu: each player row on `/atp-live` and `/wta-live` (and the deep 1000
+table) gets a small, unobtrusive "▶ highlights" affordance (a YouTube/play icon) that surfaces
+highlights for **that player's most recent match — the last round they played**.
+
+DATA-VERACITY (hard): there is no free API that maps "player's last match → a specific embeddable
+video", so we must NOT guess/fabricate a specific video id. The honest, buildable-now version is a
+per-player **YouTube search deep-link for their latest match**, built from data we already have:
+player name + their current/most-recent tournament + round (from the ESPN live overlay `tournament`
+field in `liveFeed.ts`, e.g. "Halle R16") + "highlights". For players not currently in a draw, fall
+back to `"{player} tennis highlights"`. A true *inline embed of the exact match video* requires the
+keyed YouTube Data API — that's the separate handoff ticket `youtube-api` (build this search-link
+version now; the embed upgrades on top of it when the key lands).
+
+CX-first: keep it subtle (icon per row, opens in a new tab or a small lazy modal) — it must not push
+the rankings down, slow the first scroll, or clutter the table. Lazy; if any embed/modal is used,
+`youtube-nocookie.com` + consent-gated.
 
 ## Acceptance Criteria
 
-1. A lazy-loaded curated YouTube highlights embed appears on **both** `/atp-live` and `/wta-live`,
-   below the ranking table — the table stays the hero and is not pushed down on load.
-2. Tour-appropriate source: ATP highlights on `/atp-live`, WTA highlights on `/wta-live`, set in a
-   single config constant (channel/playlist/video id) that's trivial to update.
-3. **The embed/source URL must be verified reachable: a `curl -sI` (or fetch) of the resolved
-   YouTube URL returns HTTP 200** at build/verify time — no dead/placeholder links ship. Note the
-   checked URL + status code in the verifier report.
-4. Facade → iframe on click; uses `www.youtube-nocookie.com`; iframe/cookies gated behind consent
-   (no third-party cookies before consent).
-5. No LCP/CLS regression (facade is a static thumbnail, fixed aspect-ratio box — no layout shift).
-6. A GA4 event fires on play (e.g. `video_play`) so engagement is measurable.
+1. Each player row on `/atp-live` and `/wta-live` (incl. the deep 1000 table) shows a small,
+   tasteful per-player highlights affordance — the rankings stay the hero (no layout shift, table not
+   pushed down, mobile-OK).
+2. The link targets **that player's last round**: query built from name + their tournament + round
+   (from the ESPN overlay) + "highlights"; sensible `"{player} tennis highlights"` fallback when no
+   current match. No fabricated/guessed specific video ids.
+3. The resolved YouTube URL returns HTTP 200 (it's a search URL, so always valid) — verify at build/
+   verify time; note it in the verifier report.
+4. The old single curated page-level embed is removed (superseded by per-player).
+5. **REGRESSION TEST REQUIRED:** a `node --test` unit test under `tests/` for the query-builder —
+   given a player with `tournament`/`round` → the expected search query/URL; given none → the
+   fallback. `npm test` green.
+6. Optional GA4 `video_play`/`highlights_click` event for engagement. Tokens-themed (dark+light);
+   build + eslint + check:readability green; live-verified on rankings123.com.
