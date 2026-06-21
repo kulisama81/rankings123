@@ -180,7 +180,8 @@ export async function fetchWorldCupSnapshot(): Promise<WorldCupSnapshot> {
   const oddsSource = getOddsSource();
   const matchesWithOdds = matches.map((match) => {
     if (match.state === "pre") {
-      return { ...match, odds: getMatchOdds(match.id, match.homeCode, match.awayCode) };
+      const odds = getMatchOdds();
+      return odds ? { ...match, odds } : match;
     }
     return match;
   });
@@ -202,11 +203,11 @@ export async function getWorldCupData(): Promise<WorldCupSnapshot> {
     return await fetchWorldCupSnapshot();
   } catch {
     const mockSnapshot = getMockSnapshot();
-    // Add odds to mock data as well (clearly flagged)
     const oddsSource = getOddsSource();
     const matchesWithOdds = mockSnapshot.matches.map((match) => {
       if (match.state === "pre") {
-        return { ...match, odds: getMatchOdds(match.id, match.homeCode, match.awayCode) };
+        const odds = getMatchOdds();
+        return odds ? { ...match, odds } : match;
       }
       return match;
     });

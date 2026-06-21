@@ -41,6 +41,13 @@ Autoresearch + planner should drive Phase 1 to done first, then weight Phase 2/3
 - **World Cup:** ESPN `soccer/fifa.world`. `src/lib/worldCupFeed.ts`.
 - **Discipline (keep it):** every feed degrades to a bundled mock on failure and surfaces a
   `source` flag (`espn`/`uts`/`uts+espn`/`mock`) in the UI. Never hard-fail; never fabricate.
+- **Data-veracity gate:** `npm run check:data-integrity` (also run inside `npm run build`, the
+  pre-commit hook via `.githooks`, and the loop's verify step) FAILS the build on fabricated or
+  placeholder data — synthetic generators (`Math.random`/`Math.sin`) in the data layer, or
+  "coming soon"/"Placeholder" stub UI. It's a tripwire, not a guarantee: the independent verifier
+  still owns *semantic* veracity (does every user-facing number trace to a real source?). Model
+  real structures faithfully (e.g. the official FIFA bracket template); projections only when
+  explicitly labelled as such.
 - Analytics: GA4 (`G-GDM8YNM3SM`) via `src/components/Analytics.tsx` with Consent Mode v2
   (default denied) + `ConsentBanner.tsx`.
 

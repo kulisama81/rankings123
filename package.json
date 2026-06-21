@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "node scripts/check-data-integrity.mjs && next build",
     "start": "next start",
     "lint": "eslint",
-    "check:readability": "node scripts/check-readability.mjs"
+    "check:readability": "node scripts/check-readability.mjs",
+    "check:data-integrity": "node scripts/check-data-integrity.mjs"
   },
   "dependencies": {
     "@google-analytics/data": "^6.1.0",

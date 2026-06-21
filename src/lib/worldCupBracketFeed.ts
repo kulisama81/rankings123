@@ -75,82 +75,126 @@ function parseStandings(data: any): WorldCupGroup[] {
   return groups;
 }
 
-// Project Round of 32 matchups from current group standings
-// FIFA 2026: 12 groups → top 2 (24 teams) + 8 best 3rd-placed teams (32 total)
+// Official FIFA 2026 Round of 32 bracket template (per the tournament regulations).
+// 12 groups A–L: the 12 winners (1X) + 12 runners-up (2X) + 8 best third-placed teams
+// advance. Winner/runner-up pairings are FIXED by the bracket — note this 48-team format
+// DOES pair some runners-up against each other (e.g. 2A v 2B), unlike the old 32-team
+// 1-v-2 format. The eight 3rd-place slots take the best thirds, each constrained to a
+// specific set of groups; the exact third→slot mapping comes from FIFA's 495-combination
+// table (Annex C), which we approximate greedily within each slot's allowed groups. The
+// whole bracket is clearly labelled a projection from current standings.
+type SlotSpec =
+  | { kind: "winner"; group: string }
+  | { kind: "runnerup"; group: string }
+  | { kind: "third"; allowed: string[] };
+
+const R32_TEMPLATE: { home: SlotSpec; away: SlotSpec }[] = [
+  { home: { kind: "runnerup", group: "A" }, away: { kind: "runnerup", group: "B" } }, // M73
+  { home: { kind: "winner", group: "E" }, away: { kind: "third", allowed: ["A", "B", "C", "D", "F"] } }, // M74
+  { home: { kind: "winner", group: "F" }, away: { kind: "runnerup", group: "C" } }, // M75
+  { home: { kind: "winner", group: "C" }, away: { kind: "runnerup", group: "F" } }, // M76
+  { home: { kind: "winner", group: "I" }, away: { kind: "third", allowed: ["C", "D", "F", "G", "H"] } }, // M77
+  { home: { kind: "runnerup", group: "E" }, away: { kind: "runnerup", group: "I" } }, // M78
+  { home: { kind: "winner", group: "A" }, away: { kind: "third", allowed: ["C", "E", "F", "H", "I"] } }, // M79
+  { home: { kind: "winner", group: "L" }, away: { kind: "third", allowed: ["E", "H", "I", "J", "K"] } }, // M80
+  { home: { kind: "winner", group: "D" }, away: { kind: "third", allowed: ["B", "E", "F", "I", "J"] } }, // M81
+  { home: { kind: "winner", group: "G" }, away: { kind: "third", allowed: ["A", "E", "H", "I", "J"] } }, // M82
+  { home: { kind: "runnerup", group: "K" }, away: { kind: "runnerup", group: "L" } }, // M83
+  { home: { kind: "winner", group: "H" }, away: { kind: "runnerup", group: "J" } }, // M84
+  { home: { kind: "winner", group: "B" }, away: { kind: "third", allowed: ["E", "F", "G", "I", "J"] } }, // M85
+  { home: { kind: "winner", group: "J" }, away: { kind: "runnerup", group: "H" } }, // M86
+  { home: { kind: "winner", group: "K" }, away: { kind: "third", allowed: ["D", "E", "I", "J", "L"] } }, // M87
+  { home: { kind: "runnerup", group: "D" }, away: { kind: "runnerup", group: "G" } }, // M88
+];
+
+const GROUP_LETTERS = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"];
+
+// Project Round of 32 matchups from current group standings, following the official FIFA
+// 2026 bracket template (winner/runner-up slots exact; thirds approximated).
 function projectRoundOf32(groups: WorldCupGroup[]): WorldCupMatch[] {
-  // Extract group winners (rank 1) and runners-up (rank 2) with group metadata
-  type TeamWithSeed = WorldCupTeam & { seedLabel: string };
+  const byLetter = new Map<string, WorldCupGroup>();
+  for (const g of groups) {
+    const letter = g.name.replace(/group/i, "").trim().toUpperCase();
+    byLetter.set(letter, g);
+  }
+  // Need all 12 groups (each with a current 1st/2nd/3rd) to project the bracket.
+  if (!GROUP_LETTERS.every((l) => byLetter.has(l))) return [];
+  const teamAt = (letter: string, rank: number): WorldCupTeam | undefined =>
+    byLetter.get(letter)?.teams.find((t) => t.rank === rank);
 
-  const winners: TeamWithSeed[] = groups
-    .map((g) => {
-      const team = g.teams.find((t) => t.rank === 1);
-      if (!team) return null;
-      return { ...team, seedLabel: `1st ${g.name}` };
-    })
-    .filter(Boolean) as TeamWithSeed[];
-
-  const runnersUp: TeamWithSeed[] = groups
-    .map((g) => {
-      const team = g.teams.find((t) => t.rank === 2);
-      if (!team) return null;
-      return { ...team, seedLabel: `2nd ${g.name}` };
-    })
-    .filter(Boolean) as TeamWithSeed[];
-
-  // Best 3rd-placed teams: rank all 3rd-place teams by points, GD, GF
-  const thirds: TeamWithSeed[] = groups
-    .map((g) => {
-      const team = g.teams.find((t) => t.rank === 3);
-      if (!team) return null;
-      return { ...team, seedLabel: `3rd ${g.name}` };
-    })
-    .filter(Boolean)
+  // Best 8 third-placed teams by current points / GD / GF (best → worst order kept for
+  // the "best-ranked third" slot assignment).
+  const thirdsRanked = GROUP_LETTERS.map((l) => ({ letter: l, team: teamAt(l, 3) }))
+    .filter((x) => x.team)
     .sort(
       (a, b) =>
-        b!.points - a!.points ||
-        b!.goalDiff - a!.goalDiff ||
-        b!.goalsFor - a!.goalsFor
+        b.team!.points - a.team!.points ||
+        b.team!.goalDiff - a.team!.goalDiff ||
+        b.team!.goalsFor - a.team!.goalsFor
     )
-    .slice(0, 8) as TeamWithSeed[];
+    .slice(0, 8);
+  if (thirdsRanked.length < 8) return [];
+  const qualifyingThirds = thirdsRanked.map((x) => x.letter); // best → worst
 
-  // Simplified bracket slot assignment (approximation of FIFA rules)
-  // Real FIFA bracket has complex group-position-to-slot mapping
-  const qualified = [...winners, ...runnersUp, ...thirds];
-
-  if (qualified.length < 32) {
-    // Not enough teams projected yet — return empty
-    return [];
+  // Assign qualifying thirds to the eight 3rd-place slots, respecting each slot's allowed
+  // groups: fill the most-constrained slots first, taking the best-ranked available third
+  // (approximates FIFA's Annex C combination table for a projection).
+  const thirdSlots = R32_TEMPLATE.map((m, i) => ({ i, away: m.away })).filter(
+    (s): s is { i: number; away: Extract<SlotSpec, { kind: "third" }> } => s.away.kind === "third"
+  );
+  const used = new Set<string>();
+  const assignment = new Map<number, string>();
+  const slotsByConstraint = [...thirdSlots].sort(
+    (a, b) =>
+      a.away.allowed.filter((g) => qualifyingThirds.includes(g)).length -
+      b.away.allowed.filter((g) => qualifyingThirds.includes(g)).length
+  );
+  for (const slot of slotsByConstraint) {
+    const remaining = qualifyingThirds.filter((l) => !used.has(l));
+    const pick = remaining.find((l) => slot.away.allowed.includes(l)) ?? remaining[0];
+    if (pick) {
+      assignment.set(slot.i, pick);
+      used.add(pick);
+    }
   }
 
-  // Generate 16 projected Round of 32 matches
-  // Simple pairing: 1st vs qualifying team, avoiding same-group matchups when possible
-  const matches: WorldCupMatch[] = [];
+  const resolve = (
+    spec: SlotSpec,
+    templateIndex: number
+  ): { team?: WorldCupTeam; label: string } => {
+    if (spec.kind === "winner") return { team: teamAt(spec.group, 1), label: `1st Group ${spec.group}` };
+    if (spec.kind === "runnerup") return { team: teamAt(spec.group, 2), label: `2nd Group ${spec.group}` };
+    const letter = assignment.get(templateIndex);
+    return { team: letter ? teamAt(letter, 3) : undefined, label: letter ? `3rd Group ${letter}` : "Best 3rd" };
+  };
+
   const baseDate = new Date();
-  baseDate.setDate(baseDate.getDate() + 7); // Approx 1 week from now
+  baseDate.setDate(baseDate.getDate() + 7);
 
-  for (let i = 0; i < 16; i++) {
-    const home = qualified[i] ?? { name: "TBD", code: "—", flag: "🏳️", seedLabel: "" };
-    const away = qualified[31 - i] ?? { name: "TBD", code: "—", flag: "🏳️", seedLabel: "" };
+  const matches: WorldCupMatch[] = [];
+  R32_TEMPLATE.forEach((tmpl, i) => {
+    const home = resolve(tmpl.home, i);
+    const away = resolve(tmpl.away, i);
+    if (!home.team || !away.team) return; // skip until standings provide both slots
     const matchDate = new Date(baseDate);
-    matchDate.setHours(baseDate.getHours() + i * 3); // Stagger matches
-
+    matchDate.setHours(baseDate.getHours() + i * 3);
     matches.push({
       id: `projected-r32-${i}`,
       date: matchDate.toISOString(),
       state: "pre",
       statusDetail: "Projected",
-      homeName: home.name,
-      homeCode: home.code,
-      homeFlag: home.flag,
+      homeName: home.team.name,
+      homeCode: home.team.code,
+      homeFlag: home.team.flag,
       homeScore: null,
-      homeSeedLabel: home.seedLabel,
-      awayName: away.name,
-      awayCode: away.code,
-      awayFlag: away.flag,
+      homeSeedLabel: home.label,
+      awayName: away.team.name,
+      awayCode: away.team.code,
+      awayFlag: away.team.flag,
       awayScore: null,
-      awaySeedLabel: away.seedLabel,
+      awaySeedLabel: away.label,
     });
-  }
+  });
 
   return matches;
 }

@@ -40,11 +40,18 @@ service-account/email. Prefer p0/p1.
    consider advanced providers (soccer: **Opta / Stats Perform**, FotMob, SofaScore, FBref,
    Understat; tennis: UTS) as source options; prefer keyless/public, always keep mock-fallback +
    `source` flag. New differentiating stats are core to the product — see ticket `opta-soccer-stats`.
-3. Mechanical verify: `npm run build` green, `npx eslint src --max-warnings=0` clean, **and
+3. Mechanical verify: `npm run build` green (the build runs `check:data-integrity`, which FAILS
+   on fabricated/placeholder data — Math.random/Math.sin generators, "coming soon"/"Placeholder"
+   stub UI; fix it, never bypass it), `npx eslint src --max-warnings=0` clean, **and
    `npm run check:readability` clean** (use design tokens — never raw `text-gray-*`/`bg-white`/
    `text-white`, which break in dark or light mode). Then run (`npm run start -- -p 3123 &`),
    `curl` the affected routes, and for UI changes confirm readability in BOTH dark and light
    themes. Fix until all green.
+   - **Data-veracity check (every ticket):** confirm every user-facing number/standing/matchup/stat
+     traces to a real source (ESPN/UTS/official APIs) or a clearly-flagged mock fallback. Model real
+     structures faithfully (e.g. the official FIFA bracket template, not invented pairings).
+     Projections are allowed **only** when explicitly labelled as projections. The independent
+     verifier MUST reject anything fabricated or presented as more certain than the source supports.
 4. **Independent verify:** spawn a verifier subagent (Agent tool) to adversarially check the
    work against the acceptance criteria — try to break it, find regressions / stale refs /
    half-done or faked work; it must re-run build+lint and return PASS/FAIL with evidence.

@@ -1,0 +1,10 @@
+#!/bin/sh
+# Shared pre-commit hook (enabled via: git config core.hooksPath .githooks).
+# Fast, deterministic data-veracity + readability tripwire — blocks fabricated/
+# placeholder data and theme-unaware colors before they ever get committed.
+# The authoritative backstop is still `npm run build` (runs in Vercel) + the
+# loop's adversarial verifier; this just catches mistakes earlier.
+echo "pre-commit: data-integrity + readability checks…"
+node scripts/check-data-integrity.mjs || { echo "pre-commit BLOCKED: data-integrity"; exit 1; }
+node scripts/check-readability.mjs || { echo "pre-commit BLOCKED: readability"; exit 1; }
+exit 0
