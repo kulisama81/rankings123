@@ -14,6 +14,13 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-06-21",
+    title: "Golden Boot race gets its own page",
+    description:
+      "New dedicated page for the adidas Golden Boot race with detailed stats: goals, assists, appearances, and goals-per-match for all top scorers.",
+    area: "worldcup",
+  },
+  {
+    date: "2026-06-21",
     title: "World Cup legend now matches visible team statuses",
     description:
       "The group standings legend now only shows 'Advancing' and 'Eliminated' keys when teams actually have those statuses, eliminating the confusing mismatch during mid-group play.",

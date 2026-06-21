@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { WorldCupStats, WorldCupPlayerStat } from "@/types";
 
 interface WorldCupStatsProps {
@@ -79,9 +80,17 @@ export default function WorldCupStats({ stats }: WorldCupStatsProps) {
 
   return (
     <section id="tournament-leaders" className="mt-12">
-      <h2 className="mb-6 text-2xl font-bold tracking-tight text-fg">
-        Tournament Leaders
-      </h2>
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+        <h2 className="text-2xl font-bold tracking-tight text-fg">
+          Tournament Leaders
+        </h2>
+        <Link
+          href="/world-cup/golden-boot"
+          className="text-sm font-medium text-accent transition-colors hover:text-accent/80"
+        >
+          See full Golden Boot race →
+        </Link>
+      </div>
       <div className="grid gap-6 md:grid-cols-2">
         <StatLeaderCard
           title="Top Scorers"
