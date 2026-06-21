@@ -33,6 +33,12 @@ async function getJson(path) {
   return res.json();
 }
 
+async function getHtml(path) {
+  const res = await fetch(`${BASE}${path}`);
+  if (!res.ok) throw new Error(`${path} → HTTP ${res.status}`);
+  return res.text();
+}
+
 const PLACEHOLDER_NAMES = new Set(["", "tbd", "unknown", "placeholder", "—", "home", "away"]);
 const isBadName = (n) => PLACEHOLDER_NAMES.has(String(n ?? "").trim().toLowerCase());
 
@@ -159,6 +165,29 @@ function checkBracket(bracket, groups) {
   }
 }
 
+// --- Homepage placeholder content (CX-FIRST violation guard) ---------------
+function checkHomepagePlaceholders(html) {
+  // Per CX-FIRST rule: never ship placeholder, "coming soon", empty, or fabricated UI to users.
+  // This check guards against cycling events (or any future content) displaying placeholder text
+  // like "Results not yet available", "TBD", "coming soon" on the homepage.
+  const PROHIBITED_PATTERNS = [
+    /results not yet available/i,
+    /coming soon/i,
+    // Match "TBD" but exclude legitimate uses in World Cup bracket projections
+    // where "TBD" is a factual statement about future matchups, not placeholder content.
+    // Only flag "TBD → City · Year" patterns (like "TBD → Madrid · 2026") which indicate
+    // incomplete event data, not projected bracket matchups.
+    /TBD\s*[→•]\s*[A-Z]/i,
+  ];
+
+  for (const pattern of PROHIBITED_PATTERNS) {
+    const match = html.match(pattern);
+    if (match) {
+      err("homepage", `CX-FIRST violation: placeholder text "${match[0]}" on homepage (must hide incomplete features, not show placeholders)`);
+    }
+  }
+}
+
 // --- Auto-ticket -----------------------------------------------------------
 function fileAnomalyTicket(stamp) {
   const latest = errors.map((e) => `- ${e}`).join("\n");
@@ -203,18 +232,20 @@ ${priorLog}
 async function main() {
   const stamp = new Date().toISOString();
   try {
-    const [atp, wta, wc, bracket, wcStats] = await Promise.all([
+    const [atp, wta, wc, bracket, wcStats, homepage] = await Promise.all([
       getJson("/api/atp/live"),
       getJson("/api/wta/live"),
       getJson("/api/worldcup/live"),
       getJson("/api/worldcup/bracket"),
       getJson("/api/worldcup/stats"),
+      getHtml("/"),
     ]);
     checkTennis("atp", atp);
     checkTennis("wta", wta);
     const groups = checkWorldCup(wc);
     checkBracket(bracket, groups);
     checkWorldCupGoldenBoot(wcStats);
+    checkHomepagePlaceholders(homepage);
   } catch (e) {
     err("fetch", `could not load data: ${e.message}`);
   }
