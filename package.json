@@ -10,7 +10,8 @@
     "lint": "eslint",
     "check:readability": "node scripts/check-readability.mjs",
     "check:data-integrity": "node scripts/check-data-integrity.mjs",
-    "check:data-sanity": "node scripts/check-data-sanity.mjs"
+    "check:data-sanity": "node scripts/check-data-sanity.mjs",
+    "check:performance": "node scripts/check-performance.mjs"
   },
   "dependencies": {
     "@google-analytics/data": "^6.1.0",

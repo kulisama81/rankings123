@@ -78,6 +78,9 @@ independent verifier PASS + merged + live-verified. Loop B files new tickets.
   `docs/DESIGN-IDENTITY.md`, files `design` tickets.
 - **inspector** (2×/day) — live QA: hunts functional/visual/data/consistency bugs on
   rankings123.com and files reproducible `bug` tickets (regression test required in their criteria).
+- **perf-inspector** (daily) — measures load perf + Core Web Vitals across the site, keeps a
+  `docs/perf-baseline.md`, and files `perf` tickets on budget breaches or regressions vs baseline
+  (`npm run check:performance` is the cheap measurement). Performance = conversion + ad-revenue lever.
 - **data-sanity monitor** (5×/day) — `check:data-sanity`; auto-files a `data-anomaly` ticket on bad data.
 - **analytics pull** (daily) + **daily digest email** (daily).
 These start cold — that's why this file exists. Research/QA agents touch only `.tickets/` + `docs/`.
