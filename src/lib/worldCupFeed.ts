@@ -19,8 +19,12 @@ import { getMatchOdds, getOddsSource } from "./worldCupOdds";
 // - statistics: tournament leaders (top scorers, assists, etc.)
 const STANDINGS_URL =
   "https://site.api.espn.com/apis/v2/sports/soccer/fifa.world/standings";
+// ESPN's default scoreboard returns only ONE matchday (~3 matches), so most of the
+// schedule — including matches happening "today" in the user's timezone — is missing.
+// Pull the full FIFA World Cup 2026 window (Jun 11 – Jul 19) so every fixture/result
+// is present; the table buckets "today" / upcoming / past client-side.
 const SCOREBOARD_URL =
-  "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard";
+  "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260719";
 const STATISTICS_URL =
   "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/statistics";
 
