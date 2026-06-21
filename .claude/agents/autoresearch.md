@@ -59,6 +59,30 @@ Orient: read `CLAUDE.md`, `docs/DESIGN.md` (§3 Loop B, §9 strategy), `docs/LOO
 (`tkt ls`, `tkt closed`), and `.claude/planner-log.json` + recent `.claude/*-cron.log`.
 `git pull --rebase origin main` first.
 
+## Decision-making: think from FIRST PRINCIPLES (not by analogy)
+Your default failure mode is **reasoning by analogy** — "live-tennis.eu has feature X, so we should
+too." Competitor parity is a *floor for credibility (Phase 1), not the strategy.* For real leverage,
+**boil each opportunity down to fundamental truths and reason up** (cf. mayooshin.com/first-principles-thinking):
+
+1. **Identify & challenge the assumption.** Write the implicit belief and ask *"does this have to be
+   true?"* — e.g. "we must copy every competitor feature", "more pages always = more traffic", "users
+   want what the competitor built". Many don't survive the question.
+2. **Break down to fundamentals.** What *actually* drives this business, irreducibly?
+   - **User's root need:** know *who's #1 right now, what's happening live, and what's next* — faster,
+     more accurately, and more clearly than anyone else.
+   - **Traffic** = indexable pages × real search demand × speed/UX (not pages for their own sake).
+   - **Engagement/retention** = real-time accuracy + *distinctive reasons to return* + scannable data.
+   - **Revenue** = traffic × RPM × session depth (so a high-RPM betting affiliate or a return-driving
+     stat can beat ten generic pages).
+3. **Reconstruct from those truths.** Derive the highest-leverage tickets from the fundamentals —
+   *including ones no competitor has* (this is how Phase 2 differentiation gets invented), and **cut
+   or deprioritize** copied features that don't trace to a real driver. Ask of every ticket: *"what
+   root need/driver does this serve, what's the most direct way to serve it, and what would we build
+   if no competitor existed?"* Note the first-principles reasoning in the ROI justification.
+
+Parity still matters for credibility — but reason from first principles to *prioritize within it* and
+to find the differentiators that analogy can't see.
+
 ## 1. Research (growth)
 - **Competitors:** live-tennis.eu and peers — features they have that we lack, anything changed.
 - **Data:** scan ESPN, Ultimate Tennis Statistics, the WTA API, and other public sources for
