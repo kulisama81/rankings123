@@ -88,6 +88,44 @@ function checkWorldCup(snap) {
   return groups;
 }
 
+// --- World Cup Golden Boot (stats) -----------------------------------------
+function checkWorldCupGoldenBoot(stats) {
+  if (stats.source === "mock") warn("worldcup-stats", "served from mock fallback (live feed unavailable)");
+
+  const scorers = stats?.topScorers ?? [];
+  const assisters = stats?.topAssisters ?? [];
+
+  // Fabricated placeholder names that should never appear in user-facing Golden Boot data.
+  const BANNED_PATTERNS = [
+    /max m[üu]ller/i,
+    /emma dupont/i,
+    /carlos silva/i,
+    /test\s+player/i,
+    /placeholder/i,
+    /^tbd$/i,
+  ];
+  const isFabricated = (name) => BANNED_PATTERNS.some((re) => re.test(name));
+
+  for (const player of [...scorers, ...assisters]) {
+    // Reject fabricated/placeholder names.
+    if (isBadName(player.playerName) || isBadName(player.playerShortName)) {
+      err("worldcup-stats", `placeholder player name: "${player.playerName}"`);
+    }
+    if (isFabricated(player.playerName)) {
+      err("worldcup-stats", `fabricated test player name: "${player.playerName}"`);
+    }
+    // Realistic appearance count — tournament leaders should have positive appearances.
+    // Flag zero appearances (which would indicate fabricated or placeholder data).
+    if (stats.source === "espn" && player.value > 0 && player.appearances === 0) {
+      err("worldcup-stats", `${player.playerShortName} has ${player.value} goals/assists but 0 appearances (impossible)`);
+    }
+    // Negative or nonsensical stats.
+    if (player.value < 0 || player.goals < 0 || player.assists < 0 || player.appearances < 0) {
+      err("worldcup-stats", `${player.playerShortName} has negative stats`);
+    }
+  }
+}
+
 // --- World Cup projected bracket -------------------------------------------
 function checkBracket(bracket, groups) {
   // Map each team name → its actual group letter (from the live standings).
@@ -165,16 +203,18 @@ ${priorLog}
 async function main() {
   const stamp = new Date().toISOString();
   try {
-    const [atp, wta, wc, bracket] = await Promise.all([
+    const [atp, wta, wc, bracket, wcStats] = await Promise.all([
       getJson("/api/atp/live"),
       getJson("/api/wta/live"),
       getJson("/api/worldcup/live"),
       getJson("/api/worldcup/bracket"),
+      getJson("/api/worldcup/stats"),
     ]);
     checkTennis("atp", atp);
     checkTennis("wta", wta);
     const groups = checkWorldCup(wc);
     checkBracket(bracket, groups);
+    checkWorldCupGoldenBoot(wcStats);
   } catch (e) {
     err("fetch", `could not load data: ${e.message}`);
   }
