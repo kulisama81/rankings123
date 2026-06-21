@@ -11,6 +11,7 @@ interface WorldCupBracketProps {
 function MatchCard({ match, compact = false }: { match: WorldCupMatch; compact?: boolean }) {
   const live = match.state === "in";
   const finished = match.state === "post";
+  const isProjected = match.id.startsWith("projected-");
   const kickoff = new Date(match.date).toLocaleString([], {
     month: "short",
     day: "numeric",
@@ -21,15 +22,16 @@ function MatchCard({ match, compact = false }: { match: WorldCupMatch; compact?:
   const homeWon = showScore && (match.homeScore ?? 0) > (match.awayScore ?? 0);
   const awayWon = showScore && (match.awayScore ?? 0) > (match.homeScore ?? 0);
 
-  return (
-    <Link
-      href={`/world-cup/match/${match.id}`}
-      className={`group relative overflow-hidden rounded-xl border transition-all ${
-        live
-          ? "border-trophy/40 bg-trophy/5 shadow-trophy/10 [background:linear-gradient(135deg,rgb(212_175_55/0.08)_0%,transparent_100%)]"
-          : "border-surface2 bg-surface hover:border-trophy/30 [background:linear-gradient(135deg,rgb(255_255_255/0.02)_0%,transparent_100%)]"
-      } ${compact ? "p-2.5" : "p-3"}`}
-    >
+  const cardClassName = `group relative overflow-hidden rounded-xl border transition-all ${
+    isProjected
+      ? "border-surface2/50 bg-surface/50 [background:linear-gradient(135deg,rgb(255_255_255/0.01)_0%,transparent_100%)]"
+      : live
+        ? "border-trophy/40 bg-trophy/5 shadow-trophy/10 [background:linear-gradient(135deg,rgb(212_175_55/0.08)_0%,transparent_100%)]"
+        : "border-surface2 bg-surface hover:border-trophy/30 [background:linear-gradient(135deg,rgb(255_255_255/0.02)_0%,transparent_100%)]"
+  } ${compact ? "p-2.5" : "p-3"}`;
+
+  const content = (
+    <>
       {/* Live indicator */}
       {live && (
         <div className="absolute right-2 top-2 flex items-center gap-1.5 rounded-full bg-trophy/20 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-trophy">
@@ -38,6 +40,13 @@ function MatchCard({ match, compact = false }: { match: WorldCupMatch; compact?:
             <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-trophy" />
           </span>
           Live
+        </div>
+      )}
+
+      {/* Projected indicator */}
+      {isProjected && (
+        <div className="absolute right-2 top-2 rounded-full border border-muted/30 bg-bg/80 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-muted backdrop-blur-sm">
+          Projected
         </div>
       )}
 
@@ -99,6 +108,17 @@ function MatchCard({ match, compact = false }: { match: WorldCupMatch; compact?:
           {match.venue && <span className="truncate">{match.venue}</span>}
         </div>
       </div>
+    </>
+  );
+
+  // Projected matches are not clickable
+  if (isProjected) {
+    return <div className={cardClassName}>{content}</div>;
+  }
+
+  return (
+    <Link href={`/world-cup/match/${match.id}`} className={cardClassName}>
+      {content}
     </Link>
   );
 }
@@ -113,6 +133,10 @@ function StageView({ stage, matches }: { stage: KnockoutStage; matches: WorldCup
         day: "numeric",
       })
     : "";
+
+  // Check if any matches are projected
+  const hasProjected = matches.some((m) => m.id.startsWith("projected-"));
+  const allProjected = matches.every((m) => m.id.startsWith("projected-"));
 
   // Use list view for wider stages (R32, R16), bracket tree for narrower (QF, SF, Final)
   const useListView = stage === "Round of 32" || stage === "Rd of 16";
@@ -140,6 +164,27 @@ function StageView({ stage, matches }: { stage: KnockoutStage; matches: WorldCup
             </span>
           )}
         </div>
+
+        {/* Projection notice */}
+        {hasProjected && (
+          <div className="mb-4 rounded-lg border border-muted/20 bg-surface/50 p-3 text-sm">
+            <p className="text-muted">
+              {allProjected ? (
+                <>
+                  <strong className="text-fg">Projected from current group standings.</strong>{" "}
+                  Matchups update live as results change and are not yet confirmed. Once teams are
+                  officially seeded, confirmed fixtures will replace these projections.
+                </>
+              ) : (
+                <>
+                  <strong className="text-fg">Some matchups are projected</strong> from current
+                  standings and will update as results change.
+                </>
+              )}
+            </p>
+          </div>
+        )}
+
         <div className="grid gap-3 sm:grid-cols-2">
           {matches.map((m) => (
             <MatchCard key={m.id} match={m} />
@@ -161,6 +206,26 @@ function StageView({ stage, matches }: { stage: KnockoutStage; matches: WorldCup
           </p>
         )}
       </div>
+
+      {/* Projection notice */}
+      {hasProjected && (
+        <div className="mx-auto mb-6 max-w-2xl rounded-lg border border-muted/20 bg-surface/50 p-3 text-center text-sm">
+          <p className="text-muted">
+            {allProjected ? (
+              <>
+                <strong className="text-fg">Projected from current group standings.</strong>{" "}
+                Matchups update live as results change and are not yet confirmed.
+              </>
+            ) : (
+              <>
+                <strong className="text-fg">Some matchups are projected</strong> from current
+                standings.
+              </>
+            )}
+          </p>
+        </div>
+      )}
+
       <div className="flex justify-center">
         <div className="grid gap-4">
           {matches.map((m) => (

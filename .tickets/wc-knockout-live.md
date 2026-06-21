@@ -1,6 +1,6 @@
 ---
 id: wc-knockout-live
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-20T22:46:10Z

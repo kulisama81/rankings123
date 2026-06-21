@@ -1,19 +1,137 @@
-import type { WorldCupBracket, WorldCupMatch, KnockoutStage } from "@/types";
+import type {
+  WorldCupBracket,
+  WorldCupMatch,
+  KnockoutStage,
+  WorldCupGroup,
+  WorldCupTeam,
+} from "@/types";
 import { soccerFlag } from "./worldCupFlags";
 import { getMockWorldCupBracket } from "@/data/worldCup";
 
+const STANDINGS_URL =
+  "https://site.api.espn.com/apis/v2/sports/soccer/fifa.world/standings";
 const SCOREBOARD_URL =
   "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-async function fetchJson(url: string): Promise<any> {
+async function fetchJson(url: string, revalidateSeconds = 180): Promise<any> {
   const res = await fetch(url, {
     headers: { Accept: "application/json" },
-    next: { revalidate: 180 }, // 3min cache for bracket data
+    next: { revalidate: revalidateSeconds },
   });
   if (!res.ok) throw new Error(`${url} → HTTP ${res.status}`);
   return res.json();
+}
+
+// Parse ESPN standings data into WorldCupGroup[]
+function parseStandings(data: any): WorldCupGroup[] {
+  const groups: WorldCupGroup[] = [];
+  for (const child of data?.children ?? []) {
+    const entries: any[] = child?.standings?.entries ?? [];
+    if (entries.length === 0) continue;
+
+    const teams: WorldCupTeam[] = entries.map((entry) => {
+      const team = entry?.team ?? {};
+      const stats: any[] = entry?.stats ?? [];
+      const statValue = (name: string): number => {
+        const stat = (stats ?? []).find((s) => s?.name === name);
+        return Math.round(Number(stat?.value ?? 0));
+      };
+      const gf = statValue("pointsFor");
+      const ga = statValue("pointsAgainst");
+      const code: string = team.abbreviation ?? "—";
+      const played = statValue("gamesPlayed");
+      const note = entry?.note;
+      return {
+        rank: statValue("rank"),
+        name: team.displayName ?? team.name ?? "Unknown",
+        code,
+        flag: soccerFlag(code),
+        played,
+        won: statValue("wins"),
+        drawn: statValue("ties"),
+        lost: statValue("losses"),
+        goalsFor: gf,
+        goalsAgainst: ga,
+        goalDiff: statValue("pointDifferential") || gf - ga,
+        points: statValue("points"),
+        status: note?.description,
+        outlook: "alive",
+      };
+    });
+
+    teams.sort(
+      (a, b) =>
+        a.rank - b.rank ||
+        b.points - a.points ||
+        b.goalDiff - a.goalDiff ||
+        b.goalsFor - a.goalsFor
+    );
+    teams.forEach((t, i) => (t.rank = i + 1));
+
+    groups.push({ name: child?.name ?? "Group", teams });
+  }
+  return groups;
+}
+
+// Project Round of 32 matchups from current group standings
+// FIFA 2026: 12 groups → top 2 (24 teams) + 8 best 3rd-placed teams (32 total)
+function projectRoundOf32(groups: WorldCupGroup[]): WorldCupMatch[] {
+  // Extract group winners (rank 1) and runners-up (rank 2)
+  const winners = groups.map((g) => g.teams.find((t) => t.rank === 1)).filter(Boolean);
+  const runnersUp = groups.map((g) => g.teams.find((t) => t.rank === 2)).filter(Boolean);
+
+  // Best 3rd-placed teams: rank all 3rd-place teams by points, GD, GF
+  const thirds = groups
+    .map((g) => g.teams.find((t) => t.rank === 3))
+    .filter(Boolean)
+    .sort(
+      (a, b) =>
+        b!.points - a!.points ||
+        b!.goalDiff - a!.goalDiff ||
+        b!.goalsFor - a!.goalsFor
+    )
+    .slice(0, 8);
+
+  // Simplified bracket slot assignment (approximation of FIFA rules)
+  // Real FIFA bracket has complex group-position-to-slot mapping
+  const qualified = [...winners, ...runnersUp, ...thirds] as WorldCupTeam[];
+
+  if (qualified.length < 32) {
+    // Not enough teams projected yet — return empty
+    return [];
+  }
+
+  // Generate 16 projected Round of 32 matches
+  // Simple pairing: 1st vs qualifying team, avoiding same-group matchups when possible
+  const matches: WorldCupMatch[] = [];
+  const baseDate = new Date();
+  baseDate.setDate(baseDate.getDate() + 7); // Approx 1 week from now
+
+  for (let i = 0; i < 16; i++) {
+    const home = qualified[i] ?? { name: "TBD", code: "—", flag: "🏳️" };
+    const away = qualified[31 - i] ?? { name: "TBD", code: "—", flag: "🏳️" };
+    const matchDate = new Date(baseDate);
+    matchDate.setHours(baseDate.getHours() + i * 3); // Stagger matches
+
+    matches.push({
+      id: `projected-r32-${i}`,
+      date: matchDate.toISOString(),
+      state: "pre",
+      statusDetail: "Projected",
+      homeName: home.name,
+      homeCode: home.code,
+      homeFlag: home.flag,
+      homeScore: null,
+      awayName: away.name,
+      awayCode: away.code,
+      awayFlag: away.flag,
+      awayScore: null,
+    });
+  }
+
+  return matches;
 }
 
 // Map ESPN stage labels to our knockout stage types
@@ -66,10 +184,14 @@ function parseMatch(event: any): WorldCupMatch | null {
 }
 
 export async function fetchWorldCupBracket(): Promise<WorldCupBracket> {
-  const data = await fetchJson(SCOREBOARD_URL);
+  // Fetch both knockout fixtures AND current standings for projection
+  const [scoreboardData, standingsData] = await Promise.all([
+    fetchJson(SCOREBOARD_URL, 180),
+    fetchJson(STANDINGS_URL, 300),
+  ]);
 
   // Extract calendar/stage information
-  const calendar = data?.leagues?.[0]?.calendar?.[0]?.entries ?? [];
+  const calendar = scoreboardData?.leagues?.[0]?.calendar?.[0]?.entries ?? [];
   const stageInfo: Record<string, { startDate: string; endDate: string }> = {};
   for (const entry of calendar) {
     const stage = normalizeStage(entry.label ?? "");
@@ -81,9 +203,9 @@ export async function fetchWorldCupBracket(): Promise<WorldCupBracket> {
     }
   }
 
-  // Parse events and group by stage (use ESPN's stage metadata)
+  // Parse real knockout events from ESPN and group by stage
   const stageMatches = new Map<KnockoutStage, WorldCupMatch[]>();
-  const events = data?.events ?? [];
+  const events = scoreboardData?.events ?? [];
 
   for (const event of events) {
     const match = parseMatch(event);
@@ -97,6 +219,17 @@ export async function fetchWorldCupBracket(): Promise<WorldCupBracket> {
         stageMatches.set(stage, []);
       }
       stageMatches.get(stage)!.push(match);
+    }
+  }
+
+  // Parse group standings for projection
+  const groups = parseStandings(standingsData);
+
+  // If Round of 32 has no real matches yet, generate projected matchups from standings
+  if (!stageMatches.has("Round of 32") || stageMatches.get("Round of 32")!.length === 0) {
+    const projectedMatches = projectRoundOf32(groups);
+    if (projectedMatches.length > 0) {
+      stageMatches.set("Round of 32", projectedMatches);
     }
   }
 
