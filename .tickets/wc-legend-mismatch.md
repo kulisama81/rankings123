@@ -1,6 +1,6 @@
 ---
 id: wc-legend-mismatch
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-21T07:15:02Z

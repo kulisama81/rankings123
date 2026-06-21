@@ -1,6 +1,6 @@
 ---
 id: wc-golden-boot-page
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-21T00:00:00Z
