@@ -88,6 +88,15 @@ to find the differentiators that analogy can't see.
 - **Data:** scan ESPN, Ultimate Tennis Statistics, the WTA API, and other public sources for
   tennis/multi-sport data we don't yet surface (doubles, race rankings, head-to-head,
   points-to-defend, more sports/events).
+- **Data freshness across ALL sports (every run — static data is a defect):** every sport must run
+  on a **dynamic, keyless source with a mock fallback + `source` flag** — NOT a static/bundled
+  archive that silently goes stale. Audit each sport for staleness (wrong "live"/in-progress status,
+  finished events shown as ongoing, missing current/recent events). **Cycling is the current
+  offender**: it's static mock (e.g. the Giro shown as ongoing when it's finished, Tour de Suisse /
+  current races missing) — it needs a real dynamic feed (scan ESPN cycling, ProCyclingStats, UCI,
+  FirstCycling, or similar) wired like the tennis/World-Cup feeds. File tickets to (a) wire a dynamic
+  cycling source + standings/results for current & recent races, and (b) fix any other stale-data
+  gaps you find. See `cycling-section`.
 - **Always hunt for cool, differentiating stats (every run):** actively look for novel,
   engaging stats and angles that set our rankings apart — the kind ESPN / SofaScore / FlashScore /
   BBC Sport surface but traditional ranking sites don't: streaks, current form, head-to-head,
