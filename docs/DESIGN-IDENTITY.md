@@ -192,6 +192,17 @@ Articles read and applied to rankings123 design strategy:
    - **Key takeaway:** Colorful + minimal + clean + 3D/animation. High scores (8–9.6) for balancing vibrant visuals with functional clarity. Experimental but digestible.
    - **Application:** Rankings123 already has colorful accents + clean layout. Opportunity: add subtle 3D depth to hero/cards (CSS transforms, layering), more ambitious loading/transition animations. *Ticket filed: `hero-depth-treatment`*
 
+### 2026-06-21 (Afternoon Run)
+
+4. **["20 Popular AI Assistants Compared"](https://clay.global/blog/ai-assistants)** (June 8, 2026)
+   - **Key takeaway:** Not directly applicable to rankings123 design (focuses on AI tools comparison).
+   - **Application:** Skipped — not relevant to visual identity work.
+
+**2026 Sports Data Viz Trends Research:**
+- **Awwwards Data Visualization Collection** — patterns: interactive data hierarchy, micro-interactions on state changes, strategic color for position changes (green up/red down), typography for numerical emphasis (scores/ranks larger/bolder than names), smooth animation frameworks (GSAP/Framer for rank transitions).
+- **Beyond Sports 2026 report** — trends: interactive experiences over passive viewing, short-form social-first content, real-time dashboards, automated social-ready graphics.
+- **Application:** Filed tickets for rank-change animations, social share cards, data storytelling callouts, nav accent strengthening. Focus on making "live" feel tangible through motion and making content viral-ready.
+
 ---
 
 ## Evolution Roadmap
@@ -207,15 +218,17 @@ Articles read and applied to rankings123 design strategy:
 ### Phase 2: Refinement & Distinction (Next)
 - [ ] **Button 6-state system** (ticket `button-state-system`)
 - [ ] **Hero depth treatment** (gradient layers, 3D transforms) (ticket `hero-depth-treatment`)
-- [ ] **Typography scale amplification** — bolder data hierarchy
-- [ ] **Icon system** — cohesive sport glyphs, UI icons (replace emojis where appropriate)
-- [ ] **Loading states** — branded skeletons with accent pulses
-- [ ] **Empty states** — designed "no tournaments active" messaging
+- [ ] **Typography scale amplification** (ticket `typography-scale-amplification`)
+- [ ] **Icon system** (ticket `icon-system`)
+- [ ] **Loading states** (ticket `loading-state-system`)
+- [ ] **Empty states** (ticket `empty-state-design`)
+- [ ] **Nav accent strengthening** (ticket `nav-accent-strengthen`)
+- [ ] **Rank change animations** (ticket `rank-change-animations`)
 
 ### Phase 3: Signature Moments (Future)
-- [ ] **OG image templates** — dynamic social cards with logo, data, accent gradients
-- [ ] **Micro-interactions** — rank change animations, hover depth on cards
-- [ ] **Data storytelling** — visual callouts for biggest movers, upsets, milestones
+- [ ] **OG image templates** (ticket `og-image-templates`)
+- [ ] **Social share cards** (ticket `social-share-cards`)
+- [ ] **Data storytelling callouts** (ticket `data-storytelling-callouts`)
 - [ ] **Ambient motion** — subtle background gradients that shift with sport context
 
 ---
