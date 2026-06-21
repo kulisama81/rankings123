@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { getLiveData } from "@/lib/liveFeed";
 import LiveRankingView from "@/components/LiveRankingView";
+import YouTubeHighlights from "@/components/YouTubeHighlights";
+import { YOUTUBE_HIGHLIGHTS } from "@/config/youtube";
 
 export const metadata: Metadata = {
   title: "WTA Live Ranking",
@@ -36,7 +38,15 @@ export default async function WtaLivePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <LiveRankingView tour="wta" snapshot={snapshot} />
+      <div data-sport="wta">
+        <LiveRankingView tour="wta" snapshot={snapshot} />
+        <div className="mx-auto max-w-6xl px-4 pb-12 sm:px-6 lg:px-8">
+          <YouTubeHighlights
+            videoId={YOUTUBE_HIGHLIGHTS.wta.videoId}
+            title={YOUTUBE_HIGHLIGHTS.wta.title}
+          />
+        </div>
+      </div>
     </>
   );
 }
