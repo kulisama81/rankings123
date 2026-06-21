@@ -81,6 +81,11 @@ independent verifier PASS + merged + live-verified. Loop B files new tickets.
 **Apple Sports app** aesthetic: clean/premium, bold type, rounded high-contrast cards, dark
 base, vibrant per-sport accents, score/rank-forward, subtle motion. Installed skills to use:
 `frontend-design`, `theme-factory`, `brand-guidelines`, `webapp-testing`. Ticket: `design-revamp`.
+The **`design-research`** agent (`.claude/agents/design-research.md`, runs weekly) owns evolving this
+into a **distinctive, memorable identity** — it mines Clay (clay.global/blog), Awwwards, etc., keeps
+**`docs/DESIGN-IDENTITY.md`** as the single north-star spec, and files `design`-tagged tickets the
+planner builds. All design work ladders up to that doc so the look stays cohesive (CX-first: data is
+always the hero; no CWV/a11y regressions).
 
 ## Conventions
 - **Use skills first (check before every task):** before starting any task, inspect the available
