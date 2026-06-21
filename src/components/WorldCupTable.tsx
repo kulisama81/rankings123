@@ -29,6 +29,30 @@ function outlookClasses(outlook: WorldCupTeam["outlook"]): string {
   }
 }
 
+// Determines which legend items should be shown based on which outlooks are actually
+// present in the groups. Returns { showAdvancing, showEliminated }.
+export function getActiveLegendItems(groups: WorldCupGroup[]): {
+  showAdvancing: boolean;
+  showEliminated: boolean;
+} {
+  let hasAdvanced = false;
+  let hasEliminated = false;
+
+  for (const group of groups) {
+    for (const team of group.teams) {
+      if (team.outlook === "advanced") hasAdvanced = true;
+      if (team.outlook === "out") hasEliminated = true;
+      if (hasAdvanced && hasEliminated) break; // early exit if both found
+    }
+    if (hasAdvanced && hasEliminated) break;
+  }
+
+  return {
+    showAdvancing: hasAdvanced,
+    showEliminated: hasEliminated,
+  };
+}
+
 function LiveDot() {
   return (
     <span className="relative flex h-2 w-2">
@@ -240,6 +264,7 @@ export default function WorldCupTable({ initialSnapshot }: WorldCupTableProps) {
   };
   const activeMatches = scheduleTab === "upcoming" ? upcomingMatches : resultMatches;
   const activeByDate = groupByDate(activeMatches);
+  const { showAdvancing, showEliminated } = getActiveLegendItems(snapshot.groups);
 
   return (
     <div>
@@ -289,15 +314,21 @@ export default function WorldCupTable({ initialSnapshot }: WorldCupTableProps) {
             <GroupCard key={g.name} group={g} />
           ))}
         </div>
-        <p className="mt-4 flex flex-wrap items-center gap-4 text-xs text-muted">
-          <span className="inline-flex items-center gap-1.5">
-            <span className="inline-block h-3 w-1 rounded bg-up" /> Advancing
-          </span>
-          <span className="inline-flex items-center gap-1.5">
-            <span className="inline-block h-3 w-1 rounded bg-down/60" /> Eliminated
-          </span>
-          {snapshot.source === "espn" && <span>Standings &amp; results via ESPN.</span>}
-        </p>
+        {(showAdvancing || showEliminated || snapshot.source === "espn") && (
+          <p className="mt-4 flex flex-wrap items-center gap-4 text-xs text-muted">
+            {showAdvancing && (
+              <span className="inline-flex items-center gap-1.5">
+                <span className="inline-block h-3 w-1 rounded bg-up" /> Advancing
+              </span>
+            )}
+            {showEliminated && (
+              <span className="inline-flex items-center gap-1.5">
+                <span className="inline-block h-3 w-1 rounded bg-down/60" /> Eliminated
+              </span>
+            )}
+            {snapshot.source === "espn" && <span>Standings &amp; results via ESPN.</span>}
+          </p>
+        )}
       </section>
 
       {/* Full schedule tucked behind Upcoming / Results tabs so it doesn't dominate the page. */}
