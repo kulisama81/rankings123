@@ -52,9 +52,11 @@
 [data-sport="atp"] { --accent: #b6f23c; --accent-contrast: #0a0b0f; }
 [data-sport="wta"] { --accent: #f472b6; --accent-contrast: #0a0b0f; }
 [data-sport="worldcup"] { --accent: #22c55e; --accent-contrast: #06210f; }
+[data-sport="cycling"] { --accent: #fbbf24; --accent-contrast: #0a0b0f; }
 [data-theme="light"][data-sport="atp"] { --accent: #4d7c0f; --accent-contrast: #ffffff; }
 [data-theme="light"][data-sport="wta"] { --accent: #db2777; --accent-contrast: #ffffff; }
 [data-theme="light"][data-sport="worldcup"] { --accent: #15803d; --accent-contrast: #ffffff; }
+[data-theme="light"][data-sport="cycling"] { --accent: #d97706; --accent-contrast: #ffffff; }
 
 body {
   background-color: var(--bg);
