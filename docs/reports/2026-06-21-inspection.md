@@ -107,3 +107,40 @@ None found.
 - Test any newly deployed features
 
 **Deduplication Check:** Searched existing open tickets before filing — no duplicates found. All 4 bugs are new findings.
+
+---
+
+## Follow-up Inspection — Late Afternoon Run
+
+**Focus:** World Cup feature completeness verification (checking closed tickets against live functionality)
+
+### Additional Critical Bugs Found
+
+**`wc-match-pages-404-regression`** — World Cup match pages completely non-functional (P0)
+- **Routes:** `/world-cup/match/*` (all match IDs return 404)
+- **Issue:** Ticket `wc-match-pages` is marked as closed/shipped, but ALL match detail pages return HTTP 404 in production
+- **Impact:** Core user-facing feature completely broken — clicking any match link results in 404 error
+- **Tested:** Multiple match IDs (401631445, 401631500) — confirmed all fail
+- **Root cause:** Either feature was never deployed, or deployment broke after ticket closure
+- **Severity:** P0 — Critical regression, complete feature failure
+
+**`wc-team-roster-missing-regression`** — World Cup team pages missing player rosters (P1)
+- **Routes:** `/world-cup/team/USA`, `/world-cup/team/BRA`, etc.
+- **Issue:** Ticket `wc-team-pages` is marked closed claiming pages render "squad, group, fixtures/results, form", but live pages have NO player roster section at all
+- **Impact:** Major missing content — team pages exist but lack their primary feature (squad list)
+- **Additional issues:** Upcoming fixtures show "Scheduled" with no dates, missing team headers
+- **Severity:** P1 — Partial implementation / regression
+
+### Updated Bug Count
+
+**Total Bugs Filed Today:** 6
+- P0 (Critical): 2 — Golden Boot fabricated data, Match pages 404
+- P1 (High): 1 — Team rosters missing
+- P2 (Medium): 2 — World Cup legend regression, cycling placeholders
+- P3 (Low): 1 — Privacy URL
+
+### Process Observation
+
+Two World Cup tickets (`wc-match-pages`, `wc-team-pages`) were marked as closed/completed but their features are either completely broken (404s) or significantly incomplete (missing rosters) in production. This indicates a gap between ticket closure and actual production verification.
+
+**Recommendation:** Add automated route smoke tests to CI pipeline to catch 404 regressions, and strengthen the post-deploy verification step in the build loop before closing tickets.
