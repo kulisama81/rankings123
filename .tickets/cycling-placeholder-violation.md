@@ -1,6 +1,6 @@
 ---
 id: cycling-placeholder-violation
-status: open
+status: closed
 deps: [cycling-dynamic-feed]
 links: [cycling-section]
 created: 2026-06-21T20:00:00Z

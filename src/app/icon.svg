@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Dark background circle -->
+  <circle cx="16" cy="16" r="16" fill="#0a0b0f"/>
+
+  <!-- "123" in a clean, bold font -->
+  <text x="16" y="20" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="700" fill="#b6f23c" text-anchor="middle">123</text>
+
+  <!-- Live dot accent (top right) -->
+  <circle cx="24" cy="8" r="3" fill="#b6f23c"/>
+  <circle cx="24" cy="8" r="3" fill="#b6f23c" opacity="0.6">
+    <animate attributeName="r" values="3;4.5;3" dur="1.6s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.6;0.3;0.6" dur="1.6s" repeatCount="indefinite"/>
+  </circle>
+</svg>

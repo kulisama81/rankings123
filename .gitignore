@@ -33,3 +33,4 @@ next-env.d.ts
 /src/data/analytics-report.json
 /src/data/digest-history.json
 .claude/*.log
+.vercel
