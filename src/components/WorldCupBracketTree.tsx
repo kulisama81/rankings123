@@ -27,7 +27,7 @@ function CompactMatchCard({ match, round }: CompactMatchCardProps) {
 
   const cardClassName = `group relative overflow-hidden rounded-lg transition-all ${
     isProjected
-      ? "border border-dashed border-surface2/40 bg-surface/30 backdrop-blur-sm"
+      ? "border-2 border-dashed border-muted/60 bg-surface2/50 backdrop-blur-sm shadow-sm"
       : live
         ? "border-2 border-trophy/50 bg-trophy/5 shadow-lg shadow-trophy/10"
         : "border border-surface2 bg-surface hover:border-trophy/40 hover:shadow-md"
@@ -48,7 +48,7 @@ function CompactMatchCard({ match, round }: CompactMatchCardProps) {
 
       {/* Projected indicator */}
       {isProjected && !live && (
-        <div className="absolute right-1.5 top-1.5 rounded-full border border-muted/20 bg-bg/60 px-1.5 py-0.5 text-[8px] font-medium uppercase tracking-wide text-muted backdrop-blur-sm">
+        <div className="absolute right-1.5 top-1.5 rounded-full border border-muted/40 bg-bg/80 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-muted backdrop-blur-sm">
           Proj
         </div>
       )}

@@ -7,6 +7,11 @@ import type {
 } from "@/types";
 import { soccerFlag } from "./worldCupFlags";
 import { getMockWorldCupBracket } from "@/data/worldCup";
+import {
+  getR16Sources,
+  getQFSources,
+  getSFSources,
+} from "./worldCupBracketTree";
 
 const STANDINGS_URL =
   "https://site.api.espn.com/apis/v2/sports/soccer/fifa.world/standings";
@@ -199,6 +204,119 @@ function projectRoundOf32(groups: WorldCupGroup[]): WorldCupMatch[] {
   return matches;
 }
 
+// Project future rounds (R16/QF/SF/Final) as placeholders when they don't exist yet.
+// Uses the official bracket tree mappings to create traceable "Winner R32-x" slots.
+function projectFutureRounds(r32Matches: WorldCupMatch[]): {
+  r16: WorldCupMatch[];
+  qf: WorldCupMatch[];
+  sf: WorldCupMatch[];
+  final: WorldCupMatch | null;
+} {
+  if (r32Matches.length === 0) return { r16: [], qf: [], sf: [], final: null };
+
+  const baseDate = new Date();
+  baseDate.setDate(baseDate.getDate() + 10); // offset from R32
+
+  // R16: 8 matches, each fed by 2 R32 winners
+  const r16Matches: WorldCupMatch[] = [];
+  for (let i = 0; i < 8; i++) {
+    const sourceIndices = getR16Sources(i); // [r32Index1, r32Index2]
+    const matchDate = new Date(baseDate);
+    matchDate.setHours(baseDate.getHours() + i * 3);
+
+    r16Matches.push({
+      id: `projected-r16-${i}`,
+      date: matchDate.toISOString(),
+      state: "pre",
+      statusDetail: "Projected",
+      homeName: sourceIndices[0] !== undefined ? `Winner R32 Match ${sourceIndices[0] + 1}` : "TBD",
+      homeCode: "—",
+      homeFlag: "🏆",
+      homeScore: null,
+      homeSeedLabel: sourceIndices[0] !== undefined ? `Winner M${73 + sourceIndices[0]}` : undefined,
+      awayName: sourceIndices[1] !== undefined ? `Winner R32 Match ${sourceIndices[1] + 1}` : "TBD",
+      awayCode: "—",
+      awayFlag: "🏆",
+      awayScore: null,
+      awaySeedLabel: sourceIndices[1] !== undefined ? `Winner M${73 + sourceIndices[1]}` : undefined,
+    });
+  }
+
+  // QF: 4 matches, each fed by 2 R16 winners
+  const qfMatches: WorldCupMatch[] = [];
+  for (let i = 0; i < 4; i++) {
+    const sourceIndices = getQFSources(i); // [r16Index1, r16Index2]
+    const matchDate = new Date(baseDate);
+    matchDate.setDate(baseDate.getDate() + 3);
+    matchDate.setHours(baseDate.getHours() + i * 4);
+
+    qfMatches.push({
+      id: `projected-qf-${i}`,
+      date: matchDate.toISOString(),
+      state: "pre",
+      statusDetail: "Projected",
+      homeName: sourceIndices[0] !== undefined ? `Winner R16 Match ${sourceIndices[0] + 1}` : "TBD",
+      homeCode: "—",
+      homeFlag: "🏆",
+      homeScore: null,
+      homeSeedLabel: sourceIndices[0] !== undefined ? `Winner M${89 + sourceIndices[0]}` : undefined,
+      awayName: sourceIndices[1] !== undefined ? `Winner R16 Match ${sourceIndices[1] + 1}` : "TBD",
+      awayCode: "—",
+      awayFlag: "🏆",
+      awayScore: null,
+      awaySeedLabel: sourceIndices[1] !== undefined ? `Winner M${89 + sourceIndices[1]}` : undefined,
+    });
+  }
+
+  // SF: 2 matches, each fed by 2 QF winners
+  const sfMatches: WorldCupMatch[] = [];
+  for (let i = 0; i < 2; i++) {
+    const sourceIndices = getSFSources(i); // [qfIndex1, qfIndex2]
+    const matchDate = new Date(baseDate);
+    matchDate.setDate(baseDate.getDate() + 6);
+    matchDate.setHours(baseDate.getHours() + i * 6);
+
+    sfMatches.push({
+      id: `projected-sf-${i}`,
+      date: matchDate.toISOString(),
+      state: "pre",
+      statusDetail: "Projected",
+      homeName: sourceIndices[0] !== undefined ? `Winner QF ${sourceIndices[0] + 1}` : "TBD",
+      homeCode: "—",
+      homeFlag: "🏆",
+      homeScore: null,
+      homeSeedLabel: sourceIndices[0] !== undefined ? `Winner M${97 + sourceIndices[0]}` : undefined,
+      awayName: sourceIndices[1] !== undefined ? `Winner QF ${sourceIndices[1] + 1}` : "TBD",
+      awayCode: "—",
+      awayFlag: "🏆",
+      awayScore: null,
+      awaySeedLabel: sourceIndices[1] !== undefined ? `Winner M${97 + sourceIndices[1]}` : undefined,
+    });
+  }
+
+  // Final: 1 match, fed by 2 SF winners
+  const finalDate = new Date(baseDate);
+  finalDate.setDate(baseDate.getDate() + 9);
+  const finalMatch: WorldCupMatch = {
+    id: "projected-final",
+    date: finalDate.toISOString(),
+    state: "pre",
+    statusDetail: "Projected",
+    homeName: "Winner SF 1",
+    homeCode: "—",
+    homeFlag: "🏆",
+    homeScore: null,
+    homeSeedLabel: "Winner M101",
+    awayName: "Winner SF 2",
+    awayCode: "—",
+    awayFlag: "🏆",
+    awayScore: null,
+    awaySeedLabel: "Winner M102",
+  };
+
+  return { r16: r16Matches, qf: qfMatches, sf: sfMatches, final: finalMatch };
+}
+
 // Map ESPN stage labels to our knockout stage types
 function normalizeStage(label: string): KnockoutStage | null {
   const lower = label.toLowerCase();
@@ -295,6 +413,26 @@ export async function fetchWorldCupBracket(): Promise<WorldCupBracket> {
     const projectedMatches = projectRoundOf32(groups);
     if (projectedMatches.length > 0) {
       stageMatches.set("Round of 32", projectedMatches);
+    }
+  }
+
+  // Project future rounds (R16/QF/SF/Final) as placeholders when they don't exist yet
+  const r32Matches = stageMatches.get("Round of 32") ?? [];
+  if (r32Matches.length > 0) {
+    const futureRounds = projectFutureRounds(r32Matches);
+
+    // Only add projected rounds if the real matches don't exist yet
+    if (!stageMatches.has("Rd of 16") || (stageMatches.get("Rd of 16")?.length ?? 0) === 0) {
+      stageMatches.set("Rd of 16", futureRounds.r16);
+    }
+    if (!stageMatches.has("Quarterfinals") || (stageMatches.get("Quarterfinals")?.length ?? 0) === 0) {
+      stageMatches.set("Quarterfinals", futureRounds.qf);
+    }
+    if (!stageMatches.has("Semifinals") || (stageMatches.get("Semifinals")?.length ?? 0) === 0) {
+      stageMatches.set("Semifinals", futureRounds.sf);
+    }
+    if (futureRounds.final && (!stageMatches.has("Final") || (stageMatches.get("Final")?.length ?? 0) === 0)) {
+      stageMatches.set("Final", [futureRounds.final]);
     }
   }
 
