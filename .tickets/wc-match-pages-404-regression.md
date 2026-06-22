@@ -1,6 +1,6 @@
 ---
 id: wc-match-pages-404-regression
-status: open
+status: closed
 deps: []
 links: [wc-match-pages]
 created: 2026-06-21T00:00:00Z

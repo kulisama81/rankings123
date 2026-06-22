@@ -6,6 +6,7 @@ import type {
   WorldCupTeam,
   WorldCupBracket,
   KnockoutStage,
+  WorldCupMatchDetail,
 } from "@/types";
 import { soccerFlag } from "@/lib/worldCupFlags";
 
@@ -275,5 +276,90 @@ export function getMockWorldCupBracket(): WorldCupBracket {
     lastUpdated: new Date().toISOString(),
     source: "mock",
     stages,
+  };
+}
+
+export function getMockWorldCupMatchDetail(matchId: string): WorldCupMatchDetail {
+  // Graceful fallback for match detail pages when ESPN API is unreachable.
+  // Returns a realistic match structure modeled on actual World Cup rosters.
+  const mockMatch = mockMatches[0]; // Australia vs Türkiye template
+
+  return {
+    id: matchId,
+    homeName: mockMatch.homeName,
+    awayName: mockMatch.awayName,
+    homeScore: mockMatch.hs,
+    awayScore: mockMatch.as,
+    status: mockMatch.detail,
+    venue: mockMatch.venue.split(", ")[0] || "Unknown Venue",
+    city: mockMatch.venue.split(", ")[1] || "",
+    attendance: 45000,
+    homeLineup: [
+      { name: "M. Ryan", position: "GK", jersey: "1" },
+      { name: "A. Behich", position: "DF", jersey: "16" },
+      { name: "H. Souttar", position: "DF", jersey: "19" },
+      { name: "K. Rowles", position: "DF", jersey: "4" },
+      { name: "N. Atkinson", position: "DF", jersey: "3" },
+      { name: "J. Irvine", position: "MF", jersey: "22" },
+      { name: "A. Mooy", position: "MF", jersey: "13" },
+      { name: "C. Metcalfe", position: "MF", jersey: "8" },
+      { name: "M. Boyle", position: "FW", jersey: "6" },
+      { name: "M. Duke", position: "FW", jersey: "15" },
+      { name: "C. Goodwin", position: "FW", jersey: "20" },
+    ],
+    awayLineup: [
+      { name: "U. Çakır", position: "GK", jersey: "23" },
+      { name: "Z. Çelik", position: "DF", jersey: "2" },
+      { name: "S. Demiral", position: "DF", jersey: "3" },
+      { name: "A. Akaydin", position: "DF", jersey: "4" },
+      { name: "F. Kadıoğlu", position: "DF", jersey: "20" },
+      { name: "H. Çalhanoğlu", position: "MF", jersey: "10" },
+      { name: "O. Kökçü", position: "MF", jersey: "15" },
+      { name: "İ. Kahveci", position: "MF", jersey: "17" },
+      { name: "K. Aktürkoğlu", position: "FW", jersey: "7" },
+      { name: "B. Yılmaz", position: "FW", jersey: "17" },
+      { name: "C. Ünder", position: "FW", jersey: "11" },
+    ],
+    keyEvents: mockMatch.hs !== null ? [
+      {
+        type: "Goal",
+        clock: "23'",
+        team: mockMatch.homeName,
+        player: "M. Duke",
+        description: "Goal",
+        isRedCard: false,
+        isYellowCard: false,
+        isPenalty: false,
+      },
+      {
+        type: "Goal",
+        clock: "67'",
+        team: mockMatch.homeName,
+        player: "C. Goodwin",
+        description: "Goal",
+        isRedCard: false,
+        isYellowCard: false,
+        isPenalty: false,
+      },
+    ] : [],
+    homeStats: mockMatch.hs !== null ? {
+      "Possession %": "58",
+      "Total Shots": "14",
+      "Shots on Target": "7",
+      "Saves": "2",
+      "Fouls Committed": "11",
+      "Corner Kicks": "6",
+      "Offsides": "3",
+    } : {},
+    awayStats: mockMatch.hs !== null ? {
+      "Possession %": "42",
+      "Total Shots": "8",
+      "Shots on Target": "4",
+      "Saves": "5",
+      "Fouls Committed": "13",
+      "Corner Kicks": "3",
+      "Offsides": "2",
+    } : {},
+    source: "mock",
   };
 }

@@ -1,4 +1,5 @@
 import type { WorldCupMatchDetail } from "@/types";
+import { getMockWorldCupMatchDetail } from "@/data/worldCup";
 
 const SUMMARY_URL = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/summary";
 
@@ -13,7 +14,7 @@ async function fetchJson(url: string): Promise<any> {
   return res.json();
 }
 
-export async function fetchWorldCupMatchDetail(matchId: string): Promise<WorldCupMatchDetail> {
+async function fetchWorldCupMatchDetailFromESPN(matchId: string): Promise<WorldCupMatchDetail> {
   const data = await fetchJson(`${SUMMARY_URL}?event=${matchId}`);
 
   const header = data.header || {};
@@ -83,4 +84,12 @@ export async function fetchWorldCupMatchDetail(matchId: string): Promise<WorldCu
     awayStats: statMap(awayStats),
     source: "espn",
   };
+}
+
+export async function fetchWorldCupMatchDetail(matchId: string): Promise<WorldCupMatchDetail> {
+  try {
+    return await fetchWorldCupMatchDetailFromESPN(matchId);
+  } catch {
+    return getMockWorldCupMatchDetail(matchId);
+  }
 }
