@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getWorldCupData } from "@/lib/worldCupFeed";
+import { fetchTeamRoster } from "@/lib/worldCupTeamRosterFeed";
 import type { WorldCupTeam, WorldCupMatch } from "@/types";
 
 interface TeamPageProps {
@@ -154,6 +155,9 @@ export default async function TeamPage({ params }: TeamPageProps) {
     notFound();
   }
 
+  // Fetch roster data (null if unavailable — hide section per CX FIRST)
+  const rosterData = await fetchTeamRoster(teamCode);
+
   const form = snapshot.matches
     .filter(
       (m) =>
@@ -291,6 +295,52 @@ export default async function TeamPage({ params }: TeamPageProps) {
             </div>
           )}
         </section>
+
+        {rosterData && rosterData.roster.length > 0 && (
+          <section>
+            <h2 className="mb-4 text-xl font-bold tracking-tight text-fg">
+              Squad
+            </h2>
+            <div className="overflow-hidden rounded-2xl border border-edge bg-surface">
+              <table className="min-w-full">
+                <thead className="border-b border-edge bg-surface2">
+                  <tr>
+                    <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted">
+                      #
+                    </th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted">
+                      Player
+                    </th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted">
+                      Position
+                    </th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted">
+                      Age
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {rosterData.roster.map((player, idx) => (
+                    <tr key={player.id || idx} className="border-t border-edge">
+                      <td className="px-4 py-3 tabular-nums text-sm text-muted">
+                        {player.jersey || "—"}
+                      </td>
+                      <td className="px-4 py-3 font-medium text-fg">
+                        {player.name}
+                      </td>
+                      <td className="px-4 py-3 text-sm text-muted">
+                        {player.position}
+                      </td>
+                      <td className="px-4 py-3 tabular-nums text-sm text-muted">
+                        {player.age || "—"}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        )}
 
         <section>
           <h2 className="mb-4 text-xl font-bold tracking-tight text-fg">

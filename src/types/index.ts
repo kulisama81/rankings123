@@ -190,5 +190,21 @@ export interface WorldCupStats {
   topAssisters: WorldCupPlayerStat[];
 }
 
+export interface WorldCupTeamRoster {
+  teamCode: string;
+  teamName: string;
+  roster: {
+    id: string;
+    name: string;
+    jersey: string;
+    position: string;
+    age: number | null;
+    appearances: number | null;
+    goals: number | null;
+    assists: number | null;
+  }[];
+  source: "espn";
+}
+
 // Fabricated event types removed (OlympicsRankings, CyclingRankings, RugbyRankings, EventSummary).
 // Only real sourced data remains (ATP/WTA/World Cup).
