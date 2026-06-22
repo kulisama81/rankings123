@@ -13,6 +13,13 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-06-22",
+    title: "World Cup page loads faster",
+    description:
+      "Optimized data fetching for the World Cup page — eliminated redundant API calls, reducing load time by ~100-200ms for a snappier experience during the tournament.",
+    area: "worldcup",
+  },
+  {
     date: "2026-06-21",
     title: "Removed placeholder archive content",
     description:

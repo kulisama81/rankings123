@@ -1,6 +1,6 @@
 ---
 id: perf-wc-dedupe-fetches
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-21T00:00:00Z
@@ -10,6 +10,15 @@ parent: rankings123
 tags: [perf, worldcup]
 ---
 # World Cup page: deduplicate redundant ESPN API fetches
+
+## Acceptance Criteria
+
+- [ ] Create shared cached fetch helper for ESPN STANDINGS and SCOREBOARD
+- [ ] Update `getWorldCupData()` to use shared cache
+- [ ] Update `getWorldCupBracket()` to use shared cache
+- [ ] Verify both feeds still work correctly (no data regression)
+- [ ] Re-run `npm run check:performance` — `/world-cup` TTFB should drop ~100-200ms
+- [ ] Add regression test: verify only ONE fetch per unique URL during SSR
 
 ## Context
 
@@ -68,15 +77,6 @@ Then update both feeds to use these shared cached fetches instead of inline `fet
 **SEO:** Better LCP → ranking signal
 
 World Cup traffic is time-sensitive (June–July 2026) — every ms counts.
-
-## Acceptance Criteria
-
-- [ ] Create shared cached fetch helper for ESPN STANDINGS and SCOREBOARD
-- [ ] Update `getWorldCupData()` to use shared cache
-- [ ] Update `getWorldCupBracket()` to use shared cache
-- [ ] Verify both feeds still work correctly (no data regression)
-- [ ] Re-run `npm run check:performance` — `/world-cup` TTFB should drop ~100-200ms
-- [ ] Add regression test: verify only ONE fetch per unique URL during SSR
 
 ## Performance Budget
 

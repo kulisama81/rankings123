@@ -12,22 +12,12 @@ import {
   getQFSources,
   getSFSources,
 } from "./worldCupBracketTree";
-
-const STANDINGS_URL =
-  "https://site.api.espn.com/apis/v2/sports/soccer/fifa.world/standings";
-const SCOREBOARD_URL =
-  "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard";
+import {
+  getCachedStandings,
+  getCachedScoreboardFull,
+} from "./worldCupSharedCache";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
-async function fetchJson(url: string, revalidateSeconds = 180): Promise<any> {
-  const res = await fetch(url, {
-    headers: { Accept: "application/json" },
-    next: { revalidate: revalidateSeconds },
-  });
-  if (!res.ok) throw new Error(`${url} → HTTP ${res.status}`);
-  return res.json();
-}
 
 // Parse ESPN standings data into WorldCupGroup[]
 function parseStandings(data: any): WorldCupGroup[] {
@@ -369,8 +359,8 @@ function parseMatch(event: any): WorldCupMatch | null {
 export async function fetchWorldCupBracket(): Promise<WorldCupBracket> {
   // Fetch both knockout fixtures AND current standings for projection
   const [scoreboardData, standingsData] = await Promise.all([
-    fetchJson(SCOREBOARD_URL, 180),
-    fetchJson(STANDINGS_URL, 300),
+    getCachedScoreboardFull(),
+    getCachedStandings(),
   ]);
 
   // Extract calendar/stage information
