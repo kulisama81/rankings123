@@ -264,7 +264,6 @@ export default function WorldCupTable({ initialSnapshot }: WorldCupTableProps) {
   };
   const activeMatches = scheduleTab === "upcoming" ? upcomingMatches : resultMatches;
   const activeByDate = groupByDate(activeMatches);
-  const { showAdvancing, showEliminated } = getActiveLegendItems(snapshot.groups);
 
   return (
     <div>
@@ -314,21 +313,15 @@ export default function WorldCupTable({ initialSnapshot }: WorldCupTableProps) {
             <GroupCard key={g.name} group={g} />
           ))}
         </div>
-        {(showAdvancing || showEliminated || snapshot.source === "espn") && (
-          <p className="mt-4 flex flex-wrap items-center gap-4 text-xs text-muted">
-            {showAdvancing && (
-              <span className="inline-flex items-center gap-1.5">
-                <span className="inline-block h-3 w-1 rounded bg-up" /> Advancing
-              </span>
-            )}
-            {showEliminated && (
-              <span className="inline-flex items-center gap-1.5">
-                <span className="inline-block h-3 w-1 rounded bg-down/60" /> Eliminated
-              </span>
-            )}
-            {snapshot.source === "espn" && <span>Standings &amp; results via ESPN.</span>}
-          </p>
-        )}
+        <div className="mt-4 flex flex-wrap items-center gap-4 text-xs text-muted">
+          <span className="inline-flex items-center gap-1.5">
+            <span className="inline-block h-3 w-1 rounded bg-up" /> Advancing
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <span className="inline-block h-3 w-1 rounded bg-down/60" /> Eliminated
+          </span>
+          {snapshot.source === "espn" && <span className="ml-auto">Standings &amp; results via ESPN.</span>}
+        </div>
       </section>
 
       {/* Full schedule tucked behind Upcoming / Results tabs so it doesn't dominate the page. */}
