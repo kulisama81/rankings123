@@ -109,6 +109,40 @@ function parseStandings(data: any): WorldCupGroup[] {
   return groups;
 }
 
+function aggregateTeamCards(scoreboard: any): Map<string, { yellow: number; red: number }> {
+  const teamCards = new Map<string, { yellow: number; red: number }>();
+
+  for (const event of scoreboard?.events ?? []) {
+    const comp = (event?.competitions ?? [])[0];
+    if (!comp) continue;
+
+    // Only count cards from completed matches
+    const statusType = comp?.status?.type ?? {};
+    if (statusType.state !== "post") continue;
+
+    const details: any[] = comp?.details ?? [];
+    const competitors: any[] = comp.competitors ?? [];
+
+    for (const detail of details) {
+      if (detail?.yellowCard || detail?.redCard) {
+        const teamId = String(detail?.team?.id ?? "");
+        const competitor = competitors.find((c) => String(c?.team?.id) === teamId);
+        if (!competitor) continue;
+
+        const teamCode: string = competitor?.team?.abbreviation ?? "";
+        if (!teamCode) continue;
+
+        const cards = teamCards.get(teamCode) || { yellow: 0, red: 0 };
+        if (detail.yellowCard) cards.yellow++;
+        if (detail.redCard) cards.red++;
+        teamCards.set(teamCode, cards);
+      }
+    }
+  }
+
+  return teamCards;
+}
+
 function parseMatches(scoreboard: any): WorldCupMatch[] {
   const matches: WorldCupMatch[] = [];
   for (const event of scoreboard?.events ?? []) {
@@ -165,6 +199,20 @@ export async function fetchWorldCupSnapshot(): Promise<WorldCupSnapshot> {
   const groups = parseStandings(standingsData);
   if (groups.length === 0) throw new Error("ESPN standings feed returned no groups");
   const matches = parseMatches(scoreboard);
+
+  // Aggregate card counts from match details
+  const teamCards = aggregateTeamCards(scoreboard);
+
+  // Add card counts to teams
+  for (const group of groups) {
+    for (const team of group.teams) {
+      const cards = teamCards.get(team.code);
+      if (cards) {
+        team.yellowCards = cards.yellow;
+        team.redCards = cards.red;
+      }
+    }
+  }
 
   const stageName: string =
     scoreboard?.leagues?.[0]?.season?.type?.name ||

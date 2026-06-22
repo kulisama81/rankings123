@@ -78,6 +78,9 @@ export interface WorldCupTeam {
   status?: string;
   // "advanced" = qualified, "alive" = can still qualify, "out" = eliminated.
   outlook?: "advanced" | "alive" | "out";
+  // Disciplinary record aggregated from all played matches
+  yellowCards?: number;
+  redCards?: number;
 }
 
 export interface WorldCupGroup {

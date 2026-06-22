@@ -4,6 +4,7 @@ import { getWorldCupBracket } from "@/lib/worldCupBracketFeed";
 import WorldCupTable from "@/components/WorldCupTable";
 import WorldCupStats from "@/components/WorldCupStats";
 import WorldCupBracket from "@/components/WorldCupBracket";
+import WorldCupTeamStats from "@/components/WorldCupTeamStats";
 import HeroBanner from "@/components/HeroBanner";
 import SectionNav from "@/components/SectionNav";
 
@@ -44,12 +45,14 @@ export default async function WorldCupPage() {
   const today = new Date().toDateString();
   const hasTodaysMatches = snapshot.matches.some((m) => new Date(m.date).toDateString() === today);
   const hasStats = stats.topScorers.length > 0 || stats.topAssisters.length > 0;
+  const hasTeamStats = snapshot.groups.length > 0;
 
   const sections = [
     ...(hasTodaysMatches ? [{ id: "todays-matches", label: "Today's Matches" }] : []),
     { id: "group-standings", label: "Group Standings" },
     { id: "schedule", label: "Schedule" },
     { id: "knockout-bracket", label: "Knockout Bracket" },
+    ...(hasTeamStats ? [{ id: "team-stats", label: "Team Stats" }] : []),
     ...(hasStats ? [{ id: "tournament-leaders", label: "Tournament Leaders" }] : []),
   ];
 
@@ -75,6 +78,7 @@ export default async function WorldCupPage() {
         <div className="my-12">
           <WorldCupBracket bracket={bracket} />
         </div>
+        <WorldCupTeamStats snapshot={snapshot} />
         <WorldCupStats stats={stats} />
       </div>
     </>
