@@ -14,6 +14,13 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-06-22",
+    title: "World Cup legend now always visible",
+    description:
+      "The group standings legend explaining team status colors (Advancing/Eliminated) is now always visible, helping you understand what to expect as the tournament progresses.",
+    area: "worldcup",
+  },
+  {
+    date: "2026-06-22",
     title: "World Cup page loads faster",
     description:
       "Optimized data fetching for the World Cup page — eliminated redundant API calls, reducing load time by ~100-200ms for a snappier experience during the tournament.",
