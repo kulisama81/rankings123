@@ -5,7 +5,7 @@ import { RANK_BANDS, bandBySlug } from "../bands";
 import AtpDeepRankingTable from "@/components/AtpDeepRankingTable";
 import HeroBanner from "@/components/HeroBanner";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60; // ISR: 1 minute cache
 
 export async function generateStaticParams() {
   return RANK_BANDS.map((b) => ({ band: b.slug }));

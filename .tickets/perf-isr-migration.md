@@ -1,6 +1,6 @@
 ---
 id: perf-isr-migration
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-21T00:00:00Z
@@ -10,6 +10,15 @@ parent: rankings123
 tags: [perf, worldcup]
 ---
 # Migrate data pages from force-dynamic to ISR caching
+
+## Acceptance Criteria
+
+- [ ] Remove `force-dynamic` from all data pages (`/atp-live`, `/wta-live`, `/world-cup`, etc.)
+- [ ] Add `export const revalidate = 60` (or appropriate interval per page)
+- [ ] Verify client-side polling still works (live updates visible within ~20s)
+- [ ] Re-run `npm run check:performance` — expect TTFB < 0.3s for cached hits
+- [ ] Measure Core Web Vitals (Lighthouse) — expect LCP < 2.0s
+- [ ] Add performance regression test to CI (fail if TTFB > baseline + 25%)
 
 ## Context
 
@@ -48,15 +57,6 @@ Combined with client-side polling (already implemented) for live updates. This g
 - Better Core Web Vitals → Google ranking signal
 - Faster mobile experience → better ad viewability + RPM
 - **Critical for World Cup traffic spike** (June–July 2026) — traffic volume amplifies the impact of every 100ms
-
-## Acceptance Criteria
-
-- [ ] Remove `force-dynamic` from all data pages (`/atp-live`, `/wta-live`, `/world-cup`, etc.)
-- [ ] Add `export const revalidate = 60` (or appropriate interval per page)
-- [ ] Verify client-side polling still works (live updates visible within ~20s)
-- [ ] Re-run `npm run check:performance` — expect TTFB < 0.3s for cached hits
-- [ ] Measure Core Web Vitals (Lighthouse) — expect LCP < 2.0s
-- [ ] Add performance regression test to CI (fail if TTFB > baseline + 25%)
 
 ## Performance Budget
 

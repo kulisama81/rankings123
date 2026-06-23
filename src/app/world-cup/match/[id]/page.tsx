@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: MatchPageProps): Promise<Meta
   }
 }
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60; // ISR: 1 minute cache
 
 export default async function MatchDetailPage({ params }: MatchPageProps) {
   const { id } = await params;

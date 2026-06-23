@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   },
 };
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60; // ISR: 1 minute cache with client-side polling for live updates
 
 const jsonLd = {
   "@context": "https://schema.org",

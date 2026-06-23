@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   },
 };
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60; // ISR: 1 minute cache
 
 const jsonLd = {
   "@context": "https://schema.org",

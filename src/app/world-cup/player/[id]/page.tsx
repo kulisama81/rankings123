@@ -36,7 +36,7 @@ export async function generateMetadata({
   };
 }
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60; // ISR: 1 minute cache
 
 export default async function PlayerPage({ params }: PlayerPageProps) {
   const { id } = await params;
