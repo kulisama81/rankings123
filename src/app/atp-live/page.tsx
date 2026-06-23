@@ -18,7 +18,8 @@ export const metadata: Metadata = {
   },
 };
 
-export const revalidate = 60; // ISR: 1 minute cache with client-side polling for live updates
+// Force dynamic rendering to support useSearchParams in LiveRankingTable (country filter)
+export const dynamic = "force-dynamic";
 
 const jsonLd = {
   "@context": "https://schema.org",
