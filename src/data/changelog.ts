@@ -14,6 +14,13 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-06-23",
+    title: "What's New page launched",
+    description:
+      "New public changelog page at /changelog showing all recent updates and features. Now you can see what's changed and what's coming next.",
+    area: "site",
+  },
+  {
+    date: "2026-06-23",
     title: "Focused on live features",
     description:
       "Removed cycling from our site description to focus on what's live now: tennis and World Cup. Cycling will return when we have real data to show.",
