@@ -14,6 +14,13 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-06-23",
+    title: "Fixed /whats-new route",
+    description:
+      "The /whats-new URL now properly redirects to /changelog. Both URLs work, with /changelog as the canonical route.",
+    area: "site",
+  },
+  {
+    date: "2026-06-23",
     title: "Fixed ATP/WTA ranking tables",
     description:
       "Resolved a critical issue where ATP and WTA Live ranking tables were only showing the top player instead of the full ranking. All 1000 players now load correctly.",
