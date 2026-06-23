@@ -48,3 +48,7 @@ DATA SOURCES EVALUATED:
 ✗ UCI DataRide - login-restricted
 
 RECOMMENDATION: Start with FirstCycling wrapper (most direct, keyless, documented). Fallback to PCS scraping if needed.
+
+**2026-06-23T04:18:46Z**
+
+BLOCKED: No keyless public UCI rankings API available. ESPN has no cycling data. FirstCycling/PCS require Python scrapers with Cloudflare bypass. Needs Python microservice infrastructure (out of scope for autonomous loop). Recommend human evaluation of alternatives.
