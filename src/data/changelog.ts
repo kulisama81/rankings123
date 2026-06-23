@@ -14,6 +14,13 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-06-22",
+    title: "Filter ATP/WTA rankings by country",
+    description:
+      "Tennis rankings now include a country filter dropdown. Select any nation to view only players from that country — perfect for tracking your country's players. Filter choice is saved in the URL so you can bookmark or share filtered views.",
+    area: "tennis",
+  },
+  {
+    date: "2026-06-22",
     title: "World Cup legend now always visible",
     description:
       "The group standings legend explaining team status colors (Advancing/Eliminated) is now always visible, helping you understand what to expect as the tournament progresses.",

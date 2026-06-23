@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { AtpLiveSnapshot, Tour } from "@/types";
 import LiveRankingTable from "./LiveRankingTable";
 import HeroBanner from "./HeroBanner";
@@ -30,7 +31,9 @@ export default function LiveRankingView({ tour, snapshot }: LiveRankingViewProps
         subtitle={snapshot.weekLabel}
         stats={stats}
       />
-      <LiveRankingTable tour={tour} initialSnapshot={snapshot} />
+      <Suspense fallback={<div className="text-center text-muted">Loading...</div>}>
+        <LiveRankingTable tour={tour} initialSnapshot={snapshot} />
+      </Suspense>
     </div>
   );
 }
