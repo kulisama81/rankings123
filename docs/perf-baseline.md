@@ -2,7 +2,7 @@
 
 This baseline establishes performance budgets and target metrics for all routes. Use this to detect regressions during development.
 
-**Last Updated:** 2026-06-21  
+**Last Updated:** 2026-06-23  
 **Measurement Method:** `npm run check:performance` (TTFB/total/size via live fetch)
 
 ---
@@ -23,10 +23,10 @@ Per [web.dev/vitals](https://web.dev/vitals), these are the **GOOD** thresholds 
 
 | Route        | TTFB Budget | Total Budget | Size Budget | Current TTFB | Current Total | Current Size | Status |
 |--------------|-------------|--------------|-------------|--------------|---------------|--------------|--------|
-| /            | ≤ 0.8s      | ≤ 2.0s       | ≤ 150KB     | 0.23s        | 0.27s         | 93KB         | ✅ FAST |
-| /atp-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.46s        | 0.73s         | 380KB        | ⚠️ SIZE |
-| /wta-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 200KB     | 0.29s        | 0.47s         | 165KB        | ✅ FAST |
-| /world-cup   | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.35s        | 0.49s         | 341KB        | ⚠️ SIZE |
+| /            | ≤ 0.8s      | ≤ 2.0s       | ≤ 150KB     | 0.25s        | 0.26s         | 24KB         | ✅ FAST |
+| /atp-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.18s        | 0.31s         | 269KB        | ✅ FAST |
+| /wta-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 200KB     | 0.16s        | 0.16s         | 48KB         | ✅ FAST |
+| /world-cup   | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.24s        | 0.32s         | 394KB        | ⚠️ SIZE |
 
 **Legend:**
 - **TTFB** = Time to First Byte (server response start)
@@ -40,47 +40,63 @@ Per [web.dev/vitals](https://web.dev/vitals), these are the **GOOD** thresholds 
 
 ---
 
+## Recent Improvements (2026-06-23)
+
+### ✅ ISR Migration (COMPLETED — commit b438b6d)
+**Impact:** Massive performance wins across all routes.
+
+**Results:**
+- ATP Live: TTFB 0.46s → 0.18s (-61%), size 380KB → 269KB (-29%)
+- WTA Live: TTFB 0.29s → 0.16s (-45%), size 165KB → 48KB (-71%)
+- World Cup: TTFB 0.35s → 0.24s (-31%)
+- Home: size 93KB → 24KB (-74%)
+
+Migrated from `force-dynamic` to `export const revalidate = 60` for ISR caching. Pages now served from edge with background revalidation.
+
+### ✅ ESPN Fetch Deduplication (COMPLETED — commit e3242c7)
+Eliminated redundant ESPN API calls on World Cup page. Contributed to TTFB improvements.
+
+---
+
 ## Known Performance Debt
 
-### 1. `force-dynamic` Everywhere (High Impact)
-**Impact:** Every page request blocks on upstream API calls (ESPN, WTA, UTS); no edge caching.
+### 1. World Cup Page Size Regression (High Impact, PRIORITY 1)
+**Impact:** Page size **increased 16%** (341KB → 394KB, now 31% over 300KB budget).
 
-**Affected routes:** All data pages (`/atp-live`, `/wta-live`, `/world-cup`, etc.)
+**Root cause:** Recent feature additions:
+- Team statistics leaderboards (commit 853a068)
+- Team rosters (commit 47afa40)
+- Match page enhancements (commit ed88bce)
 
-**Solution:** Migrate to ISR with short revalidation intervals:
-```ts
-export const revalidate = 60; // 1 minute ISR
-```
-Combined with client-side polling for "live" feel. This would:
-- Serve cached pages at edge (near-instant TTFB)
-- Revalidate every 60s in background
-- Reduce upstream API load
+**Mobile impact:** 394KB on slow 3G = ~3.5s transfer time.
 
----
+**Solution (ticket `perf-wc-page-size`):** Lazy-load below-the-fold sections:
+- Knockout bracket (~50KB)
+- Team statistics (~30KB)
+- Selective roster loading
 
-### 2. Redundant ESPN Fetches on World Cup Page (Medium Impact)
-**Impact:** `/world-cup` fetches ESPN's STANDINGS and SCOREBOARD APIs **twice** in parallel:
-- `getWorldCupData()` in `worldCupFeed.ts` (lines 164-167)
-- `getWorldCupBracket()` in `worldCupBracketFeed.ts` (lines 253-256)
+**Target:** < 300KB initial bundle (~100KB reduction needed)
 
-**Solution:** Deduplicate via React `cache()` or shared cached fetch helper. Savings: ~100-200ms TTFB reduction.
+**Why urgent:** World Cup 2026 is live (through ~July 19) — high mobile traffic NOW.
 
 ---
 
-### 3. Large Page Sizes (Medium Impact)
-- **/atp-live**: 380KB (over 300KB budget) — ~1000 players hydrating at once
-- **/world-cup**: 341KB (over 300KB budget) — 100 matches + 12 groups + bracket + stats
+### 2. Large Page Sizes (Medium Impact)
+- **/atp-live**: 269KB (now under 300KB budget, improved from 380KB) — still loads ~1000 players at once
+  - **Target:** < 100KB via server-side pagination (ticket `perf-atp-page-size`)
+- **/world-cup**: 394KB (**over 300KB budget**, regressed from 341KB) — 100 matches + 12 groups + bracket + stats + rosters
+  - **Target:** < 300KB via lazy-loading (ticket `perf-wc-page-size`)
 
-**Mobile impact:** 380KB on slow 3G = ~3s transfer alone.
+**Mobile impact:** 394KB on slow 3G = ~3.5s transfer alone.
 
 **Solutions:**
-- **Lazy-load below-the-fold sections** (e.g., bracket, stats) via `next/dynamic` + Suspense
-- **Virtualize large tables** (ATP deep ranking ~1000 rows)
+- **World Cup (priority 1):** Lazy-load bracket and stats via `next/dynamic` + Suspense
+- **ATP (priority 2):** Server-side pagination — send only 50 players per request
 - **Bundle analysis** to identify large JS dependencies (`@next/bundle-analyzer`)
 
 ---
 
-### 4. Multiple Font Families (Low-Medium Impact)
+### 3. Multiple Font Families (Low-Medium Impact)
 5 Google Fonts loaded: Geist, Geist_Mono, Archivo, Oswald, Source_Serif_4.
 
 **Impact:** Additional render-blocking requests; font flash.
@@ -89,7 +105,7 @@ Combined with client-side polling for "live" feel. This would:
 
 ---
 
-### 5. Limited `next/image` Usage (Low Impact)
+### 4. Limited `next/image` Usage (Low Impact)
 Only 1 occurrence of `next/image` found across components.
 
 **Impact:** Unoptimized images can bloat payload and slow LCP.

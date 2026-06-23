@@ -5,7 +5,7 @@ deps: []
 links: []
 created: 2026-06-21T00:00:00Z
 type: enhancement
-priority: 2
+priority: 1
 parent: rankings123
 tags: [perf, worldcup]
 ---
@@ -13,18 +13,25 @@ tags: [perf, worldcup]
 
 ## Context
 
-The World Cup page is **341KB** (over the 300KB budget), with all content hydrating at once:
+The World Cup page is **394KB** (over the 300KB budget), with all content hydrating at once:
 - 100 matches (full tournament schedule)
 - 12 group standings tables
 - Knockout bracket tree (projected or live)
 - Tournament stats (top scorers, assisters)
+- Team rosters (added 2026-06-22)
 
-**Mobile impact:** On slow 3G, 341KB = ~3s transfer time alone, even before JS execution.
+**⚠️ SIZE REGRESSION (2026-06-23):**
+Despite TTFB improvements from ISR migration, page size **increased 16%** from recent feature additions:
+- **Baseline (2026-06-21):** 341KB
+- **Current (2026-06-23):** 394KB (+53KB, +16%)
+- **Root cause:** Team statistics leaderboards (853a068), team rosters (47afa40), match page enhancements (ed88bce)
+
+**Mobile impact:** On slow 3G, 394KB = ~3.5s transfer time alone, even before JS execution.
 
 **Current measurement:**
-- TTFB: 0.35s (acceptable)
-- Total: 0.49s (acceptable on fast connection)
-- Size: 341KB (**over budget**, impacts mobile)
+- TTFB: 0.24s (excellent, improved via ISR)
+- Total: 0.32s (excellent on fast connection)
+- Size: 394KB (**31% over budget**, impacts mobile, **REGRESSED vs baseline**)
 
 ## Solution
 
@@ -78,6 +85,7 @@ Mobile users are more likely to be on-the-go during World Cup matches — speed 
 
 ## Performance Budget
 
-**Current:** 341KB total page size  
+**Baseline (2026-06-21):** 341KB total page size  
+**Current (2026-06-23):** 394KB total page size (+16% regression)  
 **Target:** < 300KB initial bundle  
-**Expected savings:** ~50-80KB (bracket + stats deferred)
+**Required reduction:** ~100KB (bracket + stats + selective roster loading)

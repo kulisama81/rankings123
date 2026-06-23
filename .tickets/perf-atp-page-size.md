@@ -13,19 +13,25 @@ tags: [perf]
 
 ## Context
 
-The ATP Live page is **380KB** (over the 300KB budget), the largest page on the site. This is because it loads the **deep ATP ranking** (~1000 players) in a single payload.
+The ATP Live page loads the **deep ATP ranking** (~1000 players) in a single payload.
 
 **Current implementation:**
 - Client-side pagination (50 rows per page) via `LiveRankingTable.tsx`
 - But all ~1000 player records are sent in the initial HTML/JSON payload
 - Only 50 are rendered at a time
 
-**Mobile impact:** On slow 3G, 380KB = ~3.5s transfer time alone.
+**Recent improvement (2026-06-23):**
+The ISR migration (commit b438b6d) delivered **major performance gains**:
+- Size: 380KB → **269KB** (-29%, now **under the 300KB budget!**)
+- TTFB: 0.46s → 0.18s (-61%)
+- Total: 0.73s → 0.31s (-58%)
 
 **Current measurement:**
-- TTFB: 0.46s (acceptable)
-- Total: 0.73s (acceptable on fast connection)
-- Size: 380KB (**over budget**, impacts mobile)
+- TTFB: 0.18s (excellent)
+- Total: 0.31s (excellent)
+- Size: 269KB (**now under 300KB budget**, but still far from aggressive 100KB target)
+
+**Mobile impact:** On slow 3G, 269KB = ~2.5s transfer time (improved from ~3.5s).
 
 ## Solution
 
@@ -68,6 +74,7 @@ ATP Live is one of the core value props (real-time rankings) — it needs to fee
 
 ## Performance Budget
 
-**Current:** 380KB total page size  
+**Baseline (2026-06-21):** 380KB total page size  
+**Current (2026-06-23):** 269KB total page size (-29% improvement)  
 **Target:** < 100KB initial payload  
-**Expected savings:** ~280KB (send only 50 players instead of 1000)
+**Remaining gap:** ~170KB (send only 50 players instead of 1000)
