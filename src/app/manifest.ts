@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Rankings123 — Live Sports Rankings",
     short_name: "Rankings123",
-    description: "Live ATP & WTA tennis rankings, FIFA World Cup 2026 standings, and cycling Grand Tours & classics.",
+    description: "Live ATP & WTA tennis rankings, FIFA World Cup 2026 standings.", // TODO: Re-add cycling when cycling-dynamic-feed ships
     start_url: "/",
     display: "standalone",
     background_color: "#0a0b0f",

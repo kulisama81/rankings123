@@ -1,6 +1,6 @@
 ---
 id: cycling-hide-until-ready
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-23T13:51:43Z
@@ -28,8 +28,10 @@ Users ARE finding these pages (likely via nav or homepage) but immediately leavi
 
 ## Acceptance Criteria
 
-1. Remove "Cycling" from main navigation (src/components/Navigation.tsx or equivalent)
-2. Hide cycling section from homepage (src/app/page.tsx) — use conditional render or remove section entirely
-3. Cycling routes (/events/*) can stay (direct links still work for testing) but shouldn't be discoverable via site navigation
-4. Add TODO comment: "Re-add cycling when cycling-dynamic-feed (ticket) ships"
-5. Build/lint green, live-verified (cycling nav link gone from rankings123.com)
+**Updated based on actual codebase state:** Cycling was never in navigation or homepage. The bounce traffic is likely from SEO/search engines finding cycling mentions in metadata. Real fix:
+
+1. Remove cycling from site metadata (layout.tsx, manifest.ts) so search engines stop indexing it as a promised feature
+2. Remove cycling from CLAUDE.md expansion plans (clarify as "future" not "current")
+3. Add TODO comments: "Re-add cycling when cycling-dynamic-feed ships"
+4. Build/lint green
+5. Verify no cycling promises in user-facing metadata or navigation

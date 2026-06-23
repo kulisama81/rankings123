@@ -2,7 +2,7 @@
 
 A **live multi-sport rankings hub**. Beachhead: live ATP/WTA tennis rankings to rival and
 surpass live-tennis.eu in **quality and ad revenue**; expanding to World Cup (live now),
-cycling, Olympics. Live in production at **https://rankings123.com**.
+with future plans for cycling and Olympics. Live in production at **https://rankings123.com**.
 
 > New here (new session or a scheduled cloud routine)? Read this file, then `docs/DESIGN.md`
 > (full design + strategy), `docs/LOOP.md` (how the build loop runs), and

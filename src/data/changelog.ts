@@ -13,6 +13,13 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-06-23",
+    title: "Focused on live features",
+    description:
+      "Removed cycling from our site description to focus on what's live now: tennis and World Cup. Cycling will return when we have real data to show.",
+    area: "site",
+  },
+  {
     date: "2026-06-22",
     title: "Filter ATP/WTA rankings by country",
     description:
