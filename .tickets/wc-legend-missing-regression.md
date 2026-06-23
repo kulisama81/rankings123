@@ -1,6 +1,6 @@
 ---
 id: wc-legend-missing-regression
-status: open
+status: closed
 deps: []
 links: [wc-legend-mismatch]
 created: 2026-06-21T20:00:00Z

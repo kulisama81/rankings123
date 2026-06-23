@@ -1,6 +1,6 @@
 ---
 id: wc-team-stats-dashboard
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-22T13:30:00Z
@@ -12,13 +12,6 @@ tags: [worldcup, engagement, data]
 # World Cup team statistical leaderboards
 
 Team-level stat leaders during live tournament: most goals scored, best defense (fewest conceded), most possession, most shots, disciplinary records (yellow/red cards). ESPN API already provides team stats — surface them as engaging leaderboards.
-
-## First-principles ROI
-- **User need**: During live WC, fans compare teams by performance stats, not just standings
-- **Timing**: TIME-SENSITIVE (WC live through ~July 19) — high engagement window
-- **Effort**: Low (ESPN standings API has team stats already)
-- **Impact**: High engagement (shareable, discussable), differentiates from basic standings
-- **Traffic**: World Cup pages have 621s avg session (10+ min) — deepest engagement on site
 
 ## Acceptance Criteria
 
@@ -35,3 +28,11 @@ Team-level stat leaders during live tournament: most goals scored, best defense 
 7. Themed with World Cup accent colors
 8. Build/lint/data-integrity green
 9. Live-verified on rankings123.com
+
+## First-principles ROI
+
+- **User need**: During live WC, fans compare teams by performance stats, not just standings
+- **Timing**: TIME-SENSITIVE (WC live through ~July 19) — high engagement window
+- **Effort**: Low (ESPN standings API has team stats already)
+- **Impact**: High engagement (shareable, discussable), differentiates from basic standings
+- **Traffic**: World Cup pages have 621s avg session (10+ min) — deepest engagement on site
