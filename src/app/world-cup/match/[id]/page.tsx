@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { fetchWorldCupMatchDetail } from "@/lib/worldCupMatchFeed";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { venueToSlug } from "@/lib/worldCupVenue";
 
 interface MatchPageProps {
   params: Promise<{ id: string }>;
@@ -86,10 +87,19 @@ export default async function MatchDetailPage({ params }: MatchPageProps) {
           </div>
         </div>
 
-        <div className="mt-6 space-y-1 border-t border-edge pt-4 text-center text-sm text-muted">
-          <div>{match.venue}</div>
-          {match.city && <div>{match.city}</div>}
-          {match.attendance && <div>Attendance: {match.attendance.toLocaleString()}</div>}
+        <div className="mt-6 space-y-1 border-t border-edge pt-4 text-center text-sm">
+          {match.venue ? (
+            <Link
+              href={`/world-cup/venue/${venueToSlug(match.venue)}`}
+              className="text-muted hover:text-fg transition-colors"
+            >
+              {match.venue}
+            </Link>
+          ) : (
+            <div className="text-muted">Venue TBD</div>
+          )}
+          {match.city && <div className="text-muted">{match.city}</div>}
+          {match.attendance && <div className="text-muted">Attendance: {match.attendance.toLocaleString()}</div>}
         </div>
       </div>
 

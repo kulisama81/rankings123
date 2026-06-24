@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getWorldCupData, getWorldCupStats } from "@/lib/worldCupFeed";
+import { venueToSlug } from "@/lib/worldCupVenue";
 
 const BASE = "https://rankings123.com";
 
@@ -50,7 +51,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
     }));
 
-    return [...staticRoutes, ...matchRoutes, ...teamRoutes, ...playerRoutes];
+    // Venue pages (SEO: "MetLife Stadium World Cup 2026", "Dallas World Cup matches", etc.)
+    const uniqueVenues = Array.from(
+      new Set(snapshot.matches.map((m) => m.venue).filter(Boolean))
+    ) as string[];
+    const venueRoutes: MetadataRoute.Sitemap = uniqueVenues.map((venue) => ({
+      url: `${BASE}/world-cup/venue/${venueToSlug(venue)}`,
+      lastModified: now,
+      changeFrequency: "daily" as const,
+      priority: 0.7,
+    }));
+
+    return [...staticRoutes, ...matchRoutes, ...teamRoutes, ...playerRoutes, ...venueRoutes];
   } catch {
     // If World Cup data fails, still return static routes
     return staticRoutes;

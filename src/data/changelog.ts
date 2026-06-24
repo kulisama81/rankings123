@@ -13,6 +13,13 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-06-24",
+    title: "World Cup Venue Pages",
+    description:
+      "New venue pages for all 16 World Cup 2026 stadiums! Visit /world-cup/venue/[stadium-name] to see all matches hosted at each venue, including schedule, results, and total goals scored. Great for planning your stadium visits or tracking matches by city.",
+    area: "worldcup",
+  },
+  {
     date: "2026-06-23",
     title: "World Cup Group Qualification Scenarios",
     description:
