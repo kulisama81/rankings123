@@ -14,6 +14,13 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-06-23",
+    title: "World Cup Group Qualification Scenarios",
+    description:
+      "Interactive group qualification calculator at /world-cup/scenarios! Simulate upcoming match results to see who advances from each group. Enter scores for remaining group stage matches and watch the standings update live. See which teams qualify as top 2 or best third-place finishers.",
+    area: "worldcup",
+  },
+  {
+    date: "2026-06-23",
     title: "Interactive World Cup Bracket Predictor",
     description:
       "New bracket predictor at /world-cup/bracket! Fill out your R32→Final predictions, save your bracket, and share with friends via URL. Compare your picks with actual results as the tournament progresses. Track how well you predict the knockout rounds.",
