@@ -14,6 +14,13 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-06-23",
+    title: "Interactive World Cup Bracket Predictor",
+    description:
+      "New bracket predictor at /world-cup/bracket! Fill out your R32→Final predictions, save your bracket, and share with friends via URL. Compare your picks with actual results as the tournament progresses. Track how well you predict the knockout rounds.",
+    area: "worldcup",
+  },
+  {
+    date: "2026-06-23",
     title: "Faster World Cup page loads",
     description:
       "Improved World Cup page load performance by lazy-loading below-the-fold content. The page now loads faster on mobile, especially on slower connections, making it easier to check standings during live matches.",
