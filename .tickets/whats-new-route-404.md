@@ -1,6 +1,6 @@
 ---
 id: whats-new-route-404
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-23T18:04:30Z
@@ -10,6 +10,14 @@ parent: rankings123
 tags: [bug, routing, ui]
 ---
 # /whats-new route returns 404 while /changelog works
+
+## Acceptance Criteria
+
+- Choose canonical route (/whats-new or /changelog)
+- Add redirect from non-canonical to canonical route
+- Update all internal links to use canonical route
+- **Regression test added** to tests/ that verifies both routes return 200 (canonical direct, non-canonical via redirect)
+- Verified working on production after deploy
 
 ## Bug Report
 
@@ -36,11 +44,3 @@ Either /whats-new should redirect to /changelog, OR /whats-new should be the can
 - Potential broken links
 - SEO confusion with duplicate/inconsistent URLs
 - User confusion if they try to access /whats-new
-
-## Acceptance Criteria
-
-- Choose canonical route (/whats-new or /changelog)
-- Add redirect from non-canonical to canonical route
-- Update all internal links to use canonical route
-- **Regression test added** to tests/ that verifies both routes return 200 (canonical direct, non-canonical via redirect)
-- Verified working on production after deploy
