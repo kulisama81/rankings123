@@ -222,13 +222,15 @@ export async function fetchWorldCupSnapshot(): Promise<WorldCupSnapshot> {
   // Attach odds to upcoming matches (pre-match only — never show odds as "predictions"
   // for live or finished matches, which would present unconfirmed outcomes as fact).
   const oddsSource = getOddsSource();
-  const matchesWithOdds = matches.map((match) => {
-    if (match.state === "pre") {
-      const odds = getMatchOdds();
-      return odds ? { ...match, odds } : match;
-    }
-    return match;
-  });
+  const matchesWithOdds = await Promise.all(
+    matches.map(async (match) => {
+      if (match.state === "pre") {
+        const odds = await getMatchOdds(match.homeName, match.awayName);
+        return odds ? { ...match, odds } : match;
+      }
+      return match;
+    })
+  );
 
   return {
     lastUpdated: new Date().toISOString(),
@@ -248,13 +250,15 @@ export async function getWorldCupData(): Promise<WorldCupSnapshot> {
   } catch {
     const mockSnapshot = getMockSnapshot();
     const oddsSource = getOddsSource();
-    const matchesWithOdds = mockSnapshot.matches.map((match) => {
-      if (match.state === "pre") {
-        const odds = getMatchOdds();
-        return odds ? { ...match, odds } : match;
-      }
-      return match;
-    });
+    const matchesWithOdds = await Promise.all(
+      mockSnapshot.matches.map(async (match) => {
+        if (match.state === "pre") {
+          const odds = await getMatchOdds(match.homeName, match.awayName);
+          return odds ? { ...match, odds } : match;
+        }
+        return match;
+      })
+    );
     return { ...mockSnapshot, source: "mock", oddsSource, matches: matchesWithOdds };
   }
 }

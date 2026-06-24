@@ -14,6 +14,13 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-06-24",
+    title: "World Cup Match Predictions",
+    description:
+      "Win probability predictions for upcoming World Cup matches! See which team is favored based on live betting odds from The Odds API. Predictions appear automatically for all scheduled fixtures, helping you gauge match outcomes before kickoff.",
+    area: "worldcup",
+  },
+  {
+    date: "2026-06-24",
     title: "World Cup Venue Pages",
     description:
       "New venue pages for all 16 World Cup 2026 stadiums! Visit /world-cup/venue/[stadium-name] to see all matches hosted at each venue, including schedule, results, and total goals scored. Great for planning your stadium visits or tracking matches by city.",
