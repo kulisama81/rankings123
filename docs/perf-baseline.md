@@ -2,8 +2,10 @@
 
 This baseline establishes performance budgets and target metrics for all routes. Use this to detect regressions during development.
 
-**Last Updated:** 2026-06-23  
+**Last Updated:** 2026-06-24  
 **Measurement Method:** `npm run check:performance` (TTFB/total/size via live fetch)
+
+> 🔴 **REGRESSION ALERT (2026-06-24):** ATP and WTA Live pages reverted from ISR to force-dynamic (commit 8ee5be4) to fix a rendering bug. This caused severe performance regressions (TTFB doubled). See ticket `perf-atp-wta-isr-regression` (P0). Baseline targets remain unchanged (do not rebaseline regressions).
 
 ---
 
@@ -40,9 +42,25 @@ Per [web.dev/vitals](https://web.dev/vitals), these are the **GOOD** thresholds 
 
 ---
 
-## Recent Improvements (2026-06-23)
+## Recent Changes
 
-### ✅ ISR Migration (COMPLETED — commit b438b6d)
+### 🔴 CRITICAL REGRESSION (2026-06-24) — ATP/WTA ISR Rollback
+
+**Commit:** 8ee5be4 (2026-06-23)  
+**Change:** Reverted ATP and WTA Live pages from ISR (`revalidate: 60`) to `force-dynamic`  
+**Reason:** Fix rendering bug where only 1 player showed (useSearchParams conflict with ISR)
+
+**Performance Impact (REGRESSION):**
+- **ATP Live:** TTFB 0.18s → 0.39s (+117%), size 269KB → 374KB (+39%)
+- **WTA Live:** TTFB 0.16s → 0.31s (+94%), size 48KB → 157KB (+227%)
+
+**Root cause:** Every request now blocks on origin/upstream APIs instead of serving from edge cache.
+
+**Status:** Open ticket `perf-atp-wta-isr-regression` (Priority 0) — restore ISR while keeping country filter working.
+
+---
+
+### ✅ ISR Migration (COMPLETED — commit b438b6d, 2026-06-23)
 **Impact:** Massive performance wins across all routes.
 
 **Results:**
@@ -52,6 +70,8 @@ Per [web.dev/vitals](https://web.dev/vitals), these are the **GOOD** thresholds 
 - Home: size 93KB → 24KB (-74%)
 
 Migrated from `force-dynamic` to `export const revalidate = 60` for ISR caching. Pages now served from edge with background revalidation.
+
+**Note:** ATP/WTA later reverted to force-dynamic (see regression above).
 
 ### ✅ ESPN Fetch Deduplication (COMPLETED — commit e3242c7)
 Eliminated redundant ESPN API calls on World Cup page. Contributed to TTFB improvements.
