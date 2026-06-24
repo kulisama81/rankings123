@@ -1,12 +1,48 @@
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
 import { getWorldCupData, getWorldCupStats } from "@/lib/worldCupFeed";
 import { getWorldCupBracket } from "@/lib/worldCupBracketFeed";
 import WorldCupTable from "@/components/WorldCupTable";
-import WorldCupStats from "@/components/WorldCupStats";
-import WorldCupBracket from "@/components/WorldCupBracket";
-import WorldCupTeamStats from "@/components/WorldCupTeamStats";
 import HeroBanner from "@/components/HeroBanner";
 import SectionNav from "@/components/SectionNav";
+
+// Lazy-load below-the-fold components to reduce initial bundle size
+const WorldCupBracket = dynamic(() => import("@/components/WorldCupBracket"), {
+  loading: () => (
+    <div className="my-12 animate-pulse rounded-2xl border border-edge bg-surface p-8">
+      <div className="mb-4 h-8 w-48 rounded bg-surface2" />
+      <div className="space-y-4">
+        <div className="h-32 rounded bg-surface2" />
+        <div className="h-32 rounded bg-surface2" />
+      </div>
+    </div>
+  ),
+});
+
+const WorldCupTeamStats = dynamic(() => import("@/components/WorldCupTeamStats"), {
+  loading: () => (
+    <div className="my-12 animate-pulse rounded-2xl border border-edge bg-surface p-8">
+      <div className="mb-4 h-8 w-48 rounded bg-surface2" />
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div className="h-48 rounded bg-surface2" />
+        <div className="h-48 rounded bg-surface2" />
+      </div>
+    </div>
+  ),
+});
+
+const WorldCupStats = dynamic(() => import("@/components/WorldCupStats"), {
+  loading: () => (
+    <div className="my-12 animate-pulse rounded-2xl border border-edge bg-surface p-8">
+      <div className="mb-4 h-8 w-48 rounded bg-surface2" />
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div className="h-64 rounded bg-surface2" />
+        <div className="h-64 rounded bg-surface2" />
+      </div>
+    </div>
+  ),
+});
 
 export const metadata: Metadata = {
   title: "World Cup 2026 Live — Group Standings & Results",
@@ -75,11 +111,47 @@ export default async function WorldCupPage() {
         />
         <SectionNav sections={sections} />
         <WorldCupTable initialSnapshot={snapshot} />
-        <div className="my-12">
-          <WorldCupBracket bracket={bracket} />
-        </div>
-        <WorldCupTeamStats snapshot={snapshot} />
-        <WorldCupStats stats={stats} />
+        <Suspense
+          fallback={
+            <div className="my-12 animate-pulse rounded-2xl border border-edge bg-surface p-8">
+              <div className="mb-4 h-8 w-48 rounded bg-surface2" />
+              <div className="space-y-4">
+                <div className="h-32 rounded bg-surface2" />
+                <div className="h-32 rounded bg-surface2" />
+              </div>
+            </div>
+          }
+        >
+          <div className="my-12">
+            <WorldCupBracket bracket={bracket} />
+          </div>
+        </Suspense>
+        <Suspense
+          fallback={
+            <div className="my-12 animate-pulse rounded-2xl border border-edge bg-surface p-8">
+              <div className="mb-4 h-8 w-48 rounded bg-surface2" />
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <div className="h-48 rounded bg-surface2" />
+                <div className="h-48 rounded bg-surface2" />
+              </div>
+            </div>
+          }
+        >
+          <WorldCupTeamStats snapshot={snapshot} />
+        </Suspense>
+        <Suspense
+          fallback={
+            <div className="my-12 animate-pulse rounded-2xl border border-edge bg-surface p-8">
+              <div className="mb-4 h-8 w-48 rounded bg-surface2" />
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <div className="h-64 rounded bg-surface2" />
+                <div className="h-64 rounded bg-surface2" />
+              </div>
+            </div>
+          }
+        >
+          <WorldCupStats stats={stats} />
+        </Suspense>
       </div>
     </>
   );

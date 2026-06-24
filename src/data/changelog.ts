@@ -14,6 +14,13 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-06-23",
+    title: "Faster World Cup page loads",
+    description:
+      "Improved World Cup page load performance by lazy-loading below-the-fold content. The page now loads faster on mobile, especially on slower connections, making it easier to check standings during live matches.",
+    area: "worldcup",
+  },
+  {
+    date: "2026-06-23",
     title: "Fixed /whats-new route",
     description:
       "The /whats-new URL now properly redirects to /changelog. Both URLs work, with /changelog as the canonical route.",
