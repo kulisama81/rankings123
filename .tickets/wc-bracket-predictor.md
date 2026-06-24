@@ -1,6 +1,6 @@
 ---
 id: wc-bracket-predictor
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-23T13:51:35Z
