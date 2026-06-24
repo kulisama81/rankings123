@@ -2,10 +2,10 @@
 
 This baseline establishes performance budgets and target metrics for all routes. Use this to detect regressions during development.
 
-**Last Updated:** 2026-06-24  
+**Last Updated:** 2026-06-24 (post ISR restoration)
 **Measurement Method:** `npm run check:performance` (TTFB/total/size via live fetch)
 
-> 🔴 **REGRESSION ALERT (2026-06-24):** ATP and WTA Live pages reverted from ISR to force-dynamic (commit 8ee5be4) to fix a rendering bug. This caused severe performance regressions (TTFB doubled). See ticket `perf-atp-wta-isr-regression` (P0). Baseline targets remain unchanged (do not rebaseline regressions).
+> ✅ **REGRESSION RESOLVED (2026-06-24):** ATP and WTA Live ISR caching restored (commit 6cfcae9). Performance fully recovered to baseline levels.
 
 ---
 
@@ -25,10 +25,10 @@ Per [web.dev/vitals](https://web.dev/vitals), these are the **GOOD** thresholds 
 
 | Route        | TTFB Budget | Total Budget | Size Budget | Current TTFB | Current Total | Current Size | Status |
 |--------------|-------------|--------------|-------------|--------------|---------------|--------------|--------|
-| /            | ≤ 0.8s      | ≤ 2.0s       | ≤ 150KB     | 0.25s        | 0.26s         | 24KB         | ✅ FAST |
-| /atp-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.18s        | 0.31s         | 269KB        | ✅ FAST |
+| /            | ≤ 0.8s      | ≤ 2.0s       | ≤ 150KB     | 0.30s        | 0.31s         | 24KB         | ✅ FAST |
+| /atp-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.13s        | 0.25s         | 269KB        | ✅ FAST |
 | /wta-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 200KB     | 0.16s        | 0.16s         | 48KB         | ✅ FAST |
-| /world-cup   | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.24s        | 0.32s         | 394KB        | ⚠️ SIZE |
+| /world-cup   | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.14s        | 0.29s         | 397KB        | ⚠️ SIZE |
 
 **Legend:**
 - **TTFB** = Time to First Byte (server response start)
@@ -44,19 +44,35 @@ Per [web.dev/vitals](https://web.dev/vitals), these are the **GOOD** thresholds 
 
 ## Recent Changes
 
-### 🔴 CRITICAL REGRESSION (2026-06-24) — ATP/WTA ISR Rollback
+### ✅ ISR RESTORATION (COMPLETED — commit 6cfcae9, 2026-06-24)
 
-**Commit:** 8ee5be4 (2026-06-23)  
-**Change:** Reverted ATP and WTA Live pages from ISR (`revalidate: 60`) to `force-dynamic`  
+**Commit:** 6cfcae9 (2026-06-24)
+**Change:** Restored ISR caching on ATP/WTA pages while preserving country filter functionality
+**Solution:** Removed searchParams access from server components (which forced dynamic rendering), kept useSearchParams in client component with Suspense boundary
+
+**Performance Recovery:**
+- **ATP Live:** TTFB 0.39s → 0.13s (-67%), size 374KB → 269KB (-28%)
+- **WTA Live:** TTFB 0.31s → 0.16s (-48%), size 157KB → 48KB (-69%)
+
+**Impact:** Pages now served from edge cache with 60s revalidation. Massive TTFB improvement, sizes back to ISR baseline.
+
+**Ticket:** `perf-atp-wta-isr-regression` (Priority 0) — CLOSED
+
+---
+
+### 🔴 CRITICAL REGRESSION (RESOLVED — 2026-06-24) — ATP/WTA ISR Rollback
+
+**Commit:** 8ee5be4 (2026-06-23)
+**Change:** Reverted ATP and WTA Live pages from ISR (`revalidate: 60`) to `force-dynamic`
 **Reason:** Fix rendering bug where only 1 player showed (useSearchParams conflict with ISR)
 
 **Performance Impact (REGRESSION):**
 - **ATP Live:** TTFB 0.18s → 0.39s (+117%), size 269KB → 374KB (+39%)
 - **WTA Live:** TTFB 0.16s → 0.31s (+94%), size 48KB → 157KB (+227%)
 
-**Root cause:** Every request now blocks on origin/upstream APIs instead of serving from edge cache.
+**Root cause:** Every request blocked on origin/upstream APIs instead of serving from edge cache.
 
-**Status:** Open ticket `perf-atp-wta-isr-regression` (Priority 0) — restore ISR while keeping country filter working.
+**Resolution:** Commit 6cfcae9 restored ISR while preserving country filter by moving searchParams handling entirely to client component.
 
 ---
 
