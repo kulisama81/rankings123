@@ -1,6 +1,6 @@
 ---
 id: wc-knockout-placeholder-text
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-25T21:30:00Z

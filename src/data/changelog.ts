@@ -14,6 +14,13 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-06-25",
+    title: "Improved Knockout Bracket Labels",
+    description:
+      "Knockout bracket now shows user-friendly match labels like 'Winner of R32 Match 1' instead of technical ESPN codes. Easier to understand which teams feed into each round of the knockout stage.",
+    area: "worldcup",
+  },
+  {
+    date: "2026-06-25",
     title: "World Cup Knockout Stage Hub",
     description:
       "New knockout stage hub at /world-cup/knockout! See the full R32→R16→QF→SF→Final bracket with live results, upcoming matches with countdown timers, and highlighted next matches. The primary destination for tracking the knockout rounds as they unfold. Click any match to view detailed stats and lineups.",

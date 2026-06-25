@@ -223,12 +223,12 @@ function projectFutureRounds(r32Matches: WorldCupMatch[]): {
       homeCode: "—",
       homeFlag: "🏆",
       homeScore: null,
-      homeSeedLabel: sourceIndices[0] !== undefined ? `Winner M${73 + sourceIndices[0]}` : undefined,
+      homeSeedLabel: sourceIndices[0] !== undefined ? `Winner of R32 Match ${sourceIndices[0] + 1}` : undefined,
       awayName: sourceIndices[1] !== undefined ? `Winner R32 Match ${sourceIndices[1] + 1}` : "TBD",
       awayCode: "—",
       awayFlag: "🏆",
       awayScore: null,
-      awaySeedLabel: sourceIndices[1] !== undefined ? `Winner M${73 + sourceIndices[1]}` : undefined,
+      awaySeedLabel: sourceIndices[1] !== undefined ? `Winner of R32 Match ${sourceIndices[1] + 1}` : undefined,
     });
   }
 
@@ -249,12 +249,12 @@ function projectFutureRounds(r32Matches: WorldCupMatch[]): {
       homeCode: "—",
       homeFlag: "🏆",
       homeScore: null,
-      homeSeedLabel: sourceIndices[0] !== undefined ? `Winner M${89 + sourceIndices[0]}` : undefined,
+      homeSeedLabel: undefined, // Seed labels omitted for later rounds - bracket tree shows connections visually
       awayName: sourceIndices[1] !== undefined ? `Winner R16 Match ${sourceIndices[1] + 1}` : "TBD",
       awayCode: "—",
       awayFlag: "🏆",
       awayScore: null,
-      awaySeedLabel: sourceIndices[1] !== undefined ? `Winner M${89 + sourceIndices[1]}` : undefined,
+      awaySeedLabel: undefined, // Seed labels omitted for later rounds - bracket tree shows connections visually
     });
   }
 
@@ -275,12 +275,12 @@ function projectFutureRounds(r32Matches: WorldCupMatch[]): {
       homeCode: "—",
       homeFlag: "🏆",
       homeScore: null,
-      homeSeedLabel: sourceIndices[0] !== undefined ? `Winner M${97 + sourceIndices[0]}` : undefined,
+      homeSeedLabel: undefined, // Seed labels omitted for later rounds - bracket tree shows connections visually
       awayName: sourceIndices[1] !== undefined ? `Winner QF ${sourceIndices[1] + 1}` : "TBD",
       awayCode: "—",
       awayFlag: "🏆",
       awayScore: null,
-      awaySeedLabel: sourceIndices[1] !== undefined ? `Winner M${97 + sourceIndices[1]}` : undefined,
+      awaySeedLabel: undefined, // Seed labels omitted for later rounds - bracket tree shows connections visually
     });
   }
 
@@ -296,12 +296,12 @@ function projectFutureRounds(r32Matches: WorldCupMatch[]): {
     homeCode: "—",
     homeFlag: "🏆",
     homeScore: null,
-    homeSeedLabel: "Winner M101",
+    homeSeedLabel: undefined, // Seed labels omitted for Final - bracket tree shows connections visually
     awayName: "Winner SF 2",
     awayCode: "—",
     awayFlag: "🏆",
     awayScore: null,
-    awaySeedLabel: "Winner M102",
+    awaySeedLabel: undefined, // Seed labels omitted for Final - bracket tree shows connections visually
   };
 
   return { r16: r16Matches, qf: qfMatches, sf: sfMatches, final: finalMatch };
