@@ -30,3 +30,7 @@ Extended player statistics leaderboards beyond goals/assists: fastest sprint spe
 ## Notes
 
 **2026-06-23 (autoresearch):** Verify ESPN API capabilities first. If stats unavailable, consider xG sources (xGscore, RealGM) or defer until post-tournament when FIFA releases full stats.
+
+**2026-06-25T04:16:49Z**
+
+**2026-06-24 (planner investigation):** ESPN statistics API only provides goalsLeaders and assistsLeaders. Per-athlete stats are limited to: appearances, totalGoals, goalAssists. Extended stats (sprint speed, distance covered, passes completed, saves, tackles, interceptions) are NOT available in ESPN API. Alternative sources needed: Opta/Stats Perform (paid), FotMob API, SofaScore, or FIFA official post-tournament stats. **Recommendation:** defer until viable keyless source identified, or wait for FIFA to publish full tournament stats after July 19.
