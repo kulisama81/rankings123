@@ -1,6 +1,6 @@
 ---
 id: perf-atp-wta-isr-regression
-status: open
+status: closed
 deps: []
 links: [atp-table-loading-failure]
 created: 2026-06-24T00:00:00Z
@@ -10,6 +10,18 @@ parent: rankings123
 tags: [perf, regression]
 ---
 # Restore ISR caching on ATP/WTA pages while keeping country filter working
+
+## Acceptance Criteria
+
+- [ ] Restore ISR caching on ATP Live page (`export const revalidate = 60`)
+- [ ] Restore ISR caching on WTA Live page (`export const revalidate = 60`)
+- [ ] Country filter still works (no rendering bug, full table loads)
+- [ ] Re-run `npm run check:performance`:
+  - ATP: TTFB < 0.3s, size < 300KB
+  - WTA: TTFB < 0.3s, size < 200KB
+- [ ] Re-run the regression test `tests/atp-table-rendering.test.js` — must PASS (no rendering bug)
+- [ ] Verify ISR is working: request same page twice in <60s, expect cached response (check response headers for `x-vercel-cache: HIT`)
+- [ ] Update `docs/perf-baseline.md` with new measurements
 
 ## Context
 
@@ -109,18 +121,6 @@ export default function LiveRankingViewClient({ tour, snapshot }) {
 2. Measured 2x performance regression
 3. Directly impacts SEO and ad revenue
 4. Can be fixed without sacrificing the country filter feature
-
-## Acceptance Criteria
-
-- [ ] Restore ISR caching on ATP Live page (`export const revalidate = 60`)
-- [ ] Restore ISR caching on WTA Live page (`export const revalidate = 60`)
-- [ ] Country filter still works (no rendering bug, full table loads)
-- [ ] Re-run `npm run check:performance`:
-  - ATP: TTFB < 0.3s, size < 300KB
-  - WTA: TTFB < 0.3s, size < 200KB
-- [ ] Re-run the regression test `tests/atp-table-rendering.test.js` — must PASS (no rendering bug)
-- [ ] Verify ISR is working: request same page twice in <60s, expect cached response (check response headers for `x-vercel-cache: HIT`)
-- [ ] Update `docs/perf-baseline.md` with new measurements
 
 ## Performance Budget
 

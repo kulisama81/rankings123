@@ -1,6 +1,6 @@
 ---
 id: odds-api
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-15T06:00:06Z
@@ -18,6 +18,7 @@ Wire The Odds API (the-odds-api.com, free tier) for match odds / win-probabiliti
 Odds for upcoming/live matches fetched from The Odds API where available + cached; consumed by prediction/affiliate features; key via env, never committed; graceful placeholder until keyed.
 
 ## Wiring note (key being added now)
+
 The user is setting `ODDS_API_KEY` in Vercel env vars. Build the integration to read
 `process.env.ODDS_API_KEY`: `getOddsSource()` returns "api" when the key is present (else
 "mock"); `getMatchOdds()` calls The Odds API (the-odds-api.com v4) for the relevant
