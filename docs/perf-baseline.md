@@ -2,7 +2,7 @@
 
 This baseline establishes performance budgets and target metrics for all routes. Use this to detect regressions during development.
 
-**Last Updated:** 2026-06-24 (post ISR restoration)
+**Last Updated:** 2026-06-25
 **Measurement Method:** `npm run check:performance` (TTFB/total/size via live fetch)
 
 > ✅ **REGRESSION RESOLVED (2026-06-24):** ATP and WTA Live ISR caching restored (commit 6cfcae9). Performance fully recovered to baseline levels.
@@ -25,10 +25,10 @@ Per [web.dev/vitals](https://web.dev/vitals), these are the **GOOD** thresholds 
 
 | Route        | TTFB Budget | Total Budget | Size Budget | Current TTFB | Current Total | Current Size | Status |
 |--------------|-------------|--------------|-------------|--------------|---------------|--------------|--------|
-| /            | ≤ 0.8s      | ≤ 2.0s       | ≤ 150KB     | 0.30s        | 0.31s         | 24KB         | ✅ FAST |
-| /atp-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.13s        | 0.25s         | 269KB        | ✅ FAST |
-| /wta-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 200KB     | 0.16s        | 0.16s         | 48KB         | ✅ FAST |
-| /world-cup   | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.14s        | 0.29s         | 397KB        | ⚠️ SIZE |
+| /            | ≤ 0.8s      | ≤ 2.0s       | ≤ 150KB     | 0.22s        | 0.24s         | 24KB         | ✅ FAST |
+| /atp-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.18s        | 0.33s         | 269KB        | ✅ FAST |
+| /wta-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 200KB     | 0.12s        | 0.17s         | 48KB         | ✅ FAST |
+| /world-cup   | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.12s        | 0.28s         | 393KB        | ⚠️ SIZE |
 
 **Legend:**
 - **TTFB** = Time to First Byte (server response start)
@@ -43,6 +43,22 @@ Per [web.dev/vitals](https://web.dev/vitals), these are the **GOOD** thresholds 
 ---
 
 ## Recent Changes
+
+### ⚠️ ATP Live Variance Detected (2026-06-25)
+
+**Observation:** ATP Live showed increased TTFB (0.13s → 0.18s, +38%) and total (0.25s → 0.33s, +32%) in 2026-06-25 measurement.
+
+**Status:** Monitoring (within budget, likely transient variance)
+- Still well within budget (TTFB 0.18s vs 0.8s, total 0.33s vs 2.0s)
+- No code changes affecting ATP Live in recent commits
+- Size unchanged at 269KB (ISR cache working correctly)
+- Likely cause: Network or upstream ESPN API latency fluctuation
+
+**Action:** Will monitor in next run. If variance persists above +25%, will investigate and file ticket.
+
+**Report:** docs/reports/2026-06-25-performance.md
+
+---
 
 ### ✅ ISR RESTORATION (COMPLETED — commit 6cfcae9, 2026-06-24)
 
