@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { fetchWorldCupMatchDetail } from "@/lib/worldCupMatchFeed";
+import { getWorldCupH2H } from "@/lib/worldCupH2H";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { venueToSlug } from "@/lib/worldCupVenue";
+import { WorldCupH2HSection } from "@/components/WorldCupH2H";
 
 interface MatchPageProps {
   params: Promise<{ id: string }>;
@@ -46,6 +48,9 @@ export default async function MatchDetailPage({ params }: MatchPageProps) {
   }
 
   const showScore = match.homeScore !== null && match.awayScore !== null;
+
+  // Fetch head-to-head data for this matchup
+  const h2h = await getWorldCupH2H(match.homeName, match.awayName);
 
   return (
     <div data-sport="worldcup" className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
@@ -102,6 +107,9 @@ export default async function MatchDetailPage({ params }: MatchPageProps) {
           {match.attendance && <div className="text-muted">Attendance: {match.attendance.toLocaleString()}</div>}
         </div>
       </div>
+
+      {/* Head-to-Head */}
+      <WorldCupH2HSection h2h={h2h} />
 
       {/* Key Events / Timeline */}
       {match.keyEvents.length > 0 && (

@@ -193,6 +193,30 @@ export interface WorldCupStats {
   topAssisters: WorldCupPlayerStat[];
 }
 
+export interface WorldCupH2HMatch {
+  id: string;
+  date: string; // ISO
+  year: number;
+  homeTeam: string;
+  awayTeam: string;
+  homeScore: number | null;
+  awayScore: number | null;
+  result: "win" | "draw" | "loss"; // from perspective of team1
+  stage: string; // e.g., "Final", "Group Stage", "Round of 16"
+  venue?: string;
+}
+
+export interface WorldCupH2H {
+  team1: string;
+  team2: string;
+  totalMatches: number;
+  wins: number; // team1 wins
+  draws: number;
+  losses: number; // team1 losses
+  matches: WorldCupH2HMatch[]; // recent meetings
+  source: "espn" | "none"; // "none" = no historical data found
+}
+
 export interface WorldCupTeamRoster {
   teamCode: string;
   teamName: string;

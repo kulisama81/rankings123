@@ -14,6 +14,13 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-06-24",
+    title: "World Cup Head-to-Head History",
+    description:
+      "Historical head-to-head records now displayed on match pages! See past World Cup meetings between teams going back to 2002, including total wins, draws, losses, and recent match results. Great context for understanding rivalry history before big matches.",
+    area: "worldcup",
+  },
+  {
+    date: "2026-06-24",
     title: "World Cup Match Predictions",
     description:
       "Win probability predictions for upcoming World Cup matches! See which team is favored based on live betting odds from The Odds API. Predictions appear automatically for all scheduled fixtures, helping you gauge match outcomes before kickoff.",
