@@ -13,6 +13,13 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-06-25",
+    title: "World Cup Knockout Stage Hub",
+    description:
+      "New knockout stage hub at /world-cup/knockout! See the full R32→R16→QF→SF→Final bracket with live results, upcoming matches with countdown timers, and highlighted next matches. The primary destination for tracking the knockout rounds as they unfold. Click any match to view detailed stats and lineups.",
+    area: "worldcup",
+  },
+  {
     date: "2026-06-24",
     title: "World Cup Head-to-Head History",
     description:
