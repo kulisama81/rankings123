@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import HeroBanner from "@/components/HeroBanner";
+import LiveWorldCupWidget from "@/components/LiveWorldCupWidget";
 
 export const metadata: Metadata = {
   title: "Rankings123 — Live Sports Rankings",
@@ -78,6 +79,9 @@ export default function HomePage() {
           { label: "Updated", value: "Live" },
         ]}
       />
+
+      {/* Live World Cup Matches Widget - shows only when matches are in progress */}
+      <LiveWorldCupWidget />
 
       {/* Tennis Section */}
       <section className="mb-12">
