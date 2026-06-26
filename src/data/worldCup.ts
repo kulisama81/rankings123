@@ -315,7 +315,7 @@ export function getMockWorldCupMatchDetail(matchId: string): WorldCupMatchDetail
       { name: "F. Kadıoğlu", position: "DF", jersey: "20" },
       { name: "H. Çalhanoğlu", position: "MF", jersey: "10" },
       { name: "O. Kökçü", position: "MF", jersey: "15" },
-      { name: "İ. Kahveci", position: "MF", jersey: "17" },
+      { name: "İ. Kahveci", position: "MF", jersey: "8" },
       { name: "K. Aktürkoğlu", position: "FW", jersey: "7" },
       { name: "B. Yılmaz", position: "FW", jersey: "17" },
       { name: "C. Ünder", position: "FW", jersey: "11" },

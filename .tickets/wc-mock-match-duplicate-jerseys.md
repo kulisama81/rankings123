@@ -1,6 +1,6 @@
 ---
 id: wc-mock-match-duplicate-jerseys
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-24T22:00:00Z
