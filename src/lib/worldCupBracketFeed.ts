@@ -146,7 +146,8 @@ function projectRoundOf32(groups: WorldCupGroup[]): WorldCupMatch[] {
   );
   for (const slot of slotsByConstraint) {
     const remaining = qualifyingThirds.filter((l) => !used.has(l));
-    const pick = remaining.find((l) => slot.away.allowed.includes(l)) ?? remaining[0];
+    // Only pick from the allowed groups for this slot (no fallback to invalid groups)
+    const pick = remaining.find((l) => slot.away.allowed.includes(l));
     if (pick) {
       assignment.set(slot.i, pick);
       used.add(pick);
