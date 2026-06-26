@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { venueToSlug } from "@/lib/worldCupVenue";
 import { WorldCupH2HSection } from "@/components/WorldCupH2H";
+import { WorldCupMatchStats } from "@/components/WorldCupMatchStats";
 
 interface MatchPageProps {
   params: Promise<{ id: string }>;
@@ -15,7 +16,7 @@ export async function generateMetadata({ params }: MatchPageProps): Promise<Meta
   try {
     const match = await fetchWorldCupMatchDetail(id);
     const title = `${match.homeName} vs ${match.awayName} — World Cup 2026`;
-    const description = `${match.homeName} ${match.homeScore ?? 0} - ${match.awayScore ?? 0} ${match.awayName}: lineups, timeline, stats, and venue details.`;
+    const description = `${match.homeName} ${match.homeScore ?? 0} - ${match.awayScore ?? 0} ${match.awayName}: live stats, possession, shots, lineups, timeline, and venue details.`;
 
     return {
       title,
@@ -201,29 +202,12 @@ export default async function MatchDetailPage({ params }: MatchPageProps) {
         </section>
       </div>
 
-      {/* Match Stats */}
-      {(Object.keys(match.homeStats).length > 0 || Object.keys(match.awayStats).length > 0) && (
-        <section className="mt-8">
-          <h2 className="mb-4 text-lg font-bold text-fg">Match Statistics</h2>
-          <div className="overflow-hidden rounded-2xl border border-edge bg-surface">
-            <table className="min-w-full text-sm">
-              <tbody>
-                {Object.keys(match.homeStats).map((statName) => (
-                  <tr key={statName} className="border-t border-edge first:border-t-0">
-                    <td className="px-4 py-2.5 text-right font-semibold tabular-nums text-fg">
-                      {match.homeStats[statName]}
-                    </td>
-                    <td className="px-4 py-2.5 text-center text-muted">{statName}</td>
-                    <td className="px-4 py-2.5 text-left font-semibold tabular-nums text-fg">
-                      {match.awayStats[statName] || "-"}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
-      )}
+      {/* Match Stats - Enhanced with visual comparison bars and categorized sections */}
+      <WorldCupMatchStats
+        homeStats={match.homeStats}
+        awayStats={match.awayStats}
+        source={match.source}
+      />
     </div>
   );
 }

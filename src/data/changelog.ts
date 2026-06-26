@@ -14,6 +14,13 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-06-26",
+    title: "Advanced World Cup Match Statistics",
+    description:
+      "Match pages now display advanced statistics beyond just goals: possession percentage, pass accuracy, shots on target, saves, corners, fouls, and offsides. Stats are organized into visual comparison bars showing Possession & Passing, Shooting, and Discipline & Set Pieces. All stats pulled from ESPN in real-time, elevating rankings123 from basic score tracking to analytics-forward coverage.",
+    area: "worldcup",
+  },
+  {
+    date: "2026-06-26",
     title: "Live World Cup Scores on Homepage",
     description:
       "Homepage now shows live World Cup match scores when games are in progress! See real-time scores, match minute, and team flags for up to 4 live matches. Updates automatically every 20 seconds. Click any match to view full details. The widget appears only during live matches and hides when no games are happening.",
