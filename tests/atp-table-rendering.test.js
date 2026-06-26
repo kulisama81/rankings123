@@ -75,3 +75,38 @@ test("ATP Live API endpoint returns full player list", async () => {
   assert.ok(typeof firstPlayer.liveRank === "number", "Player should have liveRank");
   assert.ok(typeof firstPlayer.livePoints === "number", "Player should have livePoints");
 });
+
+test("ATP/WTA Live pages must use dynamic rendering (regression guard)", async () => {
+  // This test guards against the specific regression where someone changes
+  // the pages from 'dynamic = "force-dynamic"' back to 'revalidate: 60' (ISR).
+  // ISR+Suspense+useSearchParams causes the Suspense fallback to persist.
+
+  const { readFileSync } = await import("node:fs");
+  const { join } = await import("node:path");
+
+  const atpPagePath = join(process.cwd(), "src/app/atp-live/page.tsx");
+  const wtaPagePath = join(process.cwd(), "src/app/wta-live/page.tsx");
+
+  const atpContent = readFileSync(atpPagePath, "utf-8");
+  const wtaContent = readFileSync(wtaPagePath, "utf-8");
+
+  // Must have dynamic = "force-dynamic"
+  assert.ok(
+    atpContent.includes('export const dynamic = "force-dynamic"'),
+    "ATP Live page must use dynamic = 'force-dynamic' (not ISR revalidate)"
+  );
+  assert.ok(
+    wtaContent.includes('export const dynamic = "force-dynamic"'),
+    "WTA Live page must use dynamic = 'force-dynamic' (not ISR revalidate)"
+  );
+
+  // Must NOT have revalidate (which would enable ISR and break Suspense+useSearchParams)
+  assert.ok(
+    !atpContent.includes("export const revalidate"),
+    "ATP Live page must NOT use revalidate (ISR breaks Suspense+useSearchParams)"
+  );
+  assert.ok(
+    !wtaContent.includes("export const revalidate"),
+    "WTA Live page must NOT use revalidate (ISR breaks Suspense+useSearchParams)"
+  );
+});

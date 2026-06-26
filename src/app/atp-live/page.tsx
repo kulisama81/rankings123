@@ -18,8 +18,8 @@ export const metadata: Metadata = {
   },
 };
 
-// ISR caching for performance
-export const revalidate = 60;
+// Force dynamic rendering to support useSearchParams in LiveRankingTable (country filter)
+export const dynamic = "force-dynamic";
 
 const jsonLd = {
   "@context": "https://schema.org",
