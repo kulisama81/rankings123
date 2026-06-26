@@ -60,7 +60,7 @@ export default function PrivacyPage() {
           <li>
             Opt out of Google Analytics across all sites:{" "}
             <a href="https://tools.google.com/dlpage/gaoptout" rel="noopener noreferrer" target="_blank">
-              tools.google.com/dlpage/gaoptout
+              https://tools.google.com/dlpage/gaoptout
             </a>
             .
           </li>
