@@ -1,6 +1,6 @@
 ---
 id: wc-knockout-hub
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-25T13:50:57Z
