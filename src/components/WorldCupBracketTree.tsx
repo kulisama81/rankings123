@@ -156,30 +156,24 @@ function RoundColumn({ title, matches, round }: RoundColumnProps) {
 }
 
 export default function WorldCupBracketTree({ bracket }: BracketTreeProps) {
-  // Extract stages
-  const r32Stage = bracket.stages.find((s) => s.name === "Round of 32");
+  // Extract stages (R16 → QF → SF → Final only, no R32 per acceptance criteria)
   const r16Stage = bracket.stages.find((s) => s.name === "Rd of 16");
   const qfStage = bracket.stages.find((s) => s.name === "Quarterfinals");
   const sfStage = bracket.stages.find((s) => s.name === "Semifinals");
   const finalStage = bracket.stages.find((s) => s.name === "Final");
 
-  const r32Matches = r32Stage?.matches ?? [];
-  const r16Matches = r16Stage?.matches ?? [];
-  const qfMatches = qfStage?.matches ?? [];
-  const sfMatches = sfStage?.matches ?? [];
-  const finalMatch = finalStage?.matches?.[0];
+  // Filter out projected matches (only show confirmed fixtures per acceptance criteria)
+  const r16Matches = (r16Stage?.matches ?? []).filter((m) => !m.id.startsWith("projected-"));
+  const qfMatches = (qfStage?.matches ?? []).filter((m) => !m.id.startsWith("projected-"));
+  const sfMatches = (sfStage?.matches ?? []).filter((m) => !m.id.startsWith("projected-"));
+  const finalMatch = finalStage?.matches?.find((m) => !m.id.startsWith("projected-"));
 
-  // Check if we have projected matches
-  const hasProjected = [r32Matches, r16Matches, qfMatches, sfMatches]
-    .flat()
-    .some((m) => m?.id?.startsWith("projected-"));
-
-  // If no R32 matches yet, show a placeholder
-  if (r32Matches.length === 0) {
+  // If no confirmed R16 matches yet, show a placeholder
+  if (r16Matches.length === 0) {
     return (
       <div className="rounded-xl border border-surface2 bg-surface p-8 text-center">
         <p className="text-muted">
-          The knockout bracket will appear once teams are confirmed from the group stage.
+          The knockout bracket will appear once Round of 16 matchups are confirmed.
         </p>
       </div>
     );
@@ -199,24 +193,12 @@ export default function WorldCupBracketTree({ bracket }: BracketTreeProps) {
     return { top, bottom };
   };
 
-  const r32ByHalf = getMatchesByHalf(r32Matches, "R32");
   const r16ByHalf = getMatchesByHalf(r16Matches, "R16");
   const qfByHalf = getMatchesByHalf(qfMatches, "QF");
   const sfByHalf = getMatchesByHalf(sfMatches, "SF");
 
   return (
     <div>
-      {/* Projection notice */}
-      {hasProjected && (
-        <div className="mb-6 rounded-lg border border-muted/20 bg-surface/50 p-3 text-center text-sm">
-          <p className="text-muted">
-            <strong className="text-fg">Bracket projected from current group standings.</strong>{" "}
-            Matchups update live as results change. Confirmed fixtures will replace projections once
-            teams are officially seeded.
-          </p>
-        </div>
-      )}
-
       {/* Bracket tree - horizontal scroll on mobile, full view on desktop */}
       <div className="scrollbar-hide -mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0">
         <div className="inline-flex min-w-max flex-col gap-8">
@@ -226,16 +208,6 @@ export default function WorldCupBracketTree({ bracket }: BracketTreeProps) {
               Top Half
             </div>
             <div className="flex items-center gap-6">
-              {r32ByHalf.top.length > 0 && (
-                <RoundColumn title="Round of 32" matches={r32ByHalf.top} round="R32" half="top" />
-              )}
-              <div className="flex items-center text-surface2">
-                <svg width="24" height="200" className="overflow-visible">
-                  {/* Simple connector visual */}
-                  <line x1="0" y1="50" x2="24" y2="100" stroke="currentColor" strokeWidth="1" opacity="0.3" />
-                  <line x1="0" y1="150" x2="24" y2="100" stroke="currentColor" strokeWidth="1" opacity="0.3" />
-                </svg>
-              </div>
               {r16ByHalf.top.length > 0 && (
                 <RoundColumn title="Round of 16" matches={r16ByHalf.top} round="R16" half="top" />
               )}
@@ -279,15 +251,6 @@ export default function WorldCupBracketTree({ bracket }: BracketTreeProps) {
               Bottom Half
             </div>
             <div className="flex items-center gap-6">
-              {r32ByHalf.bottom.length > 0 && (
-                <RoundColumn title="Round of 32" matches={r32ByHalf.bottom} round="R32" half="bottom" />
-              )}
-              <div className="flex items-center text-surface2">
-                <svg width="24" height="200" className="overflow-visible">
-                  <line x1="0" y1="50" x2="24" y2="100" stroke="currentColor" strokeWidth="1" opacity="0.3" />
-                  <line x1="0" y1="150" x2="24" y2="100" stroke="currentColor" strokeWidth="1" opacity="0.3" />
-                </svg>
-              </div>
               {r16ByHalf.bottom.length > 0 && (
                 <RoundColumn title="Round of 16" matches={r16ByHalf.bottom} round="R16" half="bottom" />
               )}

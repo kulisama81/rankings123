@@ -1,6 +1,6 @@
 ---
 id: wc-bracket-interactive
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-26T13:48:53Z
