@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import type { WorldCupBracket, WorldCupMatch, KnockoutStage } from "@/types";
 import WorldCupBracketTree from "./WorldCupBracketTree";
@@ -253,14 +253,36 @@ function StageView({ stage, matches }: { stage: KnockoutStage; matches: WorldCup
 }
 
 export default function WorldCupBracket({ bracket }: WorldCupBracketProps) {
+  // The /world-cup page is ISR-cached, so the server-passed bracket can be STALE (e.g. R32
+  // still "TBD" from before the group stage finished). Hydrate from the live (dynamic) API so
+  // the bracket always reflects current matchups — mirrors WorldCupTable's live refresh.
+  const [data, setData] = useState(bracket);
   const [viewMode, setViewMode] = useState<"tree" | "stages">("tree");
   const [selectedStage, setSelectedStage] = useState<KnockoutStage>(
     bracket.stages[0]?.name ?? "Round of 32"
   );
 
-  const currentStage = bracket.stages.find((s) => s.name === selectedStage);
+  useEffect(() => {
+    let active = true;
+    const load = async () => {
+      try {
+        const res = await fetch("/api/worldcup/bracket", { cache: "no-store" });
+        if (res.ok && active) setData(await res.json());
+      } catch {
+        /* keep last good bracket */
+      }
+    };
+    void load();
+    const id = setInterval(() => void load(), 60000);
+    return () => {
+      active = false;
+      clearInterval(id);
+    };
+  }, []);
 
-  if (bracket.stages.length === 0) {
+  const currentStage = data.stages.find((s) => s.name === selectedStage);
+
+  if (data.stages.length === 0) {
     return (
       <div id="knockout-bracket" className="rounded-xl border border-surface2 bg-surface p-8 text-center">
         <h3 className="mb-2 text-xl font-bold text-fg">Knockout Stage</h3>
@@ -306,7 +328,7 @@ export default function WorldCupBracket({ bracket }: WorldCupBracketProps) {
         {/* Stage tabs - only show in stages view mode */}
         {viewMode === "stages" && (
           <div className="scrollbar-hide -mx-4 flex gap-2 overflow-x-auto px-4 sm:mx-0 sm:px-0">
-            {bracket.stages.map((stage) => {
+            {data.stages.map((stage) => {
               const isSelected = stage.name === selectedStage;
               const hasMatches = stage.matches.length > 0;
               return (
@@ -330,7 +352,7 @@ export default function WorldCupBracket({ bracket }: WorldCupBracketProps) {
       </div>
 
       {/* Bracket tree view (default) */}
-      {viewMode === "tree" && <WorldCupBracketTree bracket={bracket} />}
+      {viewMode === "tree" && <WorldCupBracketTree bracket={data} />}
 
       {/* Stage-by-stage view (fallback) */}
       {viewMode === "stages" && currentStage && (

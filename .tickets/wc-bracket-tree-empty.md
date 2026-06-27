@@ -1,6 +1,6 @@
 ---
 id: wc-bracket-tree-empty
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-27T21:59:46Z
