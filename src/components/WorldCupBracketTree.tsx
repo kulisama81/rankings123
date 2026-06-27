@@ -156,24 +156,25 @@ function RoundColumn({ title, matches, round }: RoundColumnProps) {
 }
 
 export default function WorldCupBracketTree({ bracket }: BracketTreeProps) {
-  // Extract stages (R16 → QF → SF → Final only, no R32 per acceptance criteria)
+  // Extract stages (R16 → QF → SF → Final; R32 available but not shown in tree view due to space)
   const r16Stage = bracket.stages.find((s) => s.name === "Rd of 16");
   const qfStage = bracket.stages.find((s) => s.name === "Quarterfinals");
   const sfStage = bracket.stages.find((s) => s.name === "Semifinals");
   const finalStage = bracket.stages.find((s) => s.name === "Final");
 
-  // Filter out projected matches (only show confirmed fixtures per acceptance criteria)
-  const r16Matches = (r16Stage?.matches ?? []).filter((m) => !m.id.startsWith("projected-"));
-  const qfMatches = (qfStage?.matches ?? []).filter((m) => !m.id.startsWith("projected-"));
-  const sfMatches = (sfStage?.matches ?? []).filter((m) => !m.id.startsWith("projected-"));
-  const finalMatch = finalStage?.matches?.find((m) => !m.id.startsWith("projected-"));
+  // Include ALL matches (both confirmed and projected) — the CompactMatchCard already
+  // visually distinguishes them (dashed border + "Proj" badge for projected)
+  const r16Matches = r16Stage?.matches ?? [];
+  const qfMatches = qfStage?.matches ?? [];
+  const sfMatches = sfStage?.matches ?? [];
+  const finalMatch = finalStage?.matches?.[0];
 
-  // If no confirmed R16 matches yet, show a placeholder
+  // If no R16 matches at all (not even projected), show a message
   if (r16Matches.length === 0) {
     return (
       <div className="rounded-xl border border-surface2 bg-surface p-8 text-center">
         <p className="text-muted">
-          The knockout bracket will appear once Round of 16 matchups are confirmed.
+          The knockout bracket will appear once group stage standings are available.
         </p>
       </div>
     );

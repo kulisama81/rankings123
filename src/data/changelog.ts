@@ -23,7 +23,7 @@ export const changelog: ChangelogEntry[] = [
     date: "2026-06-27",
     title: "Interactive World Cup Knockout Bracket",
     description:
-      "Visual bracket tree showing the Round of 16 through Final. See live match indicators, results for completed games, and click any match to view full details. The bracket displays only confirmed fixtures (no placeholders), updates in real-time as matches complete, and scrolls horizontally on mobile for easy viewing.",
+      "Visual bracket tree showing the full knockout path from Round of 16 through Final. Track projected matchups based on current group standings (marked with 'Proj' badge), watch them convert to confirmed fixtures as results come in, see live match indicators with pulsing badges, and click any match to view full details. The bracket updates in real-time as matches complete and scrolls horizontally on mobile for easy viewing.",
     area: "worldcup",
   },
   {

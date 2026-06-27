@@ -9,8 +9,6 @@ import { soccerFlag } from "./worldCupFlags";
 import { getMockWorldCupBracket } from "@/data/worldCup";
 import {
   getR16Sources,
-  getQFSources,
-  getSFSources,
 } from "./worldCupBracketTree";
 import {
   getCachedStandings,
@@ -220,12 +218,12 @@ function projectFutureRounds(r32Matches: WorldCupMatch[]): {
       date: matchDate.toISOString(),
       state: "pre",
       statusDetail: "Projected",
-      homeName: sourceIndices[0] !== undefined ? `Winner R32 Match ${sourceIndices[0] + 1}` : "TBD",
+      homeName: "TBD",
       homeCode: "—",
       homeFlag: "🏆",
       homeScore: null,
       homeSeedLabel: sourceIndices[0] !== undefined ? `Winner of R32 Match ${sourceIndices[0] + 1}` : undefined,
-      awayName: sourceIndices[1] !== undefined ? `Winner R32 Match ${sourceIndices[1] + 1}` : "TBD",
+      awayName: "TBD",
       awayCode: "—",
       awayFlag: "🏆",
       awayScore: null,
@@ -236,7 +234,6 @@ function projectFutureRounds(r32Matches: WorldCupMatch[]): {
   // QF: 4 matches, each fed by 2 R16 winners
   const qfMatches: WorldCupMatch[] = [];
   for (let i = 0; i < 4; i++) {
-    const sourceIndices = getQFSources(i); // [r16Index1, r16Index2]
     const matchDate = new Date(baseDate);
     matchDate.setDate(baseDate.getDate() + 3);
     matchDate.setHours(baseDate.getHours() + i * 4);
@@ -246,12 +243,12 @@ function projectFutureRounds(r32Matches: WorldCupMatch[]): {
       date: matchDate.toISOString(),
       state: "pre",
       statusDetail: "Projected",
-      homeName: sourceIndices[0] !== undefined ? `Winner R16 Match ${sourceIndices[0] + 1}` : "TBD",
+      homeName: "TBD",
       homeCode: "—",
       homeFlag: "🏆",
       homeScore: null,
       homeSeedLabel: undefined, // Seed labels omitted for later rounds - bracket tree shows connections visually
-      awayName: sourceIndices[1] !== undefined ? `Winner R16 Match ${sourceIndices[1] + 1}` : "TBD",
+      awayName: "TBD",
       awayCode: "—",
       awayFlag: "🏆",
       awayScore: null,
@@ -262,7 +259,6 @@ function projectFutureRounds(r32Matches: WorldCupMatch[]): {
   // SF: 2 matches, each fed by 2 QF winners
   const sfMatches: WorldCupMatch[] = [];
   for (let i = 0; i < 2; i++) {
-    const sourceIndices = getSFSources(i); // [qfIndex1, qfIndex2]
     const matchDate = new Date(baseDate);
     matchDate.setDate(baseDate.getDate() + 6);
     matchDate.setHours(baseDate.getHours() + i * 6);
@@ -272,12 +268,12 @@ function projectFutureRounds(r32Matches: WorldCupMatch[]): {
       date: matchDate.toISOString(),
       state: "pre",
       statusDetail: "Projected",
-      homeName: sourceIndices[0] !== undefined ? `Winner QF ${sourceIndices[0] + 1}` : "TBD",
+      homeName: "TBD",
       homeCode: "—",
       homeFlag: "🏆",
       homeScore: null,
       homeSeedLabel: undefined, // Seed labels omitted for later rounds - bracket tree shows connections visually
-      awayName: sourceIndices[1] !== undefined ? `Winner QF ${sourceIndices[1] + 1}` : "TBD",
+      awayName: "TBD",
       awayCode: "—",
       awayFlag: "🏆",
       awayScore: null,
@@ -293,12 +289,12 @@ function projectFutureRounds(r32Matches: WorldCupMatch[]): {
     date: finalDate.toISOString(),
     state: "pre",
     statusDetail: "Projected",
-    homeName: "Winner SF 1",
+    homeName: "TBD",
     homeCode: "—",
     homeFlag: "🏆",
     homeScore: null,
     homeSeedLabel: undefined, // Seed labels omitted for Final - bracket tree shows connections visually
-    awayName: "Winner SF 2",
+    awayName: "TBD",
     awayCode: "—",
     awayFlag: "🏆",
     awayScore: null,
