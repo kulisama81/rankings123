@@ -1,6 +1,6 @@
 ---
 id: data-anomaly
-status: closed
+status: open
 deps: []
 links: []
 created: 2026-06-26T22:00:00.906Z
@@ -16,12 +16,14 @@ fabricated, mis-parsed, or mis-sourced. **Planner: investigate the relevant feed
 fix it, re-run `npm run check:data-sanity` until clean, log the resolution in the Log below,
 then close this ticket.** Do NOT close while `check:data-sanity` still reports errors.
 
-## Anomalies (latest run · 2026-06-26T22:28:23.455Z)
-
-- [worldcup-bracket] United States vs Paraguay — both from Group D (impossible)
+## Anomalies (latest run · 2026-06-27T22:00:01.200Z)
+- [worldcup] England (ENG): standings show 2 matches played, but schedule shows 3 completed/in-progress (stale standings)
+- [worldcup] Ghana (GHA): standings show 2 matches played, but schedule shows 3 completed/in-progress (stale standings)
+- [worldcup] Croatia (CRO): standings show 2 matches played, but schedule shows 3 completed/in-progress (stale standings)
+- [worldcup] Panama (PAN): standings show 2 matches played, but schedule shows 3 completed/in-progress (stale standings)
 
 ## Log
-
+- 2026-06-27T22:00:01.200Z: 4 anomalies — [worldcup] England (ENG): standings show 2 matches played, but schedule shows 3 completed/in-progress (stale standings) (…)
 - 2026-06-26T22:28:23.455Z: 1 anomalies — [worldcup-bracket] United States vs Paraguay — both from Group D (impossible)
 - 2026-06-26T22:30:00.000Z: **RESOLVED** — Fixed third-place assignment logic in `worldCupBracketFeed.ts`. Removed fallback that allowed invalid group assignments. All projected R32 matches now respect the official FIFA bracket template constraints (no same-group matchups). Verified locally: check passes.
 - 2026-06-26T22:26:14.356Z: 1 anomalies — [worldcup-bracket] United States vs Paraguay — both from Group D (impossible)
