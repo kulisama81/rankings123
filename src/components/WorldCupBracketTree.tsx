@@ -156,21 +156,23 @@ function RoundColumn({ title, matches, round }: RoundColumnProps) {
 }
 
 export default function WorldCupBracketTree({ bracket }: BracketTreeProps) {
-  // Extract stages (R16 → QF → SF → Final; R32 available but not shown in tree view due to space)
+  // Round of 32 is the key column right now — it holds the actual (projected) matchups;
+  // R16→Final stay "Winner of R32 Match X" until results come in. (R32 was previously
+  // dropped "to save space", which left the tree all-TBD and useless — it's restored here.)
+  const r32Stage = bracket.stages.find((s) => s.name === "Round of 32");
   const r16Stage = bracket.stages.find((s) => s.name === "Rd of 16");
   const qfStage = bracket.stages.find((s) => s.name === "Quarterfinals");
   const sfStage = bracket.stages.find((s) => s.name === "Semifinals");
   const finalStage = bracket.stages.find((s) => s.name === "Final");
 
-  // Include ALL matches (both confirmed and projected) — the CompactMatchCard already
-  // visually distinguishes them (dashed border + "Proj" badge for projected)
+  // Include ALL matches (confirmed + projected) — CompactMatchCard distinguishes them.
+  const r32Matches = r32Stage?.matches ?? [];
   const r16Matches = r16Stage?.matches ?? [];
   const qfMatches = qfStage?.matches ?? [];
   const sfMatches = sfStage?.matches ?? [];
   const finalMatch = finalStage?.matches?.[0];
 
-  // If no R16 matches at all (not even projected), show a message
-  if (r16Matches.length === 0) {
+  if (r32Matches.length === 0 && r16Matches.length === 0) {
     return (
       <div className="rounded-xl border border-surface2 bg-surface p-8 text-center">
         <p className="text-muted">
@@ -180,20 +182,25 @@ export default function WorldCupBracketTree({ bracket }: BracketTreeProps) {
     );
   }
 
-  // Split matches by half using the bracket tree structure
+  // Split matches by half using the official bracket structure. Derive each match's TRUE
+  // index from its "projected-<round>-<n>" id (not array position) so a missing slot never
+  // shifts teams into the wrong half.
+  const idxOf = (m: WorldCupMatch, fallback: number) => {
+    const mt = String(m.id).match(/-(\d+)$/);
+    return mt ? Number(mt[1]) : fallback;
+  };
   const getMatchesByHalf = (matches: WorldCupMatch[], round: "R32" | "R16" | "QF" | "SF") => {
     const top: WorldCupMatch[] = [];
     const bottom: WorldCupMatch[] = [];
-
-    matches.forEach((match, idx) => {
-      const half = getMatchHalf(round, idx);
+    matches.forEach((match, i) => {
+      const half = getMatchHalf(round, idxOf(match, i));
       if (half === "top") top.push(match);
       else if (half === "bottom") bottom.push(match);
     });
-
     return { top, bottom };
   };
 
+  const r32ByHalf = getMatchesByHalf(r32Matches, "R32");
   const r16ByHalf = getMatchesByHalf(r16Matches, "R16");
   const qfByHalf = getMatchesByHalf(qfMatches, "QF");
   const sfByHalf = getMatchesByHalf(sfMatches, "SF");
@@ -209,6 +216,15 @@ export default function WorldCupBracketTree({ bracket }: BracketTreeProps) {
               Top Half
             </div>
             <div className="flex items-center gap-6">
+              {r32ByHalf.top.length > 0 && (
+                <RoundColumn title="Round of 32" matches={r32ByHalf.top} round="R32" half="top" />
+              )}
+              <div className="flex items-center text-surface2">
+                <svg width="24" height="200" className="overflow-visible">
+                  <line x1="0" y1="50" x2="24" y2="100" stroke="currentColor" strokeWidth="1" opacity="0.3" />
+                  <line x1="0" y1="150" x2="24" y2="100" stroke="currentColor" strokeWidth="1" opacity="0.3" />
+                </svg>
+              </div>
               {r16ByHalf.top.length > 0 && (
                 <RoundColumn title="Round of 16" matches={r16ByHalf.top} round="R16" half="top" />
               )}
@@ -252,6 +268,15 @@ export default function WorldCupBracketTree({ bracket }: BracketTreeProps) {
               Bottom Half
             </div>
             <div className="flex items-center gap-6">
+              {r32ByHalf.bottom.length > 0 && (
+                <RoundColumn title="Round of 32" matches={r32ByHalf.bottom} round="R32" half="bottom" />
+              )}
+              <div className="flex items-center text-surface2">
+                <svg width="24" height="200" className="overflow-visible">
+                  <line x1="0" y1="50" x2="24" y2="100" stroke="currentColor" strokeWidth="1" opacity="0.3" />
+                  <line x1="0" y1="150" x2="24" y2="100" stroke="currentColor" strokeWidth="1" opacity="0.3" />
+                </svg>
+              </div>
               {r16ByHalf.bottom.length > 0 && (
                 <RoundColumn title="Round of 16" matches={r16ByHalf.bottom} round="R16" half="bottom" />
               )}
