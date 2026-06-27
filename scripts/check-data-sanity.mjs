@@ -73,8 +73,21 @@ function checkTennis(sport, snap) {
 // --- World Cup -------------------------------------------------------------
 function checkWorldCup(snap) {
   const groups = snap?.groups ?? [];
+  const matches = snap?.matches ?? [];
   if (snap.source === "mock") warn("worldcup", "served from mock fallback (live feed unavailable)");
   if (groups.length !== 12) warn("worldcup", `${groups.length} groups (expected 12 for 2026)`);
+
+  // Build a map of team code → count of completed/in-progress matches
+  const teamMatchCounts = new Map();
+  for (const m of matches) {
+    // Only count completed or in-progress matches (not future/scheduled ones)
+    if (m.state === "post" || m.state === "in") {
+      const hc = m.homeCode;
+      const ac = m.awayCode;
+      teamMatchCounts.set(hc, (teamMatchCounts.get(hc) || 0) + 1);
+      teamMatchCounts.set(ac, (teamMatchCounts.get(ac) || 0) + 1);
+    }
+  }
 
   for (const g of groups) {
     const teams = g.teams ?? [];
@@ -89,6 +102,18 @@ function checkWorldCup(snap) {
       if (t.goalDiff !== t.goalsFor - t.goalsAgainst) err("worldcup", `${t.name}: GD ${t.goalDiff} ≠ GF−GA`);
       if (t.played > 3) err("worldcup", `${t.name}: played ${t.played} > 3 group games`);
       if (t.played < 0 || t.points < 0 || t.goalsFor < 0) err("worldcup", `${t.name}: negative value`);
+
+      // Staleness check (regression guard for bug-wc-group-standings-stale):
+      // Standings "matches played" should be consistent with the scoreboard's completed/in-progress matches.
+      // If a team has completed/in-progress matches in the schedule, but standings show fewer,
+      // it indicates stale standings data (cached on a different revalidation cycle).
+      const actualMatches = teamMatchCounts.get(t.code) || 0;
+      if (actualMatches > t.played) {
+        err(
+          "worldcup",
+          `${t.name} (${t.code}): standings show ${t.played} matches played, but schedule shows ${actualMatches} completed/in-progress (stale standings)`
+        );
+      }
     }
   }
   return groups;

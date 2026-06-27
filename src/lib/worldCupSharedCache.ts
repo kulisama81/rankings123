@@ -29,9 +29,11 @@ async function fetchJson(url: string, revalidateSeconds: number): Promise<any> {
 
 /**
  * Cached ESPN standings fetch (group tables, advancement notes).
- * Revalidates every 300s (5 min).
+ * Revalidates every 60s (1 min) — matches scoreboard frequency to prevent
+ * staleness during live matches (standings showing fewer matches played than
+ * the schedule shows completed/in-progress).
  */
-export const getCachedStandings = cache(() => fetchJson(STANDINGS_URL, 300));
+export const getCachedStandings = cache(() => fetchJson(STANDINGS_URL, 60));
 
 /**
  * Cached ESPN scoreboard fetch — FULL tournament window (Jun 11 – Jul 19, 2026).
