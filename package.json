@@ -13,7 +13,8 @@
     "check:data-sanity": "node scripts/check-data-sanity.mjs",
     "check:performance": "node scripts/check-performance.mjs",
     "check:ticket-hygiene": "node scripts/check-ticket-hygiene.mjs",
-    "check:changelog": "node scripts/check-changelog.mjs"
+    "check:changelog": "node scripts/check-changelog.mjs",
+    "check:core-features": "node scripts/check-core-features.mjs"
   },
   "dependencies": {
     "@google-analytics/data": "^6.1.0",
@@ -29,6 +30,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
+    "playwright": "^1.61.1",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

@@ -85,6 +85,14 @@ independent verifier PASS + merged + live-verified. Loop B files new tickets.
 - **analytics pull** (daily) + **daily digest email** (daily).
 These start cold — that's why this file exists. Research/QA agents touch only `.tickets/` + `docs/`.
 
+## Core features — never remove them
+**`docs/CORE-FEATURES.md`** lists must-have user-facing features that must NEVER be removed/hidden/
+gutted (not even "to save space" — scroll/collapse/paginate instead). The verifier must FAIL any diff
+that removes a feature the ticket didn't explicitly + human-approvedly ask to remove. **`npm run
+check:core-features`** (real-browser Playwright render) enforces this — run post-deploy for UI work
+and in the inspector; it fails if a protected feature (e.g. the World Cup R32 bracket column) is
+missing. (A planner silently dropped the R32 column once — this guard exists so it can't recur.)
+
 ## Docs to keep current (every ship)
 - **README.md** — update when something **major** ships (new sport/page/feature/data source).
 - **Site changelog** — `src/data/changelog.ts` drives a public "What's new" page linked in the

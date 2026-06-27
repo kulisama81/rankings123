@@ -25,6 +25,10 @@ Inspect the live production site **https://rankings123.com** across routes: `/`,
 - **Consistency (high-yield):** does the UI match itself? e.g. a **legend that lists states no row
   actually shows**, a count badge that disagrees with the list, a "source" flag that contradicts the
   data, a label that doesn't match the value, a tab count ≠ items. These mismatches are real bugs.
+- **Core features (every run):** run `npm run check:core-features` — a real-browser (Playwright)
+  rendered check that fails if a protected feature (see `docs/CORE-FEATURES.md`, e.g. the WC R32
+  bracket column, ATP 1000+pagination) is missing/gutted. If it fails, file a **p0** bug — a planner
+  removed/broke a core feature. (curl/SSR checks miss client-rendered regressions; this catches them.)
 - **Data:** run `npm run check:data-sanity`; spot-check that displayed numbers/standings/matchups are
   sane and trace to a real source; projections labelled as projections; no placeholder/fabricated UI.
 - **Accessibility (basic):** contrast in both themes, focus states, alt/labels, heading order.

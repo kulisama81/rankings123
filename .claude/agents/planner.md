@@ -67,6 +67,12 @@ service-account/email. Prefer p0/p1.
    half-done or faked work; it must re-run build+lint and return PASS/FAIL with evidence.
    On FAIL: fix and re-verify (≤3 rounds). Still failing → revert, `tkt edit <id> --status open`
    with a note, move on.
+   - **NEVER REMOVE A CORE FEATURE (see `docs/CORE-FEATURES.md`):** never delete/hide/gut a
+     user-facing feature — not even "to save space/simplify" (scroll/collapse/paginate instead).
+     The verifier MUST inspect the diff for **removed or hidden UI/sections/features** and FAIL the
+     ticket if it removes anything the ticket didn't explicitly (and human-approvedly) ask to remove
+     — feature deletion is a regression even if the ticket's own AC pass. (This is how the R32
+     bracket column got silently dropped — don't repeat it.)
 5. On PASS: `tkt edit <id> --status closed`, commit specific files (not `git add -A`) with a
    message ending `Closes: [<id>]`.
    - **Keep docs current in the SAME commit:** (a) if the ticket added/changed something **major**
@@ -77,7 +83,10 @@ service-account/email. Prefer p0/p1.
 6. **Push policy** (see Guardrails) → if allowed, `git push origin main` (auto-deploys).
 7. **Post-deploy verify:** wait ~120s; check the Vercel build succeeded
    (`gh api repos/kulisama81/rankings123/commits/<sha>/status --jq '.statuses[]|select(.context=="Vercel")|.state'` → `success`)
-   and `curl https://rankings123.com` + the feature routes (200 + expected content). If the live
+   and `curl https://rankings123.com` + the feature routes (200 + expected content). For UI/feature
+   work, also run **`npm run check:core-features`** (real-browser rendered check) — it FAILS if a
+   protected feature (incl. the WC R32 bracket) is missing; if it fails, you broke/removed a feature
+   → revert. (curl can't see client-rendered content; this catches what SSR checks miss.) If the live
    site is broken: `git revert` + push to restore, then stop and report.
 
 ## Guardrails
