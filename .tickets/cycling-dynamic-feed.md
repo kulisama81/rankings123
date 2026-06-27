@@ -52,3 +52,13 @@ RECOMMENDATION: Start with FirstCycling wrapper (most direct, keyless, documente
 **2026-06-23T04:18:46Z**
 
 BLOCKED: No keyless public UCI rankings API available. ESPN has no cycling data. FirstCycling/PCS require Python scrapers with Cloudflare bypass. Needs Python microservice infrastructure (out of scope for autonomous loop). Recommend human evaluation of alternatives.
+
+## UNBLOCK (2026-06-27) — do NOT use the FirstCycling Python wrapper
+The blocker was assuming we need the FirstCycling *Python* library — we don't, and it can't be
+imported into our Next.js/TypeScript runtime. We don't need Python at all: FirstCycling /
+ProCyclingStats are just HTML web pages. **Fetch + parse that HTML directly in a TypeScript server
+feed** (keyless), exactly like the tennis/World-Cup feeds: `fetch(url)` → parse the HTML tables →
+map → mock fallback + `source` flag (`pcs`/`firstcycling`/`mock`), `revalidate` cached. Use
+**ProCyclingStats** (procyclingstats.com) as primary — it has structured tables for UCI rankings,
+race GC standings, startlists, and per-stage **distance + elevation gain + profile**. No RapidAPI key
+needed. (firstcycling-mcp / a Python function are overkill — close them in favor of this.)
