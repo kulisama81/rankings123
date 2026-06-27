@@ -5,7 +5,7 @@ deps: []
 links: []
 created: 2026-06-24T13:49:14Z
 type: feature
-priority: 1
+priority: 0
 parent: rankings123
 tags: [tennis, worldcup-priority, traffic, parity]
 ---
