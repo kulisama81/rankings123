@@ -44,13 +44,13 @@ test("ATP Live page renders full ranking table (not just Loading fallback)", asy
     );
   }
 
-  // Should NOT show the Suspense fallback "Loading..." as the main content
+  // Should NOT show the Suspense fallback "Loading table..." as the main content
   // (it's ok if "Loading..." appears in a button label or as part of dynamic
   // client-side updates, but not as the primary table content indicator)
-  const hasLoadingFallback = /<div[^>]*>Loading\.\.\.<\/div>/.test(html);
+  const hasLoadingFallback = /Loading table\.\.\./i.test(html);
   assert.ok(
     !hasLoadingFallback,
-    "Page should not show Suspense 'Loading...' fallback as main content"
+    "Page should not show 'Loading table...' fallback text"
   );
 });
 
