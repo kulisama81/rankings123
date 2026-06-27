@@ -2,12 +2,14 @@
 
 This baseline establishes performance budgets and target metrics for all routes. Use this to detect regressions during development.
 
-**Last Updated:** 2026-06-26
+**Last Updated:** 2026-06-27
 **Measurement Method:** `npm run check:performance` (TTFB/total/size via live fetch)
 
-> ⚠️ **MONITORING (2026-06-26):** World Cup page shows +33% TTFB variance (0.12s → 0.16s), similar to ATP variance from 2026-06-25 (which self-resolved). Monitoring for persistence.
+> 🔴 **CRITICAL REGRESSION (2026-06-27):** ATP/WTA Live pages show MASSIVE performance degradation (ATP TTFB +259%, WTA +182%) due to `force-dynamic` rendering introduced in commit 3eec872. See ticket `perf-atp-wta-isr-restore` (P0).
 
-> ✅ **VARIANCE RESOLVED (2026-06-26):** ATP Live variance from 2026-06-25 (+38% TTFB) confirmed transient — performance improved today (-5.6% TTFB vs baseline).
+> ⚠️ **MONITORING (2026-06-27):** Homepage shows +65% TTFB variance (0.23s → 0.38s). Cause TBD — monitoring for persistence.
+
+> ✅ **VARIANCE RESOLVED (2026-06-27):** World Cup TTFB variance from 2026-06-26 (+33%, 0.12s → 0.16s) confirmed transient — performance improved back to 0.12s baseline.
 
 ---
 
@@ -46,20 +48,62 @@ Per [web.dev/vitals](https://web.dev/vitals), these are the **GOOD** thresholds 
 
 ## Recent Changes
 
-### ⚠️ World Cup Page Variance Detected (2026-06-26)
+### 🔴 CRITICAL REGRESSION: ATP/WTA Force-Dynamic Rendering (2026-06-27)
+
+**Observation:** MASSIVE performance degradation across all tennis pages.
+
+**Measurements (2026-06-27 vs 2026-06-26 baseline):**
+- **ATP Live:** TTFB 0.17s → 0.61s (+259%), size 271KB → 399KB (+47%)
+- **WTA Live:** TTFB 0.11s → 0.31s (+182%), size 49KB → 153KB (+212%)
+- **Homepage:** TTFB 0.23s → 0.38s (+65%, cause TBD)
+
+**Root Cause:** Commit 3eec872 (2026-06-26) restored `export const dynamic = "force-dynamic"` in ATP/WTA page files to fix a table rendering bug (Suspense fallback persisting). This forces every request to render on origin instead of serving from edge cache.
+
+**Status:** 🔴 CRITICAL — P0 ticket filed (`perf-atp-wta-isr-restore`)
+
+**Impact:**
+- Every request hits origin + upstream ESPN APIs (no caching)
+- 3.6× slower TTFB on ATP, 2.8× slower on WTA
+- Harms UX, SEO (Core Web Vitals), ad revenue (viewability), and scale (100× more origin requests)
+- Dual problem: BOTH performance regression (this) AND functional bug (production shows "Loading table..." fallback, see ticket `suspense-fallback-bug`)
+
+**Technical Details:**
+The force-dynamic change "fixes" functionality (table renders correctly) but destroys performance. The root issue is an architectural conflict: **ISR + React Suspense + useSearchParams**.
+
+When using ISR (`revalidate: 60`):
+- Next.js pre-renders at build time
+- `LiveRankingTable` (client component) uses `useSearchParams()`
+- SearchParams unavailable at build time → component suspends
+- Suspense fallback ("Loading table...") rendered in static HTML
+- Result: Fast TTFB but broken UI
+
+When using force-dynamic:
+- Every request renders at request time
+- SearchParams available → component renders correctly
+- Result: Correct UI but terrible performance (no caching)
+
+**Previous Fix Attempt:** Commit 6cfcae9 (2026-06-24) successfully restored ISR (ATP TTFB 0.39s → 0.18s), but that fix later regressed.
+
+**Solution:** Fix the Suspense+useSearchParams conflict properly (move Suspense inside client component OR make searchParams optional) so ISR works without breaking functionality. See ticket for detailed implementation plan.
+
+**Urgency:** IMMEDIATE — tennis pages are core traffic drivers. Blocks monetization path (slow pages = lower ad RPM).
+
+**Report:** docs/reports/2026-06-27-performance.md
+
+---
+
+### ⚠️ World Cup Page Variance Detected (2026-06-26) — ✅ RESOLVED (2026-06-27)
 
 **Observation:** World Cup page showed increased TTFB (0.12s → 0.16s, +33%) and total (0.28s → 0.37s, +32%) in 2026-06-26 measurement.
 
-**Status:** Monitoring (within budget, likely transient variance)
-- Still well within budget (TTFB 0.16s vs 0.8s, total 0.37s vs 2.0s)
-- Size slightly improved (393KB → 390KB, -0.8%)
-- Recent code change: `LiveWorldCupWidget` added to homepage (commit f77f74b) with client-side polling to `/api/worldcup/live` endpoint
-- Widget shouldn't affect page SSR (client-side only), but new API route polls `getWorldCupData()` every 20s
-- Likely cause: Network or upstream ESPN API latency fluctuation (same pattern as ATP variance from yesterday)
+**Resolution (2026-06-27):** Performance returned to baseline with IMPROVEMENTS:
+- TTFB: 0.16s → 0.12s (-25%, back to baseline)
+- Total: 0.37s → 0.31s (-16%)
+- Size: 390KB → 351KB (-10%)
 
-**Action:** Will monitor in next run. If variance persists, will investigate upstream API pressure and file ticket.
+**Status:** ✅ Resolved — variance was transient network/upstream ESPN API latency (same pattern as ATP variance from 2026-06-25).
 
-**Report:** docs/reports/2026-06-26-performance.md
+**Report:** docs/reports/2026-06-26-performance.md, docs/reports/2026-06-27-performance.md
 
 ---
 
