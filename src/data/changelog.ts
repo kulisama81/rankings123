@@ -14,6 +14,13 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-06-27",
+    title: "Wimbledon 2026 Live Rankings",
+    description:
+      "Dedicated Wimbledon Championships page showing live ATP and WTA rankings during the tournament (June 29 - July 12). Toggle between men's and women's draws, see real-time ranking projections as matches complete, and track which players are still competing. Live points updates throughout the tournament at /tournaments/wimbledon-2026.",
+    area: "tennis",
+  },
+  {
+    date: "2026-06-27",
     title: "Interactive World Cup Knockout Bracket",
     description:
       "Visual bracket tree showing the Round of 16 through Final. See live match indicators, results for completed games, and click any match to view full details. The bracket displays only confirmed fixtures (no placeholders), updates in real-time as matches complete, and scrolls horizontally on mobile for easy viewing.",

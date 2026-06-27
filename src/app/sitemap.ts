@@ -11,6 +11,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: BASE, lastModified: now, changeFrequency: "daily", priority: 1.0 },
     { url: `${BASE}/atp-live`, lastModified: now, changeFrequency: "always", priority: 0.9 },
     { url: `${BASE}/wta-live`, lastModified: now, changeFrequency: "always", priority: 0.9 },
+    { url: `${BASE}/tournaments/wimbledon-2026`, lastModified: now, changeFrequency: "always", priority: 0.9 },
     { url: `${BASE}/world-cup`, lastModified: now, changeFrequency: "always", priority: 0.8 },
     { url: `${BASE}/world-cup/golden-boot`, lastModified: now, changeFrequency: "always", priority: 0.8 },
     { url: `${BASE}/changelog`, lastModified: now, changeFrequency: "weekly", priority: 0.6 },
