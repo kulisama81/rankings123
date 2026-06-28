@@ -4,6 +4,7 @@ import HeroBanner from "@/components/HeroBanner";
 import SectionNav from "@/components/SectionNav";
 import TdfStagesTable from "@/components/TdfStagesTable";
 import TdfGCTable from "@/components/TdfGCTable";
+import TdfJerseys from "@/components/TdfJerseys";
 
 export const metadata: Metadata = {
   title: "Tour de France 2026 Live — Stages & GC Standings",
@@ -35,6 +36,7 @@ export default async function CyclingPage() {
   const tdfData = await getTdfSnapshot();
 
   const sections = [
+    { id: "jerseys", label: "Jersey Leaders" },
     { id: "stages", label: "Stages" },
     { id: "gc", label: "General Classification" },
   ];
@@ -61,6 +63,17 @@ export default async function CyclingPage() {
 
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionNav sections={sections} />
+
+          {/* Jersey Leaders */}
+          <section id="jerseys" className="mb-12">
+            <h2 className="mb-6 text-3xl font-bold text-primary">
+              Jersey Leaders
+              <span className="ml-3 text-sm font-normal text-secondary">
+                Four classifications
+              </span>
+            </h2>
+            <TdfJerseys jerseys={tdfData.jerseys} raceStatus={tdfData.raceStatus} />
+          </section>
 
           {/* Stages */}
           <section id="stages" className="mb-12">

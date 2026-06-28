@@ -257,11 +257,21 @@ export interface TdfGCRider {
   gap?: string; // gap to leader (e.g., "+1:23")
 }
 
+export interface TdfJerseyLeader {
+  jersey: "yellow" | "green" | "polka-dot" | "white";
+  jerseyName: string; // e.g., "General Classification", "Points Classification"
+  rider?: string; // undefined before race starts
+  team?: string;
+  flag?: string;
+  country?: string;
+}
+
 export interface TdfSnapshot {
   lastUpdated: string; // ISO timestamp
   raceStatus: "upcoming" | "active" | "complete";
   currentStage?: number; // which stage is happening now
   stages: TdfStage[];
   gc: TdfGCRider[]; // General Classification standings
+  jerseys: TdfJerseyLeader[]; // Jersey leaders
   source: "wikipedia" | "letour" | "mock";
 }

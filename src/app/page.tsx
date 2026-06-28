@@ -27,6 +27,19 @@ const worldCupLinks = [
   { href: "/world-cup", label: "FIFA 2026", sub: "Live standings & schedule", sport: "worldcup", isLive: true },
 ];
 
+const cyclingLinks = [
+  { href: "/cycling", label: "Tour de France 2026", sub: "Stages, GC standings & jersey leaders", sport: "cycling", isLive: true },
+];
+
+// Show cycling during Tour de France (July 4-26, 2026) + 1 week pre-race promo
+function isTourDeFranceActive(): boolean {
+  const now = new Date();
+  const year = 2026;
+  const promoStart = new Date(year, 5, 27); // June 27 (month is 0-indexed)
+  const raceEnd = new Date(year, 6, 26); // July 26
+  return now >= promoStart && now <= raceEnd;
+}
+
 function SportCard({
   href,
   label,
@@ -67,15 +80,20 @@ function SportCard({
 }
 
 export default function HomePage() {
+  const showTourDeFrance = isTourDeFranceActive();
+
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
       <HeroBanner
         icon="🏆"
         title="Live Sports Rankings"
-        subtitle="Real-time ATP & WTA tennis, FIFA World Cup standings."
+        subtitle={showTourDeFrance
+          ? "Real-time ATP & WTA tennis, FIFA World Cup, Tour de France 2026."
+          : "Real-time ATP & WTA tennis, FIFA World Cup standings."
+        }
         live={false}
         stats={[
-          { label: "Sports", value: "Tennis · Football" },
+          { label: "Sports", value: showTourDeFrance ? "Tennis · Football · Cycling" : "Tennis · Football" },
           { label: "Updated", value: "Live" },
         ]}
       />
@@ -106,6 +124,20 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+
+      {/* Cycling Section - shown during Tour de France (July 4-26, 2026) */}
+      {showTourDeFrance && (
+        <section className="mb-12">
+          <h2 className="mb-4 font-display text-sm font-bold uppercase tracking-wide text-muted">
+            Cycling
+          </h2>
+          <div className="grid gap-4">
+            {cyclingLinks.map((link) => (
+              <SportCard key={link.href} {...link} />
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }

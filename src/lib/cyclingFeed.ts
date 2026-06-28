@@ -139,12 +139,21 @@ export async function getTdfSnapshot(
     const raceStatus = determineRaceStatus(stages);
     const currentStage = findCurrentStage(stages, raceStatus);
 
+    // Jerseys will be populated during the race; for now use empty pre-race state
+    const jerseys = [
+      { jersey: "yellow" as const, jerseyName: "General Classification (Maillot Jaune)" },
+      { jersey: "green" as const, jerseyName: "Points Classification (Maillot Vert)" },
+      { jersey: "polka-dot" as const, jerseyName: "Mountains Classification (Maillot à Pois)" },
+      { jersey: "white" as const, jerseyName: "Young Rider Classification (Maillot Blanc)" },
+    ];
+
     return {
       lastUpdated: new Date().toISOString(),
       raceStatus,
       currentStage,
       stages,
-      gc: gc.length > 0 ? gc : getMockTdfSnapshot().gc,
+      gc, // Keep parsed GC (empty pre-race, populated during race) - never use fabricated mock riders
+      jerseys,
       source: "wikipedia",
     };
   } catch (error) {

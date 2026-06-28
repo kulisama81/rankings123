@@ -6,6 +6,12 @@ export function getMockTdfSnapshot(): TdfSnapshot {
   return {
     lastUpdated: new Date().toISOString(),
     raceStatus: "upcoming",
+    jerseys: [
+      { jersey: "yellow", jerseyName: "General Classification (Maillot Jaune)" },
+      { jersey: "green", jerseyName: "Points Classification (Maillot Vert)" },
+      { jersey: "polka-dot", jerseyName: "Mountains Classification (Maillot à Pois)" },
+      { jersey: "white", jerseyName: "Young Rider Classification (Maillot Blanc)" },
+    ],
     stages: [
       {
         stage: 1,
@@ -155,37 +161,7 @@ export function getMockTdfSnapshot(): TdfSnapshot {
         type: "Flat stage",
       },
     ],
-    gc: [
-      {
-        rank: 1,
-        name: "Tadej Pogačar",
-        team: "UAE Team Emirates",
-        country: "Slovenia",
-        countryCode: "SVN",
-        flag: "🇸🇮",
-        time: "0:00:00",
-      },
-      {
-        rank: 2,
-        name: "Jonas Vingegaard",
-        team: "Visma-Lease a Bike",
-        country: "Denmark",
-        countryCode: "DEN",
-        flag: "🇩🇰",
-        time: "0:00:00",
-        gap: "+0:00",
-      },
-      {
-        rank: 3,
-        name: "Primož Roglič",
-        team: "Red Bull-Bora-Hansgrohe",
-        country: "Slovenia",
-        countryCode: "SVN",
-        flag: "🇸🇮",
-        time: "0:00:00",
-        gap: "+0:00",
-      },
-    ],
+    gc: [], // Empty until race starts - no fabricated pre-race data
     source: "mock",
   };
 }

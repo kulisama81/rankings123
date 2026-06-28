@@ -1,6 +1,6 @@
 ---
 id: cycling-tdf-2026
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-26T13:49:49Z
@@ -11,7 +11,7 @@ tags: [cycling, timesensitive]
 ---
 # Cycling Tour de France 2026 live GC standings
 
-Tour de France 2026 live GC (general classification) standings page — starts July 5, 2026
+Tour de France 2026 live GC (general classification) standings page — starts July 4, 2026
 
 ## Acceptance Criteria
 
@@ -21,4 +21,4 @@ Page shows current GC standings (rider, team, time/gap to leader), stage results
 
 **2026-06-26T13:49:49Z**
 
-ROI: TIME-SENSITIVE — Tour de France starts July 5 (9 days away), runs 3 weeks. Massive search traffic spike during tour. First principles: like World Cup, TdF is a short-window traffic opportunity we can't miss. Cycling section needs this to be credible. Depends on cycling-dynamic-feed but can be fast-followed.
+ROI: TIME-SENSITIVE — Tour de France starts July 4 (6 days away), runs 3 weeks. Massive search traffic spike during tour. First principles: like World Cup, TdF is a short-window traffic opportunity we can't miss. Cycling section needs this to be credible. Depends on cycling-dynamic-feed but can be fast-followed.
