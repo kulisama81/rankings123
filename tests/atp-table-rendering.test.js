@@ -76,10 +76,10 @@ test("ATP Live API endpoint returns full player list", async () => {
   assert.ok(typeof firstPlayer.livePoints === "number", "Player should have livePoints");
 });
 
-test("ATP/WTA Live pages must use dynamic rendering (regression guard)", async () => {
-  // This test guards against the specific regression where someone changes
-  // the pages from 'dynamic = "force-dynamic"' back to 'revalidate: 60' (ISR).
-  // ISR+Suspense+useSearchParams causes the Suspense fallback to persist.
+test("ATP/WTA Live pages must use ISR (regression guard)", async () => {
+  // This test guards against reverting to force-dynamic, which causes a massive
+  // performance regression (TTFB +259% for ATP, +182% for WTA).
+  // See ticket perf-atp-wta-isr-restore for details.
 
   const { readFileSync } = await import("node:fs");
   const { join } = await import("node:path");
@@ -90,23 +90,26 @@ test("ATP/WTA Live pages must use dynamic rendering (regression guard)", async (
   const atpContent = readFileSync(atpPagePath, "utf-8");
   const wtaContent = readFileSync(wtaPagePath, "utf-8");
 
-  // Must have dynamic = "force-dynamic"
+  // Must use ISR (revalidate) for performance
   assert.ok(
-    atpContent.includes('export const dynamic = "force-dynamic"'),
-    "ATP Live page must use dynamic = 'force-dynamic' (not ISR revalidate)"
+    atpContent.includes("export const revalidate"),
+    "ATP Live page must use ISR (revalidate) for performance, not force-dynamic. " +
+      "If you need force-dynamic, you're re-introducing a known 259% TTFB regression. " +
+      "See ticket perf-atp-wta-isr-restore."
   );
   assert.ok(
-    wtaContent.includes('export const dynamic = "force-dynamic"'),
-    "WTA Live page must use dynamic = 'force-dynamic' (not ISR revalidate)"
+    wtaContent.includes("export const revalidate"),
+    "WTA Live page must use ISR (revalidate) for performance, not force-dynamic. " +
+      "See ticket perf-atp-wta-isr-restore."
   );
 
-  // Must NOT have revalidate (which would enable ISR and break Suspense+useSearchParams)
+  // Must NOT use force-dynamic (which causes the performance regression)
   assert.ok(
-    !atpContent.includes("export const revalidate"),
-    "ATP Live page must NOT use revalidate (ISR breaks Suspense+useSearchParams)"
+    !atpContent.includes('dynamic = "force-dynamic"'),
+    "ATP Live page must NOT use dynamic = 'force-dynamic' (causes 259% TTFB regression)"
   );
   assert.ok(
-    !wtaContent.includes("export const revalidate"),
-    "WTA Live page must NOT use revalidate (ISR breaks Suspense+useSearchParams)"
+    !wtaContent.includes('dynamic = "force-dynamic"'),
+    "WTA Live page must NOT use dynamic = 'force-dynamic' (causes 182% TTFB regression)"
   );
 });

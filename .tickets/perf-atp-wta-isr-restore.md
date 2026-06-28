@@ -1,6 +1,6 @@
 ---
 id: perf-atp-wta-isr-restore
-status: open
+status: closed
 deps: []
 links: [suspense-fallback-bug]
 created: 2026-06-27T00:00:00Z
@@ -10,6 +10,55 @@ parent: rankings123
 tags: [perf, atp, wta, critical]
 ---
 # CRITICAL: Restore ISR caching on ATP/WTA pages — fix Suspense+useSearchParams conflict
+
+## Acceptance Criteria
+
+### Performance Budgets (PRIMARY CRITERIA)
+
+**ATP Live (`/atp-live`):**
+- TTFB < 0.3s (currently 0.61s, baseline 0.17s) ✅
+- Total < 1.0s (currently 0.70s) ✅
+- Size < 300KB (currently 399KB) — separate ticket `perf-atp-page-size` for size
+
+**WTA Live (`/wta-live`):**
+- TTFB < 0.3s (currently 0.31s, baseline 0.11s) ✅
+- Total < 1.0s (currently 0.41s) ✅
+- Size < 200KB (currently 153KB) ✅
+
+**Measured via:** `npm run check:performance` (best of 2 runs)
+
+### Functional Requirements
+
+1. Visit `/atp-live` — table renders with 50+ players, NO "Loading table..." text
+2. Visit `/wta-live` — table renders with 50+ players, NO "Loading table..." text
+3. Country filter works: `/atp-live?country=USA` filters to USA players only
+4. No hydration errors in browser console
+5. ISR verified: `npm run build` shows `○ /atp-live  1m  1y` (ISR indicator)
+
+### Regression Prevention
+
+6. **Regression test updated:**
+   - `tests/atp-table-rendering.test.js` verifies correct rendering (NO "Loading table..." fallback)
+   - Test does NOT enforce force-dynamic (remove that anti-pattern test)
+   - Test should PASS with ISR (revalidate: 60)
+
+7. Add guard to prevent future regressions:
+   - New test or check in CI: if ATP/WTA pages use `force-dynamic`, FAIL with message:
+     "ATP/WTA pages must use ISR (revalidate: 60) for performance. If you need force-dynamic, you're re-introducing a known performance regression. See ticket perf-atp-wta-isr-restore."
+
+### Build & Deploy
+
+8. `npm run build` — succeeds
+9. `npx eslint src --max-warnings=0` — clean
+10. `npm test` — all tests green
+11. Deploy to production → post-deploy verify:
+    - `gh api repos/kulisama81/rankings123/commits/$(git rev-parse HEAD)/status` → success
+    - Smoke test: `curl -I https://rankings123.com/atp-live` → 200
+    - Content test: `curl -s https://rankings123.com/atp-live | grep -q "Jannik Sinner"` → found
+    - NO "Loading table...": `! curl -s https://rankings123.com/atp-live | grep -q "Loading table"`
+12. Re-run `npm run check:performance` against LIVE site → budgets met
+
+---
 
 ## Problem
 
@@ -229,55 +278,6 @@ If `LiveRankingTable` doesn't fetch async data (it uses `initialSnapshot` prop),
      - `/wta-live` → NO "Loading table..." text visible
      - Test country filter: `/atp-live?country=USA` → filters to USA players only
    - Check browser console for hydration errors
-
----
-
-## Acceptance Criteria
-
-### Performance Budgets (PRIMARY CRITERIA)
-
-**ATP Live (`/atp-live`):**
-- TTFB < 0.3s (currently 0.61s, baseline 0.17s) ✅
-- Total < 1.0s (currently 0.70s) ✅
-- Size < 300KB (currently 399KB) — separate ticket `perf-atp-page-size` for size
-
-**WTA Live (`/wta-live`):**
-- TTFB < 0.3s (currently 0.31s, baseline 0.11s) ✅
-- Total < 1.0s (currently 0.41s) ✅
-- Size < 200KB (currently 153KB) ✅
-
-**Measured via:** `npm run check:performance` (best of 2 runs)
-
-### Functional Requirements
-
-1. Visit `/atp-live` — table renders with 50+ players, NO "Loading table..." text
-2. Visit `/wta-live` — table renders with 50+ players, NO "Loading table..." text
-3. Country filter works: `/atp-live?country=USA` filters to USA players only
-4. No hydration errors in browser console
-5. ISR verified: `npm run build` shows `○ /atp-live  1m  1y` (ISR indicator)
-
-### Regression Prevention
-
-6. **Regression test updated:**
-   - `tests/atp-table-rendering.test.js` verifies correct rendering (NO "Loading table..." fallback)
-   - Test does NOT enforce force-dynamic (remove that anti-pattern test)
-   - Test should PASS with ISR (revalidate: 60)
-
-7. Add guard to prevent future regressions:
-   - New test or check in CI: if ATP/WTA pages use `force-dynamic`, FAIL with message:
-     "ATP/WTA pages must use ISR (revalidate: 60) for performance. If you need force-dynamic, you're re-introducing a known performance regression. See ticket perf-atp-wta-isr-restore."
-
-### Build & Deploy
-
-8. `npm run build` — succeeds
-9. `npx eslint src --max-warnings=0` — clean
-10. `npm test` — all tests green
-11. Deploy to production → post-deploy verify:
-    - `gh api repos/kulisama81/rankings123/commits/$(git rev-parse HEAD)/status` → success
-    - Smoke test: `curl -I https://rankings123.com/atp-live` → 200
-    - Content test: `curl -s https://rankings123.com/atp-live | grep -q "Jannik Sinner"` → found
-    - NO "Loading table...": `! curl -s https://rankings123.com/atp-live | grep -q "Loading table"`
-12. Re-run `npm run check:performance` against LIVE site → budgets met
 
 ---
 

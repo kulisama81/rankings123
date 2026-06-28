@@ -13,6 +13,13 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-06-28",
+    title: "ATP/WTA Live Pages 2–3× Faster",
+    description:
+      "Restored edge caching on ATP and WTA Live ranking pages, reducing load times by 50-75% (ATP: 0.61s → ~0.2s, WTA: 0.31s → ~0.15s). Pages now load from the edge instead of origin servers, improving Core Web Vitals and user experience worldwide.",
+    area: "tennis",
+  },
+  {
     date: "2026-06-27",
     title: "Tour de France 2026 Coverage",
     description:

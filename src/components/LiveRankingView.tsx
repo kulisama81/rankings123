@@ -31,7 +31,7 @@ export default function LiveRankingView({ tour, snapshot }: LiveRankingViewProps
         subtitle={snapshot.weekLabel}
         stats={stats}
       />
-      <Suspense fallback={<div className="text-center text-muted">Loading table...</div>}>
+      <Suspense fallback={null}>
         <LiveRankingTable tour={tour} initialSnapshot={snapshot} />
       </Suspense>
     </div>
