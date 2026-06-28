@@ -17,7 +17,7 @@ export const changelog: ChangelogEntry[] = [
     title: "Tour de France 2026 Live",
     description:
       "Added Tour de France 2026 coverage with 21-stage schedule, jersey leaders (yellow, green, polka-dot, white), and General Classification standings. Live updates throughout the race (July 4-26).",
-    area: "Cycling",
+    area: "cycling",
   },
   {
     date: "2026-06-28",
