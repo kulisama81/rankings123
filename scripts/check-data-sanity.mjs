@@ -77,15 +77,30 @@ function checkWorldCup(snap) {
   if (snap.source === "mock") warn("worldcup", "served from mock fallback (live feed unavailable)");
   if (groups.length !== 12) warn("worldcup", `${groups.length} groups (expected 12 for 2026)`);
 
-  // Build a map of team code → count of completed/in-progress matches
+  // Build a map of team code → their group
+  const teamGroup = new Map();
+  for (const g of groups) {
+    for (const t of g.teams ?? []) {
+      teamGroup.set(t.code, g.name);
+    }
+  }
+
+  // Build a map of team code → count of completed/in-progress GROUP STAGE matches.
+  // Only count matches where both teams are in the same group (group stage matches).
+  // Cross-group or knockout matches shouldn't be counted against group standings.
   const teamMatchCounts = new Map();
   for (const m of matches) {
     // Only count completed or in-progress matches (not future/scheduled ones)
     if (m.state === "post" || m.state === "in") {
       const hc = m.homeCode;
       const ac = m.awayCode;
-      teamMatchCounts.set(hc, (teamMatchCounts.get(hc) || 0) + 1);
-      teamMatchCounts.set(ac, (teamMatchCounts.get(ac) || 0) + 1);
+      const homeGroup = teamGroup.get(hc);
+      const awayGroup = teamGroup.get(ac);
+      // Only count if both teams are in the same group (group stage match)
+      if (homeGroup && awayGroup && homeGroup === awayGroup) {
+        teamMatchCounts.set(hc, (teamMatchCounts.get(hc) || 0) + 1);
+        teamMatchCounts.set(ac, (teamMatchCounts.get(ac) || 0) + 1);
+      }
     }
   }
 
