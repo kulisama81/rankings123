@@ -2,12 +2,12 @@
 
 This baseline establishes performance budgets and target metrics for all routes. Use this to detect regressions during development.
 
-**Last Updated:** 2026-06-27
+**Last Updated:** 2026-06-28
 **Measurement Method:** `npm run check:performance` (TTFB/total/size via live fetch)
 
-> 🔴 **CRITICAL REGRESSION (2026-06-27):** ATP/WTA Live pages show MASSIVE performance degradation (ATP TTFB +259%, WTA +182%) due to `force-dynamic` rendering introduced in commit 3eec872. See ticket `perf-atp-wta-isr-restore` (P0).
+> 🔴 **CRITICAL REGRESSION (ongoing):** ATP/WTA Live pages show MASSIVE performance degradation (ATP TTFB +135%, WTA +164% vs baseline) due to `force-dynamic` rendering. TTFB improving slightly but still critical. See ticket `perf-atp-wta-isr-restore` (P0, open).
 
-> ⚠️ **MONITORING (2026-06-27):** Homepage shows +65% TTFB variance (0.23s → 0.38s). Cause TBD — monitoring for persistence.
+> ✅ **VARIANCE RESOLVED (2026-06-28):** Homepage TTFB variance from 2026-06-27 (+65%, 0.23s → 0.38s) fully resolved (now 0.12s, -48% vs baseline). Confirmed transient network/upstream latency.
 
 > ✅ **VARIANCE RESOLVED (2026-06-27):** World Cup TTFB variance from 2026-06-26 (+33%, 0.12s → 0.16s) confirmed transient — performance improved back to 0.12s baseline.
 
@@ -29,10 +29,10 @@ Per [web.dev/vitals](https://web.dev/vitals), these are the **GOOD** thresholds 
 
 | Route        | TTFB Budget | Total Budget | Size Budget | Current TTFB | Current Total | Current Size | Status |
 |--------------|-------------|--------------|-------------|--------------|---------------|--------------|--------|
-| /            | ≤ 0.8s      | ≤ 2.0s       | ≤ 150KB     | 0.23s        | 0.25s         | 24KB         | ✅ FAST |
-| /atp-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.17s        | 0.28s         | 271KB        | ✅ FAST |
-| /wta-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 200KB     | 0.11s        | 0.16s         | 49KB         | ✅ FAST |
-| /world-cup   | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.16s        | 0.37s         | 390KB        | ⚠️ SIZE |
+| /            | ≤ 0.8s      | ≤ 2.0s       | ≤ 150KB     | 0.12s        | 0.13s         | 24KB         | ✅ FAST |
+| /atp-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.40s        | 0.68s         | 399KB        | 🔴 SLOW |
+| /wta-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 200KB     | 0.29s        | 0.35s         | 173KB        | 🔴 SLOW |
+| /world-cup   | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.17s        | 0.39s         | 379KB        | ⚠️ SIZE |
 
 **Legend:**
 - **TTFB** = Time to First Byte (server response start)
@@ -44,9 +44,49 @@ Per [web.dev/vitals](https://web.dev/vitals), these are the **GOOD** thresholds 
 - ⚠️ **SIZE** = Over size budget (affects mobile, metered connections)
 - 🔴 **SLOW** = Over TTFB or total budget (user-perceived slowness)
 
+**Note on ATP/WTA status (2026-06-28):**
+- ATP TTFB 0.40s is technically within 0.8s budget but 135% regressed vs 0.17s baseline → marked SLOW
+- WTA TTFB 0.29s is within budget but 164% regressed vs 0.11s baseline → marked SLOW
+- Both routes suffer from force-dynamic regression (ticket `perf-atp-wta-isr-restore`)
+
 ---
 
 ## Recent Changes
+
+### ⚠️ ATP/WTA Regression Persists, Homepage Variance Resolved (2026-06-28)
+
+**Observation:** Mixed results — homepage variance fully resolved, ATP/WTA regression persists but showing slight improvement.
+
+**Measurements (2026-06-28):**
+- **Homepage:** TTFB 0.38s → 0.12s (-68%, variance fully resolved)
+- **ATP Live:** TTFB 0.61s → 0.40s (-34% improvement but still +135% vs 0.17s baseline)
+- **WTA Live:** TTFB 0.31s → 0.29s (-6%, still +164% vs 0.11s baseline), size 153KB → 173KB (+13%)
+- **World Cup:** size 390KB → 379KB (-3%, still over 300KB budget)
+
+**Status:**
+- ✅ **Homepage variance RESOLVED** — The +65% TTFB spike from 2026-06-27 (0.23s → 0.38s) is completely resolved, now at 0.12s (-48% vs baseline). Confirms transient network/upstream latency.
+- 🔴 **ATP/WTA regression PERSISTS** — Pages still use force-dynamic (ticket `perf-atp-wta-isr-restore` remains open). TTFB improving slightly but still critical (+135-164% vs baseline).
+- ⚠️ **World Cup size improving** — Down from 390KB to 379KB, still 26% over 300KB budget but trending right.
+
+**Code Status (confirmed 2026-06-28):**
+```
+src/app/atp-live/page.tsx:export const dynamic = "force-dynamic";
+src/app/wta-live/page.tsx:export const dynamic = "force-dynamic";
+```
+
+**Trend Analysis:**
+ATP/WTA TTFB is slowly improving (ATP -34%, WTA -6% vs yesterday) even with force-dynamic still in place. This suggests:
+1. Upstream ESPN API latency improving, OR
+2. Origin function cold-start frequency reduced, OR
+3. Network conditions improving
+
+However, regression remains CRITICAL — baseline is 0.17s (ATP) and 0.11s (WTA), so current state is still 135-164% slower.
+
+**Action:** Continue monitoring. No new ticket needed (existing ticket `perf-atp-wta-isr-restore` is comprehensive).
+
+**Report:** docs/reports/2026-06-28-performance.md
+
+---
 
 ### 🔴 CRITICAL REGRESSION: ATP/WTA Force-Dynamic Rendering (2026-06-27)
 
