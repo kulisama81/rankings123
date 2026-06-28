@@ -1,6 +1,6 @@
 ---
 id: cycling-dynamic-feed
-status: open
+status: in_progress
 deps: []
 links: []
 created: 2026-06-21T07:54:28Z
@@ -54,6 +54,7 @@ RECOMMENDATION: Start with FirstCycling wrapper (most direct, keyless, documente
 BLOCKED: No keyless public UCI rankings API available. ESPN has no cycling data. FirstCycling/PCS require Python scrapers with Cloudflare bypass. Needs Python microservice infrastructure (out of scope for autonomous loop). Recommend human evaluation of alternatives.
 
 ## UNBLOCK (2026-06-27) — do NOT use the FirstCycling Python wrapper
+
 The blocker was assuming we need the FirstCycling *Python* library — we don't, and it can't be
 imported into our Next.js/TypeScript runtime. We don't need Python at all: FirstCycling /
 ProCyclingStats are just HTML web pages. **Fetch + parse that HTML directly in a TypeScript server
@@ -62,3 +63,14 @@ map → mock fallback + `source` flag (`pcs`/`firstcycling`/`mock`), `revalidate
 **ProCyclingStats** (procyclingstats.com) as primary — it has structured tables for UCI rankings,
 race GC standings, startlists, and per-stage **distance + elevation gain + profile**. No RapidAPI key
 needed. (firstcycling-mcp / a Python function are overkill — close them in favor of this.)
+
+## DATA SOURCE — CORRECTED (2026-06-27, tested server-side)
+ProCyclingStats is **Cloudflare-blocked (403)** from server fetch — do NOT use it. FirstCycling is
+ambiguous (challenge). **Use the Wikipedia API** (keyless, reliable, no Cloudflare):
+`https://en.wikipedia.org/w/api.php?action=parse&page=2026_Tour_de_France&prop=wikitext|text&format=json`
+— the 2026 Tour de France page has all 21 stages (date, start→finish, distance km, stage TYPE
+flat/hilly/mountain/ITT) and the General Classification (updated during the race). Supplement with
+**letour.fr** (official, fetchable, has a JSON/rankings API) for live GC + stage elevation where
+available. For UCI ranking, parse the relevant Wikipedia page (e.g. "2026 UCI World Tour"). Standard
+pattern: fetch → parse → mock fallback + `source` flag (`wikipedia`/`letour`/`mock`); never fabricate.
+Elevation gain: include where the source provides it; otherwise show distance + stage type + climbs.
