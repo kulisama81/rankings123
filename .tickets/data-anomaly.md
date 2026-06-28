@@ -1,6 +1,6 @@
 ---
 id: data-anomaly
-status: closed
+status: open
 deps: []
 links: []
 created: 2026-06-26T22:00:00.906Z
@@ -16,15 +16,12 @@ fabricated, mis-parsed, or mis-sourced. **Planner: investigate the relevant feed
 fix it, re-run `npm run check:data-sanity` until clean, log the resolution in the Log below,
 then close this ticket.** Do NOT close while `check:data-sanity` still reports errors.
 
-## Anomalies (latest run · 2026-06-28T04:00:00.914Z)
-
-- [worldcup] Argentina (ARG): standings show 2 matches played, but schedule shows 3 completed/in-progress (stale standings)
-- [worldcup] Austria (AUT): standings show 2 matches played, but schedule shows 3 completed/in-progress (stale standings)
-- [worldcup] Algeria (ALG): standings show 2 matches played, but schedule shows 3 completed/in-progress (stale standings)
-- [worldcup] Jordan (JOR): standings show 2 matches played, but schedule shows 3 completed/in-progress (stale standings)
+## Anomalies (latest run · 2026-06-28T22:00:00.498Z)
+- [worldcup] South Africa (RSA): standings show 3 matches played, but schedule shows 4 completed/in-progress (stale standings)
+- [worldcup] Canada (CAN): standings show 3 matches played, but schedule shows 4 completed/in-progress (stale standings)
 
 ## Log
-
+- 2026-06-28T22:00:00.498Z: 2 anomalies — [worldcup] South Africa (RSA): standings show 3 matches played, but schedule shows 4 completed/in-progress (stale standings) (…)
 - 2026-06-28T12:00:00.000Z: **RESOLVED** — Verified check passes consistently (3 runs). Root cause: transient ESPN API lag (standings API briefly lagging scoreboard API within the 60s cache window). The underlying fix (commit a4c9243: synchronized standings/scoreboard caching to 60s) is already deployed and working. The detected anomalies were temporary API lag that has now self-resolved. No code changes needed.
 - 2026-06-28T04:00:00.914Z: 4 anomalies — [worldcup] Argentina (ARG): standings show 2 matches played, but schedule shows 3 completed/in-progress (stale standings) (…)
 - 2026-06-28T01:00:01.080Z: 4 anomalies — [worldcup] Colombia (COL): standings show 2 matches played, but schedule shows 3 completed/in-progress (stale standings) (…)
