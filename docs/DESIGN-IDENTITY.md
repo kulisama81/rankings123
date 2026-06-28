@@ -1,6 +1,6 @@
 # Rankings123 Design Identity (North Star)
 
-*Last updated: 2026-06-21*
+*Last updated: 2026-06-28*
 
 This document defines the visual identity for rankings123.com — a **distinctive, premium sports rankings hub** that stands out from commodity sites like live-tennis.eu. Data is always the hero; beauty serves scannability.
 
@@ -203,6 +203,19 @@ Articles read and applied to rankings123 design strategy:
 - **Beyond Sports 2026 report** — trends: interactive experiences over passive viewing, short-form social-first content, real-time dashboards, automated social-ready graphics.
 - **Application:** Filed tickets for rank-change animations, social share cards, data storytelling callouts, nav accent strengthening. Focus on making "live" feel tangible through motion and making content viral-ready.
 
+### 2026-06-28 (Weekly Run)
+
+5. **["What Is a Brand Language?"](https://clay.global/blog/brand-language)** (June 22, 2026)
+   - **Key takeaway:** Article was inaccessible (404 error) — will retry next run.
+   - **Application:** Deferred.
+
+**Awwwards Sports Sites (June 2026):**
+- **Podium** (Site of the Day, June 27) — sophisticated interactive elements, Developer Award
+- **Balmoral** (Site of the Day, June 19) — running community, movement-based design, photography-driven
+- **FC Porto Memorial** (March 22) — sports heritage storytelling with narrative typography
+- **Common patterns:** Motion design, responsive layouts, photography/imagery for hero moments, athletic energy + functional clarity
+- **Application:** Filed tickets for sport background imagery (`sport-background-visuals`), premium table hover interactions (`table-hover-premium`), mobile-first table patterns (`mobile-table-patterns`), nav sport icons (`nav-sport-icons`), and accent glow system (`accent-glow-system`). Focus: move from "clean template" to "designed product people remember" with signature visual moments.
+
 ---
 
 ## Evolution Roadmap
@@ -224,6 +237,11 @@ Articles read and applied to rankings123 design strategy:
 - [ ] **Empty states** (ticket `empty-state-design`)
 - [ ] **Nav accent strengthening** (ticket `nav-accent-strengthen`)
 - [ ] **Rank change animations** (ticket `rank-change-animations`)
+- [ ] **Sport background visuals** (ticket `sport-background-visuals`) — NEW 2026-06-28
+- [ ] **Table hover premium** (ticket `table-hover-premium`) — NEW 2026-06-28
+- [ ] **Mobile table patterns** (ticket `mobile-table-patterns`) — NEW 2026-06-28
+- [ ] **Nav sport icons** (ticket `nav-sport-icons`) — NEW 2026-06-28
+- [ ] **Accent glow system** (ticket `accent-glow-system`) — NEW 2026-06-28
 
 ### Phase 3: Signature Moments (Future)
 - [ ] **OG image templates** (ticket `og-image-templates`)
