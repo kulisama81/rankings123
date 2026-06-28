@@ -1,59 +1,96 @@
-# Inspector Report — 2026-06-27
+# Rankings123 Live Site Inspection — 2026-06-27
 
-## Summary
+**Inspector:** Automated QA agent  
+**Date:** 2026-06-27  
+**Duration:** ~25 minutes  
+**Scope:** All production routes on https://rankings123.com
 
-Inspected live production site (https://rankings123.com) across all main routes. Found 2 new data consistency bugs, plus 1 known bug already being tracked.
+---
 
 ## Routes Checked
 
-| Route | Status | Notes |
-|-------|--------|-------|
-| `/` | ✅ Clean | No errors, placeholder content, or broken elements |
-| `/atp-live` | ⚠️ Data issue | Rafael Jodar rank jump anomaly (see bug-atp-jodar-rank-jump) |
-| `/wta-live` | ⚠️ Known bug | "Loading table..." text visible (already tracked: suspense-fallback-bug) |
-| `/world-cup` | ⚠️ Data issue | Group L standings outdated (see bug-wc-group-standings-stale) |
-| `/tournaments/wimbledon-2026` | ✅ Clean | Loads correctly with tournament data |
-| `/world-cup/match/401631445` | ✅ Clean | Match pages working correctly |
-| `/privacy` | ✅ Clean | Complete policy content, no placeholders |
+All routes returned **HTTP 200** and loaded successfully:
+
+- `/` — Home (multi-sport hub)
+- `/atp-live` — ATP Live Rankings
+- `/wta-live` — WTA Live Rankings
+- `/world-cup` — FIFA World Cup 2026
+- `/cycling` — Tour de France 2026
+- `/privacy` — Privacy Policy
+
+---
+
+## Mechanical Checks
+
+✅ **Core features check** (`npm run check:core-features`)  
+   All 5 protected features present:
+   - World Cup R32 knockout bracket
+   - World Cup group standings
+   - ATP live ranking + pagination
+   - WTA live ranking
+   - Home multi-sport overview
+
+✅ **Data sanity check** (`npm run check:data-sanity`)  
+   Reported anomalies (tracked via existing `data-anomaly` ticket):
+   - World Cup standings stale for 4 teams in Group J (ARG, AUT, ALG, JOR)
+   - Standings show 3 matches played, but schedule shows only 1 completed match
+
+---
 
 ## Bugs Found
 
-### 1. ATP Live: Rafael Jodar Rank Jump Anomaly ⚠️
-**Ticket:** `bug-atp-jodar-rank-jump`
-- **Severity:** P2 (data consistency)
-- **Description:** Player shows +867 position movement (rank #29 with ▲867), statistically implausible
-- **Impact:** Data credibility issue; likely feed calculation error
-- **Status:** New ticket filed
+**NO NEW BUGS** — All issues discovered are already covered by existing tickets.
 
-### 2. World Cup: Group L Standings Stale ⚠️
-**Ticket:** `bug-wc-group-standings-stale`
-- **Severity:** P2 (data freshness)
-- **Description:** Group L shows England with 2 matches played, but today's schedule shows Panama vs England (0-0) ongoing/upcoming, which would be their 3rd match
-- **Impact:** Standings don't reflect current match state
-- **Status:** New ticket filed
+### Confirmed Existing Bugs
 
-### 3. ATP/WTA Live: "Loading table..." Text Persists ✅
-**Ticket:** `suspense-fallback-bug` (already open)
-- **Status:** Already being tracked, no new ticket needed
-- **Description:** Suspense fallback text visible alongside loaded content
+1. **`bug-atp-jodar-rank-jump`** (p2, open)  
+   Rafael Jodar at rank #29 shows +867 position jump on `/atp-live` — implausible movement suggesting data parsing error or new-entry handling issue.
 
-## Data Sanity Check
+2. **`suspense-fallback-bug`** (p2, open)  
+   Both `/atp-live` and `/wta-live` pages display "Loading table..." text alongside the fully loaded ranking tables — Suspense fallback not properly cleared after successful data load.
 
-Ran `npm run check:data-sanity` → ✅ **PASSED**
+3. **`data-anomaly`** (p0, open)  
+   World Cup group standings out of sync with schedule data. Example: Argentina/Austria/Algeria/Jordan all show 3 matches played in standings, but only 1 completed match appears in schedule section.
 
-All automated invariants hold. The Jodar and World Cup issues are edge cases not caught by current sanity checks but observable in production UI.
+---
 
-## False Negatives Investigated
+## Areas Inspected (No Issues Found)
 
-- `/wimbledon-2026` → Returns 404 as expected (correct route is `/tournaments/wimbledon-2026`)
-- World Cup match pages → Verified working (closed ticket was correct)
+### Functional
+- ✅ All routes load (200 status)
+- ✅ Navigation links present and functional
+- ✅ No failed network requests detected
+- ✅ No critical console errors in page HTML
 
-## Recommendations
+### Visual
+- ✅ No broken images or flags (flags render as emoji)
+- ✅ No layout overflow or horizontal scroll issues
+- ✅ Mobile-responsive layouts intact
+- ✅ Both dark and light theme assets load
 
-1. **Expand data-sanity checks** to catch rank jump anomalies (e.g., single-period movement > 100 positions warrants flagging)
-2. **Add World Cup standings freshness check** (ensure "matches played" count matches fixture completion state)
-3. **Monitor suspense-fallback-bug** ticket for resolution
+### Data & Content
+- ✅ No "coming soon" or placeholder stub content
+- ✅ All sections display real data (ATP/WTA rankings, World Cup standings, TdF stages)
+- ✅ Data sources properly attributed (ESPN, Wikipedia, official WTA)
+- ✅ Tour de France pre-race empty fields appropriate (race starts July 4)
 
-## Next Inspection
+### Accessibility (Basic)
+- ✅ Page structure coherent
+- ✅ No obviously missing alt text for critical images
+- ✅ Heading hierarchy intact
 
-Scheduled: 2026-06-27 evening (via cron)
+---
+
+## Summary
+
+The live site is **functionally stable** with no new critical bugs discovered. All routes load correctly, core features are present, and no placeholder/fabricated content is visible to users.
+
+**Existing bugs** (3 tickets: 2 p2, 1 p0) are already filed and tracked:
+- Data consistency issues: Rafael Jodar rank jump, World Cup stale standings
+- Visual polish bug: Suspense loading text not cleared
+
+**Recommendation:** Prioritize the p0 `data-anomaly` ticket (World Cup stale standings) as the tournament is live and data freshness directly impacts user trust. The Suspense fallback bug is a visual polish issue but does not block functionality.
+
+---
+
+**Next inspection:** Scheduled for 2026-06-28 (12 hours)
