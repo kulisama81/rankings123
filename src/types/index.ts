@@ -235,3 +235,33 @@ export interface WorldCupTeamRoster {
 
 // Fabricated event types removed (OlympicsRankings, CyclingRankings, RugbyRankings, EventSummary).
 // Only real sourced data remains (ATP/WTA/World Cup).
+
+// --- Cycling / Tour de France ---
+export interface TdfStage {
+  stage: number;
+  date: string; // e.g., "4 July"
+  course: string; // e.g., "Barcelona" or "Tarragona to Barcelona"
+  distance: string; // e.g., "19.7 km (12.2 mi)"
+  type: "Team time trial" | "Hilly stage" | "Mountain stage" | "Flat stage" | "Individual time trial";
+  winner?: string; // empty until stage is completed
+}
+
+export interface TdfGCRider {
+  rank: number;
+  name: string;
+  team: string;
+  country: string;
+  countryCode: string;
+  flag: string;
+  time: string; // overall time or gap to leader
+  gap?: string; // gap to leader (e.g., "+1:23")
+}
+
+export interface TdfSnapshot {
+  lastUpdated: string; // ISO timestamp
+  raceStatus: "upcoming" | "active" | "complete";
+  currentStage?: number; // which stage is happening now
+  stages: TdfStage[];
+  gc: TdfGCRider[]; // General Classification standings
+  source: "wikipedia" | "letour" | "mock";
+}

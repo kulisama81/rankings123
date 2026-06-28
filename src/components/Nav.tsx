@@ -9,6 +9,7 @@ const tabs = [
   { href: "/atp-live", label: "ATP" },
   { href: "/wta-live", label: "WTA" },
   { href: "/world-cup", label: "World Cup" },
+  { href: "/cycling", label: "Cycling" },
 ];
 
 export default function Nav() {

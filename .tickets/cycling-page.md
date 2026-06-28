@@ -1,6 +1,6 @@
 ---
 id: cycling-page
-status: open
+status: closed
 deps: [cycling-dynamic-feed]
 links: []
 created: 2026-06-21T07:54:53Z

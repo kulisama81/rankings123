@@ -14,6 +14,13 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-06-27",
+    title: "Tour de France 2026 Coverage",
+    description:
+      "Complete Tour de France 2026 coverage at /cycling featuring all 21 stages (Barcelona start on July 4 through Paris finish on July 26), stage types (mountain, hilly, flat, time trials), and live General Classification standings once the race begins. Stage schedule sourced from Wikipedia with real-time updates. New Cycling tab in main navigation.",
+    area: "cycling",
+  },
+  {
+    date: "2026-06-27",
     title: "Wimbledon 2026 Live Rankings",
     description:
       "Dedicated Wimbledon Championships page showing live ATP and WTA rankings during the tournament (June 29 - July 12). Toggle between men's and women's draws, see real-time ranking projections as matches complete, and track which players are still competing. Live points updates throughout the tournament at /tournaments/wimbledon-2026.",
