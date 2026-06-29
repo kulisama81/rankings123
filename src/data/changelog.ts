@@ -13,6 +13,13 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-06-29",
+    title: "ATP/WTA Live Tables Fixed",
+    description:
+      "Fixed critical bug where ATP and WTA Live ranking pages only showed 1 player instead of the full 1000+ ranking. Full tables and pagination controls are now working correctly.",
+    area: "tennis",
+  },
+  {
     date: "2026-06-28",
     title: "Tour de France 2026 Live",
     description:

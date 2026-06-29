@@ -18,8 +18,8 @@ export const metadata: Metadata = {
   },
 };
 
-// ISR caching for performance (60s background revalidation)
-export const revalidate = 60;
+// Dynamic rendering required for useSearchParams compatibility
+export const dynamic = "force-dynamic";
 
 const jsonLd = {
   "@context": "https://schema.org",

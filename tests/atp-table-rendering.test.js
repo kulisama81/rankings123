@@ -76,10 +76,15 @@ test("ATP Live API endpoint returns full player list", async () => {
   assert.ok(typeof firstPlayer.livePoints === "number", "Player should have livePoints");
 });
 
-test("ATP/WTA Live pages must use ISR (regression guard)", async () => {
-  // This test guards against reverting to force-dynamic, which causes a massive
-  // performance regression (TTFB +259% for ATP, +182% for WTA).
-  // See ticket perf-atp-wta-isr-restore for details.
+test("ATP/WTA Live pages must use dynamic rendering (regression guard)", async () => {
+  // This test guards against changing back to ISR (revalidate), which causes
+  // a critical functional regression: ISR + Suspense + useSearchParams results
+  // in the table only showing 1 player instead of the full ranking.
+  // See tickets atp-live-table-truncated, wta-live-table-truncated.
+  //
+  // Trade-off: force-dynamic has worse performance (TTFB +259% ATP, +182% WTA)
+  // but the page WORKS. ISR is faster but BREAKS the table rendering.
+  // Working > Fast. File a separate ticket to optimize without breaking functionality.
 
   const { readFileSync } = await import("node:fs");
   const { join } = await import("node:path");
@@ -90,26 +95,23 @@ test("ATP/WTA Live pages must use ISR (regression guard)", async () => {
   const atpContent = readFileSync(atpPagePath, "utf-8");
   const wtaContent = readFileSync(wtaPagePath, "utf-8");
 
-  // Must use ISR (revalidate) for performance
+  // Must use force-dynamic for useSearchParams compatibility
   assert.ok(
-    atpContent.includes("export const revalidate"),
-    "ATP Live page must use ISR (revalidate) for performance, not force-dynamic. " +
-      "If you need force-dynamic, you're re-introducing a known 259% TTFB regression. " +
-      "See ticket perf-atp-wta-isr-restore."
+    atpContent.includes('dynamic = "force-dynamic"'),
+    "ATP Live page must use dynamic = 'force-dynamic' (ISR breaks table rendering with useSearchParams)"
   );
   assert.ok(
-    wtaContent.includes("export const revalidate"),
-    "WTA Live page must use ISR (revalidate) for performance, not force-dynamic. " +
-      "See ticket perf-atp-wta-isr-restore."
+    wtaContent.includes('dynamic = "force-dynamic"'),
+    "WTA Live page must use dynamic = 'force-dynamic' (ISR breaks table rendering with useSearchParams)"
   );
 
-  // Must NOT use force-dynamic (which causes the performance regression)
+  // Must NOT use ISR (which breaks the table)
   assert.ok(
-    !atpContent.includes('dynamic = "force-dynamic"'),
-    "ATP Live page must NOT use dynamic = 'force-dynamic' (causes 259% TTFB regression)"
+    !atpContent.includes("export const revalidate"),
+    "ATP Live page must NOT use revalidate (ISR) - it causes table to show only 1 player"
   );
   assert.ok(
-    !wtaContent.includes('dynamic = "force-dynamic"'),
-    "WTA Live page must NOT use dynamic = 'force-dynamic' (causes 182% TTFB regression)"
+    !wtaContent.includes("export const revalidate"),
+    "WTA Live page must NOT use revalidate (ISR) - it causes table to show only 1 player"
   );
 });
