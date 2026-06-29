@@ -1,6 +1,6 @@
 ---
 id: firstcycling-mcp
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-24T13:49:39Z

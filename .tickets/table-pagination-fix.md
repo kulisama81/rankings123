@@ -1,6 +1,6 @@
 ---
 id: table-pagination-fix
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-29T13:49:50Z
