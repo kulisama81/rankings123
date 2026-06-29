@@ -1,14 +1,28 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <!-- Dark background circle -->
-  <circle cx="16" cy="16" r="16" fill="#0a0b0f"/>
+  <defs>
+    <!-- Subtle stroke for light/dark browser compatibility -->
+    <filter id="stroke">
+      <feMorphology in="SourceAlpha" result="expanded" operator="dilate" radius="0.5"/>
+      <feFlood flood-color="#000000" flood-opacity="0.3"/>
+      <feComposite in2="expanded" operator="in"/>
+      <feComposite in="SourceGraphic" operator="over"/>
+    </filter>
+  </defs>
 
-  <!-- "123" in a clean, bold font -->
-  <text x="16" y="20" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="700" fill="#b6f23c" text-anchor="middle">123</text>
+  <!-- Three ascending bars with DISTINCT per-sport colors (unique to rankings123) -->
+  <!-- Bar 1: World Cup green #22c55e (40% height) -->
+  <rect x="5" y="18.5" width="6.5" height="8" rx="2" fill="#22c55e" filter="url(#stroke)"/>
 
-  <!-- Live dot accent (top right) -->
-  <circle cx="24" cy="8" r="3" fill="#b6f23c"/>
-  <circle cx="24" cy="8" r="3" fill="#b6f23c" opacity="0.6">
-    <animate attributeName="r" values="3;4.5;3" dur="1.6s" repeatCount="indefinite"/>
-    <animate attributeName="opacity" values="0.6;0.3;0.6" dur="1.6s" repeatCount="indefinite"/>
+  <!-- Bar 2: WTA magenta #f472b6 (65% height) -->
+  <rect x="12.75" y="13.5" width="6.5" height="13" rx="2" fill="#f472b6" filter="url(#stroke)"/>
+
+  <!-- Bar 3: ATP lime #b6f23c (100% height) -->
+  <rect x="20.5" y="7" width="6.5" height="19.5" rx="2" fill="#b6f23c" filter="url(#stroke)"/>
+
+  <!-- Live pulse dot (signature element) -->
+  <circle cx="23.75" cy="6" r="2.5" fill="#ffffff" filter="url(#stroke)">
+    <animate attributeName="r" values="2.5;3.2;2.5" dur="1.6s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="1;0.7;1" dur="1.6s" repeatCount="indefinite"/>
   </circle>
+  <circle cx="23.75" cy="6" r="1.5" fill="#b6f23c"/>
 </svg>
