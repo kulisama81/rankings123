@@ -1,6 +1,6 @@
 ---
 id: atp-live-table-truncated
-status: open
+status: in_progress
 deps: []
 links: []
 created: 2026-06-29T05:08:05Z
