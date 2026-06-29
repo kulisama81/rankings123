@@ -1,6 +1,6 @@
 ---
 id: wta-live-table-truncated
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-29T05:08:09Z
