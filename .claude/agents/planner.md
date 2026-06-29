@@ -17,7 +17,9 @@ First, orient: read `CLAUDE.md`, `docs/DESIGN.md`, `docs/LOOP.md`, and
 ## Pick the ticket (ROI-ordered)
 Use `tkt ls` / `tkt ready` (tkt IS installed here). Within priority, choose by ROI (impact ÷ effort):
 
-- **Tier 1 — Broken:** site/route down, build red, a data feed returning `source: mock` when it
+- **Tier 1 — Broken:** site/route down, build red, **an open `deploy-failed` ticket** (the latest
+  Vercel build failed → newest changes aren't live; reproduce with `npm run build`, fix, push,
+  confirm the deploy goes green, then close), a data feed returning `source: mock` when it
   shouldn't, visibly wrong rankings, **or an open `data-anomaly` ticket** (filed automatically by
   `npm run check:data-sanity` when served data fails real-world invariants — wrong football maths,
   out-of-order ranks, same-group teams meeting in the projected bracket, etc.). For a `data-anomaly`:

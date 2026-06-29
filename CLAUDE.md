@@ -82,6 +82,10 @@ independent verifier PASS + merged + live-verified. Loop B files new tickets.
   `docs/perf-baseline.md`, and files `perf` tickets on budget breaches or regressions vs baseline
   (`npm run check:performance` is the cheap measurement). Performance = conversion + ad-revenue lever.
 - **data-sanity monitor** (5×/day) — `check:data-sanity`; auto-files a `data-anomaly` ticket on bad data.
+- **deploy-health monitor** (hourly) — `check:deploy-health`; if the latest Vercel build FAILED
+  (silent — the site keeps serving last-good, but new changes aren't live), auto-files a p0
+  `deploy-failed` ticket so the planner fixes the build and re-ships. (Vercel access via the
+  vercel MCP for build logs; the monitor itself uses the GitHub commit status, keyless.)
 - **analytics pull** (daily) + **daily digest email** (daily).
 These start cold — that's why this file exists. Research/QA agents touch only `.tickets/` + `docs/`.
 
