@@ -82,7 +82,11 @@ service-account/email. Prefer p0/p1.
      **customer-facing** change, append a one-line entry to the site changelog
      (`src/data/changelog.ts` — date, title, short blurb, area/sport) so the public "What's new" page
      (linked in the footer) stays current. Skip the changelog only for purely internal/infra changes.
-6. **Push policy** (see Guardrails) → if allowed, `git push origin main` (auto-deploys).
+6. **Push policy** (see Guardrails) → if allowed, `git push origin main` (auto-deploys). A
+   `.githooks/pre-push` gate runs `npm run build` on any code push and **ABORTS the push if the
+   build fails** — so a broken build can never reach Vercel. Always have a green `npm run build`
+   from step 3 BEFORE pushing (don't rely on the hook to find failures); **never bypass it with
+   `--no-verify`**. If your push is rejected by the gate, fix the build and re-push.
 7. **Post-deploy verify:** wait ~120s; check the Vercel build succeeded
    (`gh api repos/kulisama81/rankings123/commits/<sha>/status --jq '.statuses[]|select(.context=="Vercel")|.state'` → `success`)
    and `curl https://rankings123.com` + the feature routes (200 + expected content). For UI/feature
