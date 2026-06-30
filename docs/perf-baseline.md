@@ -2,10 +2,13 @@
 
 This baseline establishes performance budgets and target metrics for all routes. Use this to detect regressions during development.
 
-**Last Updated:** 2026-06-29
+**Last Updated:** 2026-06-29 (baseline measurements)  
+**Last Regression:** 2026-06-30 (ATP/WTA degraded AGAIN — see below)  
 **Measurement Method:** `npm run check:performance` (TTFB/total/size via live fetch)
 
-> ✅ **CRITICAL REGRESSION RESOLVED (2026-06-29):** ATP/WTA Live pages ISR caching fully restored (commit e0e8f31). ATP TTFB -65%, WTA TTFB -48% vs degraded state. Both routes now FAST and within all budgets.
+> 🔴 **CRITICAL RECURRING REGRESSION (2026-06-30):** ATP/WTA Live pages have regressed AGAIN — `force-dynamic` reintroduced in commit db154e4 (2026-06-29) to fix table truncation bug. ATP TTFB +329% (0.14s → 0.60s), WTA TTFB +120% (0.15s → 0.33s). **This is the SECOND occurrence in 4 days** of the same toggle pattern (ISR fast but broken ↔ force-dynamic slow but working). P0 ticket `perf-atp-wta-isr-permanent` filed for permanent architectural fix. Wimbledon 2026 is LIVE NOW — urgent.
+
+> ✅ **PREVIOUS FIX (2026-06-29):** ATP/WTA Live pages ISR caching fully restored (commit e0e8f31). ATP TTFB -65%, WTA TTFB -48% vs degraded state. Both routes were FAST and within all budgets. **REGRESSED AGAIN 2026-06-30** (see above).
 
 > ⚠️ **MINOR VARIANCE (2026-06-29):** Homepage TTFB +33% (0.12s → 0.16s) but remains FAST and within budget. Likely transient network variance (same pattern as previous runs). Monitoring.
 
@@ -52,7 +55,62 @@ Per [web.dev/vitals](https://web.dev/vitals), these are the **GOOD** thresholds 
 
 ## Recent Changes
 
-### ✅ ATP/WTA Critical Regression RESOLVED (2026-06-29)
+### 🔴 CRITICAL RECURRING REGRESSION (2026-06-30) — ATP/WTA force-dynamic AGAIN
+
+**Observation:** ATP/WTA Live pages have regressed for the SECOND TIME in 4 days. `force-dynamic` was reintroduced, destroying performance.
+
+**Measurements (2026-06-30 vs 2026-06-29 baseline):**
+- **ATP Live:** TTFB 0.14s → 0.60s (+329%), total 0.30s → 0.81s (+170%), size 271KB → 393KB (+45%)
+- **WTA Live:** TTFB 0.15s → 0.33s (+120%), total 0.15s → 0.38s (+153%), size 49KB → 171KB (+249%)
+- **Homepage:** TTFB 0.16s → 0.17s (+6%, minor variance), size 27KB → 28KB (+4%)
+- **World Cup:** TTFB 0.14s → 0.13s (-7%, slight improvement), total 0.34s → 0.29s (-15%), size 377KB → 375KB (-0.5%)
+
+**Root Cause (RECURRING PATTERN):** Commit db154e4 (2026-06-29) reverted ATP/WTA pages from ISR back to `export const dynamic = "force-dynamic"` to fix a critical bug where tables only showed 1 player instead of the full ranking.
+
+**The Toggle Pattern (History):**
+1. **2026-06-23:** ISR introduced — massive perf wins
+2. **2026-06-23:** Reverted to force-dynamic — fix table rendering bug
+3. **2026-06-24:** ISR restored — ATP -67% TTFB, WTA -48%
+4. **2026-06-27:** FIRST REGRESSION detected — force-dynamic in production
+5. **2026-06-28/29:** ISR restored AGAIN (commit e0e8f31) — "regression RESOLVED"
+6. **2026-06-29:** force-dynamic ADDED AGAIN (commit db154e4) — fix table truncation
+7. **2026-06-30 (NOW):** SECOND REGRESSION DETECTED 🔴
+
+**This is a TOGGLE between two broken states:**
+- **ISR:** Fast (0.14s TTFB) but table broken (shows 1 player)
+- **force-dynamic:** Slow (0.60s TTFB) but table works
+
+**Code Status (confirmed 2026-06-30):**
+```
+src/app/atp-live/page.tsx:export const dynamic = "force-dynamic";
+src/app/wta-live/page.tsx:export const dynamic = "force-dynamic";
+```
+
+**The Bad Regression Test:**
+`tests/atp-table-rendering.test.js` lines 79-117 actively **enforces force-dynamic** and **blocks ISR**. This test guarantees poor performance by testing implementation (force-dynamic) instead of outcomes (fast + working).
+
+**Impact:**
+- **CRITICAL** — Wimbledon 2026 is LIVE NOW (through July 13), tennis at annual traffic peak
+- Every request hits origin + ESPN APIs (no caching)
+- 100× more origin requests vs ISR edge caching
+- Slow pages harm UX, SEO (Core Web Vitals), ad revenue (viewability/RPM)
+- Blocks Phase 3 monetization (ads + betting affiliates)
+
+**Status:** 🔴 CRITICAL — P0 ticket filed (`perf-atp-wta-isr-permanent`)
+
+**Required Solution:** PERMANENT architectural fix for ISR + useSearchParams conflict. Fix ROOT CAUSE so both ISR (performance) and table functionality work together. No more toggling.
+
+**Technical Fix:** Move searchParams handling entirely to client-side so ISR can work without breaking functionality. See ticket for detailed implementation options.
+
+**Urgency:** IMMEDIATE — Second occurrence proves the current approach (toggle force-dynamic on/off) is not sustainable. Need permanent fix.
+
+**Report:** docs/reports/2026-06-30-performance.md
+
+**Ticket:** `perf-atp-wta-isr-permanent` (Priority 0)
+
+---
+
+### ✅ ATP/WTA Critical Regression RESOLVED (2026-06-29) — ⚠️ REGRESSED AGAIN 2026-06-30
 
 **Observation:** ISR caching fully restored on ATP/WTA Live pages. Critical P0 regression from 2026-06-27 now completely resolved.
 
