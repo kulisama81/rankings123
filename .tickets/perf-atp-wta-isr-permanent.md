@@ -1,81 +1,15 @@
 ---
-title: ATP/WTA ISR+useSearchParams conflict — permanent architectural fix (RECURRING P0)
-status: open
-priority: 0
-type: bug
-tags: [perf, regression, atp, wta, isr, critical]
-parent: rankings123
+status: closed
 created: 2026-06-30
+type: bug
+priority: 0
+parent: rankings123
+tags: [perf, regression, atp, wta, isr, critical]
+title: ATP/WTA ISR+useSearchParams conflict — permanent architectural fix (RECURRING P0)
 ---
+# Untitled ticket
 
 **CRITICAL RECURRING REGRESSION** — ATP/WTA Live pages have toggled between ISR (fast but broken) and force-dynamic (slow but working) **TWICE** in 4 days. This is the SECOND occurrence of the same performance regression.
-
-## Current State (2026-06-30)
-- **ATP Live:** TTFB 0.60s (+329% vs 0.14s baseline), size 393KB (+45% vs 271KB)
-- **WTA Live:** TTFB 0.33s (+120% vs 0.15s baseline), size 171KB (+249% vs 49KB)
-- Both pages using `dynamic = "force-dynamic"` (zero caching, every request hits origin + ESPN APIs)
-
-## Performance Impact
-- **Engagement:** Slow pages kill user experience during high-traffic events (Wimbledon 2026 is LIVE NOW)
-- **SEO:** Poor Core Web Vitals harm search rankings
-- **Revenue:** Slow TTFB reduces ad viewability and RPM
-- **Scale:** 100× more origin requests vs ISR (expensive, fragile)
-
-## Root Cause (Architectural Conflict)
-The issue is an **architectural conflict** between three Next.js patterns:
-1. **ISR** (`revalidate: 60`) — pre-renders at build time for edge caching
-2. **useSearchParams** — LiveRankingTable uses it for country filtering, requires request-time context
-3. **React Suspense** — wraps the client component, but searchParams unavailable at build time → component suspends → fallback rendered in static HTML
-
-**When using ISR:**
-- Table suspends during static generation
-- Suspense fallback persists → table shows only 1 player or "Loading..." text
-- Result: FAST but BROKEN
-
-**When using force-dynamic:**
-- Every request renders at request time
-- SearchParams available → table renders correctly
-- Result: WORKS but SLOW (no caching)
-
-## The Toggle Pattern (History)
-1. **2026-06-23:** ISR introduced (commit b438b6d) — massive perf wins
-2. **2026-06-23:** Reverted to force-dynamic (commit 8ee5be4) — fix table rendering bug
-3. **2026-06-24:** ISR restored (commit 6cfcae9) — ATP -67% TTFB, WTA -48%
-4. **2026-06-27:** REGRESSION detected — force-dynamic found in production
-5. **2026-06-28/29:** ISR restored AGAIN (commit e0e8f31) — ATP -65% TTFB, WTA -48%
-6. **2026-06-29:** force-dynamic ADDED AGAIN (commit db154e4) — "fix" table truncation bug
-7. **2026-06-30 (NOW):** REGRESSION DETECTED AGAIN — same performance degradation
-
-**This ticket is the SECOND occurrence in 4 days.** The current "fix" just toggles between broken states.
-
-## The Bad Regression Test
-`tests/atp-table-rendering.test.js` lines 79-117 **enforces force-dynamic** and **blocks ISR**. This test guarantees poor performance by mandating the wrong implementation. It tests implementation pattern (force-dynamic) instead of outcomes (functionality + performance).
-
-## Permanent Solution (Required)
-Fix the ROOT CAUSE so ISR and table functionality BOTH work:
-
-**Option A (Recommended):** Move searchParams handling entirely to client-side
-- Remove `useSearchParams` from build-time code path
-- Pass country filter state via client-only context/state
-- Suspense boundary stays but never suspends during SSG
-
-**Option B:** Make searchParams optional with defaults
-- Component renders with default (all countries) during SSG
-- Client-side hydration applies filter from URL after mount
-- Requires careful handling to avoid hydration mismatch
-
-**Option C:** Lazy-load the filtered table component
-- Static shell renders immediately
-- Table component loads client-side with `next/dynamic` + `ssr: false`
-- Trade-off: slight delay before table appears
-
-All options must satisfy BOTH performance AND functionality budgets (see acceptance criteria).
-
-## Why This Matters NOW
-- **Wimbledon 2026 is LIVE** (through July 13) — tennis traffic at annual peak
-- ATP/WTA pages are core traffic drivers for the site
-- Slow pages during a major tournament = lost engagement + revenue
-- This is the foundation for Phase 3 monetization (ads + betting affiliates)
 
 ## Acceptance Criteria
 
@@ -120,3 +54,77 @@ All options must satisfy BOTH performance AND functionality budgets (see accepta
 - WTA size: 171KB → ≤ 200KB (already within budget, maintain)
 - Zero functional regressions (table works perfectly)
 - Pattern documented so it never recurs
+
+## Current State (2026-06-30)
+
+- **ATP Live:** TTFB 0.60s (+329% vs 0.14s baseline), size 393KB (+45% vs 271KB)
+- **WTA Live:** TTFB 0.33s (+120% vs 0.15s baseline), size 171KB (+249% vs 49KB)
+- Both pages using `dynamic = "force-dynamic"` (zero caching, every request hits origin + ESPN APIs)
+
+## Performance Impact
+
+- **Engagement:** Slow pages kill user experience during high-traffic events (Wimbledon 2026 is LIVE NOW)
+- **SEO:** Poor Core Web Vitals harm search rankings
+- **Revenue:** Slow TTFB reduces ad viewability and RPM
+- **Scale:** 100× more origin requests vs ISR (expensive, fragile)
+
+## Root Cause (Architectural Conflict)
+
+The issue is an **architectural conflict** between three Next.js patterns:
+1. **ISR** (`revalidate: 60`) — pre-renders at build time for edge caching
+2. **useSearchParams** — LiveRankingTable uses it for country filtering, requires request-time context
+3. **React Suspense** — wraps the client component, but searchParams unavailable at build time → component suspends → fallback rendered in static HTML
+
+**When using ISR:**
+- Table suspends during static generation
+- Suspense fallback persists → table shows only 1 player or "Loading..." text
+- Result: FAST but BROKEN
+
+**When using force-dynamic:**
+- Every request renders at request time
+- SearchParams available → table renders correctly
+- Result: WORKS but SLOW (no caching)
+
+## The Toggle Pattern (History)
+
+1. **2026-06-23:** ISR introduced (commit b438b6d) — massive perf wins
+2. **2026-06-23:** Reverted to force-dynamic (commit 8ee5be4) — fix table rendering bug
+3. **2026-06-24:** ISR restored (commit 6cfcae9) — ATP -67% TTFB, WTA -48%
+4. **2026-06-27:** REGRESSION detected — force-dynamic found in production
+5. **2026-06-28/29:** ISR restored AGAIN (commit e0e8f31) — ATP -65% TTFB, WTA -48%
+6. **2026-06-29:** force-dynamic ADDED AGAIN (commit db154e4) — "fix" table truncation bug
+7. **2026-06-30 (NOW):** REGRESSION DETECTED AGAIN — same performance degradation
+
+**This ticket is the SECOND occurrence in 4 days.** The current "fix" just toggles between broken states.
+
+## The Bad Regression Test
+
+`tests/atp-table-rendering.test.js` lines 79-117 **enforces force-dynamic** and **blocks ISR**. This test guarantees poor performance by mandating the wrong implementation. It tests implementation pattern (force-dynamic) instead of outcomes (functionality + performance).
+
+## Permanent Solution (Required)
+
+Fix the ROOT CAUSE so ISR and table functionality BOTH work:
+
+**Option A (Recommended):** Move searchParams handling entirely to client-side
+- Remove `useSearchParams` from build-time code path
+- Pass country filter state via client-only context/state
+- Suspense boundary stays but never suspends during SSG
+
+**Option B:** Make searchParams optional with defaults
+- Component renders with default (all countries) during SSG
+- Client-side hydration applies filter from URL after mount
+- Requires careful handling to avoid hydration mismatch
+
+**Option C:** Lazy-load the filtered table component
+- Static shell renders immediately
+- Table component loads client-side with `next/dynamic` + `ssr: false`
+- Trade-off: slight delay before table appears
+
+All options must satisfy BOTH performance AND functionality budgets (see acceptance criteria).
+
+## Why This Matters NOW
+
+- **Wimbledon 2026 is LIVE** (through July 13) — tennis traffic at annual peak
+- ATP/WTA pages are core traffic drivers for the site
+- Slow pages during a major tournament = lost engagement + revenue
+- This is the foundation for Phase 3 monetization (ads + betting affiliates)
