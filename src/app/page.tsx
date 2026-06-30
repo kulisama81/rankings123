@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import HeroBanner from "@/components/HeroBanner";
 import LiveWorldCupWidget from "@/components/LiveWorldCupWidget";
+import WimbledonCallout from "@/components/WimbledonCallout";
 
 export const metadata: Metadata = {
   title: "Rankings123 — Live Sports Rankings",
@@ -97,6 +98,9 @@ export default function HomePage() {
           { label: "Updated", value: "Live" },
         ]}
       />
+
+      {/* Wimbledon 2026 LIVE Callout - shows during tournament (June 29 - July 12) */}
+      <WimbledonCallout />
 
       {/* Live World Cup Matches Widget - shows only when matches are in progress */}
       <LiveWorldCupWidget />

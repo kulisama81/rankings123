@@ -1,6 +1,6 @@
 ---
 id: homepage-wimbledon-callout
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-29T13:49:41Z

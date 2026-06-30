@@ -14,6 +14,13 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-06-30",
+    title: "Wimbledon 2026 Live Coverage",
+    description:
+      "Added prominent Wimbledon 2026 live banner on homepage with tournament dates (June 29-July 12), defending champions, and direct link to tournament page. Capturing the massive search traffic spike during tennis's most prestigious Grand Slam.",
+    area: "tennis",
+  },
+  {
+    date: "2026-06-30",
     title: "ATP/WTA Live Performance Permanently Optimized",
     description:
       "Permanently resolved recurring performance issue on ATP and WTA Live pages. Pages now load 38% faster (ATP: 0.60s → 0.37s TTFB) with edge caching fully restored, while maintaining all table functionality. Architectural fix ensures fast load times during Wimbledon 2026 and all future tournaments.",
