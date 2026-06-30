@@ -18,8 +18,10 @@ export const metadata: Metadata = {
   },
 };
 
-// Dynamic rendering required for useSearchParams compatibility
-export const dynamic = "force-dynamic";
+// ISR with 60s revalidation — searchParams handled client-side in LiveRankingTable
+// to avoid build-time suspension. Component renders with default state (all countries)
+// during SSG, then hydrates with URL params on mount.
+export const revalidate = 60;
 
 const jsonLd = {
   "@context": "https://schema.org",
