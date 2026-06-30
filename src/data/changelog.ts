@@ -14,6 +14,13 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-06-30",
+    title: "Distinctive Brand Icon & Favicon",
+    description:
+      "Launched new Rankings123 brand icon featuring bold '123' numerals with signature live-dot pulse. Distinctive favicon appears in browser tabs, home screen icons, and PWA installs — premium, on-brand, and memorable across all devices.",
+    area: "site",
+  },
+  {
+    date: "2026-06-30",
     title: "Wimbledon 2026 Live Coverage",
     description:
       "Added prominent Wimbledon 2026 live banner on homepage with tournament dates (June 29-July 12), defending champions, and direct link to tournament page. Capturing the massive search traffic spike during tennis's most prestigious Grand Slam.",

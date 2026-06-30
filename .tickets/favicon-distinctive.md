@@ -1,6 +1,6 @@
 ---
 id: favicon-distinctive
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-27T22:01:24Z

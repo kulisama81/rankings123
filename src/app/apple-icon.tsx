@@ -14,55 +14,106 @@ export default function AppleIcon() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          background: '#0a0b0f',
-          borderRadius: '36px',
+          background: 'radial-gradient(circle at 50% 30%, rgba(182, 242, 60, 0.15) 0%, #0a0b0f 100%)',
+          position: 'relative',
         }}
       >
-        {/* Three ascending bars with distinct per-sport colors */}
-        <div style={{ display: 'flex', alignItems: 'flex-end', gap: '12px', position: 'relative' }}>
-          {/* Bar 1 - World Cup green (40%) */}
-          <div
-            style={{
-              width: '32px',
-              height: '48px',
-              background: '#22c55e',
-              borderRadius: '10px',
-              border: '1.5px solid rgba(0,0,0,0.15)',
-            }}
-          />
-          {/* Bar 2 - WTA magenta (65%) */}
-          <div
-            style={{
-              width: '32px',
-              height: '78px',
-              background: '#f472b6',
-              borderRadius: '10px',
-              border: '1.5px solid rgba(0,0,0,0.15)',
-            }}
-          />
-          {/* Bar 3 - ATP lime (100%) */}
-          <div
-            style={{
-              width: '32px',
-              height: '120px',
-              background: '#b6f23c',
-              borderRadius: '10px',
-              position: 'relative',
-              border: '1.5px solid rgba(0,0,0,0.15)',
-            }}
-          />
-          {/* Pulse dot with glow */}
+        {/* Outer ring for premium badge feel */}
+        <div
+          style={{
+            position: 'absolute',
+            width: '168px',
+            height: '168px',
+            borderRadius: '84px',
+            border: '3px solid rgba(182, 242, 60, 0.6)',
+            display: 'flex',
+          }}
+        />
+
+        {/* "123" numerals - ascending diagonal layout */}
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            position: 'relative',
+            width: '100%',
+            height: '100%',
+            padding: '24px',
+          }}
+        >
+          {/* "1" - top left, smaller */}
           <div
             style={{
               position: 'absolute',
-              top: '-18px',
-              right: '8px',
-              width: '24px',
-              height: '24px',
+              top: '30px',
+              left: '28px',
+              fontSize: '38px',
+              fontWeight: 900,
+              color: '#ffffff',
+              opacity: 0.75,
+              fontFamily: 'system-ui, -apple-system, sans-serif',
+            }}
+          >
+            1
+          </div>
+
+          {/* "2" - middle center, medium */}
+          <div
+            style={{
+              position: 'absolute',
+              top: '65px',
+              left: '58px',
+              fontSize: '48px',
+              fontWeight: 900,
+              color: '#ffffff',
+              opacity: 0.85,
+              fontFamily: 'system-ui, -apple-system, sans-serif',
+            }}
+          >
+            2
+          </div>
+
+          {/* "3" - bottom right, largest (hero) */}
+          <div
+            style={{
+              position: 'absolute',
+              bottom: '22px',
+              right: '28px',
+              fontSize: '60px',
+              fontWeight: 900,
+              color: '#ffffff',
+              letterSpacing: '-1px',
+              fontFamily: 'system-ui, -apple-system, sans-serif',
+            }}
+          >
+            3
+          </div>
+
+          {/* Live pulse dot - top right corner */}
+          <div
+            style={{
+              position: 'absolute',
+              top: '18px',
+              right: '18px',
+              width: '28px',
+              height: '28px',
               background: '#ffffff',
               borderRadius: '50%',
-              border: '2px solid #b6f23c',
-              boxShadow: '0 0 20px rgba(182, 242, 60, 0.9), 0 0 40px rgba(182, 242, 60, 0.5)',
+              border: '3px solid #b6f23c',
+              boxShadow: '0 0 25px rgba(182, 242, 60, 0.8), 0 0 45px rgba(182, 242, 60, 0.4)',
+              display: 'flex',
+            }}
+          />
+          <div
+            style={{
+              position: 'absolute',
+              top: '26px',
+              right: '26px',
+              width: '12px',
+              height: '12px',
+              background: '#b6f23c',
+              borderRadius: '50%',
+              display: 'flex',
             }}
           />
         </div>
