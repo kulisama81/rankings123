@@ -1,6 +1,6 @@
 ---
 id: data-anomaly
-status: closed
+status: open
 deps: []
 links: []
 created: 2026-06-26T22:00:00.906Z
@@ -16,13 +16,11 @@ fabricated, mis-parsed, or mis-sourced. **Planner: investigate the relevant feed
 fix it, re-run `npm run check:data-sanity` until clean, log the resolution in the Log below,
 then close this ticket.** Do NOT close while `check:data-sanity` still reports errors.
 
-## Anomalies (latest run · 2026-06-28T22:14:03.447Z)
-
-- [worldcup] South Africa (RSA): standings show 3 matches played, but schedule shows 4 completed/in-progress (stale standings)
-- [worldcup] Canada (CAN): standings show 3 matches played, but schedule shows 4 completed/in-progress (stale standings)
+## Anomalies (latest run · 2026-07-01T16:00:00.730Z)
+- [fetch] could not load data: fetch failed
 
 ## Log
-
+- 2026-07-01T16:00:00.730Z: 1 anomalies — [fetch] could not load data: fetch failed
 - 2026-06-28T23:30:00.000Z: **RESOLVED** — Root cause: false positive in the sanity check. The check was counting ALL completed matches (including cross-group/knockout matches like RSA vs CAN) against group-stage standings. Fixed `scripts/check-data-sanity.mjs` to only count group-stage matches (where both teams are in the same group). Group standings correctly show 3 matches played (the group-stage maximum); the 4th match was cross-group and shouldn't count toward group standings.
 - 2026-06-28T22:14:03.447Z: 2 anomalies — [worldcup] South Africa (RSA): standings show 3 matches played, but schedule shows 4 completed/in-progress (stale standings) (…)
 - 2026-06-28T22:02:47.674Z: 2 anomalies — [worldcup] South Africa (RSA): standings show 3 matches played, but schedule shows 4 completed/in-progress (stale standings) (…)
