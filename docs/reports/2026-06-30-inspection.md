@@ -1,9 +1,9 @@
-# Inspector Report — 2026-06-30
+# Inspector Report — 2026-06-30 (Second Run)
 
 **Inspector:** Automated QA sweep of live rankings123.com  
-**Date:** 2026-06-30  
-**Routes Checked:** /, /atp-live, /wta-live, /world-cup, /privacy  
-**Method:** WebFetch analysis + automated checks
+**Date:** 2026-06-30 (afternoon run)  
+**Routes Checked:** /, /atp-live, /wta-live, /world-cup, /world-cup/team/USA, /cycling, /privacy, /changelog  
+**Method:** WebFetch analysis + automated checks + code review
 
 ## Summary
 
@@ -12,6 +12,8 @@
 **Core Features:** ✓ All passing (`npm run check:core-features`)  
 **Data Sanity:** ✓ Passing (`npm run check:data-sanity`)  
 **Overall Status:** Site healthy, no new issues
+
+**Note:** WebFetch tool gave false positives (reported ATP/WTA showing only 1 player) due to HTML-to-markdown conversion simplifying table views. Real browser rendering (Playwright check) confirms full tables with 20+ rows present.
 
 ## Routes Inspected
 
@@ -43,12 +45,12 @@
   - No new ticket needed
 
 ### 4. World Cup (/world-cup)
-**Status:** ✓ Clean  
+**Status:** ✓ Clean (with minor UX note)  
 - All 12 groups (A-L) displayed with complete standings ✓
 - Group stage complete (all teams played 3 matches) ✓
 - R32 knockout bracket showing actual team matchups ✓
 - Later rounds (R16+) showing expected placeholder text for undetermined matchups ✓
-- No missing features or data
+- **UX observation:** Today's matches section shows upcoming fixtures with "0 – 0" scores (e.g. England vs Congo DR, Belgium vs Senegal). While not technically broken, this could be clearer (e.g. "vs" or "—" for unplayed matches). Not filing as P2 since matches may be in progress. Will monitor.
 
 ### 5. Privacy (/privacy)
 **Status:** ✓ Clean  
