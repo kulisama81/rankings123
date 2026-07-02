@@ -16,10 +16,11 @@ fabricated, mis-parsed, or mis-sourced. **Planner: investigate the relevant feed
 fix it, re-run `npm run check:data-sanity` until clean, log the resolution in the Log below,
 then close this ticket.** Do NOT close while `check:data-sanity` still reports errors.
 
-## Anomalies (latest run · 2026-07-01T22:00:00.832Z)
+## Anomalies (latest run · 2026-07-02T01:00:00.642Z)
 - [fetch] could not load data: fetch failed
 
 ## Log
+- 2026-07-02T01:00:00.642Z: 1 anomalies — [fetch] could not load data: fetch failed
 - 2026-07-01T22:00:00.832Z: 1 anomalies — [fetch] could not load data: fetch failed
 - 2026-07-01T19:00:00.641Z: 1 anomalies — [fetch] could not load data: fetch failed
 - 2026-07-01T16:00:00.730Z: 1 anomalies — [fetch] could not load data: fetch failed
