@@ -1,6 +1,6 @@
 ---
 id: cycling-completed-races
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-03T13:54:46Z

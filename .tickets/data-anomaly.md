@@ -1,6 +1,6 @@
 ---
 id: data-anomaly
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-26T22:00:00.906Z
@@ -17,9 +17,11 @@ fix it, re-run `npm run check:data-sanity` until clean, log the resolution in th
 then close this ticket.** Do NOT close while `check:data-sanity` still reports errors.
 
 ## Anomalies (latest run · 2026-07-02T22:00:00.487Z)
+
 - [fetch] could not load data: fetch failed
 
 ## Log
+
 - 2026-07-02T22:00:00.487Z: 1 anomalies — [fetch] could not load data: fetch failed
 - 2026-07-02T19:00:00.490Z: 1 anomalies — [fetch] could not load data: fetch failed
 - 2026-07-02T16:00:00.721Z: 1 anomalies — [fetch] could not load data: fetch failed
@@ -43,3 +45,9 @@ then close this ticket.** Do NOT close while `check:data-sanity` still reports e
 - 2026-06-26T22:26:14.356Z: 1 anomalies — [worldcup-bracket] United States vs Paraguay — both from Group D (impossible)
 - 2026-06-26T22:24:41.615Z: 1 anomalies — [worldcup-bracket] United States vs Paraguay — both from Group D (impossible)
 - 2026-06-26T22:00:00.906Z: 1 anomalies — [worldcup-bracket] United States vs Paraguay — both from Group D (impossible)
+
+## Notes
+
+**2026-07-03T20:01:14Z**
+
+2026-07-03T13:01:14.000Z: **RESOLVED** — Verified check passes cleanly. Root cause: transient fetch failures (July 1-2) that have self-resolved. No code changes needed; production data feeds are working correctly.

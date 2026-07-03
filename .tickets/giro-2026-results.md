@@ -1,6 +1,6 @@
 ---
 id: giro-2026-results
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-21T07:56:10Z
