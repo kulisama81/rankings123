@@ -99,6 +99,44 @@ export default async function CyclingPage() {
             </section>
           )}
 
+          {/* Completed Races */}
+          <section className="mb-12">
+            <h2 className="mb-6 text-3xl font-bold text-primary">
+              Completed Races
+              <span className="ml-3 text-sm font-normal text-secondary">
+                2026 season results
+              </span>
+            </h2>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <a
+                href="/events/giro-2026"
+                className="rounded-xl border border-edge bg-surface p-6 transition-colors hover:border-accent hover:bg-surface-hover"
+              >
+                <div className="mb-2 flex items-center gap-2">
+                  <span className="text-2xl">🇮🇹</span>
+                  <h3 className="text-xl font-bold text-primary">Giro d&apos;Italia 2026</h3>
+                </div>
+                <p className="mb-3 text-sm text-secondary">May 8-31, 2026</p>
+                <p className="text-sm text-primary">
+                  🏆 Winner: <strong>Jonas Vingegaard</strong> (Visma–Lease a Bike)
+                </p>
+              </a>
+              <a
+                href="/events/tour-de-suisse-2026"
+                className="rounded-xl border border-edge bg-surface p-6 transition-colors hover:border-accent hover:bg-surface-hover"
+              >
+                <div className="mb-2 flex items-center gap-2">
+                  <span className="text-2xl">🇨🇭</span>
+                  <h3 className="text-xl font-bold text-primary">Tour de Suisse 2026</h3>
+                </div>
+                <p className="mb-3 text-sm text-secondary">June 17-21, 2026</p>
+                <p className="text-sm text-primary">
+                  🏆 Winner: <strong>Tadej Pogačar</strong> (UAE Team Emirates XRG)
+                </p>
+              </a>
+            </div>
+          </section>
+
           {/* Data source notice */}
           <div className="mb-12 rounded-xl border border-edge bg-surface p-4 text-sm text-secondary">
             <p>
