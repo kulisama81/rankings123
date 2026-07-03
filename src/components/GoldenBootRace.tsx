@@ -1,6 +1,7 @@
 import type { WorldCupStats, WorldCupPlayerStat } from "@/types";
 import { soccerFlag } from "@/lib/worldCupFlags";
 import Link from "next/link";
+import EmptyState from "./EmptyState";
 
 interface GoldenBootRaceProps {
   stats: WorldCupStats;
@@ -9,11 +10,11 @@ interface GoldenBootRaceProps {
 function GoldenBootTable({ scorers }: { scorers: WorldCupPlayerStat[] }) {
   if (scorers.length === 0) {
     return (
-      <div className="rounded-2xl border border-edge bg-surface p-8 text-center">
-        <p className="text-sm text-muted">
-          No scoring data available yet. Golden Boot race will appear once matches begin.
-        </p>
-      </div>
+      <EmptyState
+        icon="trophy"
+        headline="No scoring data yet"
+        description="The Golden Boot leaderboard will appear once tournament matches begin"
+      />
     );
   }
 

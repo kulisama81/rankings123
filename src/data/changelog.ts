@@ -14,6 +14,13 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-07-03",
+    title: "Improved Empty State Designs",
+    description:
+      "Enhanced no-results and off-season messaging with sport-themed icons, helpful guidance, and clear filter-clearing actions. When search returns no players or tournaments are off-season, you'll see friendly, animated empty states instead of generic messages.",
+    area: "site",
+  },
+  {
+    date: "2026-07-03",
     title: "Giro d'Italia & Tour de Suisse 2026 Final Results",
     description:
       "Added final General Classification standings for completed cycling events: Giro d'Italia 2026 (winner: Jonas Vingegaard) and Tour de Suisse 2026 (winner: Tadej Pogačar). Browse complete top-20 GC standings and jersey winners for both races.",

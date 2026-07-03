@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { AtpDeepRankingSnapshot, AtpLivePlayer } from "@/types";
 import AnimatedNumber from "./AnimatedNumber";
+import EmptyState from "./EmptyState";
 
 const REFRESH_INTERVAL_S = 30;
 const PAGE_SIZE = 50;
@@ -146,61 +147,88 @@ export default function AtpDeepRankingTable({ initialSnapshot, band, apiEndpoint
         </div>
       </div>
 
-      <div className="overflow-x-auto rounded-2xl border border-edge bg-surface">
-        <table className="min-w-full text-sm">
-          <thead className="bg-surface2 text-[11px] uppercase tracking-wide text-muted">
-            <tr>
-              <th className="px-3 py-3 text-right">#</th>
-              <th className="px-2 py-3 text-center">+/-</th>
-              <th className="px-4 py-3 text-left">Player</th>
-              <th className="px-3 py-3 text-center">Country</th>
-              <th className="px-3 py-3 text-right">CH</th>
-              <th className="px-4 py-3 text-right">Live Pts</th>
-              <th className="px-2 py-3 text-right">Δ</th>
-              <th className="px-3 py-3 text-right">Official</th>
-              <th className="px-4 py-3 text-left">Tournament</th>
-            </tr>
-          </thead>
-          <tbody>
-            {pageRows.map((p) => (
-              <tr
-                key={`${p.officialRank}-${p.name}`}
-                className={`border-t border-edge transition ${
-                  p.tournament?.active ? "bg-accent/[0.035] hover:bg-surface2" : "hover:bg-surface2"
-                }`}
-              >
-                <td className="px-3 py-2.5 text-right font-bold tabular-nums text-fg">{p.liveRank}</td>
-                <td className="px-2 py-2.5 text-center"><Movement value={p.movement} /></td>
-                <td className="px-4 py-2.5">
-                  <span className="flex items-center gap-2">
-                    <span className="text-base leading-none">{p.flag}</span>
-                    <span className="font-semibold text-fg">{p.name}</span>
-                  </span>
-                </td>
-                <td className="px-3 py-2.5 text-center text-xs text-muted">{p.countryCode}</td>
-                <td className="px-3 py-2.5 text-right text-xs tabular-nums text-muted">
-                  {p.careerHigh ? `#${p.careerHigh}` : "—"}
-                </td>
-                <td className="px-4 py-2.5 text-right font-bold text-fg">
-                  <AnimatedNumber value={p.livePoints} />
-                </td>
-                <td className="px-2 py-2.5 text-right"><PointsDelta value={p.pointsDelta} /></td>
-                <td className="px-3 py-2.5 text-right tabular-nums text-muted">
-                  {p.officialPoints.toLocaleString()}
-                </td>
-                <td className="px-4 py-2.5"><TournamentStatus player={p} /></td>
-              </tr>
-            ))}
-            {filtered.length === 0 && (
+{filtered.length > 0 ? (
+        <div className="overflow-x-auto rounded-2xl border border-edge bg-surface">
+          <table className="min-w-full text-sm">
+            <thead className="bg-surface2 text-[11px] uppercase tracking-wide text-muted">
               <tr>
-                <td colSpan={9} className="px-4 py-8 text-center text-sm text-muted">
-                  No players match your filters.
-                </td>
+                <th className="px-3 py-3 text-right">#</th>
+                <th className="px-2 py-3 text-center">+/-</th>
+                <th className="px-4 py-3 text-left">Player</th>
+                <th className="px-3 py-3 text-center">Country</th>
+                <th className="px-3 py-3 text-right">CH</th>
+                <th className="px-4 py-3 text-right">Live Pts</th>
+                <th className="px-2 py-3 text-right">Δ</th>
+                <th className="px-3 py-3 text-right">Official</th>
+                <th className="px-4 py-3 text-left">Tournament</th>
               </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {pageRows.map((p) => (
+                <tr
+                  key={`${p.officialRank}-${p.name}`}
+                  className={`border-t border-edge transition ${
+                    p.tournament?.active ? "bg-accent/[0.035] hover:bg-surface2" : "hover:bg-surface2"
+                  }`}
+                >
+                  <td className="px-3 py-2.5 text-right font-bold tabular-nums text-fg">{p.liveRank}</td>
+                  <td className="px-2 py-2.5 text-center"><Movement value={p.movement} /></td>
+                  <td className="px-4 py-2.5">
+                    <span className="flex items-center gap-2">
+                      <span className="text-base leading-none">{p.flag}</span>
+                      <span className="font-semibold text-fg">{p.name}</span>
+                    </span>
+                  </td>
+                  <td className="px-3 py-2.5 text-center text-xs text-muted">{p.countryCode}</td>
+                  <td className="px-3 py-2.5 text-right text-xs tabular-nums text-muted">
+                    {p.careerHigh ? `#${p.careerHigh}` : "—"}
+                  </td>
+                  <td className="px-4 py-2.5 text-right font-bold text-fg">
+                    <AnimatedNumber value={p.livePoints} />
+                  </td>
+                  <td className="px-2 py-2.5 text-right"><PointsDelta value={p.pointsDelta} /></td>
+                  <td className="px-3 py-2.5 text-right tabular-nums text-muted">
+                    {p.officialPoints.toLocaleString()}
+                  </td>
+                  <td className="px-4 py-2.5"><TournamentStatus player={p} /></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <EmptyState
+          icon={query ? "search" : liveOnly || country !== "all" ? "filter" : "trophy"}
+          headline={
+            query
+              ? `0 players match "${query}"`
+              : liveOnly && country !== "all"
+                ? `No ${country} players currently in play`
+                : liveOnly
+                  ? "No players currently in play"
+                  : country !== "all"
+                    ? `No ${country} players in this range`
+                    : "No players in this range"
+          }
+          description={
+            query || liveOnly || country !== "all"
+              ? "Try adjusting your search or filters"
+              : undefined
+          }
+          action={
+            query || liveOnly || country !== "all"
+              ? {
+                  label: "Clear all filters",
+                  onClick: () => {
+                    setQuery("");
+                    setCountry("all");
+                    setLiveOnly(false);
+                  },
+                }
+              : undefined
+          }
+        />
+      )}
 
       <div className="mt-3 flex flex-wrap items-center justify-between gap-3 text-xs text-muted">
         <span>

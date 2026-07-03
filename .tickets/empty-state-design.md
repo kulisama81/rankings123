@@ -1,6 +1,6 @@
 ---
 id: empty-state-design
-status: open
+status: in_progress
 deps: []
 links: []
 created: 2026-06-21T00:00:00Z

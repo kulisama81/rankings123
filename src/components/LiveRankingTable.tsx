@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import type { AtpLivePlayer, AtpLiveSnapshot, Tour } from "@/types";
 import AnimatedNumber from "./AnimatedNumber";
+import EmptyState from "./EmptyState";
 
 const REFRESH_INTERVAL_S = 20;
 const PAGE_SIZE = 50;
@@ -231,92 +232,122 @@ export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingT
         </div>
       </div>
 
-      {/* Desktop: dense table */}
-      <div className="hidden overflow-hidden rounded-2xl border border-edge bg-surface md:block">
-        <table className="min-w-full text-sm">
-          <thead className="bg-surface2 text-[11px] uppercase tracking-wide text-muted">
-            <tr>
-              <th className="px-3 py-2.5 text-right">#</th>
-              <th className="px-2 py-2.5 text-center">+/-</th>
-              <th className="px-3 py-2.5 text-left">Player</th>
-              <th className="px-2 py-2.5 text-center">Age</th>
-              <th className="px-3 py-2.5 text-right">Live Pts</th>
-              <th className="px-2 py-2.5 text-right">Δ</th>
-              <th className="px-3 py-2.5 text-right">Official</th>
-              <th className="px-3 py-2.5 text-left">Tournament</th>
-            </tr>
-          </thead>
-          <tbody>
+{filtered.length > 0 ? (
+        <>
+          {/* Desktop: dense table */}
+          <div className="hidden overflow-hidden rounded-2xl border border-edge bg-surface md:block">
+            <table className="min-w-full text-sm">
+              <thead className="bg-surface2 text-[11px] uppercase tracking-wide text-muted">
+                <tr>
+                  <th className="px-3 py-2.5 text-right">#</th>
+                  <th className="px-2 py-2.5 text-center">+/-</th>
+                  <th className="px-3 py-2.5 text-left">Player</th>
+                  <th className="px-2 py-2.5 text-center">Age</th>
+                  <th className="px-3 py-2.5 text-right">Live Pts</th>
+                  <th className="px-2 py-2.5 text-right">Δ</th>
+                  <th className="px-3 py-2.5 text-right">Official</th>
+                  <th className="px-3 py-2.5 text-left">Tournament</th>
+                </tr>
+              </thead>
+              <tbody>
+                {pageRows.map((p) => (
+                  <tr
+                    key={p.name}
+                    onClick={() => setPinned(pinned === p.name ? null : p.name)}
+                    className={`cursor-pointer border-t border-edge transition ${
+                      pinned === p.name
+                        ? "bg-accent/10"
+                        : p.tournament?.active
+                          ? "bg-accent/[0.035] hover:bg-surface2"
+                          : "hover:bg-surface2"
+                    }`}
+                  >
+                    <td className="px-3 py-2 text-right">
+                      <RankBadge rank={p.liveRank} />
+                    </td>
+                    <td className="px-2 py-2 text-center"><Movement value={p.movement} /></td>
+                    <td className="px-3 py-2">
+                      <span className="flex items-center gap-2">
+                        <span className="text-base leading-none">{p.flag}</span>
+                        <span className="font-semibold text-fg">{p.name}</span>
+                        <span className="text-xs text-muted">{p.countryCode}</span>
+                      </span>
+                    </td>
+                    <td className="px-2 py-2 text-center text-muted">{p.age || "—"}</td>
+                    <td className="px-3 py-2 text-right text-[15px] font-bold text-fg">
+                      <AnimatedNumber value={p.livePoints} />
+                    </td>
+                    <td className="px-2 py-2 text-right"><Delta value={p.pointsDelta} /></td>
+                    <td className="px-3 py-2 text-right tabular-nums text-muted">
+                      {p.officialPoints.toLocaleString()}
+                    </td>
+                    <td className="px-3 py-2"><Tournament player={p} /></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Mobile: card rows */}
+          <div className="space-y-2 md:hidden">
             {pageRows.map((p) => (
-              <tr
+              <div
                 key={p.name}
                 onClick={() => setPinned(pinned === p.name ? null : p.name)}
-                className={`cursor-pointer border-t border-edge transition ${
-                  pinned === p.name
-                    ? "bg-accent/10"
-                    : p.tournament?.active
-                      ? "bg-accent/[0.035] hover:bg-surface2"
-                      : "hover:bg-surface2"
+                className={`rounded-xl border p-3 transition ${
+                  pinned === p.name ? "border-accent bg-accent/10" : "border-edge bg-surface"
                 }`}
               >
-                <td className="px-3 py-2 text-right">
+                <div className="flex items-center gap-2.5">
                   <RankBadge rank={p.liveRank} />
-                </td>
-                <td className="px-2 py-2 text-center"><Movement value={p.movement} /></td>
-                <td className="px-3 py-2">
+                  <Movement value={p.movement} />
+                  <span className="text-base leading-none">{p.flag}</span>
+                  <span className="flex-1 font-semibold text-fg">{p.name}</span>
+                  <AnimatedNumber value={p.livePoints} className="font-bold text-fg" />
+                </div>
+                <div className="mt-2 flex items-center justify-between pl-[38px] text-xs text-muted">
+                  <Tournament player={p} />
                   <span className="flex items-center gap-2">
-                    <span className="text-base leading-none">{p.flag}</span>
-                    <span className="font-semibold text-fg">{p.name}</span>
-                    <span className="text-xs text-muted">{p.countryCode}</span>
+                    <Delta value={p.pointsDelta} />
+                    <span className="tabular-nums">{p.countryCode}{p.age ? ` · ${p.age}y` : ""}</span>
                   </span>
-                </td>
-                <td className="px-2 py-2 text-center text-muted">{p.age || "—"}</td>
-                <td className="px-3 py-2 text-right text-[15px] font-bold text-fg">
-                  <AnimatedNumber value={p.livePoints} />
-                </td>
-                <td className="px-2 py-2 text-right"><Delta value={p.pointsDelta} /></td>
-                <td className="px-3 py-2 text-right tabular-nums text-muted">
-                  {p.officialPoints.toLocaleString()}
-                </td>
-                <td className="px-3 py-2"><Tournament player={p} /></td>
-              </tr>
+                </div>
+              </div>
             ))}
-          </tbody>
-        </table>
-      </div>
-
-      {/* Mobile: card rows */}
-      <div className="space-y-2 md:hidden">
-        {pageRows.map((p) => (
-          <div
-            key={p.name}
-            onClick={() => setPinned(pinned === p.name ? null : p.name)}
-            className={`rounded-xl border p-3 transition ${
-              pinned === p.name ? "border-accent bg-accent/10" : "border-edge bg-surface"
-            }`}
-          >
-            <div className="flex items-center gap-2.5">
-              <RankBadge rank={p.liveRank} />
-              <Movement value={p.movement} />
-              <span className="text-base leading-none">{p.flag}</span>
-              <span className="flex-1 font-semibold text-fg">{p.name}</span>
-              <AnimatedNumber value={p.livePoints} className="font-bold text-fg" />
-            </div>
-            <div className="mt-2 flex items-center justify-between pl-[38px] text-xs text-muted">
-              <Tournament player={p} />
-              <span className="flex items-center gap-2">
-                <Delta value={p.pointsDelta} />
-                <span className="tabular-nums">{p.countryCode}{p.age ? ` · ${p.age}y` : ""}</span>
-              </span>
-            </div>
           </div>
-        ))}
-      </div>
-
-      {filtered.length === 0 && (
-        <p className="rounded-2xl border border-edge bg-surface px-4 py-10 text-center text-sm text-muted">
-          No players match your filters.
-        </p>
+        </>
+      ) : (
+        <EmptyState
+          icon={query ? "search" : liveOnly || country !== "all" ? "filter" : "trophy"}
+          headline={
+            query
+              ? `0 players match "${query}"`
+              : liveOnly && country !== "all"
+                ? `No ${country} players currently in play`
+                : liveOnly
+                  ? "No players currently in play"
+                  : country !== "all"
+                    ? `No ${country} players in this view`
+                    : "No players found"
+          }
+          description={
+            query || liveOnly || country !== "all"
+              ? "Try adjusting your search or filters"
+              : undefined
+          }
+          action={
+            query || liveOnly || country !== "all"
+              ? {
+                  label: "Clear all filters",
+                  onClick: () => {
+                    setQuery("");
+                    setCountry("all");
+                    setLiveOnly(false);
+                  },
+                }
+              : undefined
+          }
+        />
       )}
 
       {filtered.length > PAGE_SIZE && (

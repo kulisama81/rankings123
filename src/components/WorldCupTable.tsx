@@ -8,6 +8,7 @@ import type {
   WorldCupSnapshot,
   WorldCupTeam,
 } from "@/types";
+import EmptyState from "./EmptyState";
 
 const REFRESH_INTERVAL_S = 30;
 
@@ -363,9 +364,19 @@ export default function WorldCupTable({ initialSnapshot }: WorldCupTableProps) {
               ))}
             </div>
           ) : (
-            <p className="text-sm text-muted">
-              No {scheduleTab === "upcoming" ? "upcoming fixtures" : "results"} yet.
-            </p>
+            <EmptyState
+              icon="calendar"
+              headline={
+                scheduleTab === "upcoming"
+                  ? "No upcoming fixtures scheduled"
+                  : "No match results yet"
+              }
+              description={
+                scheduleTab === "upcoming"
+                  ? "Check back as the tournament schedule is announced"
+                  : "Results will appear here as matches finish"
+              }
+            />
           )}
           </>
         )}
