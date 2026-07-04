@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import type { AtpLivePlayer, AtpLiveSnapshot, Tour } from "@/types";
 import AnimatedNumber from "./AnimatedNumber";
 import EmptyState from "./EmptyState";
@@ -80,7 +80,6 @@ function Delta({ value }: { value: number }) {
 }
 
 export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingTableProps) {
-  const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
 
@@ -94,19 +93,21 @@ export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingT
   const fetching = useRef(false);
   const mounted = useRef(false);
 
-  // Read country from URL on mount (client-side only)
+  // Read country from URL on mount (client-side only, using window.location to avoid SSR issues)
   useEffect(() => {
-    const urlCountry = searchParams.get("country");
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const urlCountry = params.get("country");
     if (urlCountry) {
       setCountry(urlCountry);
     }
     mounted.current = true;
-  }, [searchParams]);
+  }, []);
 
   // Update URL when country filter changes (after mount to avoid initial write)
   useEffect(() => {
     if (!mounted.current) return;
-    const params = new URLSearchParams(searchParams.toString());
+    const params = new URLSearchParams(window.location.search);
     if (country !== "all") {
       params.set("country", country);
     } else {
@@ -114,7 +115,7 @@ export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingT
     }
     const newUrl = params.toString() ? `${pathname}?${params.toString()}` : pathname;
     router.replace(newUrl, { scroll: false });
-  }, [country, pathname, router, searchParams]);
+  }, [country, pathname, router]);
 
   const refresh = useCallback(async () => {
     if (fetching.current) return;
