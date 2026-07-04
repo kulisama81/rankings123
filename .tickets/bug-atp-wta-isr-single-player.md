@@ -1,6 +1,6 @@
 ---
 id: bug-atp-wta-isr-single-player
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-03T05:04:06Z

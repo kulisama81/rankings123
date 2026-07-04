@@ -1,6 +1,6 @@
 ---
 id: wc-match-demo-labels
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-29T05:08:13Z
