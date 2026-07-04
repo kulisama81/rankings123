@@ -5,7 +5,7 @@ deps: []
 links: []
 created: 2026-06-25T13:49:00Z
 type: feature
-priority: 1
+priority: 0
 parent: rankings123
 tags: [seo, traffic, revenue]
 ---
@@ -56,3 +56,15 @@ IMPACT vs EFFORT:
 BLOCKING: Player pages, tournament pages, and rank history features all depend on this foundation. Without proper SEO markup, those features won't generate organic traffic even when built.
 
 TIME-SENSITIVE: Wimbledon starts June 29 (4 days). If wimbledon-2026-live ships without proper SEO, we lose the entire 2-week traffic spike.
+
+**2026-07-04T13:50:55Z**
+
+PRIORITY ESCALATION (2026-07-04 autoresearch):
+
+Analytics show ONLY 5% of traffic is organic search (5 of 90 sessions). This is a CRISIS - we're invisible to search engines during peak events (Wimbledon, WC, TdF).
+
+Search demand exists (millions of searches for 'wimbledon live rankings', 'world cup standings', 'tennis ranking') but ALL goes to competitors because we lack basic SEO foundation.
+
+URGENCY: Wimbledon + WC + TdF are ALL LIVE NOW. Without SEO, event coverage ships but doesn't capture organic search traffic.
+
+Raising to p0 - this gates the ROI of every other feature.

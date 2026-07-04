@@ -5,7 +5,7 @@ deps: []
 links: []
 created: 2026-06-24T13:50:19Z
 type: feature
-priority: 2
+priority: 1
 parent: rankings123
 tags: [cx, engagement, traffic]
 ---
