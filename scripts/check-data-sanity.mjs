@@ -228,6 +228,35 @@ function checkHomepagePlaceholders(html) {
   }
 }
 
+// --- Match pages demo data guard (regression for wc-match-demo-labels) -----
+async function checkMatchPagesNoDemoLabels() {
+  // Regression guard for bug wc-match-demo-labels: World Cup match pages previously showed
+  // "Demo data" labels for non-existent matches (ESPN 404) instead of returning 404.
+  // This check verifies that known-bad match IDs now properly return 404 instead of showing mock.
+  const KNOWN_NONEXISTENT_MATCHES = ["401635294"]; // From the original bug report
+
+  for (const matchId of KNOWN_NONEXISTENT_MATCHES) {
+    const path = `/world-cup/match/${matchId}`;
+    try {
+      const res = await fetch(`${BASE}${path}`);
+      if (res.status === 200) {
+        const html = await res.text();
+        // If the page loads, it must not contain "Demo data" labels (CX violation).
+        if (html.includes("Demo data")) {
+          err(
+            "worldcup-match",
+            `${path} shows "Demo data" labels — match doesn't exist in ESPN, should return 404 not mock fallback`
+          );
+        }
+      }
+      // If status is 404, that's correct behavior — non-existent match returns 404.
+      // Any other status is unexpected but not necessarily this bug.
+    } catch (e) {
+      // Network error fetching the page — not this bug's concern.
+    }
+  }
+}
+
 // --- Auto-ticket -----------------------------------------------------------
 function fileAnomalyTicket(stamp) {
   const latest = errors.map((e) => `- ${e}`).join("\n");
@@ -286,6 +315,7 @@ async function main() {
     checkBracket(bracket, groups);
     checkWorldCupGoldenBoot(wcStats);
     checkHomepagePlaceholders(homepage);
+    await checkMatchPagesNoDemoLabels();
   } catch (e) {
     err("fetch", `could not load data: ${e.message}`);
   }

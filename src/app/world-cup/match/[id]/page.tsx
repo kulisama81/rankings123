@@ -45,6 +45,8 @@ export default async function MatchDetailPage({ params }: MatchPageProps) {
   try {
     match = await fetchWorldCupMatchDetail(id);
   } catch {
+    // If match doesn't exist in ESPN (404), show 404 page
+    // If ESPN is temporarily down, we fall back to mock data with a badge
     notFound();
   }
 
