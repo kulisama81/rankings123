@@ -79,6 +79,7 @@ export async function fetchAtpDeepRankingSnapshot(): Promise<AtpDeepRankingSnaps
     const live = liveByName.get(key);
     const earned = live?.earned ?? 0;
     return {
+      guid: espn?.guid,
       officialRank: b.officialRank,
       name: b.name,
       countryCode: b.countryCode,

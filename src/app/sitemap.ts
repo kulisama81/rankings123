@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getWorldCupData, getWorldCupStats } from "@/lib/worldCupFeed";
 import { venueToSlug } from "@/lib/worldCupVenue";
+import { getLiveData } from "@/lib/liveFeed";
 
 const BASE = "https://rankings123.com";
 
@@ -20,6 +21,41 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/cookies`, lastModified: now, changeFrequency: "yearly", priority: 0.2 },
     { url: `${BASE}/terms`, lastModified: now, changeFrequency: "yearly", priority: 0.2 },
   ];
+
+  // Add tennis player pages (SEO long-tail: "Jannik Sinner ATP ranking", etc.)
+  const tennisPlayerRoutes: MetadataRoute.Sitemap = [];
+  try {
+    const [atpData, wtaData] = await Promise.all([
+      getLiveData("atp").catch(() => null),
+      getLiveData("wta").catch(() => null),
+    ]);
+
+    if (atpData) {
+      const atpPlayers = atpData.players.filter((p) => p.guid);
+      tennisPlayerRoutes.push(
+        ...atpPlayers.map((p) => ({
+          url: `${BASE}/atp/player/${p.guid}`,
+          lastModified: now,
+          changeFrequency: "daily" as const,
+          priority: 0.7,
+        }))
+      );
+    }
+
+    if (wtaData) {
+      const wtaPlayers = wtaData.players.filter((p) => p.guid);
+      tennisPlayerRoutes.push(
+        ...wtaPlayers.map((p) => ({
+          url: `${BASE}/wta/player/${p.guid}`,
+          lastModified: now,
+          changeFrequency: "daily" as const,
+          priority: 0.7,
+        }))
+      );
+    }
+  } catch {
+    // If tennis data fails, continue with empty player routes
+  }
 
   // Add World Cup match, team, and player pages (SEO long-tail)
   try {
@@ -64,9 +100,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
     }));
 
-    return [...staticRoutes, ...matchRoutes, ...teamRoutes, ...playerRoutes, ...venueRoutes];
+    return [
+      ...staticRoutes,
+      ...tennisPlayerRoutes,
+      ...matchRoutes,
+      ...teamRoutes,
+      ...playerRoutes,
+      ...venueRoutes,
+    ];
   } catch {
-    // If World Cup data fails, still return static routes
-    return staticRoutes;
+    // If World Cup data fails, still return static routes + tennis player routes
+    return [...staticRoutes, ...tennisPlayerRoutes];
   }
 }

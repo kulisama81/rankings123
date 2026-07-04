@@ -270,7 +270,17 @@ export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingT
                     <td className="px-3 py-2">
                       <span className="flex items-center gap-2">
                         <span className="text-base leading-none">{p.flag}</span>
-                        <span className="font-semibold text-fg">{p.name}</span>
+                        {p.guid ? (
+                          <Link
+                            href={`/${tour}/player/${p.guid}`}
+                            className="font-semibold text-fg transition hover:text-accent"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            {p.name}
+                          </Link>
+                        ) : (
+                          <span className="font-semibold text-fg">{p.name}</span>
+                        )}
                         <span className="text-xs text-muted">{p.countryCode}</span>
                       </span>
                     </td>
@@ -303,7 +313,17 @@ export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingT
                   <RankBadge rank={p.liveRank} />
                   <Movement value={p.movement} />
                   <span className="text-base leading-none">{p.flag}</span>
-                  <span className="flex-1 font-semibold text-fg">{p.name}</span>
+                  {p.guid ? (
+                    <Link
+                      href={`/${tour}/player/${p.guid}`}
+                      className="flex-1 font-semibold text-fg transition hover:text-accent"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      {p.name}
+                    </Link>
+                  ) : (
+                    <span className="flex-1 font-semibold text-fg">{p.name}</span>
+                  )}
                   <AnimatedNumber value={p.livePoints} className="font-bold text-fg" />
                 </div>
                 <div className="mt-2 flex items-center justify-between pl-[38px] text-xs text-muted">

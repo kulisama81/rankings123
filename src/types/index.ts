@@ -20,6 +20,7 @@ export interface AtpTournamentStatus {
 }
 
 export interface AtpLivePlayer {
+  guid?: string; // ESPN athlete GUID for player pages
   liveRank: number;
   officialRank: number;
   movement: number; // officialRank - liveRank (positive = up)

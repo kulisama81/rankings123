@@ -227,6 +227,7 @@ export async function fetchLiveSnapshot(tour: Tour): Promise<AtpLiveSnapshot> {
     const officialPoints = Math.round(entry.points ?? 0);
     const earned = live?.earned ?? 0;
     return {
+      guid: athlete.guid as string | undefined,
       officialRank: entry.current as number,
       name: (athlete.displayName as string) ?? "Unknown",
       countryCode: (athlete.citizenshipCountry as string) ?? "—",

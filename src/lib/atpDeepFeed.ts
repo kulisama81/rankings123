@@ -195,6 +195,7 @@ export async function fetchAtpLiveSnapshot(): Promise<AtpLiveSnapshot> {
     const officialPoints = Math.round(entry.points ?? 0);
     const earned = live?.earned ?? 0;
     return {
+      guid: athlete.guid as string | undefined,
       officialRank: entry.current as number,
       name: (athlete.displayName as string) ?? "Unknown",
       countryCode: (athlete.citizenshipCountry as string) ?? "—",
@@ -297,15 +298,17 @@ export function buildLiveStatusesByName(
 // source's points snapshot against ESPN for the players ESPN actually covers.
 export function buildEspnPointsByName(
   rankingsData: any
-): Map<string, { rank: number; points: number }> {
+): Map<string, { rank: number; points: number; guid?: string }> {
   const ranks: any[] = rankingsData?.rankings?.[0]?.ranks ?? [];
-  const map = new Map<string, { rank: number; points: number }>();
+  const map = new Map<string, { rank: number; points: number; guid?: string }>();
   for (const entry of ranks) {
     const name = entry?.athlete?.displayName;
+    const guid = entry?.athlete?.guid;
     if (!name) continue;
     map.set(normalizeName(name), {
       rank: entry.current as number,
       points: Math.round(entry.points ?? 0),
+      guid: guid as string | undefined,
     });
   }
   return map;
