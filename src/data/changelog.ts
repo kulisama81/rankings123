@@ -14,6 +14,13 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-07-04",
+    title: "Player Profile Pages",
+    description:
+      "Individual player pages now available for all ATP and WTA players, showing live rank, official rank, movement, points, and current tournament status. Click any player name in the rankings to view their profile.",
+    area: "tennis",
+  },
+  {
+    date: "2026-07-04",
     title: "Fixed ATP/WTA Live Rankings SEO",
     description:
       "Fixed server-side rendering for ATP and WTA live ranking pages — full player tables now load instantly for search engines and users, improving discoverability and initial page load experience.",
