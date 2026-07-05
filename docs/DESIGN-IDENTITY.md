@@ -1,6 +1,6 @@
 # Rankings123 Design Identity (North Star)
 
-*Last updated: 2026-06-28*
+*Last updated: 2026-07-05*
 
 This document defines the visual identity for rankings123.com — a **distinctive, premium sports rankings hub** that stands out from commodity sites like live-tennis.eu. Data is always the hero; beauty serves scannability.
 
@@ -206,8 +206,29 @@ Articles read and applied to rankings123 design strategy:
 ### 2026-06-28 (Weekly Run)
 
 5. **["What Is a Brand Language?"](https://clay.global/blog/brand-language)** (June 22, 2026)
-   - **Key takeaway:** Article was inaccessible (404 error) — will retry next run.
-   - **Application:** Deferred.
+   - **Key takeaway:** Article was inaccessible (404 error) — retried 2026-07-05, still 404.
+   - **Application:** Deferred — will check again next run.
+
+### 2026-07-05 (Weekly Run)
+
+6. **Clay Blog** — No new articles since last run (most recent still "What Is a Brand Language?" June 22, inaccessible).
+
+**Awwwards Sports Sites (July 2026):**
+
+7. **[day one® Run](https://www.awwwards.com/sites/day-one-r-run)** (Awwwards Nominee)
+   - **Key takeaway:** Award-worthy through sophisticated motion choreography (GSAP, BARBA.js) — "Loader Reveal", "SVG Drawing", smooth page transitions. Combines big background imagery with parallax scrolling for layered depth. Scores 7.5+ across design, usability, creativity. "Effectively engages users through strategic use of color, typography, and imagery."
+   - **Application:** Rankings123 needs similar entrance/transition choreography — not just static load. Filed ticket: `entrance-animation-choreography` (page load reveals, orchestrated timing).
+
+**2026 Sports Data Viz Trends (Beyond Sports Report):**
+
+8. **["From Data to Experience: Sports Visualization Trends to Watch in 2026"](https://www.beyondsports.nl/news/from-data-to-experience-sports-visualization-trends-to-watch-in-2026)** (Beyond Sports)
+   - **Key takeaways:**
+     - **Interactive over linear**: "Nearly 1/3 of viewers engage with interactive features while watching live broadcasts" — passive scrolling is out, active exploration is in
+     - **Gaming platform integration**: Sports data in Roblox, platform-agnostic design
+     - **Social-first short-form**: "48% of fans discover content via highlights and short clips on social platforms" — data-driven recreations ideal for instant visual storytelling
+     - **Major events as gateways**: FIFA World Cup 2026 (LIVE NOW) is entry point for new audiences via interactive/gamified formats
+     - **Core shift**: Sports data viz moving from "optional enhancement" to "core experience layer"
+   - **Application:** Rankings123 is currently 100% static tables (passive). Need interactive tools (comparison, live match trackers, gamification). Filed tickets: `player-comparison-tool` (H2H interactive comparisons), `live-match-tracker-widget` (real-time urgency, gamification during World Cup).
 
 **Awwwards Sports Sites (June 2026):**
 - **Podium** (Site of the Day, June 27) — sophisticated interactive elements, Developer Award
@@ -237,17 +258,21 @@ Articles read and applied to rankings123 design strategy:
 - [ ] **Empty states** (ticket `empty-state-design`)
 - [ ] **Nav accent strengthening** (ticket `nav-accent-strengthen`)
 - [ ] **Rank change animations** (ticket `rank-change-animations`)
-- [ ] **Sport background visuals** (ticket `sport-background-visuals`) — NEW 2026-06-28
-- [ ] **Table hover premium** (ticket `table-hover-premium`) — NEW 2026-06-28
-- [ ] **Mobile table patterns** (ticket `mobile-table-patterns`) — NEW 2026-06-28
-- [ ] **Nav sport icons** (ticket `nav-sport-icons`) — NEW 2026-06-28
-- [ ] **Accent glow system** (ticket `accent-glow-system`) — NEW 2026-06-28
+- [ ] **Sport background visuals** (ticket `sport-background-visuals`)
+- [ ] **Table hover premium** (ticket `table-hover-premium`)
+- [ ] **Mobile table patterns** (ticket `mobile-table-patterns`)
+- [ ] **Nav sport icons** (ticket `nav-sport-icons`)
+- [ ] **Accent glow system** (ticket `accent-glow-system`)
+- [ ] **Entrance animation choreography** (ticket `entrance-animation-choreography`) — NEW 2026-07-05
+- [ ] **Scroll reveal & parallax** (ticket `scroll-reveal-parallax`) — NEW 2026-07-05
+- [ ] **Ambient gradient pulse** (ticket `ambient-gradient-pulse`) — NEW 2026-07-05
 
-### Phase 3: Signature Moments (Future)
+### Phase 3: Signature Moments & Interactive Features
 - [ ] **OG image templates** (ticket `og-image-templates`)
 - [ ] **Social share cards** (ticket `social-share-cards`)
 - [ ] **Data storytelling callouts** (ticket `data-storytelling-callouts`)
-- [ ] **Ambient motion** — subtle background gradients that shift with sport context
+- [ ] **Live match tracker widget** (ticket `live-match-tracker-widget`) — NEW 2026-07-05 (gamification, World Cup urgency)
+- [ ] **Player comparison tool** (ticket `player-comparison-tool`) — NEW 2026-07-05 (interactive over linear trend)
 
 ---
 
