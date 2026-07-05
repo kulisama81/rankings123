@@ -80,49 +80,73 @@ function parseStages(html: string): TdfStage[] {
   return stages.sort((a, b) => a.stage - b.stage);
 }
 
-// Parse GC standings from the Wikipedia page
-// Note: GC data may not be available until the race starts
-function parseGC(html: string): TdfGCRider[] {
-  const gc: TdfGCRider[] = [];
+// Parse jersey leaders from the Classification leadership table
+function parseJerseyLeaders(html: string): {
+  yellow?: { name: string; team?: string };
+  green?: { name: string; team?: string };
+  polkadot?: { name: string; team?: string };
+  white?: { name: string; team?: string };
+  latestStage?: number;
+} {
+  const jerseys: ReturnType<typeof parseJerseyLeaders> = {};
 
-  // Look for a General Classification table (try both capitalizations)
-  const gcStart = Math.max(
-    html.indexOf('General classification'),
-    html.indexOf('General Classification')
-  );
-  if (gcStart === -1) return gc;
+  // Find the "Classification leadership by stage" table
+  const tableStart = html.indexOf('Classification leadership by stage');
+  if (tableStart === -1) return jerseys;
 
-  // This is a placeholder - actual GC parsing would happen during the race
-  // For now, return empty array as GC standings aren't available pre-race
+  // Extract table section
+  const tableEnd = html.indexOf('</table>', tableStart);
+  const tableSection = html.substring(tableStart, tableEnd);
 
-  return gc;
-}
+  // Split into rows
+  const rows = tableSection.split('<tr>');
 
-function determineRaceStatus(stages: TdfStage[]): TdfSnapshot["raceStatus"] {
-  const now = new Date();
-  const year = 2026;
+  let latestCompleteStage = 0;
 
-  // Check if any stage has a winner (race is active or complete)
-  const hasWinners = stages.some(s => s.winner);
-  if (hasWinners) {
-    // Check if all stages are complete
-    const allComplete = stages.every(s => s.winner);
-    return allComplete ? "complete" : "active";
+  // Process each stage row (skip header rows)
+  for (const row of rows) {
+    // Look for stage number
+    const stageMatch = row.match(/>(\d+)<\/a>/);
+    if (!stageMatch) continue;
+
+    const stageNum = parseInt(stageMatch[1]);
+
+    // Extract rider names from this row FIRST
+    const yellowMatch = row.match(/<td[^>]*style="background:#FFEB64[^"]*"[^>]*>.*?<a[^>]*>([^<]+)<\/a>/);
+    const greenMatch = row.match(/<td[^>]*style="background:#008000[^"]*"[^>]*>.*?<a[^>]*>.*?<span[^>]*>([^<]+)<\/span>/);
+    const polkadotMatch = row.match(/<td[^>]*style="background:#FFA8A4[^"]*"[^>]*>.*?<a[^>]*>([^<]+)<\/a>/);
+    const whiteMatch = row.match(/<td[^>]*style="background:#F8F9FA[^"]*"[^>]*>.*?<a[^>]*>([^<]+)<\/a>/);
+
+    // Only count as a complete stage if we found at least one jersey leader
+    const hasJerseyData = yellowMatch || greenMatch || polkadotMatch || whiteMatch;
+
+    if (hasJerseyData && stageNum > latestCompleteStage) {
+      latestCompleteStage = stageNum;
+      if (yellowMatch) jerseys.yellow = { name: yellowMatch[1].trim() };
+      if (greenMatch) jerseys.green = { name: greenMatch[1].trim() };
+      if (polkadotMatch) jerseys.polkadot = { name: polkadotMatch[1].trim() };
+      if (whiteMatch) jerseys.white = { name: whiteMatch[1].trim() };
+    }
   }
 
-  // Check if race has started based on first stage date
-  // Stage 1 is July 4, 2026
-  const raceStart = new Date(year, 6, 4); // Month is 0-indexed
-  return now >= raceStart ? "active" : "upcoming";
+  // If we found any jersey leaders, set latestStage even if it's 0
+  // (0 means race started but no stages complete yet)
+  jerseys.latestStage = latestCompleteStage;
+
+  return jerseys;
 }
 
-function findCurrentStage(stages: TdfStage[], raceStatus: string): number | undefined {
-  if (raceStatus !== "active") return undefined;
-
-  // Find first stage without a winner
-  const nextStage = stages.find(s => !s.winner);
-  return nextStage?.stage;
+// Parse GC standings from the Wikipedia page
+// Note: Full GC data is not available on the main Wikipedia page during the race
+// (detailed GC is in the stage-by-stage sub-articles)
+// For now, jersey leaders provide the key information
+function parseGC(): TdfGCRider[] {
+  // Return empty array - jersey leaders show the key standings
+  // A future enhancement could fetch and parse the dedicated GC table
+  // from the stage sub-articles (e.g., "2026 Tour de France, Stage 1 to Stage 11")
+  return [];
 }
+
 
 export async function getTdfSnapshot(
   revalidateSeconds = 300
@@ -135,17 +159,62 @@ export async function getTdfSnapshot(
       throw new Error("No stages found in Wikipedia data");
     }
 
-    const gc = parseGC(html);
-    const raceStatus = determineRaceStatus(stages);
-    const currentStage = findCurrentStage(stages, raceStatus);
+    // Parse jersey leaders from the classification table
+    const jerseyLeaders = parseJerseyLeaders(html);
 
-    // Jerseys will be populated during the race; for now use empty pre-race state
+    // Build jerseys array with actual leaders when available
     const jerseys = [
-      { jersey: "yellow" as const, jerseyName: "General Classification (Maillot Jaune)" },
-      { jersey: "green" as const, jerseyName: "Points Classification (Maillot Vert)" },
-      { jersey: "polka-dot" as const, jerseyName: "Mountains Classification (Maillot à Pois)" },
-      { jersey: "white" as const, jerseyName: "Young Rider Classification (Maillot Blanc)" },
+      {
+        jersey: "yellow" as const,
+        jerseyName: "General Classification (Maillot Jaune)",
+        rider: jerseyLeaders.yellow?.name,
+        team: jerseyLeaders.yellow?.team,
+      },
+      {
+        jersey: "green" as const,
+        jerseyName: "Points Classification (Maillot Vert)",
+        rider: jerseyLeaders.green?.name,
+        team: jerseyLeaders.green?.team,
+      },
+      {
+        jersey: "polka-dot" as const,
+        jerseyName: "Mountains Classification (Maillot à Pois)",
+        rider: jerseyLeaders.polkadot?.name,
+        team: jerseyLeaders.polkadot?.team,
+      },
+      {
+        jersey: "white" as const,
+        jerseyName: "Young Rider Classification (Maillot Blanc)",
+        rider: jerseyLeaders.white?.name,
+        team: jerseyLeaders.white?.team,
+      },
     ];
+
+    const gc = parseGC();
+
+    // Determine race status: if we have jersey leaders OR we're past the start date, race is active
+    const hasJerseyLeaders = jerseyLeaders.yellow || jerseyLeaders.green || jerseyLeaders.polkadot || jerseyLeaders.white;
+
+    // Check if we're past the race start date (July 4, 2026)
+    const now = new Date();
+    const raceStart = new Date(2026, 6, 4); // Month is 0-indexed
+    const isPastStartDate = now >= raceStart;
+
+    const raceStatus = (hasJerseyLeaders || isPastStartDate) ? "active" : "upcoming";
+
+    // Calculate current stage
+    let currentStage: number | undefined;
+    if (hasJerseyLeaders && typeof jerseyLeaders.latestStage === 'number') {
+      // We have jersey data with a valid stage number
+      currentStage = jerseyLeaders.latestStage < 21 ? jerseyLeaders.latestStage + 1 : undefined;
+    } else if (hasJerseyLeaders || isPastStartDate) {
+      // Race is active but no complete stages yet, or we have jersey leaders without stage info
+      // Default to Stage 1
+      currentStage = 1;
+    } else {
+      // Pre-race
+      currentStage = undefined;
+    }
 
     return {
       lastUpdated: new Date().toISOString(),
