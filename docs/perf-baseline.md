@@ -2,7 +2,7 @@
 
 This baseline establishes performance budgets and target metrics for all routes. Use this to detect regressions during development.
 
-**Last Updated:** 2026-07-04 (continued stability — ISR fix holding, day 3)  
+**Last Updated:** 2026-07-05 (CRITICAL REGRESSIONS on ATP/WTA)  
 **Last Fix:** 2026-06-30 (ATP/WTA ISR permanently restored via client-side searchParams)  
 **Measurement Method:** `npm run check:performance` (TTFB/total/size via live fetch)
 
@@ -30,10 +30,10 @@ Per [web.dev/vitals](https://web.dev/vitals), these are the **GOOD** thresholds 
 
 | Route        | TTFB Budget | Total Budget | Size Budget | Current TTFB | Current Total | Current Size | Status |
 |--------------|-------------|--------------|-------------|--------------|---------------|--------------|--------|
-| /            | ≤ 0.8s      | ≤ 2.0s       | ≤ 150KB     | 0.16s        | 0.16s         | 32KB         | ✅ FAST |
-| /atp-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.12s        | 0.19s         | 271KB        | ✅ FAST |
-| /wta-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 200KB     | 0.15s        | 0.15s         | 49KB         | ✅ FAST |
-| /world-cup   | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.11s        | 0.26s         | 366KB        | ⚠️ SIZE |
+| /            | ≤ 0.8s      | ≤ 2.0s       | ≤ 150KB     | 0.12s        | 0.14s         | 32KB         | ✅ FAST |
+| /atp-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.13s        | 0.39s         | 591KB        | 🔴 SIZE FAIL |
+| /wta-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 200KB     | 0.16s        | 0.35s         | 356KB        | 🔴 SIZE FAIL |
+| /world-cup   | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.15s        | 0.36s         | 364KB        | ⚠️ SIZE |
 
 **Legend:**
 - **TTFB** = Time to First Byte (server response start)
@@ -43,6 +43,7 @@ Per [web.dev/vitals](https://web.dev/vitals), these are the **GOOD** thresholds 
 **Status:**
 - ✅ **FAST** = All metrics within budget
 - ⚠️ **SIZE** = Over size budget (affects mobile, metered connections)
+- 🔴 **SIZE FAIL** = Critically over size budget (regression detected)
 - 🔴 **SLOW** = Over TTFB or total budget (user-perceived slowness)
 
 **Note on ATP size:**
@@ -60,6 +61,44 @@ Per [web.dev/vitals](https://web.dev/vitals), these are the **GOOD** thresholds 
 ---
 
 ## Recent Changes
+
+### 🔴 CRITICAL REGRESSIONS — ATP/WTA Page Size (2026-07-05)
+
+**Observation:** MASSIVE performance regression on ATP and WTA Live pages. Both pages now critically over size budget.
+
+**Measurements (2026-07-05 vs 2026-07-04 baseline):**
+- **ATP Live:** TTFB 0.12s → 0.13s (+8%), total 0.19s → 0.39s (+105%, **DOUBLED**), size 271KB → 591KB (+118%, **97% over 300KB budget**)
+- **WTA Live:** TTFB 0.15s → 0.16s (+7%), total 0.15s → 0.35s (+133%, **MORE THAN DOUBLED**), size 49KB → 356KB (+627%, **78% over 200KB budget**)
+- **Homepage:** TTFB 0.16s → 0.12s (-25%, improvement), total 0.16s → 0.14s (-12%), size stable 32KB
+- **World Cup:** TTFB 0.11s → 0.15s (+36%), total 0.26s → 0.36s (+38%), size stable 364KB
+
+**Root Cause:** Commit 91820bf (2026-07-04) added `guid` field to player data for linking to player profile pages. This 36-character UUID is now embedded in the Next.js `self.__next` JSON payload for client-side hydration, bloating it from ~130KB to ~410KB (+280KB!).
+
+**Technical Analysis:**
+- The `guid` field is only needed for linking to player pages (`/atp/player/[guid]`)
+- It does NOT need to be in the SSR payload — the ranking table can render without it
+- `self.__next` JSON payload: ~130KB → ~410KB (+280KB, 67% of total page size)
+- HTML also grew due to Link components with long GUID URLs in both desktop and mobile table views
+
+**Impact:**
+- 🔴 **CRITICAL** — Both tennis pages (core traffic drivers) now critically over size budget
+- ❌ **ATP:** 591KB vs 300KB budget (97% over)
+- ❌ **WTA:** 356KB vs 200KB budget (78% over)
+- 📱 **Mobile:** 591KB on slow 3G = ~5.5s transfer time alone (ATP)
+- 💰 **Revenue:** Slow loads harm UX, SEO (Core Web Vitals), ad viewability/RPM
+- ⏱ **Load time doubled** on both pages (ATP 0.19s → 0.39s, WTA 0.15s → 0.35s)
+
+**Status:** 🔴 CRITICAL — P0 tickets filed (`perf-atp-guid-bloat`, `perf-wta-guid-bloat`)
+
+**Recommended Fix:** Remove `guid` from SSR payload. Use computed slug from player name instead (e.g., `/atp/player/novak-djokovic-1`). Simpler, no extra fetch, SEO-friendly.
+
+**Tickets:** 
+- `perf-atp-guid-bloat` (Priority 0) — ATP Live page size regression
+- `perf-wta-guid-bloat` (Priority 0) — WTA Live page size regression
+
+**Report:** docs/reports/2026-07-05-performance.md
+
+---
 
 ### ✅ Continued Stability — ISR Fix Holding (Day 3) (2026-07-04)
 
