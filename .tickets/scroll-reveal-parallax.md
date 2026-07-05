@@ -1,14 +1,15 @@
 ---
 id: scroll-reveal-parallax
-title: Scroll-triggered reveals and parallax hero system
 status: open
+deps: []
+links: []
+created: 2026-07-05T07:33:00Z
 type: feature
 priority: 3
-tags:
-  - design
 parent: rankings123
-created: 2026-07-05
+tags: [design]
 ---
+# Scroll-triggered reveals and parallax hero system
 
 ## Problem
 No scroll-based interactivity — all content is immediately visible and static. Premium sports sites (Awwwards nominees) use parallax and scroll reveals to create depth and guide attention. Current hero gradient orbs are static; they could move subtly on scroll for added dimension.

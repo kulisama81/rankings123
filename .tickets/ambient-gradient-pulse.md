@@ -1,15 +1,15 @@
 ---
 id: ambient-gradient-pulse
-title: Ambient gradient pulse system (breathing backgrounds)
 status: open
+deps: []
+links: []
+created: 2026-07-05T07:34:00Z
 type: feature
 priority: 3
-tags:
-  - design
-  - motion
 parent: rankings123
-created: 2026-07-05
+tags: [design, motion]
 ---
+# Ambient gradient pulse system (breathing backgrounds)
 
 ## Problem
 Current site has static radial gradient on body (subtle, good) but no ambient motion. Award-winning sports sites (day one® Run, Awwwards nominees) use subtle animated gradients that create a "breathing" premium feel. Current gradient orbs in hero are static.

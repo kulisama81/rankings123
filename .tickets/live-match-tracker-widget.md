@@ -1,15 +1,15 @@
 ---
 id: live-match-tracker-widget
-title: Live match tracker widget (gamification & urgency)
 status: open
+deps: []
+links: []
+created: 2026-07-05T07:33:00Z
 type: feature
 priority: 2
-tags:
-  - design
-  - worldcup
 parent: rankings123
-created: 2026-07-05
+tags: [design, worldcup]
 ---
+# Live match tracker widget (gamification & urgency)
 
 ## Problem
 2026 sports viz trend (Beyond Sports): "interactive over linear" + "gamified experiences" are key to engaging modern fans. Current site shows static rankings; no sense of urgency or real-time match activity. During World Cup 2026 (LIVE NOW through ~July 19), we need to capture attention and create FOMO.

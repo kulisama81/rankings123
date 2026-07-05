@@ -1,14 +1,15 @@
 ---
 id: entrance-animation-choreography
-title: Page entrance animation choreography system
 status: open
+deps: []
+links: []
+created: 2026-07-05T07:33:00Z
 type: feature
 priority: 2
-tags:
-  - design
 parent: rankings123
-created: 2026-07-05
+tags: [design]
 ---
+# Page entrance animation choreography system
 
 ## Problem
 Current site is static and utilitarian (per 2026-07-05 audit) — no entrance motion, pages feel lifeless on load. 2026 sports viz trend (Beyond Sports) emphasizes "interactive over linear" experiences. Award-winning sports sites (day one® Run on Awwwards) use sophisticated animation choreography for emotional storytelling.

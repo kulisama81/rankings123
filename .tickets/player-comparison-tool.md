@@ -1,15 +1,15 @@
 ---
 id: player-comparison-tool
-title: Interactive player comparison tool (head-to-head)
 status: open
+deps: []
+links: []
+created: 2026-07-05T07:33:00Z
 type: feature
 priority: 3
-tags:
-  - design
-  - interactive
 parent: rankings123
-created: 2026-07-05
+tags: [design, interactive]
 ---
+# Interactive player comparison tool (head-to-head)
 
 ## Problem
 2026 sports viz trend: "interactive over linear" — fans want to actively explore data, not just passively scroll. Current site is 100% static tables. No interactive tools to engage users or encourage repeat visits. Competitor sites (SofaScore, FlashScore) have H2H comparisons.
