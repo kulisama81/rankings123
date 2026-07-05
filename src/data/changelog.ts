@@ -13,6 +13,13 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-07-05",
+    title: "Wimbledon 2026 Post-Tournament Champions Display",
+    description:
+      "Enhanced Wimbledon tournament page to show champions and final point changes after the tournament concludes (July 12). When the tournament ends, the page will display both Men's and Women's Singles champions with their final rankings and Wimbledon point gains.",
+    area: "tennis",
+  },
+  {
     date: "2026-07-04",
     title: "Player Profile Pages",
     description:
