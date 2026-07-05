@@ -14,6 +14,13 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-07-05",
+    title: "Tour de France 2026 Live Race Data",
+    description:
+      "Tour de France page now shows live race data during the 2026 edition, including current stage status, jersey leaders (yellow, green, polka-dot, white), and real-time standings from Wikipedia. Race progress updates as stages complete.",
+    area: "cycling",
+  },
+  {
+    date: "2026-07-05",
     title: "Wimbledon 2026 Post-Tournament Champions Display",
     description:
       "Enhanced Wimbledon tournament page to show champions and final point changes after the tournament concludes (July 12). When the tournament ends, the page will display both Men's and Women's Singles champions with their final rankings and Wimbledon point gains.",
