@@ -1,6 +1,6 @@
 ---
 id: tdf-live-homepage-widget
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-06T13:48:24Z
