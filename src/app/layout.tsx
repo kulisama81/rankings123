@@ -44,6 +44,11 @@ export const metadata: Metadata = {
   },
   description:
     "Live sports rankings: real-time ATP & WTA tennis rankings during tournaments, FIFA World Cup 2026 group standings.", // TODO: Re-add cycling when cycling-dynamic-feed ships
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
   openGraph: {
     type: "website",
     siteName: "Rankings123",

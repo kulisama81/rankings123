@@ -14,6 +14,13 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-07-06",
+    title: "New Rankings123 Logo & Wordmark",
+    description:
+      "Introduced a distinctive new logo design featuring the signature pulsing live dot integrated into the wordmark. The logo adapts to dark and light themes and appears in the navigation, favicon, and across the site.",
+    area: "site",
+  },
+  {
+    date: "2026-07-06",
     title: "Tour de France Live Widget on Homepage",
     description:
       "Added live Tour de France widget to homepage showing General Classification top 5 (when available) or yellow jersey leader during the race (July 4-26). Updates every 5 minutes with current stage progress and links to full TdF coverage.",

@@ -1,0 +1,15 @@
+<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Rankings123 Favicon: Theme-neutral design with signature live dot -->
+
+  <!-- Vertical bar (the "1") - dark gray, works on both light and dark backgrounds -->
+  <rect x="7" y="15" width="4" height="11" rx="1.5" fill="#1f2937"/>
+
+  <!-- Live dot outer glow - lime green signature -->
+  <circle cx="9" cy="11" r="5" fill="#84cc16" opacity="0.5"/>
+
+  <!-- Live dot inner solid - lime green signature -->
+  <circle cx="9" cy="11" r="3" fill="#84cc16"/>
+
+  <!-- "23" - dark gray to match the bar -->
+  <text x="15" y="24.5" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="700" fill="#1f2937">23</text>
+</svg>

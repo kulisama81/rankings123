@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import ThemeToggle from "./ThemeToggle";
 import DesignSwitcher from "./DesignSwitcher";
+import Logo from "./Logo";
 
 const tabs = [
   { href: "/atp-live", label: "ATP" },
@@ -17,17 +18,10 @@ export default function Nav() {
   return (
     <nav className="sticky top-0 z-40 border-b border-edge bg-bg/80 backdrop-blur-md">
       <div className="mx-auto flex h-14 max-w-6xl items-center gap-3 px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="flex shrink-0 items-center gap-2 font-bold tracking-tight text-fg">
-          <span className="relative flex h-2 w-2">
-            <span
-              className="absolute inline-flex h-full w-full rounded-full bg-accent opacity-60"
-              style={{ animation: "pulse-dot 1.6s ease-in-out infinite" }}
-            />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
-          </span>
-          <span className="hidden sm:inline">RANKINGS</span>
-          <span className="sm:hidden">R</span>
-          <span className="text-accent">123</span>
+        <Link href="/" className="flex shrink-0 items-center">
+          {/* Full wordmark on desktop, compact on mobile */}
+          <Logo variant="full" className="hidden h-8 w-auto sm:block" />
+          <Logo variant="compact" className="h-8 w-auto sm:hidden" />
         </Link>
         <div className="flex flex-1 items-center gap-1 overflow-x-auto text-sm">
           {tabs.map((t) => {
