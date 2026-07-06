@@ -2,7 +2,7 @@
 
 This baseline establishes performance budgets and target metrics for all routes. Use this to detect regressions during development.
 
-**Last Updated:** 2026-07-05 (CRITICAL REGRESSIONS on ATP/WTA)  
+**Last Updated:** 2026-07-06 (CRITICAL REGRESSIONS PERSIST — Day 2)  
 **Last Fix:** 2026-06-30 (ATP/WTA ISR permanently restored via client-side searchParams)  
 **Measurement Method:** `npm run check:performance` (TTFB/total/size via live fetch)
 
@@ -30,10 +30,10 @@ Per [web.dev/vitals](https://web.dev/vitals), these are the **GOOD** thresholds 
 
 | Route        | TTFB Budget | Total Budget | Size Budget | Current TTFB | Current Total | Current Size | Status |
 |--------------|-------------|--------------|-------------|--------------|---------------|--------------|--------|
-| /            | ≤ 0.8s      | ≤ 2.0s       | ≤ 150KB     | 0.12s        | 0.14s         | 32KB         | ✅ FAST |
-| /atp-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.13s        | 0.39s         | 591KB        | 🔴 SIZE FAIL |
-| /wta-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 200KB     | 0.16s        | 0.35s         | 356KB        | 🔴 SIZE FAIL |
-| /world-cup   | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.15s        | 0.36s         | 364KB        | ⚠️ SIZE |
+| /            | ≤ 0.8s      | ≤ 2.0s       | ≤ 150KB     | 0.13s        | 0.15s         | 32KB         | ✅ FAST |
+| /atp-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.13s        | 0.25s         | 590KB        | 🔴 SIZE FAIL |
+| /wta-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 200KB     | 0.13s        | 0.29s         | 345KB        | 🔴 SIZE FAIL |
+| /world-cup   | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.13s        | 0.23s         | 366KB        | ⚠️ SIZE |
 
 **Legend:**
 - **TTFB** = Time to First Byte (server response start)
@@ -61,6 +61,44 @@ Per [web.dev/vitals](https://web.dev/vitals), these are the **GOOD** thresholds 
 ---
 
 ## Recent Changes
+
+### 🔴 CRITICAL REGRESSIONS PERSIST — Day 2 (2026-07-06)
+
+**Observation:** CRITICAL performance regressions on ATP and WTA Live pages **continue for a 2nd consecutive day**. P0 tickets from 2026-07-05 remain unfixed.
+
+**Measurements (2026-07-06 vs 2026-07-05):**
+- **ATP Live:** TTFB 0.13s (stable), total 0.39s → 0.25s (-36%, **improvement**), size 591KB → 590KB (-0.2%, **virtually unchanged**)
+- **WTA Live:** TTFB 0.16s → 0.13s (-19%, improvement), total 0.35s → 0.29s (-17%, improvement), size 356KB → 345KB (-3.1%, **minor improvement but still critical**)
+- **Homepage:** TTFB 0.12s → 0.13s (+8%, minor variance), total 0.14s → 0.15s (+7%), size stable 32KB
+- **World Cup:** TTFB 0.15s → 0.13s (-13%), total 0.36s → 0.23s (-36%, **improvement**), size 364KB → 366KB (+0.5%, stable)
+
+**Analysis:**
+- 🔴 **ATP:** 590KB (97% over 300KB budget) — regression persists, virtually unchanged from yesterday
+- 🔴 **WTA:** 345KB (73% over 200KB budget) — minor size reduction but still critically over budget
+- ✅ **TTFB/Total improvements:** All routes show faster TTFB/total times (likely ISR edge-cache warming or transient network variance)
+- ⚠️ **Root cause unfixed:** No commits since 2026-07-05 addressed the GUID bloat issue (commit 91820bf)
+- 🚫 **WTA improvement is NOT a code fix** — likely cache warming or variance, not structural improvement
+
+**Technical Notes:**
+- WTA -3% size improvement (356KB → 345KB, -11KB) but still 73% over budget
+- ATP load time improved (0.39s → 0.25s, -36%) but size unchanged (590KB)
+- Load time improvements likely due to ISR edge caching stabilizing, NOT code fixes
+
+**Impact (ESCALATING):**
+- 🔴 **Day 2 of critical regressions** — both tennis pages (core traffic drivers) remain critically degraded
+- 📱 **Mobile:** ATP 590KB on slow 3G = ~5.5s transfer time alone
+- 💰 **Revenue:** Blocks Phase 3 monetization (ads + betting affiliates)
+- ⏱ **Urgency:** IMMEDIATE — second consecutive day without fix
+
+**Status:** 🔴 CRITICAL — P0 tickets remain open (`perf-atp-guid-bloat`, `perf-wta-guid-bloat`)
+
+**Tickets:** 
+- `perf-atp-guid-bloat` (Priority 0) — OPEN, day 2
+- `perf-wta-guid-bloat` (Priority 0) — OPEN, day 2
+
+**Report:** docs/reports/2026-07-06-performance.md
+
+---
 
 ### 🔴 CRITICAL REGRESSIONS — ATP/WTA Page Size (2026-07-05)
 
