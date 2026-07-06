@@ -1,6 +1,6 @@
 ---
 id: wimbledon-live-countdown
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-06T13:48:44Z
@@ -16,3 +16,9 @@ Add Wimbledon live status widget to homepage and ATP/WTA pages. Shows 'LIVE: Wim
 ## Acceptance Criteria
 
 Wimbledon status widget on homepage + ATP/WTA pages. Shows current round OR countdown. Updates daily. Links to /tournaments/wimbledon-2026. Ships by July 8. Verified on live site. Effort: LOW (simple component). Impact: MEDIUM-HIGH (time-sensitive traffic).
+
+## Notes
+
+**2026-07-06T18:13:23Z**
+
+✅ Shipped to production (commit 87ce622). Verified live on rankings123.com (homepage + ATP/WTA pages). Shows 'Fourth Round · 6 days remaining' (July 6, 2026).
