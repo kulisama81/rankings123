@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import HeroBanner from "@/components/HeroBanner";
 import LiveWorldCupWidget from "@/components/LiveWorldCupWidget";
+import LiveTdfWidget from "@/components/LiveTdfWidget";
 import WimbledonCallout from "@/components/WimbledonCallout";
 
 export const metadata: Metadata = {
@@ -104,6 +105,9 @@ export default function HomePage() {
 
       {/* Live World Cup Matches Widget - shows only when matches are in progress */}
       <LiveWorldCupWidget />
+
+      {/* Live Tour de France Widget - shows during race (July 4-26, 2026) */}
+      <LiveTdfWidget />
 
       {/* Tennis Section */}
       <section className="mb-12">
