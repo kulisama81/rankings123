@@ -13,6 +13,13 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-07-06",
+    title: "Wimbledon Live Status Widget",
+    description:
+      "Added live Wimbledon tournament status widget to homepage and ATP/WTA ranking pages. Shows current tournament round and days remaining during Wimbledon 2026 (June 29 - July 12), with direct link to full tournament coverage.",
+    area: "tennis",
+  },
+  {
     date: "2026-07-05",
     title: "Tour de France 2026 Live Race Data",
     description:

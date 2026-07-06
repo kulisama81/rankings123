@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getLiveData } from "@/lib/liveFeed";
 import LiveRankingView from "@/components/LiveRankingView";
 import YouTubeHighlights from "@/components/YouTubeHighlights";
+import WimbledonCallout from "@/components/WimbledonCallout";
 import { YOUTUBE_HIGHLIGHTS } from "@/config/youtube";
 
 export const metadata: Metadata = {
@@ -44,6 +45,7 @@ export default async function AtpLivePage() {
       <div data-sport="atp">
         <LiveRankingView tour="atp" snapshot={snapshot} />
         <div className="mx-auto max-w-6xl px-4 pb-12 sm:px-6 lg:px-8">
+          <WimbledonCallout variant="compact" />
           <YouTubeHighlights
             videoId={YOUTUBE_HIGHLIGHTS.atp.videoId}
             title={YOUTUBE_HIGHLIGHTS.atp.title}
