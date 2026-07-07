@@ -2,7 +2,7 @@
 
 This baseline establishes performance budgets and target metrics for all routes. Use this to detect regressions during development.
 
-**Last Updated:** 2026-07-06 (CRITICAL REGRESSIONS PERSIST — Day 2)  
+**Last Updated:** 2026-07-07 (CRITICAL REGRESSIONS PERSIST — Day 3)  
 **Last Fix:** 2026-06-30 (ATP/WTA ISR permanently restored via client-side searchParams)  
 **Measurement Method:** `npm run check:performance` (TTFB/total/size via live fetch)
 
@@ -30,10 +30,10 @@ Per [web.dev/vitals](https://web.dev/vitals), these are the **GOOD** thresholds 
 
 | Route        | TTFB Budget | Total Budget | Size Budget | Current TTFB | Current Total | Current Size | Status |
 |--------------|-------------|--------------|-------------|--------------|---------------|--------------|--------|
-| /            | ≤ 0.8s      | ≤ 2.0s       | ≤ 150KB     | 0.13s        | 0.15s         | 32KB         | ✅ FAST |
-| /atp-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.13s        | 0.25s         | 590KB        | 🔴 SIZE FAIL |
-| /wta-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 200KB     | 0.13s        | 0.29s         | 345KB        | 🔴 SIZE FAIL |
-| /world-cup   | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.13s        | 0.23s         | 366KB        | ⚠️ SIZE |
+| /            | ≤ 0.8s      | ≤ 2.0s       | ≤ 150KB     | 0.12s        | 0.14s         | 33KB         | ✅ FAST |
+| /atp-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.14s        | 0.24s         | 591KB        | 🔴 SIZE FAIL |
+| /wta-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 200KB     | 0.12s        | 0.27s         | 348KB        | 🔴 SIZE FAIL |
+| /world-cup   | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.20s        | 0.32s         | 364KB        | ⚠️ TTFB VARIANCE |
 
 **Legend:**
 - **TTFB** = Time to First Byte (server response start)
@@ -61,6 +61,41 @@ Per [web.dev/vitals](https://web.dev/vitals), these are the **GOOD** thresholds 
 ---
 
 ## Recent Changes
+
+### 🔴 CRITICAL REGRESSIONS PERSIST — Day 3 (2026-07-07)
+
+**Observation:** CRITICAL performance regressions on ATP and WTA Live pages **continue for a 3rd consecutive day**. P0 tickets from 2026-07-05 remain unfixed. NEW: World Cup TTFB variance detected (+54%) but still within budget.
+
+**Measurements (2026-07-07 vs 2026-07-06):**
+- **ATP Live:** TTFB 0.13s → 0.14s (+8%, minor variance), total 0.25s → 0.24s (-4%), size 590KB → 591KB (+0.2%, **virtually unchanged**)
+- **WTA Live:** TTFB 0.13s → 0.12s (-8%), total 0.29s → 0.27s (-7%), size 345KB → 348KB (+0.9%, **minor increase**)
+- **Homepage:** TTFB 0.13s → 0.12s (-8%), total 0.15s → 0.14s (-7%), size 32KB → 33KB (+3%)
+- **World Cup:** TTFB 0.13s → 0.20s (+54%, **notable variance**), total 0.23s → 0.32s (+39%), size 366KB → 364KB (-0.5%)
+
+**Analysis:**
+- 🔴 **ATP:** 591KB (97% over 300KB budget) — regression persists, **Day 3**, no change from Day 2
+- 🔴 **WTA:** 348KB (74% over 200KB budget) — regression persists, **Day 3**, +3KB from Day 2 (negligible)
+- ⚠️ **World Cup:** TTFB +54% (0.13s → 0.20s) but still within budget (< 0.8s) — likely transient upstream API latency (no recent code changes), monitoring for pattern
+- ✅ **Homepage:** Fast and stable
+- ⚠️ **Root cause unfixed:** No commits since 2026-07-05 addressed the GUID bloat issue (commit 91820bf)
+- 🚫 **Minor improvements are NOT code fixes** — load time improvements likely cache warming or variance
+
+**Impact (ESCALATING):**
+- 🔴 **Day 3 of critical regressions** — both tennis pages (core traffic drivers) remain critically degraded
+- 📱 **Mobile:** ATP 591KB on slow 3G = ~5.5s transfer time alone, WTA 348KB = ~3.2s
+- 💰 **Revenue:** Blocks Phase 3 monetization (ads + betting affiliates)
+- 🏆 **Wimbledon 2026:** Live through July 13 (peak tennis traffic NOW)
+- ⏱ **Urgency:** IMMEDIATE — third consecutive day without fix
+
+**Status:** 🔴 CRITICAL — P0 tickets remain open (`perf-atp-guid-bloat`, `perf-wta-guid-bloat`)
+
+**Tickets:** 
+- `perf-atp-guid-bloat` (Priority 0) — OPEN, day 3
+- `perf-wta-guid-bloat` (Priority 0) — OPEN, day 3
+
+**Report:** docs/reports/2026-07-07-performance.md
+
+---
 
 ### 🔴 CRITICAL REGRESSIONS PERSIST — Day 2 (2026-07-06)
 
