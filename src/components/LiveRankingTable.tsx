@@ -102,6 +102,12 @@ export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingT
       setCountry(urlCountry);
     }
     mounted.current = true;
+
+    // Remove SSR fallback table on hydration (fixes atp-duplicate-table bug)
+    const ssrTable = document.getElementById("ssr-table");
+    if (ssrTable) {
+      ssrTable.remove();
+    }
   }, []);
 
   // Update URL when country filter changes (after mount to avoid initial write)

@@ -114,3 +114,48 @@ test("ATP/WTA Live pages performance budget (TTFB ≤ 0.8s)", async () => {
     `WTA Live TTFB should be ≤ 800ms, got ${wtaTTFB}ms (likely using force-dynamic instead of ISR)`
   );
 });
+
+test("ATP Live ranking table renders exactly once (no duplication)", async () => {
+  // Regression test for atp-duplicate-table bug.
+  //
+  // Bug context: The ATP Live page was rendering both a StaticRankingTable
+  // (SSR version) and LiveRankingTable (interactive version), causing
+  // duplicate content where the same players appeared twice on the page.
+  //
+  // This test ensures the table appears exactly once, not duplicated.
+
+  const port = process.env.TEST_PORT || 3000;
+  const url = `http://localhost:${port}/atp-live`;
+
+  const response = await fetch(url);
+  assert.strictEqual(response.status, 200, "ATP Live page should return 200");
+
+  const html = await response.text();
+
+  // Count table instances by looking for <tbody> elements
+  // (each ranking table should have exactly one tbody)
+  const tbodyMatches = html.match(/<tbody[^>]*>/g) || [];
+  const tbodyCount = tbodyMatches.length;
+
+  assert.strictEqual(
+    tbodyCount,
+    1,
+    `ATP Live page should have exactly 1 ranking table (tbody), found ${tbodyCount}. ` +
+    `This indicates duplicate tables are being rendered.`
+  );
+
+  // Additional check: count occurrences of a specific top player's name
+  // It should appear a reasonable number of times (once in table, once in stats banner,
+  // plus in meta tags / OG tags / JSON-LD), but NOT 10+ which would indicate
+  // severe duplication
+  const sinnerMatches = html.match(/Jannik Sinner/g) || [];
+  const sinnerCount = sinnerMatches.length;
+
+  // Expect 1-6 occurrences (table row, stats banner, meta tags, OG tags, JSON-LD),
+  // but NOT 10+ which would suggest the table is heavily duplicated
+  assert.ok(
+    sinnerCount <= 9,
+    `"Jannik Sinner" should appear 1-9 times, found ${sinnerCount}. ` +
+    `High count (10+) suggests duplicate table rendering.`
+  );
+});

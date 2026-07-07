@@ -7,7 +7,7 @@ interface LiveRankingViewProps {
   snapshot: AtpLiveSnapshot;
 }
 
-// Server-rendered table that shows in SSR and gets replaced by interactive version
+// Server-rendered table for SSR/SEO - hidden by LiveRankingTable on hydration
 function StaticRankingTable({ players }: { players: AtpLivePlayer[] }) {
   const pageRows = players.slice(0, 50);
 
