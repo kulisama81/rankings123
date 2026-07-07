@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { Suspense } from "react";
 import { getWorldCupData, getWorldCupStats } from "@/lib/worldCupFeed";
 import { getWorldCupBracket } from "@/lib/worldCupBracketFeed";
@@ -123,6 +124,15 @@ export default async function WorldCupPage() {
           }
         >
           <div className="my-12">
+            <div className="mb-6 flex items-center justify-between">
+              <h2 className="text-2xl font-bold text-fg">Knockout Bracket</h2>
+              <Link
+                href="/world-cup/bracket"
+                className="inline-flex items-center gap-1.5 rounded-lg border border-trophy/30 bg-trophy/5 px-4 py-2 text-sm font-bold text-trophy transition hover:border-trophy hover:bg-trophy/10"
+              >
+                View Full Bracket →
+              </Link>
+            </div>
             <WorldCupBracket bracket={bracket} />
           </div>
         </Suspense>
