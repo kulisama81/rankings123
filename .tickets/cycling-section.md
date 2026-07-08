@@ -1,6 +1,6 @@
 ---
 id: cycling-section
-status: open
+status: closed
 deps: [cycling-page]
 links: []
 created: 2026-06-15T02:06:32Z
