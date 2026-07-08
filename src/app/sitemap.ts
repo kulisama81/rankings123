@@ -22,6 +22,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/terms`, lastModified: now, changeFrequency: "yearly", priority: 0.2 },
   ];
 
+  // Add Tour de France stage pages (21 stages — SEO for "tour de france stage N results")
+  const tdfStageRoutes: MetadataRoute.Sitemap = Array.from({ length: 21 }, (_, i) => ({
+    url: `${BASE}/events/tdf-2026/stage-${i + 1}`,
+    lastModified: now,
+    changeFrequency: "always" as const,
+    priority: 0.8,
+  }));
+
   // Add tennis player pages (SEO long-tail: "Jannik Sinner ATP ranking", etc.)
   const tennisPlayerRoutes: MetadataRoute.Sitemap = [];
   try {
@@ -102,6 +110,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     return [
       ...staticRoutes,
+      ...tdfStageRoutes,
       ...tennisPlayerRoutes,
       ...matchRoutes,
       ...teamRoutes,
@@ -109,7 +118,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ...venueRoutes,
     ];
   } catch {
-    // If World Cup data fails, still return static routes + tennis player routes
-    return [...staticRoutes, ...tennisPlayerRoutes];
+    // If World Cup data fails, still return static routes + tennis player routes + TdF stages
+    return [...staticRoutes, ...tdfStageRoutes, ...tennisPlayerRoutes];
   }
 }

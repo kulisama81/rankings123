@@ -13,6 +13,13 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-07-08",
+    title: "Individual Tour de France Stage Pages",
+    description:
+      "Added dedicated pages for all 21 Tour de France 2026 stages at /events/tdf-2026/stage-[N]. Each page shows stage details (date, route, distance, type), winner when completed, and current jersey leaders. Click any stage number in the main TdF page to view detailed information.",
+    area: "cycling",
+  },
+  {
     date: "2026-07-06",
     title: "New Rankings123 Logo & Wordmark",
     description:

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import type { TdfStage } from "@/types";
 
 interface TdfStagesTableProps {
@@ -66,11 +67,16 @@ export default function TdfStagesTable({ stages, currentStage }: TdfStagesTableP
                     isCurrentStage ? "bg-surface2" : ""
                   }`}
                 >
-                  <td className="px-3 py-3 text-center font-semibold text-primary">
-                    {stage.stage}
-                    {isCurrentStage && (
-                      <span className="ml-1.5 inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
-                    )}
+                  <td className="px-3 py-3 text-center font-semibold">
+                    <Link
+                      href={`/events/tdf-2026/stage-${stage.stage}`}
+                      className="text-accent transition hover:text-accentfg"
+                    >
+                      {stage.stage}
+                      {isCurrentStage && (
+                        <span className="ml-1.5 inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
+                      )}
+                    </Link>
                   </td>
                   <td className="px-3 py-3 text-fg">{stage.date}</td>
                   <td className="px-3 py-3 text-fg">{stage.course}</td>
