@@ -185,7 +185,7 @@ export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingT
     "rounded-lg border border-edge bg-surface px-3 py-1.5 text-sm text-fg placeholder:text-muted/60 focus:border-accent focus:outline-none";
 
   return (
-    <div>
+    <div className="animate-entrance-table">
       {/* Controls */}
       <div className="mb-4 flex flex-wrap items-center gap-2.5">
         <div className="inline-flex gap-1 rounded-xl bg-surface2 p-1">

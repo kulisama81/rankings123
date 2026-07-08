@@ -14,6 +14,13 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-07-08",
+    title: "Page Entrance Animations",
+    description:
+      "Added choreographed entrance animations across the site — pages now come to life with a subtle, athletic motion sequence. Heroes fade up first, sport cards cascade in with rhythm, then tables arrive. Fast (under 1 second), GPU-efficient, and respectful of accessibility preferences.",
+    area: "site",
+  },
+  {
+    date: "2026-07-08",
     title: "Individual Tour de France Stage Pages",
     description:
       "Added dedicated pages for all 21 Tour de France 2026 stages at /events/tdf-2026/stage-[N]. Each page shows stage details (date, route, distance, type), winner when completed, and current jersey leaders. Click any stage number in the main TdF page to view detailed information.",

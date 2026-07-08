@@ -42,7 +42,7 @@ function stageTypeColor(type: TdfStage["type"]): string {
 
 export default function TdfStagesTable({ stages, currentStage }: TdfStagesTableProps) {
   return (
-    <div className="overflow-hidden rounded-2xl border border-edge bg-surface">
+    <div className="animate-entrance-table overflow-hidden rounded-2xl border border-edge bg-surface">
       <div className="overflow-x-auto">
         <table className="min-w-full text-sm">
           <thead className="border-b border-edge bg-surface2 text-[11px] uppercase tracking-wide text-muted">

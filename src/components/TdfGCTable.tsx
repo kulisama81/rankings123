@@ -9,7 +9,7 @@ interface TdfGCTableProps {
 export default function TdfGCTable({ riders }: TdfGCTableProps) {
   if (riders.length === 0) {
     return (
-      <div className="rounded-2xl border border-edge bg-surface p-8 text-center text-secondary">
+      <div className="animate-entrance-table rounded-2xl border border-edge bg-surface p-8 text-center text-secondary">
         <p className="text-lg">General Classification will be available once the race begins.</p>
         <p className="mt-2 text-sm text-muted">The race starts on July 4, 2026 in Barcelona.</p>
       </div>
@@ -17,7 +17,7 @@ export default function TdfGCTable({ riders }: TdfGCTableProps) {
   }
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-edge bg-surface">
+    <div className="animate-entrance-table overflow-hidden rounded-2xl border border-edge bg-surface">
       <div className="overflow-x-auto">
         <table className="min-w-full text-sm">
           <thead className="border-b border-edge bg-surface2 text-[11px] uppercase tracking-wide text-muted">

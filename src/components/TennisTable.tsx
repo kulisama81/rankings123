@@ -13,7 +13,7 @@ function Movement({ value }: { value: number }) {
 
 export default function TennisTable({ rankings }: TennisTableProps) {
   return (
-    <div className="overflow-x-auto rounded-xl border border-gray-200">
+    <div className="animate-entrance-table overflow-x-auto rounded-xl border border-gray-200">
       <table className="min-w-full text-sm">
         <thead className="bg-gray-50 text-xs uppercase text-gray-500">
           <tr>

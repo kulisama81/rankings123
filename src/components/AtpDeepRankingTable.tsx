@@ -117,7 +117,7 @@ export default function AtpDeepRankingTable({ initialSnapshot, band, apiEndpoint
     "rounded-lg border border-edge px-2.5 py-1 font-medium text-fg transition hover:bg-surface2 disabled:cursor-not-allowed disabled:opacity-40";
 
   return (
-    <div>
+    <div className="animate-entrance-table">
       <div className="mb-4 flex flex-wrap items-center gap-2.5">
         <input
           type="search"

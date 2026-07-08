@@ -267,7 +267,7 @@ export default function WorldCupTable({ initialSnapshot }: WorldCupTableProps) {
   const activeByDate = groupByDate(activeMatches);
 
   return (
-    <div>
+    <div className="animate-entrance-table">
       <div className="mb-4 flex flex-wrap items-center gap-3 text-xs text-muted">
         {snapshot.source === "mock" && (
           <span className="rounded-full bg-down/15 px-2 py-0.5 font-medium text-down">Demo data</span>

@@ -47,19 +47,22 @@ function SportCard({
   label,
   sub,
   sport,
-  isLive
+  isLive,
+  animationIndex = 0
 }: {
   href: string;
   label: string;
   sub: string;
   sport: string;
   isLive: boolean;
+  animationIndex?: number;
 }) {
+  const animationClass = animationIndex > 0 ? `animate-entrance-card-${animationIndex}` : 'animate-entrance-card';
   return (
     <Link
       href={href}
       data-sport={sport}
-      className="group flex items-center justify-between rounded-2xl border border-edge bg-surface p-5 transition hover:border-accent/60 hover:bg-surface2"
+      className={`${animationClass} group flex items-center justify-between rounded-2xl border border-edge bg-surface p-5 transition hover:border-accent/60 hover:bg-surface2`}
     >
       <div>
         <div className="flex items-center gap-2">
@@ -115,8 +118,8 @@ export default function HomePage() {
           Tennis
         </h2>
         <div className="grid gap-4 sm:grid-cols-3">
-          {tennisLinks.map((link) => (
-            <SportCard key={link.href} {...link} />
+          {tennisLinks.map((link, i) => (
+            <SportCard key={link.href} {...link} animationIndex={i + 1} />
           ))}
         </div>
       </section>
@@ -127,8 +130,8 @@ export default function HomePage() {
           World Cup
         </h2>
         <div className="grid gap-4">
-          {worldCupLinks.map((link) => (
-            <SportCard key={link.href} {...link} />
+          {worldCupLinks.map((link, i) => (
+            <SportCard key={link.href} {...link} animationIndex={tennisLinks.length + i + 1} />
           ))}
         </div>
       </section>
@@ -140,8 +143,8 @@ export default function HomePage() {
             Cycling
           </h2>
           <div className="grid gap-4">
-            {cyclingLinks.map((link) => (
-              <SportCard key={link.href} {...link} />
+            {cyclingLinks.map((link, i) => (
+              <SportCard key={link.href} {...link} animationIndex={tennisLinks.length + worldCupLinks.length + i + 1} />
             ))}
           </div>
         </section>

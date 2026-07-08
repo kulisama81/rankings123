@@ -13,7 +13,7 @@ interface HeroBannerProps {
 
 export default function HeroBanner({ icon, title, subtitle, live = true, stats }: HeroBannerProps) {
   return (
-    <div className="relative mb-6 overflow-hidden rounded-3xl border border-edge bg-surface">
+    <div className="animate-entrance-hero relative mb-6 overflow-hidden rounded-3xl border border-edge bg-surface">
       {/* accent depth */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-accent/20 via-accent/5 to-transparent" />
       <div className="pointer-events-none absolute -right-20 -top-24 h-64 w-64 rounded-full bg-accent/25 blur-3xl" />
