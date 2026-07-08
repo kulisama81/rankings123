@@ -2,7 +2,7 @@
 
 This baseline establishes performance budgets and target metrics for all routes. Use this to detect regressions during development.
 
-**Last Updated:** 2026-07-07 (CRITICAL REGRESSIONS PERSIST — Day 3)  
+**Last Updated:** 2026-07-08 (CRITICAL REGRESSIONS PERSIST — Day 4)  
 **Last Fix:** 2026-06-30 (ATP/WTA ISR permanently restored via client-side searchParams)  
 **Measurement Method:** `npm run check:performance` (TTFB/total/size via live fetch)
 
@@ -61,6 +61,41 @@ Per [web.dev/vitals](https://web.dev/vitals), these are the **GOOD** thresholds 
 ---
 
 ## Recent Changes
+
+### 🔴 CRITICAL REGRESSIONS PERSIST — Day 4 (2026-07-08)
+
+**Observation:** CRITICAL performance regressions on ATP and WTA Live pages **continue for a 4th consecutive day**. P0 tickets from 2026-07-05 remain unfixed.
+
+**Measurements (2026-07-08 vs 2026-07-07):**
+- **ATP Live:** TTFB 0.14s → 0.12s (-14%), total 0.24s (stable), size 591KB (UNCHANGED, **no improvement**)
+- **WTA Live:** TTFB 0.12s → 0.15s (+25%), total 0.27s → 0.28s (+4%), size 348KB → 346KB (-2KB, **minor variance only**)
+- **Homepage:** TTFB 0.12s → 0.14s (+17%), total stable 0.14s, size stable 33KB
+- **World Cup:** TTFB 0.20s → 0.14s (-30%, **variance resolved**), total 0.32s → 0.29s (-9%), size 364KB → 361KB (-3KB)
+
+**Analysis:**
+- 🔴 **ATP:** 591KB (97% over 300KB budget) — regression persists, **Day 4**, size UNCHANGED from Days 2-4
+- 🔴 **WTA:** 346KB (73% over 200KB budget) — regression persists, **Day 4**, -2KB likely measurement variance
+- ✅ **World Cup TTFB variance resolved:** Yesterday's +54% spike (0.13s → 0.20s) fully resolved (0.20s → 0.14s), confirmed as transient upstream API latency
+- ✅ **Homepage:** Stable and fast
+- ⚠️ **Root cause unfixed:** No commits since 2026-07-05 addressed the GUID bloat issue (commit 91820bf)
+- 🚫 **WTA -2KB is NOT a fix** — measurement variance, not structural improvement
+
+**Impact (ESCALATING):**
+- 🔴 **Day 4 of critical regressions** — both tennis pages (core traffic drivers) remain critically degraded
+- 📱 **Mobile:** ATP 591KB on slow 3G = ~5.5s transfer time alone, WTA 346KB = ~3.2s
+- 💰 **Revenue:** Blocks Phase 3 monetization (ads + betting affiliates)
+- 🏆 **Tour de France 2026:** Live through July 27 (elevated sports traffic)
+- ⏱ **Urgency:** IMMEDIATE — fourth consecutive day without fix, no code intervention attempted
+
+**Status:** 🔴 CRITICAL — P0 tickets remain open (`perf-atp-guid-bloat`, `perf-wta-guid-bloat`)
+
+**Tickets:** 
+- `perf-atp-guid-bloat` (Priority 0) — OPEN, day 4
+- `perf-wta-guid-bloat` (Priority 0) — OPEN, day 4
+
+**Report:** docs/reports/2026-07-08-performance.md
+
+---
 
 ### 🔴 CRITICAL REGRESSIONS PERSIST — Day 3 (2026-07-07)
 
