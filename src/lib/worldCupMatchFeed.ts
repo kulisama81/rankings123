@@ -5,21 +5,11 @@ const SUMMARY_URL = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.w
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-class NotFoundError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = "NotFoundError";
-  }
-}
-
 async function fetchJson(url: string): Promise<any> {
   const res = await fetch(url, {
     headers: { Accept: "application/json" },
     next: { revalidate: 60 },
   });
-  if (res.status === 404) {
-    throw new NotFoundError(`${url} → HTTP 404`);
-  }
   if (!res.ok) throw new Error(`${url} → HTTP ${res.status}`);
   return res.json();
 }
@@ -99,12 +89,11 @@ async function fetchWorldCupMatchDetailFromESPN(matchId: string): Promise<WorldC
 export async function fetchWorldCupMatchDetail(matchId: string): Promise<WorldCupMatchDetail> {
   try {
     return await fetchWorldCupMatchDetailFromESPN(matchId);
-  } catch (error) {
-    // Re-throw 404 errors so the page can return notFound()
-    // Only fall back to mock for temporary API failures (network issues, 500s, etc.)
-    if (error instanceof NotFoundError) {
-      throw error;
-    }
+  } catch {
+    // Fall back to mock for ALL errors (404, 500s, network issues).
+    // Match IDs come from ESPN's scoreboard, so they're valid matches even if the
+    // detail endpoint returns 404 (upcoming matches, not yet populated).
+    // Show mock structure with "Demo data" badge rather than a broken 404 page.
     return getMockWorldCupMatchDetail(matchId);
   }
 }

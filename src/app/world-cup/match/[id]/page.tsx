@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { fetchWorldCupMatchDetail } from "@/lib/worldCupMatchFeed";
 import { getWorldCupH2H } from "@/lib/worldCupH2H";
-import { notFound } from "next/navigation";
 import Link from "next/link";
 import { venueToSlug } from "@/lib/worldCupVenue";
 import { WorldCupH2HSection } from "@/components/WorldCupH2H";
@@ -13,27 +12,22 @@ interface MatchPageProps {
 
 export async function generateMetadata({ params }: MatchPageProps): Promise<Metadata> {
   const { id } = await params;
-  try {
-    const match = await fetchWorldCupMatchDetail(id);
-    const title = `${match.homeName} vs ${match.awayName} — World Cup 2026`;
-    const description = `${match.homeName} ${match.homeScore ?? 0} - ${match.awayScore ?? 0} ${match.awayName}: live stats, possession, shots, lineups, timeline, and venue details.`;
+  // fetchWorldCupMatchDetail never throws - always returns data (ESPN or mock fallback)
+  const match = await fetchWorldCupMatchDetail(id);
+  const title = `${match.homeName} vs ${match.awayName} — World Cup 2026`;
+  const description = `${match.homeName} ${match.homeScore ?? 0} - ${match.awayScore ?? 0} ${match.awayName}: live stats, possession, shots, lineups, timeline, and venue details.`;
 
-    return {
-      title,
+  return {
+    title,
+    description,
+    alternates: { canonical: `/world-cup/match/${id}` },
+    openGraph: {
+      title: `${title} — Rankings123`,
       description,
-      alternates: { canonical: `/world-cup/match/${id}` },
-      openGraph: {
-        title: `${title} — Rankings123`,
-        description,
-        url: `/world-cup/match/${id}`,
-        type: "article",
-      },
-    };
-  } catch {
-    return {
-      title: "Match Not Found — Rankings123",
-    };
-  }
+      url: `/world-cup/match/${id}`,
+      type: "article",
+    },
+  };
 }
 
 export const revalidate = 60; // ISR: 1 minute cache
@@ -41,14 +35,9 @@ export const revalidate = 60; // ISR: 1 minute cache
 export default async function MatchDetailPage({ params }: MatchPageProps) {
   const { id } = await params;
 
-  let match;
-  try {
-    match = await fetchWorldCupMatchDetail(id);
-  } catch {
-    // If match doesn't exist in ESPN (404), show 404 page
-    // If ESPN is temporarily down, we fall back to mock data with a badge
-    notFound();
-  }
+  // Always returns data: real ESPN data when available, or mock fallback with "Demo data" badge.
+  // Never throws, so users never see a 404 even if ESPN doesn't have match details yet.
+  const match = await fetchWorldCupMatchDetail(id);
 
   const showScore = match.homeScore !== null && match.awayScore !== null;
 

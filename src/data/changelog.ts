@@ -13,6 +13,13 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-07-09",
+    title: "World Cup Match Pages Fixed",
+    description:
+      "Fixed issue where World Cup match detail pages were returning 404 errors. Match pages now always load successfully, showing either live ESPN data when available or a graceful fallback with a clear 'Demo data' indicator.",
+    area: "worldcup",
+  },
+  {
     date: "2026-07-08",
     title: "Page Entrance Animations",
     description:
