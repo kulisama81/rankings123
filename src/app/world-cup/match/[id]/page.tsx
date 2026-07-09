@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { fetchWorldCupMatchDetail } from "@/lib/worldCupMatchFeed";
 import { getWorldCupH2H } from "@/lib/worldCupH2H";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { venueToSlug } from "@/lib/worldCupVenue";
 import { WorldCupH2HSection } from "@/components/WorldCupH2H";
 import { WorldCupMatchStats } from "@/components/WorldCupMatchStats";
@@ -12,8 +13,16 @@ interface MatchPageProps {
 
 export async function generateMetadata({ params }: MatchPageProps): Promise<Metadata> {
   const { id } = await params;
-  // fetchWorldCupMatchDetail never throws - always returns data (ESPN or mock fallback)
   const match = await fetchWorldCupMatchDetail(id);
+
+  // If match doesn't exist (ESPN returned 404), return minimal metadata - page will show 404
+  if (!match) {
+    return {
+      title: "Match Not Found — World Cup 2026",
+      description: "The requested World Cup match could not be found.",
+    };
+  }
+
   const title = `${match.homeName} vs ${match.awayName} — World Cup 2026`;
   const description = `${match.homeName} ${match.homeScore ?? 0} - ${match.awayScore ?? 0} ${match.awayName}: live stats, possession, shots, lineups, timeline, and venue details.`;
 
@@ -35,9 +44,13 @@ export const revalidate = 60; // ISR: 1 minute cache
 export default async function MatchDetailPage({ params }: MatchPageProps) {
   const { id } = await params;
 
-  // Always returns data: real ESPN data when available, or mock fallback with "Demo data" badge.
-  // Never throws, so users never see a 404 even if ESPN doesn't have match details yet.
   const match = await fetchWorldCupMatchDetail(id);
+
+  // If ESPN returned 404 (match doesn't exist), show Next.js 404 page instead of mock data.
+  // This prevents serving "Demo data" labels for invalid/old match IDs.
+  if (!match) {
+    notFound();
+  }
 
   const showScore = match.homeScore !== null && match.awayScore !== null;
 

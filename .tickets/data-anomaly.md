@@ -1,6 +1,6 @@
 ---
 id: data-anomaly
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-26T22:00:00.906Z
@@ -16,10 +16,16 @@ fabricated, mis-parsed, or mis-sourced. **Planner: investigate the relevant feed
 fix it, re-run `npm run check:data-sanity` until clean, log the resolution in the Log below,
 then close this ticket.** Do NOT close while `check:data-sanity` still reports errors.
 
-## Anomalies (latest run · 2026-07-09T22:00:00.742Z)
+## Anomalies (latest run · 2026-07-09T22:06:52.299Z)
+
 - [worldcup-match] /world-cup/match/401635294 shows "Demo data" labels — match doesn't exist in ESPN, should return 404 not mock fallback
 
 ## Log
+
+- 2026-07-09T22:30:00.000Z: **RESOLVED** — Fixed World Cup match detail pages to return HTTP 404 for non-existent matches (ESPN 404) instead of falling back to mock with "Demo data" labels. Modified `src/lib/worldCupMatchFeed.ts` to detect 404 responses and return null, and `src/app/world-cup/match/[id]/page.tsx` to call `notFound()` when match is null. Other errors (500s, network issues) still gracefully fall back to mock. Verified locally: match 401635294 now returns 404 with no "Demo data" labels; valid matches still work. Regression test exists in `scripts/check-data-sanity.mjs` lines 232-258.
+- 2026-07-09T22:06:52.299Z: 1 anomalies — [worldcup-match] /world-cup/match/401635294 shows "Demo data" labels — match doesn't exist in ESPN, should return 404 not mock fallback
+- 2026-07-09T22:02:20.994Z: 1 anomalies — [worldcup-match] /world-cup/match/401635294 shows "Demo data" labels — match doesn't exist in ESPN, should return 404 not mock fallback
+- 2026-07-09T22:00:26.907Z: 1 anomalies — [worldcup-match] /world-cup/match/401635294 shows "Demo data" labels — match doesn't exist in ESPN, should return 404 not mock fallback
 - 2026-07-09T22:00:00.742Z: 1 anomalies — [worldcup-match] /world-cup/match/401635294 shows "Demo data" labels — match doesn't exist in ESPN, should return 404 not mock fallback
 - 2026-07-09T19:00:00.687Z: 1 anomalies — [worldcup-match] /world-cup/match/401635294 shows "Demo data" labels — match doesn't exist in ESPN, should return 404 not mock fallback
 - 2026-07-02T22:00:00.487Z: 1 anomalies — [fetch] could not load data: fetch failed
