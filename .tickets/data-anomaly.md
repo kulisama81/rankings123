@@ -1,6 +1,6 @@
 ---
 id: data-anomaly
-status: closed
+status: open
 deps: []
 links: []
 created: 2026-06-26T22:00:00.906Z
@@ -16,12 +16,11 @@ fabricated, mis-parsed, or mis-sourced. **Planner: investigate the relevant feed
 fix it, re-run `npm run check:data-sanity` until clean, log the resolution in the Log below,
 then close this ticket.** Do NOT close while `check:data-sanity` still reports errors.
 
-## Anomalies (latest run · 2026-07-02T22:00:00.487Z)
-
-- [fetch] could not load data: fetch failed
+## Anomalies (latest run · 2026-07-09T19:00:00.687Z)
+- [worldcup-match] /world-cup/match/401635294 shows "Demo data" labels — match doesn't exist in ESPN, should return 404 not mock fallback
 
 ## Log
-
+- 2026-07-09T19:00:00.687Z: 1 anomalies — [worldcup-match] /world-cup/match/401635294 shows "Demo data" labels — match doesn't exist in ESPN, should return 404 not mock fallback
 - 2026-07-02T22:00:00.487Z: 1 anomalies — [fetch] could not load data: fetch failed
 - 2026-07-02T19:00:00.490Z: 1 anomalies — [fetch] could not load data: fetch failed
 - 2026-07-02T16:00:00.721Z: 1 anomalies — [fetch] could not load data: fetch failed
