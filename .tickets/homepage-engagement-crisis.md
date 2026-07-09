@@ -1,12 +1,16 @@
 ---
 id: homepage-engagement-crisis
-title: Homepage engagement system - fix 70% bounce rate
-type: feature
 status: open
+deps: []
+links: []
+created: 2026-07-09T13:47:00Z
+type: feature
 priority: 0
 parent: rankings123
-created: 2026-07-09
+tags: [ux, engagement, homepage]
 ---
+
+# Homepage engagement system - fix 70% bounce rate
 
 # Homepage engagement system: fix 70% bounce rate
 

@@ -1,12 +1,16 @@
 ---
 id: realtime-notification-system
-title: Real-time push notifications for ranking changes & match events
-type: feature
 status: open
+deps: []
+links: []
+created: 2026-07-09T13:49:00Z
+type: feature
 priority: 1
 parent: rankings123
-created: 2026-07-09
+tags: [engagement, notifications, retention]
 ---
+
+# Real-time push notifications for ranking changes & match events
 
 # Real-time push notifications for ranking changes & match events
 
