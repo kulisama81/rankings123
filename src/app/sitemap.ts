@@ -24,7 +24,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Add Tour de France stage pages (21 stages — SEO for "tour de france stage N results")
   const tdfStageRoutes: MetadataRoute.Sitemap = Array.from({ length: 21 }, (_, i) => ({
-    url: `${BASE}/events/tdf-2026/stage-${i + 1}`,
+    url: `${BASE}/events/tdf-2026/stage/${i + 1}`,
     lastModified: now,
     changeFrequency: "always" as const,
     priority: 0.8,

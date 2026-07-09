@@ -1,6 +1,6 @@
 ---
 id: bug-cycling-stage-404
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-09T22:00:00Z
@@ -10,6 +10,27 @@ parent: rankings123
 tags: [bug, cycling, routing, ui]
 ---
 # Tour de France stage pages return 404 (broken links)
+
+## Acceptance Criteria
+
+1. All stage page routes under `/events/tdf-2026/stage-[N]` return HTTP 200 (not 404)
+2. Stage pages display stage information correctly (stage number, distance, date, type)
+3. Stage pages are properly linked from the cycling main page
+4. Navigation between stage pages works (if implemented)
+5. **REGRESSION TEST REQUIRED:**
+   - Add test in `tests/cycling-stage-pages.test.js` (run via `npm test`)
+   - Test must verify:
+     - Stage 1 page returns 200, not 404
+     - Current stage page (e.g., stage 7) returns 200
+     - Stage pages contain expected content (stage number, basic details)
+   - Test should FAIL on current code, PASS when fixed
+6. Run `npm test` — all tests green
+7. Run `npm run build` — succeeds
+8. Verify on LIVE production:
+   - Visit https://rankings123.com/cycling
+   - Click on a stage link
+   - Confirm stage page loads (HTTP 200, not 404)
+   - Check multiple stage pages work
 
 ## Bug Report
 
@@ -45,24 +66,3 @@ curl -I "https://rankings123.com/events/tdf-2026/stage-1" # Returns 404
 - Looks unprofessional
 - Users expect to see stage details when clicking these links
 - Git history shows "Add individual Tour de France stage pages" was committed (16c4045) but pages are not accessible
-
-## Acceptance Criteria
-
-1. All stage page routes under `/events/tdf-2026/stage-[N]` return HTTP 200 (not 404)
-2. Stage pages display stage information correctly (stage number, distance, date, type)
-3. Stage pages are properly linked from the cycling main page
-4. Navigation between stage pages works (if implemented)
-5. **REGRESSION TEST REQUIRED:**
-   - Add test in `tests/cycling-stage-pages.test.js` (run via `npm test`)
-   - Test must verify:
-     - Stage 1 page returns 200, not 404
-     - Current stage page (e.g., stage 7) returns 200
-     - Stage pages contain expected content (stage number, basic details)
-   - Test should FAIL on current code, PASS when fixed
-6. Run `npm test` — all tests green
-7. Run `npm run build` — succeeds
-8. Verify on LIVE production:
-   - Visit https://rankings123.com/cycling
-   - Click on a stage link
-   - Confirm stage page loads (HTTP 200, not 404)
-   - Check multiple stage pages work

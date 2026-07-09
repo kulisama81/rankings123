@@ -54,11 +54,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title,
     description,
-    alternates: { canonical: `/events/tdf-2026/stage-${num}` },
+    alternates: { canonical: `/events/tdf-2026/stage/${num}` },
     openGraph: {
       title: `${title} — Rankings123`,
       description,
-      url: `/events/tdf-2026/stage-${num}`,
+      url: `/events/tdf-2026/stage/${num}`,
       type: "article",
     },
   };
@@ -87,6 +87,7 @@ export default async function TdfStagePage({ params }: Props) {
   if (!stage) {
     notFound();
   }
+
 
   // Determine if this stage is completed, current, or upcoming
   const isCompleted = !!stage.winner;
@@ -223,7 +224,7 @@ export default async function TdfStagePage({ params }: Props) {
           <div className="mb-8 flex items-center justify-between rounded-2xl border border-edge bg-surface p-4">
             {num > 1 ? (
               <Link
-                href={`/events/tdf-2026/stage-${num - 1}`}
+                href={`/events/tdf-2026/stage/${num - 1}`}
                 className="flex items-center gap-2 text-sm font-medium text-accent transition hover:text-accentfg"
               >
                 ← Stage {num - 1}
@@ -241,7 +242,7 @@ export default async function TdfStagePage({ params }: Props) {
 
             {num < 21 ? (
               <Link
-                href={`/events/tdf-2026/stage-${num + 1}`}
+                href={`/events/tdf-2026/stage/${num + 1}`}
                 className="flex items-center gap-2 text-sm font-medium text-accent transition hover:text-accentfg"
               >
                 Stage {num + 1} →

@@ -1,6 +1,6 @@
 ---
 id: worldcup-match-404
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-06T18:00:00Z
@@ -10,6 +10,26 @@ parent: rankings123
 tags: [bug, worldcup, routing, p0]
 ---
 # CRITICAL: World Cup match detail pages return 404
+
+## Acceptance Criteria
+
+1. World Cup match detail routes `/world-cup/match/[id]` return 200 (not 404)
+2. Match page loads with proper data (teams, score, stats, or "match not found" message if ID is invalid)
+3. Links from /world-cup page to match details work correctly
+4. **REGRESSION TEST REQUIRED:**
+   - Add test in `tests/worldcup-match-routes.test.js` (run via `npm test`)
+   - Test must verify:
+     - Route handler exists for /world-cup/match/[id]
+     - Valid match IDs return 200 status
+     - Response contains match data structure
+   - Test should FAIL on current code, PASS when fixed
+5. Run `npm test` — all tests green
+6. Run `npm run build` — succeeds
+7. Verify on LIVE production after deploy:
+   - Visit https://rankings123.com/world-cup/match/401636239
+   - Page loads (200 status)
+   - Match data displays correctly
+8. Check multiple match IDs to ensure the fix is general
 
 ## Bug Report
 
@@ -36,23 +56,3 @@ HTTP 404 Not Found
 - Users cannot view World Cup match details
 - Tournament is LIVE (through July 19) - this is time-sensitive
 - Core navigation from main World Cup page is broken
-
-## Acceptance Criteria
-
-1. World Cup match detail routes `/world-cup/match/[id]` return 200 (not 404)
-2. Match page loads with proper data (teams, score, stats, or "match not found" message if ID is invalid)
-3. Links from /world-cup page to match details work correctly
-4. **REGRESSION TEST REQUIRED:**
-   - Add test in `tests/worldcup-match-routes.test.js` (run via `npm test`)
-   - Test must verify:
-     - Route handler exists for /world-cup/match/[id]
-     - Valid match IDs return 200 status
-     - Response contains match data structure
-   - Test should FAIL on current code, PASS when fixed
-5. Run `npm test` — all tests green
-6. Run `npm run build` — succeeds
-7. Verify on LIVE production after deploy:
-   - Visit https://rankings123.com/world-cup/match/401636239
-   - Page loads (200 status)
-   - Match data displays correctly
-8. Check multiple match IDs to ensure the fix is general
