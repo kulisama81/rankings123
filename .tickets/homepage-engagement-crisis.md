@@ -1,5 +1,6 @@
 ---
 id: homepage-engagement-crisis
+title: Homepage engagement system - fix 70% bounce rate
 status: open
 deps: []
 links: []
@@ -9,8 +10,6 @@ priority: 0
 parent: rankings123
 tags: [ux, engagement, homepage]
 ---
-
-# Homepage engagement system - fix 70% bounce rate
 
 # Homepage engagement system: fix 70% bounce rate
 

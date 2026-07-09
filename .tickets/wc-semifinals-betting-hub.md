@@ -1,5 +1,6 @@
 ---
 id: wc-semifinals-betting-hub
+title: World Cup semifinals betting preview hub (July 14-15)
 status: open
 deps: []
 links: []
@@ -9,8 +10,6 @@ priority: 1
 parent: rankings123
 tags: [worldcup, betting, revenue]
 ---
-
-# World Cup semifinals betting preview hub (July 14-15)
 
 # World Cup semifinals betting preview hub (July 14-15)
 

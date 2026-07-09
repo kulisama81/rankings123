@@ -1,5 +1,6 @@
 ---
 id: wc-qf-live-tracker
+title: World Cup QF live match tracker with momentum indicators
 status: open
 deps: []
 links: []
@@ -9,8 +10,6 @@ priority: 0
 parent: rankings123
 tags: [worldcup, live, engagement]
 ---
-
-# World Cup QF live match tracker with momentum indicators
 
 # World Cup QF live match tracker with momentum indicators
 

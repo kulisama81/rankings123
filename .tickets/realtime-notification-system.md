@@ -1,5 +1,6 @@
 ---
 id: realtime-notification-system
+title: Real-time push notifications for ranking changes & match events
 status: open
 deps: []
 links: []
@@ -9,8 +10,6 @@ priority: 1
 parent: rankings123
 tags: [engagement, notifications, retention]
 ---
-
-# Real-time push notifications for ranking changes & match events
 
 # Real-time push notifications for ranking changes & match events
 
