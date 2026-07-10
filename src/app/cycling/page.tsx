@@ -141,7 +141,8 @@ export default async function CyclingPage() {
           <div className="mb-12 rounded-xl border border-edge bg-surface p-4 text-sm text-secondary">
             <p>
               <strong className="text-primary">Data Source:</strong> Stage information sourced from Wikipedia.
-              General Classification will update once the race begins on July 4, 2026.
+              {tdfData.raceStatus === "upcoming" && " General Classification will update once the race begins on July 4, 2026."}
+              {tdfData.raceStatus === "active" && " General Classification updates as the race progresses."}
               {tdfData.source === "mock" && " Currently showing preview data."}
             </p>
           </div>
