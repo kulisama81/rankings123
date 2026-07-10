@@ -13,6 +13,13 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-07-10",
+    title: "Cycling Page Status Message Fix",
+    description:
+      "Fixed contradictory race status messages on the cycling page. The data source notice now properly adapts to the current race state: shows 'will update once race begins' before the race starts, and 'updates as the race progresses' when the race is active.",
+    area: "cycling",
+  },
+  {
     date: "2026-07-09",
     title: "World Cup Match Pages Fixed",
     description:
