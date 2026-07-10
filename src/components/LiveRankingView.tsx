@@ -7,13 +7,14 @@ interface LiveRankingViewProps {
   snapshot: AtpLiveSnapshot;
 }
 
-// Server-rendered table for SSR/SEO - hidden by LiveRankingTable on hydration
+// Server-rendered table for SSR/SEO - visible initially, then hidden by JavaScript
+// after hydration. Must be visible in SSR HTML for search engine crawlers.
 function StaticRankingTable({ players }: { players: AtpLivePlayer[] }) {
   const pageRows = players.slice(0, 50);
 
   return (
-    <div id="ssr-table" className="contents">
-      <div className="hidden overflow-hidden rounded-2xl border border-edge bg-surface md:block">
+    <div id="ssr-table" className="contents" data-ssr-fallback>
+      <div className="overflow-hidden rounded-2xl border border-edge bg-surface max-md:hidden">
         <table className="min-w-full text-sm">
           <thead className="bg-surface2 text-[11px] uppercase tracking-wide text-muted">
             <tr>
@@ -68,7 +69,7 @@ function StaticRankingTable({ players }: { players: AtpLivePlayer[] }) {
         </table>
       </div>
 
-      {/* Mobile cards */}
+      {/* Mobile cards - visible on mobile for SSR/SEO */}
       <div className="space-y-2 md:hidden">
         {pageRows.map((p) => (
           <div key={p.name} className="rounded-xl border border-edge bg-surface p-3">

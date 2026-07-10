@@ -103,10 +103,11 @@ export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingT
     }
     mounted.current = true;
 
-    // Remove SSR fallback table on hydration (fixes atp-duplicate-table bug)
-    const ssrTable = document.getElementById("ssr-table");
-    if (ssrTable) {
-      ssrTable.remove();
+    // Hide SSR fallback table on hydration (fixes atp-duplicate-table bug)
+    // Use CSS display:none instead of removing to avoid React hydration conflicts
+    const ssrFallback = document.querySelector("[data-ssr-fallback]");
+    if (ssrFallback) {
+      (ssrFallback as HTMLElement).style.display = "none";
     }
   }, []);
 
