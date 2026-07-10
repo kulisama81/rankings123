@@ -89,20 +89,20 @@ export default function WimbledonTournamentView({
       <div className="mb-6 flex justify-center gap-2">
         <button
           onClick={() => setActiveTour("atp")}
-          className={`rounded-lg px-6 py-2.5 font-medium transition-colors ${
-            activeTour === "atp"
-              ? "bg-accent text-accent-contrast"
-              : "bg-surface-elevated text-muted hover:bg-surface-raised hover:text-default"
+          aria-pressed={activeTour === "atp"}
+          aria-label="View ATP Men's tournament"
+          className={`btn-base rounded-lg font-medium ${
+            activeTour === "atp" ? "btn-primary" : "btn-secondary"
           }`}
         >
           ATP Men
         </button>
         <button
           onClick={() => setActiveTour("wta")}
-          className={`rounded-lg px-6 py-2.5 font-medium transition-colors ${
-            activeTour === "wta"
-              ? "bg-accent text-accent-contrast"
-              : "bg-surface-elevated text-muted hover:bg-surface-raised hover:text-default"
+          aria-pressed={activeTour === "wta"}
+          aria-label="View WTA Women's tournament"
+          className={`btn-base rounded-lg font-medium ${
+            activeTour === "wta" ? "btn-primary" : "btn-secondary"
           }`}
         >
           WTA Women

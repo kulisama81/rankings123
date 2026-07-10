@@ -26,7 +26,8 @@ export default function ThemeToggle() {
     <button
       onClick={toggle}
       aria-label="Toggle dark / light theme"
-      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-edge text-muted transition hover:bg-surface2 hover:text-fg"
+      className="btn-base btn-ghost btn-icon shrink-0 rounded-lg border border-edge text-lg"
+      title={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
     >
       {theme === "dark" ? "☀" : "☾"}
     </button>

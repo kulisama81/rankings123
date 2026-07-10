@@ -132,12 +132,15 @@ function MatchCard({
       <button
         onClick={() => !finished && onPredict(homeSelected ? null : "home")}
         disabled={finished}
-        className={`mb-2 flex w-full items-center justify-between rounded-lg border px-3 py-2 text-left transition-all ${
+        aria-pressed={homeSelected}
+        aria-label={`Predict ${match.homeName} to win`}
+        title={finished ? "Match finished" : `Select ${match.homeName}`}
+        className={`btn-base mb-2 flex w-full items-center justify-between rounded-lg border px-3 py-2 text-left ${
           homeSelected
             ? "border-trophy bg-trophy/10"
             : finished && actualWinner === "home"
               ? "border-green-500/30 bg-green-500/10"
-              : "border-edge bg-surface2 hover:border-trophy/30"
+              : "border-edge bg-surface2"
         } ${finished ? "cursor-default" : "cursor-pointer"}`}
       >
         <div className="flex items-center gap-2">
@@ -159,12 +162,15 @@ function MatchCard({
       <button
         onClick={() => !finished && onPredict(awaySelected ? null : "away")}
         disabled={finished}
-        className={`flex w-full items-center justify-between rounded-lg border px-3 py-2 text-left transition-all ${
+        aria-pressed={awaySelected}
+        aria-label={`Predict ${match.awayName} to win`}
+        title={finished ? "Match finished" : `Select ${match.awayName}`}
+        className={`btn-base flex w-full items-center justify-between rounded-lg border px-3 py-2 text-left ${
           awaySelected
             ? "border-trophy bg-trophy/10"
             : finished && actualWinner === "away"
               ? "border-green-500/30 bg-green-500/10"
-              : "border-edge bg-surface2 hover:border-trophy/30"
+              : "border-edge bg-surface2"
         } ${finished ? "cursor-default" : "cursor-pointer"}`}
       >
         <div className="flex items-center gap-2">
@@ -256,7 +262,9 @@ export default function InteractiveBracketPredictor({
           </div>
           <button
             onClick={() => setShowComparison(!showComparison)}
-            className="rounded-lg border border-edge bg-surface2 px-4 py-2 text-sm font-medium text-fg transition-colors hover:bg-surface"
+            aria-pressed={showComparison}
+            aria-label={`${showComparison ? "Hide" : "Show"} results comparison`}
+            className="btn-base btn-secondary rounded-lg border border-edge text-sm"
           >
             {showComparison ? "Hide" : "Show"} Results Comparison
           </button>
@@ -264,7 +272,8 @@ export default function InteractiveBracketPredictor({
         <div className="flex items-center gap-2">
           <button
             onClick={() => setPredictions({})}
-            className="rounded-lg border border-edge bg-surface2 px-4 py-2 text-sm font-medium text-fg transition-colors hover:bg-surface"
+            aria-label="Clear all predictions"
+            className="btn-base btn-secondary rounded-lg border border-edge text-sm"
           >
             Clear All
           </button>
@@ -274,7 +283,8 @@ export default function InteractiveBracketPredictor({
               navigator.clipboard.writeText(url);
               alert("Bracket URL copied! Share it with friends.");
             }}
-            className="rounded-lg bg-trophy px-4 py-2 text-sm font-bold text-bg transition-colors hover:bg-trophy/90"
+            aria-label="Share bracket via URL"
+            className="btn-base rounded-lg bg-trophy text-sm font-bold text-bg"
           >
             Share Bracket
           </button>

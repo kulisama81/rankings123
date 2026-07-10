@@ -207,7 +207,8 @@ export default function WorldCupScenarios({ initialSnapshot }: WorldCupScenarios
             {hasSimulations && (
               <button
                 onClick={handleReset}
-                className="rounded-lg border border-edge bg-surface px-4 py-2 text-sm font-medium text-fg transition-colors hover:bg-surface2"
+                className="btn-base btn-secondary rounded-lg border border-edge text-sm"
+                aria-label="Reset all simulated match results"
               >
                 Reset All
               </button>

@@ -281,7 +281,8 @@ export default function WorldCupTable({ initialSnapshot }: WorldCupTableProps) {
           <span className="hidden sm:inline">updated {updatedAt} · {secondsLeft}s</span>
           <button
             onClick={() => void refresh()}
-            className="rounded-lg border border-edge px-2.5 py-1 font-medium text-fg transition hover:bg-surface2"
+            className="btn-base btn-secondary btn-compact rounded-lg border border-edge text-sm"
+            aria-label="Refresh World Cup data"
           >
             Refresh
           </button>
@@ -339,10 +340,10 @@ export default function WorldCupTable({ initialSnapshot }: WorldCupTableProps) {
                 <button
                   key={key}
                   onClick={() => setScheduleTab(key)}
-                  className={`rounded-md px-3 py-1 transition ${
-                    scheduleTab === key
-                      ? "bg-surface2 text-fg"
-                      : "text-muted hover:text-fg"
+                  aria-pressed={scheduleTab === key}
+                  aria-label={`Show ${label.toLowerCase()} matches`}
+                  className={`btn-base btn-compact rounded-md ${
+                    scheduleTab === key ? "btn-secondary" : "btn-ghost"
                   }`}
                 >
                   {label} <span className="tabular-nums opacity-70">{count}</span>

@@ -39,8 +39,9 @@ export default function DesignSwitcher() {
           key={d.key}
           onClick={() => choose(d.key)}
           aria-pressed={design === d.key}
-          className={`rounded-md px-2.5 py-1 text-xs font-semibold transition ${
-            design === d.key ? "bg-accent text-accentfg" : "text-muted hover:text-fg"
+          aria-label={`Switch to ${d.label} design`}
+          className={`btn-base btn-compact rounded-md text-xs font-semibold ${
+            design === d.key ? "btn-primary" : "btn-ghost"
           }`}
         >
           {d.label}

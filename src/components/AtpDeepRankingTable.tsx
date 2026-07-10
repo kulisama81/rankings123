@@ -113,8 +113,6 @@ export default function AtpDeepRankingTable({ initialSnapshot, band, apiEndpoint
   const rangeEnd = Math.min(filtered.length, safePage * PAGE_SIZE + PAGE_SIZE);
   const inputCls =
     "rounded-lg border border-edge bg-surface px-3 py-1.5 text-sm text-fg placeholder:text-muted/60 focus:border-accent focus:outline-none";
-  const btnCls =
-    "rounded-lg border border-edge px-2.5 py-1 font-medium text-fg transition hover:bg-surface2 disabled:cursor-not-allowed disabled:opacity-40";
 
   return (
     <div className="animate-entrance-table">
@@ -144,7 +142,13 @@ export default function AtpDeepRankingTable({ initialSnapshot, band, apiEndpoint
             <span className="rounded-full bg-accent/15 px-2 py-0.5 font-medium text-accent">Ranking only</span>
           )}
           <span className="hidden sm:inline">updated {updatedAt} · {secondsLeft}s</span>
-          <button onClick={() => void refresh()} className={btnCls}>Refresh</button>
+          <button
+            onClick={() => void refresh()}
+            className="btn-base btn-secondary btn-compact rounded-lg border border-edge text-sm"
+            aria-label="Refresh ranking data"
+          >
+            Refresh
+          </button>
         </div>
       </div>
 
@@ -246,11 +250,23 @@ export default function AtpDeepRankingTable({ initialSnapshot, band, apiEndpoint
           {snapshot.total > snapshot.players.length && ` · ${snapshot.total.toLocaleString()} ranked`}
         </span>
         <div className="flex items-center gap-2">
-          <button onClick={() => setPage((p) => Math.max(0, p - 1))} disabled={safePage === 0} className={btnCls}>
+          <button
+            onClick={() => setPage((p) => Math.max(0, p - 1))}
+            disabled={safePage === 0}
+            className="btn-base btn-secondary btn-compact rounded-lg border border-edge text-sm"
+            aria-label="Previous page"
+            title={safePage === 0 ? "Already on first page" : "Go to previous page"}
+          >
             ← Prev
           </button>
           <span className="tabular-nums">Page {safePage + 1} / {pageCount}</span>
-          <button onClick={() => setPage((p) => Math.min(pageCount - 1, p + 1))} disabled={safePage >= pageCount - 1} className={btnCls}>
+          <button
+            onClick={() => setPage((p) => Math.min(pageCount - 1, p + 1))}
+            disabled={safePage >= pageCount - 1}
+            className="btn-base btn-secondary btn-compact rounded-lg border border-edge text-sm"
+            aria-label="Next page"
+            title={safePage >= pageCount - 1 ? "Already on last page" : "Go to next page"}
+          >
             Next →
           </button>
         </div>

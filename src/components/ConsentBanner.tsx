@@ -53,13 +53,15 @@ export default function ConsentBanner() {
         <div className="flex shrink-0 gap-2">
           <button
             onClick={() => decide(false)}
-            className="rounded-lg border border-edge px-4 py-1.5 text-sm font-medium text-fg transition hover:bg-surface2"
+            className="btn-base btn-secondary rounded-lg border border-edge text-sm"
+            aria-label="Decline cookies and analytics"
           >
             Decline
           </button>
           <button
             onClick={() => decide(true)}
-            className="rounded-lg bg-accent px-4 py-1.5 text-sm font-semibold text-accentfg transition hover:opacity-90"
+            className="btn-base btn-primary rounded-lg text-sm font-semibold"
+            aria-label="Accept cookies and analytics"
           >
             Accept
           </button>

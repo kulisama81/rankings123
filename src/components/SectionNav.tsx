@@ -68,12 +68,11 @@ export default function SectionNav({ sections, sticky = true }: SectionNavProps)
           <button
             key={id}
             onClick={() => scrollToSection(id)}
-            className={`shrink-0 rounded-lg px-3 py-1.5 text-sm font-medium transition-all ${
-              isActive
-                ? "bg-accent/20 text-accent"
-                : "border border-edge bg-surface text-muted hover:border-accent/30 hover:text-fg"
+            className={`btn-base shrink-0 rounded-lg text-sm ${
+              isActive ? "bg-accent/20 text-accent" : "btn-secondary border border-edge"
             }`}
             aria-current={isActive ? "location" : undefined}
+            aria-label={`Jump to ${label} section`}
           >
             {label}
           </button>

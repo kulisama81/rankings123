@@ -302,23 +302,25 @@ export default function WorldCupBracket({ bracket }: WorldCupBracketProps) {
           <div className="flex gap-2">
             <button
               onClick={() => setViewMode("tree")}
-              className={`rounded-lg px-3 py-1.5 text-sm font-bold transition-all ${
+              aria-pressed={viewMode === "tree"}
+              aria-label="Bracket tree view"
+              className={`btn-base rounded-lg text-sm font-bold ${
                 viewMode === "tree"
                   ? "bg-trophy text-base shadow-md shadow-trophy/20"
-                  : "border border-surface2 bg-surface text-fg hover:border-trophy/30"
+                  : "btn-secondary border border-surface2"
               }`}
-              aria-label="Bracket tree view"
             >
               Bracket Tree
             </button>
             <button
               onClick={() => setViewMode("stages")}
-              className={`rounded-lg px-3 py-1.5 text-sm font-bold transition-all ${
+              aria-pressed={viewMode === "stages"}
+              aria-label="Stage-by-stage view"
+              className={`btn-base rounded-lg text-sm font-bold ${
                 viewMode === "stages"
                   ? "bg-trophy text-base shadow-md shadow-trophy/20"
-                  : "border border-surface2 bg-surface text-fg hover:border-trophy/30"
+                  : "btn-secondary border border-surface2"
               }`}
-              aria-label="Stage-by-stage view"
             >
               By Stage
             </button>
@@ -335,12 +337,14 @@ export default function WorldCupBracket({ bracket }: WorldCupBracketProps) {
                 <button
                   key={stage.name}
                   onClick={() => setSelectedStage(stage.name)}
-                  className={`shrink-0 rounded-lg px-4 py-2 text-sm font-bold transition-all ${
+                  disabled={!hasMatches}
+                  aria-pressed={isSelected}
+                  aria-label={`View ${stage.name} matches`}
+                  title={!hasMatches ? "No matches yet" : `View ${stage.name}`}
+                  className={`btn-base shrink-0 rounded-lg text-sm font-bold ${
                     isSelected
                       ? "bg-trophy text-base shadow-md shadow-trophy/20"
-                      : hasMatches
-                        ? "border border-surface2 bg-surface text-fg hover:border-trophy/30"
-                        : "border border-surface2 bg-surface/50 text-muted"
+                      : "btn-secondary border border-surface2"
                   }`}
                 >
                   {stage.name === "Rd of 16" ? "R16" : stage.name.replace(/^(.+)s$/, "$1")}

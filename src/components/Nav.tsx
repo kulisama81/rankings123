@@ -30,10 +30,9 @@ export default function Nav() {
               <Link
                 key={t.href}
                 href={t.href}
-                className={`whitespace-nowrap rounded-full px-3 py-1.5 font-medium transition ${
-                  active
-                    ? "bg-accent text-accentfg"
-                    : "text-muted hover:bg-surface2 hover:text-fg"
+                aria-current={active ? "page" : undefined}
+                className={`btn-base whitespace-nowrap rounded-full font-medium ${
+                  active ? "btn-primary" : "btn-ghost"
                 }`}
               >
                 {t.label}

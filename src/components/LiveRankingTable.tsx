@@ -233,7 +233,8 @@ export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingT
           </span>
           <button
             onClick={() => void refresh()}
-            className="rounded-lg border border-edge px-2.5 py-1 font-medium text-fg transition hover:bg-surface2"
+            className="btn-base btn-secondary btn-compact rounded-lg border border-edge text-sm"
+            aria-label="Refresh ranking data"
           >
             Refresh
           </button>
@@ -388,7 +389,9 @@ export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingT
             <button
               onClick={() => setPage((p) => Math.max(0, p - 1))}
               disabled={safePage === 0}
-              className="rounded-lg border border-edge px-2.5 py-1 font-medium text-fg transition hover:bg-surface2 disabled:cursor-not-allowed disabled:opacity-40"
+              className="btn-base btn-secondary btn-compact rounded-lg border border-edge text-sm"
+              aria-label="Previous page"
+              title={safePage === 0 ? "Already on first page" : "Go to previous page"}
             >
               ← Prev
             </button>
@@ -396,7 +399,9 @@ export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingT
             <button
               onClick={() => setPage((p) => Math.min(pageCount - 1, p + 1))}
               disabled={safePage >= pageCount - 1}
-              className="rounded-lg border border-edge px-2.5 py-1 font-medium text-fg transition hover:bg-surface2 disabled:cursor-not-allowed disabled:opacity-40"
+              className="btn-base btn-secondary btn-compact rounded-lg border border-edge text-sm"
+              aria-label="Next page"
+              title={safePage >= pageCount - 1 ? "Already on last page" : "Go to next page"}
             >
               Next →
             </button>

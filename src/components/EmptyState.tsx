@@ -212,7 +212,8 @@ export default function EmptyState({
         {action && (
           <button
             onClick={action.onClick}
-            className="mt-2 rounded-lg border border-edge bg-surface px-4 py-2 text-sm font-semibold text-accent transition hover:border-accent/60 hover:bg-surface2"
+            className="btn-base btn-secondary mt-2 rounded-lg border border-edge text-sm font-semibold"
+            aria-label={action.label}
           >
             {action.label}
           </button>

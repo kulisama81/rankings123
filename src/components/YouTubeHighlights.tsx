@@ -46,8 +46,9 @@ export default function YouTubeHighlights({ videoId, title }: YouTubeHighlightsP
             // Facade: thumbnail + play button
             <button
               onClick={handlePlay}
-              className="group absolute inset-0 w-full h-full cursor-pointer border-0 bg-transparent p-0 transition"
+              className="btn-base group absolute inset-0 h-full w-full cursor-pointer border-0 bg-transparent p-0"
               aria-label={`Play ${title}`}
+              style={{ minHeight: 'auto', minWidth: 'auto' }}
             >
               {/* Thumbnail */}
               <Image
