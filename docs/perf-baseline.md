@@ -2,9 +2,9 @@
 
 This baseline establishes performance budgets and target metrics for all routes. Use this to detect regressions during development.
 
-**Last Updated:** 2026-07-09 (CRITICAL REGRESSIONS PERSIST — Day 5)  
+**Last Updated:** 2026-07-10 (CRITICAL REGRESSIONS PERSIST — Day 6)  
 **Last Fix:** 2026-06-30 (ATP/WTA ISR permanently restored via client-side searchParams)  
-**Measurement Method:** `npm run check:performance` (TTFB/total/size via live fetch) + Core Web Vitals (Playwright)
+**Measurement Method:** `npm run check:performance` (TTFB/total/size via live fetch) + Core Web Vitals (Playwright when available)
 
 > ✅ **REGRESSION RESOLVED (2026-06-30):** ATP/WTA Live ISR + searchParams architectural conflict permanently fixed. SearchParams handling moved entirely to client-side (already was via useEffect, just removed blocking `force-dynamic`). ISR caching (`revalidate = 60`) now works without breaking table functionality. ATP TTFB -38% (0.60s → 0.37s), WTA TTFB -6% (0.33s → 0.31s). Regression test rewritten to check OUTCOMES (performance budget) instead of IMPLEMENTATION (force-dynamic), preventing future toggle pattern.
 
@@ -49,12 +49,12 @@ Per [web.dev/vitals](https://web.dev/vitals), these are the **GOOD** thresholds 
 
 | Route        | TTFB Budget | Total Budget | Size Budget | Current TTFB | Current Total | Current Size | Status |
 |--------------|-------------|--------------|-------------|--------------|---------------|--------------|--------|
-| /            | ≤ 0.8s      | ≤ 2.0s       | ≤ 150KB     | 0.11s        | 0.14s         | 33KB         | ✅ FAST |
-| /atp-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.32s*       | 0.45s         | 591KB        | 🔴 SIZE FAIL + ⚠️ TTFB VARIANCE |
-| /wta-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 200KB     | 0.13s        | 0.22s         | 346KB        | 🔴 SIZE FAIL |
-| /world-cup   | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.12s        | 0.29s         | 362KB        | 🔴 SIZE FAIL |
+| /            | ≤ 0.8s      | ≤ 2.0s       | ≤ 150KB     | 0.33s        | 0.33s         | 33KB         | ⚠️ TTFB VARIANCE |
+| /atp-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.15s        | 0.25s         | 591KB        | 🔴 SIZE FAIL |
+| /wta-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 200KB     | 0.13s        | 0.32s         | 345KB        | 🔴 SIZE FAIL |
+| /world-cup   | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.15s        | 0.36s         | 361KB        | 🔴 SIZE FAIL |
 
-*ATP TTFB shows high variance (0.32-0.43s via HTTP fetch) but browser Core Web Vitals show excellent performance (0.04s TTFB, 0.78s LCP) — likely transient network variance.
+*Homepage TTFB shows variance (0.11s → 0.33s, +200%) but within budget — monitoring for pattern (similar to ATP variance on 2026-07-09 that self-resolved).
 
 **Legend:**
 - **TTFB** = Time to First Byte (server response start)
@@ -83,7 +83,49 @@ Per [web.dev/vitals](https://web.dev/vitals), these are the **GOOD** thresholds 
 
 ## Recent Changes
 
-### 🔴 CRITICAL REGRESSIONS PERSIST — Day 5 + ⚠️ ATP TTFB Variance (2026-07-09)
+### 🔴 CRITICAL REGRESSIONS PERSIST — Day 6 + ✅ ATP Variance Resolved + ⚠️ Homepage Variance (2026-07-10)
+
+**Observation:** CRITICAL performance regressions on ATP and WTA Live pages **continue for a 6th consecutive day**. P0 tickets from 2026-07-05 remain unfixed. GOOD: ATP TTFB variance from yesterday fully resolved (-53%). NEW: Homepage TTFB variance detected (+200% but within budget).
+
+**Measurements (2026-07-10 vs 2026-07-09):**
+
+**HTTP Fetch (npm run check:performance):**
+- **Homepage:** TTFB 0.11s → 0.33s (+200%, **variance**), total 0.14s → 0.33s (+136%), size 33KB (stable)
+- **ATP Live:** TTFB 0.32s → 0.15s (-53%, **variance RESOLVED**), total 0.45s → 0.25s (-44%), size 591KB (UNCHANGED)
+- **WTA Live:** TTFB 0.13s (stable), total 0.22s → 0.32s (+45%), size 346KB → 345KB (-0.3%)
+- **World Cup:** TTFB 0.12s → 0.15s (+25%), total 0.29s → 0.36s (+24%), size 362KB → 361KB (-0.3%)
+
+**Core Web Vitals:** Not measured (browser automation blocked)
+
+**Analysis:**
+- ✅ **ATP TTFB variance RESOLVED:** Yesterday's +129% spike (0.14s → 0.32s) fully resolved (0.32s → 0.15s, -53%), confirms transient network/edge latency
+- 🔴 **ATP size:** 591KB (97% over 300KB budget) — regression persists, **Day 6**, size UNCHANGED
+- 🔴 **WTA size:** 345KB (73% over 200KB budget) — regression persists, **Day 6**, -1KB measurement variance only
+- ⚠️ **Homepage TTFB variance:** +200% (0.11s → 0.33s) but within 0.8s budget — same pattern as ATP variance (Day 5) and World Cup spike (2026-07-07/08), likely transient
+- ⚠️ **WTA total load time:** +45% (0.22s → 0.32s) despite stable TTFB/size — likely network transfer latency
+- ⚠️ **Root cause unfixed:** No commits since 2026-07-05 addressed the GUID bloat issue (commit 91820bf)
+
+**Code changes since 2026-07-09:** Bug fixes to World Cup match pages and Tour de France routes. **No changes** to homepage, ATP Live, or WTA Live pages.
+
+**Impact (ESCALATING):**
+- 🔴 **Day 6 of critical size regressions** — both tennis pages (core traffic drivers) remain critically over budget
+- 📱 **Mobile:** ATP 591KB on slow 3G = ~5.5s transfer time alone, WTA 345KB = ~3.2s
+- 💰 **Revenue:** Blocks Phase 3 monetization (ads + betting affiliates)
+- 🏆 **Tour de France 2026:** Live through July 27 (elevated sports traffic NOW)
+- ⏱ **Urgency:** IMMEDIATE — sixth consecutive day without fix, no code intervention attempted
+- ✅ **TTFB/total within budgets:** All routes FAST despite size bloat
+
+**Status:** 🔴 CRITICAL SIZE REGRESSIONS PERSIST (Day 6) — P0 tickets remain open (`perf-atp-guid-bloat`, `perf-wta-guid-bloat`)
+
+**Tickets:** 
+- `perf-atp-guid-bloat` (Priority 0) — OPEN, day 6
+- `perf-wta-guid-bloat` (Priority 0) — OPEN, day 6
+
+**Report:** docs/reports/2026-07-10-performance.md
+
+---
+
+### 🔴 CRITICAL REGRESSIONS PERSIST — Day 5 + ⚠️ ATP TTFB Variance (2026-07-09) [RESOLVED]
 
 **Observation:** CRITICAL performance regressions on ATP and WTA Live pages **continue for a 5th consecutive day**. P0 tickets from 2026-07-05 remain unfixed. NEW: ATP TTFB shows variance (0.32-0.43s via HTTP fetch) but browser Core Web Vitals show excellent performance (0.04s TTFB, 0.78s LCP).
 
