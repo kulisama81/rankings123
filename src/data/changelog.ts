@@ -14,6 +14,13 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-07-10",
+    title: "Enhanced Button Interactions",
+    description:
+      "Upgraded all interactive buttons with a comprehensive 6-state system following modern design standards. Buttons now provide smooth hover feedback, visible focus rings for keyboard navigation, instant tactile response when pressed, and meet mobile touch target guidelines. Improved accessibility across dark/light themes.",
+    area: "site",
+  },
+  {
+    date: "2026-07-10",
     title: "Cycling Page Status Message Fix",
     description:
       "Fixed contradictory race status messages on the cycling page. The data source notice now properly adapts to the current race state: shows 'will update once race begins' before the race starts, and 'updates as the race progresses' when the race is active.",
