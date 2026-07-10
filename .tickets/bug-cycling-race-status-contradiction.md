@@ -1,6 +1,6 @@
 ---
 id: bug-cycling-race-status-contradiction
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-08T20:00:00Z
@@ -10,6 +10,28 @@ parent: rankings123
 tags: [bug, cycling, ui, consistency]
 ---
 # Cycling page: Contradictory race status messages ("Stage 5 in progress" vs "will update once race begins")
+
+## Acceptance Criteria
+
+1. Make the "General Classification will update once the race begins" message conditional
+2. Only show this message when `tdfData.raceStatus === "upcoming"`
+3. When race is active or complete, either:
+   - Show different appropriate text, OR
+   - Omit that sentence entirely
+4. Ensure data source attribution still shows (just make the race timing part conditional)
+5. **REGRESSION TEST REQUIRED:**
+   - Add test in `tests/cycling-race-status-consistency.test.js` (run via `npm test`)
+   - Test must verify:
+     - When raceStatus is "active", page should not contain "will update once the race begins"
+     - When raceStatus is "upcoming", message is appropriate
+     - No contradictory status messages present
+   - Test should FAIL on current code, PASS when fixed
+6. Run `npm test` — all tests green
+7. Run `npm run build` — succeeds
+8. Verify on LIVE production:
+   - Visit https://rankings123.com/cycling
+   - Check that race status messages are consistent
+   - No contradictory text present
 
 ## Bug Report
 
@@ -54,25 +76,3 @@ Both messages show simultaneously, contradicting each other.
 - User confusion about race status
 - Looks unprofessional / buggy
 - Undermines trust in data accuracy
-
-## Acceptance Criteria
-
-1. Make the "General Classification will update once the race begins" message conditional
-2. Only show this message when `tdfData.raceStatus === "upcoming"`
-3. When race is active or complete, either:
-   - Show different appropriate text, OR
-   - Omit that sentence entirely
-4. Ensure data source attribution still shows (just make the race timing part conditional)
-5. **REGRESSION TEST REQUIRED:**
-   - Add test in `tests/cycling-race-status-consistency.test.js` (run via `npm test`)
-   - Test must verify:
-     - When raceStatus is "active", page should not contain "will update once the race begins"
-     - When raceStatus is "upcoming", message is appropriate
-     - No contradictory status messages present
-   - Test should FAIL on current code, PASS when fixed
-6. Run `npm test` — all tests green
-7. Run `npm run build` — succeeds
-8. Verify on LIVE production:
-   - Visit https://rankings123.com/cycling
-   - Check that race status messages are consistent
-   - No contradictory text present

@@ -1,6 +1,6 @@
 ---
 id: tdf-winner-betting-guide
-status: open
+status: blocked
 deps: []
 links: []
 created: 2026-07-01T13:50:04Z
