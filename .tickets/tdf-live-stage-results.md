@@ -1,6 +1,6 @@
 ---
 id: tdf-live-stage-results
-status: in_progress
+status: closed
 deps: []
 links: []
 created: 2026-07-11T13:49:17Z
