@@ -14,6 +14,13 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-07-11",
+    title: "Tour de France Live Stage Winners",
+    description:
+      "Tour de France 2026 page now shows actual stage winners for all completed stages. Real-time results from Wikipedia display the winning riders and teams (Tadej Pogačar, Isaac del Toro, Tim Merlier, and more) with last-updated timestamps, replacing the previous preview placeholders.",
+    area: "cycling",
+  },
+  {
+    date: "2026-07-11",
     title: "Fixed Duplicate ATP Ranking Table",
     description:
       "Fixed visual bug where the ATP Live ranking table appeared twice on the page. The page now correctly shows a single ranking table with full functionality — filters, pagination, and live updates all working as expected.",
