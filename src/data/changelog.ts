@@ -13,6 +13,13 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-07-11",
+    title: "Fixed Duplicate ATP Ranking Table",
+    description:
+      "Fixed visual bug where the ATP Live ranking table appeared twice on the page. The page now correctly shows a single ranking table with full functionality — filters, pagination, and live updates all working as expected.",
+    area: "tennis",
+  },
+  {
     date: "2026-07-10",
     title: "Enhanced Button Interactions",
     description:

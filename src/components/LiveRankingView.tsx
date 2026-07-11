@@ -13,7 +13,7 @@ function StaticRankingTable({ players }: { players: AtpLivePlayer[] }) {
   const pageRows = players.slice(0, 50);
 
   return (
-    <div id="ssr-table" className="contents" data-ssr-fallback>
+    <div id="ssr-table" data-ssr-fallback>
       <div className="overflow-hidden rounded-2xl border border-edge bg-surface max-md:hidden">
         <table className="min-w-full text-sm">
           <thead className="bg-surface2 text-[11px] uppercase tracking-wide text-muted">
