@@ -113,6 +113,15 @@ export default async function TdfOverviewPage() {
               information sourced from Wikipedia.
               {tdfData.source === "mock" && " Currently showing preview data."}
             </p>
+            <p className="mt-2 text-xs text-muted">
+              Last updated: {new Date(tdfData.lastUpdated).toLocaleString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: '2-digit',
+                timeZoneName: 'short'
+              })}
+            </p>
           </div>
         </div>
       </div>

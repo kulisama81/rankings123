@@ -68,12 +68,32 @@ function parseStages(html: string): TdfStage[] {
       type = "Flat stage";
     }
 
+    // Cell 5: Winner (if stage is completed)
+    // Winner cell contains: <span class="flagicon">...</span> <a href="/wiki/...">RIDER_NAME</a>
+    // Extract the rider/team name from the <a> tag
+    let winner: string | undefined;
+    if (cells.length >= 6 && cells[5]) {
+      const winnerCell = cells[5];
+      // Look for the <a> tag with the rider/team name (after the flag icon)
+      const winnerMatch = winnerCell.match(/<a[^>]*>([^<]+)<\/a>/);
+      if (winnerMatch) {
+        winner = winnerMatch[1]
+          .replace(/&#160;/g, ' ')
+          .replace(/&ndash;/g, '–')
+          .replace(/&mdash;/g, '—')
+          .replace(/&#8211;/g, '–')
+          .replace(/&#8212;/g, '—')
+          .trim();
+      }
+    }
+
     stages.push({
       stage: stageNum,
       date,
       course: courseText,
       distance: distanceText,
       type,
+      ...(winner && { winner }), // Only include winner if it exists
     });
   }
 
