@@ -69,7 +69,7 @@ export default function SectionNav({ sections, sticky = true }: SectionNavProps)
             key={id}
             onClick={() => scrollToSection(id)}
             className={`btn-base shrink-0 rounded-lg text-sm ${
-              isActive ? "bg-accent/20 text-accent" : "btn-secondary border border-edge"
+              isActive ? "btn-section-nav-active" : "btn-section-nav-inactive"
             }`}
             aria-current={isActive ? "location" : undefined}
             aria-label={`Jump to ${label} section`}

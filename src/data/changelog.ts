@@ -14,6 +14,13 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-07-11",
+    title: "Enhanced Sport Navigation Visibility",
+    description:
+      "Strengthened per-sport color identity in navigation — active tabs now feature bold accent underlines, subtle glows, and filled backgrounds that instantly signal which sport you're viewing. ATP's lime, WTA's magenta, World Cup's green, and Cycling's amber are now unmistakable at a glance across all themes and devices.",
+    area: "site",
+  },
+  {
+    date: "2026-07-11",
     title: "Tour de France Live Stage Winners",
     description:
       "Tour de France 2026 page now shows actual stage winners for all completed stages. Real-time results from Wikipedia display the winning riders and teams (Tadej Pogačar, Isaac del Toro, Tim Merlier, and more) with last-updated timestamps, replacing the previous preview placeholders.",

@@ -7,10 +7,10 @@ import DesignSwitcher from "./DesignSwitcher";
 import Logo from "./Logo";
 
 const tabs = [
-  { href: "/atp-live", label: "ATP" },
-  { href: "/wta-live", label: "WTA" },
-  { href: "/world-cup", label: "World Cup" },
-  { href: "/cycling", label: "Cycling" },
+  { href: "/atp-live", label: "ATP", sport: "atp" },
+  { href: "/wta-live", label: "WTA", sport: "wta" },
+  { href: "/world-cup", label: "World Cup", sport: "worldcup" },
+  { href: "/cycling", label: "Cycling", sport: "cycling" },
 ];
 
 export default function Nav() {
@@ -31,8 +31,9 @@ export default function Nav() {
                 key={t.href}
                 href={t.href}
                 aria-current={active ? "page" : undefined}
-                className={`btn-base whitespace-nowrap rounded-full font-medium ${
-                  active ? "btn-primary" : "btn-ghost"
+                data-nav-sport={t.sport}
+                className={`btn-base whitespace-nowrap rounded-full ${
+                  active ? "btn-nav-active" : "btn-nav-inactive"
                 }`}
               >
                 {t.label}
