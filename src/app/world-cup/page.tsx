@@ -7,6 +7,7 @@ import { getWorldCupBracket } from "@/lib/worldCupBracketFeed";
 import WorldCupTable from "@/components/WorldCupTable";
 import HeroBanner from "@/components/HeroBanner";
 import SectionNav from "@/components/SectionNav";
+import WorldCupCountdown from "@/components/WorldCupCountdown";
 
 // Lazy-load below-the-fold components to reduce initial bundle size
 const WorldCupBracket = dynamic(() => import("@/components/WorldCupBracket"), {
@@ -110,6 +111,9 @@ export default async function WorldCupPage() {
             { label: "Matches", value: String(snapshot.matches.length) },
           ]}
         />
+        <div className="my-6">
+          <WorldCupCountdown currentMatches={snapshot.matches} />
+        </div>
         <SectionNav sections={sections} />
         <WorldCupTable initialSnapshot={snapshot} />
         <Suspense

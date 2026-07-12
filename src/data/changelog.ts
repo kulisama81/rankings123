@@ -14,6 +14,13 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-07-12",
+    title: "World Cup Finals Countdown Widget",
+    description:
+      "New countdown widget on the World Cup page creates urgency and FOMO for the tournament climax. Shows days to finals (July 19), escalating urgency messaging ('Finals in 3 days' → 'Semi-finals TODAY' → 'Finals LIVE NOW'), and pulsing live match indicators. Auto-hides after the tournament ends. Time-sensitive feature to capture the finals week traffic spike.",
+    area: "worldcup",
+  },
+  {
+    date: "2026-07-12",
     title: "SEO-Friendly Player Page URLs",
     description:
       "Player pages now use human-readable URLs like /atp/player/jannik-sinner instead of technical IDs. All 200 ATP and 150 WTA player pages are pre-rendered for faster loading and better search engine visibility. Find your favorite players' rankings and stats with URLs that are easy to remember and share.",
