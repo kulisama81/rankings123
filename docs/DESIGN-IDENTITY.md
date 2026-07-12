@@ -1,6 +1,6 @@
 # Rankings123 Design Identity (North Star)
 
-*Last updated: 2026-07-05*
+*Last updated: 2026-07-12*
 
 This document defines the visual identity for rankings123.com — a **distinctive, premium sports rankings hub** that stands out from commodity sites like live-tennis.eu. Data is always the hero; beauty serves scannability.
 
@@ -213,6 +213,44 @@ Articles read and applied to rankings123 design strategy:
 
 6. **Clay Blog** — No new articles since last run (most recent still "What Is a Brand Language?" June 22, inaccessible).
 
+### 2026-07-12 (Weekly Run)
+
+7. **Clay Blog** — No new articles since last run (most recent still "What Is a Brand Language?" June 22, 2026)
+   - Article URL remains inaccessible (404) — will retry next run
+
+**Awwwards Data Visualization 2026 (May-June winners):**
+
+8. **[Cleo AI](https://www.awwwards.com/)** (May 23, 2026) — Developer Award, Site of the Day
+   - **Key takeaway:** Interactive financial data presentation with engaging UI, animated transitions between data states, clean typography for data hierarchy
+   - **Application:** Confirms tooltips/interactive overlays are table-stakes for premium 2026 data viz — filed ticket `data-tooltip-overlays`
+
+9. **[People's Audit](https://www.awwwards.com/)** (June 2026)
+   - **Key takeaway:** Interactive charts with transparent data storytelling — hover/tap reveals context without cluttering the view
+   - **Application:** Reinforces data tooltips pattern; also shows value of contextual overlays vs static numbers
+
+**2026 Micro-Interactions Trends Research:**
+
+10. **["How Micro-Interactions & Motion Design Improve UX in 2026"](https://acodez.in/micro-interactions-motion-design/)** + **["UI Trends 2026: Micro-Interactions, 3D & Immersive Design"](https://4tech.ma/en/ui-trends-2026-micro-interactions-3d-and-visual-immersion/)**
+    - **Key takeaways:**
+      - **Sophisticated easing functions:** Physics-based motion (spring, momentum) creates natural feel vs programmed cubic-bezier
+      - **Haptic feedback integration:** Mobile devices pair visual animations with tactile vibrations (not visual-only)
+      - **Minimalist, purposeful animation:** Moving away from flashy effects toward subtle, functional micro-interactions
+      - **Accessibility standard:** `prefers-reduced-motion` becoming non-negotiable
+    - **Application:** Filed tickets for `physics-based-easing-system` (spring motion), `haptic-feedback-micro-interactions` (mobile tactile), and `podium-trophy-micro-interactions` (purposeful celebration)
+
+**Sports Website Design Trends 2026:**
+
+11. **["Best Sports Website Designs 2026"](https://www.designrush.com/best-designs/websites/trends/best-sports-websites)** (DesignRush)
+    - **Key takeaways:**
+      - **Mobile-first critical:** 62.54% global traffic from mobile (Q4 2024), sports skews even higher
+      - **High contrast & bold layouts:** Scores/rankings must pop instantly
+      - **Performance matters:** 32% bounce increase from 1s to 3s load time (sports audiences less forgiving)
+    - **Application:** Reinforces mobile-first priority; haptic feedback + gesture interactions are mobile-UX musts
+
+12. **["How Data Visualization Is Changing Sports Analysis in 2026"](https://abstractsports.com/blog/how-data-visualization-is-changing-sports-analysis-in-2026/)** (Abstract Sports)
+    - **Key takeaway:** "Raw data alone isn't enough" — need charts, comparison slides, highlight sequences, storytelling over statistics
+    - **Application:** Tooltips/overlays add storytelling layer without cluttering view; filed `data-tooltip-overlays` as p2
+
 **Awwwards Sports Sites (July 2026):**
 
 7. **[day one® Run](https://www.awwwards.com/sites/day-one-r-run)** (Awwwards Nominee)
@@ -241,38 +279,44 @@ Articles read and applied to rankings123 design strategy:
 
 ## Evolution Roadmap
 
-### Phase 1: Foundation Solidification (Current)
+### Phase 1: Foundation Solidification (COMPLETE ✅)
 - [x] Per-sport accent system
 - [x] Dark/light themes + 3 design variants
 - [x] Token-based CSS architecture
 - [x] Apple Sports aesthetic base
-- [ ] **Logo/wordmark** (ticket `logo-wordmark`)
+- [x] **Logo/wordmark** (SHIPPED 2026-07-11 ✅) — Distinctive SVG with live dot integration
+- [x] **Entrance animation choreography** (SHIPPED 2026-07-11 ✅) — Hero → cards → tables stagger
+- [x] **Button 6-state system** (SHIPPED 2026-07-10 ✅) — Clay 2026 guidance
+- [x] **Nav accent strengthening** (SHIPPED 2026-07-11 ✅) — Per-sport color identity
 - [ ] **Favicon/app icons** (ticket `favicon`)
 
-### Phase 2: Refinement & Distinction (Next)
-- [ ] **Button 6-state system** (ticket `button-state-system`)
+### Phase 2: Micro-Interaction Richness & Mobile-First (Current)
+- [ ] **Data tooltip overlays** (ticket `data-tooltip-overlays`) — NEW 2026-07-12, p2 (award-winning pattern)
+- [ ] **Sport hero imagery** (ticket `sport-hero-imagery`) — NEW 2026-07-12, p2 (replace emojis)
+- [ ] **Rank change animations** (ticket `rank-change-animations`)
 - [ ] **Hero depth treatment** (gradient layers, 3D transforms) (ticket `hero-depth-treatment`)
+- [ ] **Mobile table patterns** (ticket `mobile-table-patterns`)
+- [ ] **Podium trophy micro-interactions** (ticket `podium-trophy-micro-interactions`) — NEW 2026-07-12, p3
+- [ ] **Haptic feedback micro-interactions** (ticket `haptic-feedback-micro-interactions`) — NEW 2026-07-12, p3 (mobile tactile)
+- [ ] **Physics-based easing system** (ticket `physics-based-easing-system`) — NEW 2026-07-12, p3 (spring motion)
 - [ ] **Typography scale amplification** (ticket `typography-scale-amplification`)
 - [ ] **Icon system** (ticket `icon-system`)
 - [ ] **Loading states** (ticket `loading-state-system`)
 - [ ] **Empty states** (ticket `empty-state-design`)
-- [ ] **Nav accent strengthening** (ticket `nav-accent-strengthen`)
-- [ ] **Rank change animations** (ticket `rank-change-animations`)
 - [ ] **Sport background visuals** (ticket `sport-background-visuals`)
 - [ ] **Table hover premium** (ticket `table-hover-premium`)
-- [ ] **Mobile table patterns** (ticket `mobile-table-patterns`)
 - [ ] **Nav sport icons** (ticket `nav-sport-icons`)
 - [ ] **Accent glow system** (ticket `accent-glow-system`)
-- [ ] **Entrance animation choreography** (ticket `entrance-animation-choreography`) — NEW 2026-07-05
-- [ ] **Scroll reveal & parallax** (ticket `scroll-reveal-parallax`) — NEW 2026-07-05
-- [ ] **Ambient gradient pulse** (ticket `ambient-gradient-pulse`) — NEW 2026-07-05
+- [ ] **Scroll reveal & parallax** (ticket `scroll-reveal-parallax`)
+- [ ] **Ambient gradient pulse** (ticket `ambient-gradient-pulse`)
 
 ### Phase 3: Signature Moments & Interactive Features
+- [ ] **World Cup finals countdown urgency** (ticket `wc-finals-countdown-urgency`) — NEW 2026-07-12, p1 TIME-SENSITIVE (finals ~July 19)
+- [ ] **Live match tracker widget** (ticket `live-match-tracker-widget`)
+- [ ] **Player comparison tool** (ticket `player-comparison-tool`)
 - [ ] **OG image templates** (ticket `og-image-templates`)
 - [ ] **Social share cards** (ticket `social-share-cards`)
 - [ ] **Data storytelling callouts** (ticket `data-storytelling-callouts`)
-- [ ] **Live match tracker widget** (ticket `live-match-tracker-widget`) — NEW 2026-07-05 (gamification, World Cup urgency)
-- [ ] **Player comparison tool** (ticket `player-comparison-tool`) — NEW 2026-07-05 (interactive over linear trend)
 
 ---
 
