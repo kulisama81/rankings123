@@ -16,3 +16,9 @@ For the Tour de France subsection, make following the race FUN: per-stage detail
 ## Acceptance Criteria
 
 1) TdF stage list shows each stage's distance + elevation gain + type + start/finish; upcoming stages highlighted with what-to-expect. 2) Stage elevation profile shown (image/chart from PCS or rendered from profile data). 3) Real data via the TS scraper (source flag), no fabrication/placeholder. 4) tokens-themed, mobile; build/lint/check green; live-verified.
+
+## Notes
+
+**2026-07-12T20:11:00Z**
+
+BLOCKED: ProCyclingStats is Cloudflare-blocked (403) from server-side fetch, and Wikipedia doesn't include elevation data in its stage tables. Need alternative keyless source for elevation gain + profiles, or accept limitation and implement without elevation data. Investigated 2026-07-12 by planner (cycling lane).
