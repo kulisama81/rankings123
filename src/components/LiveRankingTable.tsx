@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import type { AtpLivePlayer, AtpLiveSnapshot, Tour } from "@/types";
+import { playerToSlug } from "@/lib/playerSlug";
 import AnimatedNumber from "./AnimatedNumber";
 import EmptyState from "./EmptyState";
 
@@ -278,17 +279,13 @@ export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingT
                     <td className="px-3 py-2">
                       <span className="flex items-center gap-2">
                         <span className="text-base leading-none">{p.flag}</span>
-                        {p.guid ? (
-                          <Link
-                            href={`/${tour}/player/${p.guid}`}
-                            className="font-semibold text-fg transition hover:text-accent"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            {p.name}
-                          </Link>
-                        ) : (
-                          <span className="font-semibold text-fg">{p.name}</span>
-                        )}
+                        <Link
+                          href={`/${tour}/player/${playerToSlug(p.name)}`}
+                          className="font-semibold text-fg transition hover:text-accent"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          {p.name}
+                        </Link>
                         <span className="text-xs text-muted">{p.countryCode}</span>
                       </span>
                     </td>
@@ -321,17 +318,13 @@ export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingT
                   <RankBadge rank={p.liveRank} />
                   <Movement value={p.movement} />
                   <span className="text-base leading-none">{p.flag}</span>
-                  {p.guid ? (
-                    <Link
-                      href={`/${tour}/player/${p.guid}`}
-                      className="flex-1 font-semibold text-fg transition hover:text-accent"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      {p.name}
-                    </Link>
-                  ) : (
-                    <span className="flex-1 font-semibold text-fg">{p.name}</span>
-                  )}
+                  <Link
+                    href={`/${tour}/player/${playerToSlug(p.name)}`}
+                    className="flex-1 font-semibold text-fg transition hover:text-accent"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {p.name}
+                  </Link>
                   <AnimatedNumber value={p.livePoints} className="font-bold text-fg" />
                 </div>
                 <div className="mt-2 flex items-center justify-between pl-[38px] text-xs text-muted">

@@ -1,7 +1,9 @@
 import type { MetadataRoute } from "next";
 import { getWorldCupData, getWorldCupStats } from "@/lib/worldCupFeed";
 import { venueToSlug } from "@/lib/worldCupVenue";
-import { getLiveData } from "@/lib/liveFeed";
+import { getAtpDeepRankingData } from "@/lib/atpDeepRanking";
+import { fetchWtaDeepRankingSnapshot } from "@/lib/wtaDeepRanking";
+import { getTop200WithSlugs } from "@/lib/playerSlug";
 
 const BASE = "https://rankings123.com";
 
@@ -31,18 +33,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   // Add tennis player pages (SEO long-tail: "Jannik Sinner ATP ranking", etc.)
+  // Top 200 ATP/WTA with slug-based URLs for organic search
   const tennisPlayerRoutes: MetadataRoute.Sitemap = [];
   try {
     const [atpData, wtaData] = await Promise.all([
-      getLiveData("atp").catch(() => null),
-      getLiveData("wta").catch(() => null),
+      getAtpDeepRankingData().catch(() => null),
+      fetchWtaDeepRankingSnapshot().catch(() => null),
     ]);
 
     if (atpData) {
-      const atpPlayers = atpData.players.filter((p) => p.guid);
+      const atpTop200 = getTop200WithSlugs(atpData.players, 200);
       tennisPlayerRoutes.push(
-        ...atpPlayers.map((p) => ({
-          url: `${BASE}/atp/player/${p.guid}`,
+        ...atpTop200.map((p) => ({
+          url: `${BASE}/atp/player/${p.slug}`,
           lastModified: now,
           changeFrequency: "daily" as const,
           priority: 0.7,
@@ -51,10 +54,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
 
     if (wtaData) {
-      const wtaPlayers = wtaData.players.filter((p) => p.guid);
+      const wtaTop200 = getTop200WithSlugs(wtaData.players, 200);
       tennisPlayerRoutes.push(
-        ...wtaPlayers.map((p) => ({
-          url: `${BASE}/wta/player/${p.guid}`,
+        ...wtaTop200.map((p) => ({
+          url: `${BASE}/wta/player/${p.slug}`,
           lastModified: now,
           changeFrequency: "daily" as const,
           priority: 0.7,

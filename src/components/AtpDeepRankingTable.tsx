@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import type { AtpDeepRankingSnapshot, AtpLivePlayer } from "@/types";
+import { playerToSlug } from "@/lib/playerSlug";
 import AnimatedNumber from "./AnimatedNumber";
 import EmptyState from "./EmptyState";
 
@@ -181,16 +182,12 @@ export default function AtpDeepRankingTable({ initialSnapshot, band, apiEndpoint
                   <td className="px-4 py-2.5">
                     <span className="flex items-center gap-2">
                       <span className="text-base leading-none">{p.flag}</span>
-                      {p.guid ? (
-                        <Link
-                          href={`/atp/player/${p.guid}`}
-                          className="font-semibold text-fg transition hover:text-accent"
-                        >
-                          {p.name}
-                        </Link>
-                      ) : (
-                        <span className="font-semibold text-fg">{p.name}</span>
-                      )}
+                      <Link
+                        href={`/atp/player/${playerToSlug(p.name)}`}
+                        className="font-semibold text-fg transition hover:text-accent"
+                      >
+                        {p.name}
+                      </Link>
                     </span>
                   </td>
                   <td className="px-3 py-2.5 text-center text-xs text-muted">{p.countryCode}</td>

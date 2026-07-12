@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getLiveData } from "@/lib/liveFeed";
+import { getAtpDeepRankingData } from "@/lib/atpDeepRanking";
+import { findPlayerBySlugOrGuid, getTop200WithSlugs, playerToSlug } from "@/lib/playerSlug";
 import Link from "next/link";
 import type { AtpLivePlayer } from "@/types";
 
@@ -10,24 +11,41 @@ interface Props {
   params: Promise<{ id: string }>;
 }
 
-async function getPlayerData(guid: string): Promise<AtpLivePlayer | null> {
-  const snapshot = await getLiveData("atp");
-  return snapshot.players.find((p) => p.guid === guid) ?? null;
+// Generate static params for top 200 ATP players (SEO)
+export async function generateStaticParams() {
+  try {
+    const snapshot = await getAtpDeepRankingData();
+    const top200 = getTop200WithSlugs(snapshot.players, 200);
+    return top200.map((p) => ({ id: p.slug }));
+  } catch {
+    return []; // Graceful degradation
+  }
+}
+
+async function getPlayerData(idOrSlug: string): Promise<{ player: AtpLivePlayer; slug: string } | null> {
+  // Use deep ranking for full top 200 coverage
+  const snapshot = await getAtpDeepRankingData();
+  const player = findPlayerBySlugOrGuid(snapshot.players, idOrSlug);
+  if (!player) return null;
+  return { player, slug: playerToSlug(player.name) };
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
-  const player = await getPlayerData(id);
-  if (!player) return { title: "Player Not Found" };
+  const result = await getPlayerData(id);
+  if (!result) return { title: "Player Not Found" };
+
+  const { player, slug } = result;
+  const canonicalUrl = `/atp/player/${slug}`;
 
   return {
     title: `${player.name} — ATP Live Ranking`,
     description: `${player.name} live ATP ranking: #${player.liveRank} (official #${player.officialRank}). ${player.tournament ? `Currently playing ${player.tournament.name}` : "Current points, rank movement, and tournament status."}`,
-    alternates: { canonical: `/atp/player/${id}` },
+    alternates: { canonical: canonicalUrl },
     openGraph: {
       title: `${player.name} — ATP Rankings123`,
       description: `Live rank #${player.liveRank} · ${player.livePoints.toLocaleString()} points`,
-      url: `/atp/player/${id}`,
+      url: canonicalUrl,
       type: "profile",
     },
   };
@@ -112,9 +130,11 @@ function LiveDot() {
 
 export default async function AtpPlayerPage({ params }: Props) {
   const { id } = await params;
-  const player = await getPlayerData(id);
+  const result = await getPlayerData(id);
 
-  if (!player) notFound();
+  if (!result) notFound();
+
+  const { player } = result;
 
   const hasTournament = Boolean(player.tournament);
   const isActiveTournament = player.tournament?.active ?? false;

@@ -13,6 +13,13 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-07-12",
+    title: "SEO-Friendly Player Page URLs",
+    description:
+      "Player pages now use human-readable URLs like /atp/player/jannik-sinner instead of technical IDs. All 200 ATP and 150 WTA player pages are pre-rendered for faster loading and better search engine visibility. Find your favorite players' rankings and stats with URLs that are easy to remember and share.",
+    area: "tennis",
+  },
+  {
     date: "2026-07-11",
     title: "Enhanced Sport Navigation Visibility",
     description:
