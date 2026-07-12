@@ -1,6 +1,6 @@
 ---
 id: wc-r16-betting-previews
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-01T13:50:00Z
@@ -57,3 +57,7 @@ Template value:
 - Compounds: Better template = better conversion = higher LTV per event
 
 Dependency: BLOCKED until betting-affiliate-kickstart (p0) is complete (1-2 week approval). Content can be drafted but should NOT ship with placeholder/coming soon affiliate links (CX-first rule).
+
+**2026-07-12T13:49:03Z**
+
+Closed 2026-07-12: Deadline missed (R16 matches July 4-8 already complete). Lesson: Time-sensitive tickets need deadline tracking. Template work can inform semifinals/finals betting content.

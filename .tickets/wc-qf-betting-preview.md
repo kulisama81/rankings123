@@ -1,6 +1,6 @@
 ---
 id: wc-qf-betting-preview
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-07T13:55:00Z
@@ -12,9 +12,6 @@ tags: [worldcup, urgent, revenue, betting]
 # World Cup Quarterfinal betting preview (July 8-11)
 
 Comprehensive betting preview for all 4 World Cup quarterfinal matches with odds, analysis, and predictions.
-
-## Context
-Round of 16 ends TODAY (July 7). Quarterfinals start TOMORROW (July 8-11). Ticket `wc-r16-betting-previews` covers R16; need QF coverage. Peak traffic window for betting content. ESPN API provides odds from DraftKings.
 
 ## Acceptance Criteria
 
@@ -31,6 +28,10 @@ Round of 16 ends TODAY (July 7). Quarterfinals start TOMORROW (July 8-11). Ticke
 ✓ Published before first QF match kicks off (July 8)
 ✓ Link from: World Cup main page, bracket page, relevant match pages
 ✓ Verifier must check: odds accuracy, no fabricated predictions, published on time
+
+## Context
+
+Round of 16 ends TODAY (July 7). Quarterfinals start TOMORROW (July 8-11). Ticket `wc-r16-betting-previews` covers R16; need QF coverage. Peak traffic window for betting content. ESPN API provides odds from DraftKings.
 
 ## Notes
 
@@ -80,3 +81,7 @@ FIRST PRINCIPLES ROI ANALYSIS:
 - ESPN API scoreboard includes odds.details with moneyline/spread/over-under
 - Provider: DraftKings (via ESPN)
 - Reference ticket: wc-r16-betting-previews for format
+
+**2026-07-12T13:49:04Z**
+
+Closed 2026-07-12: Deadline missed (QF matches July 8-11 already complete). Focus shifts to semifinals (July 14-15) and finals (July 19).
