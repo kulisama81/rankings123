@@ -74,13 +74,17 @@ export async function fetchAtpDeepRankingSnapshot(): Promise<AtpDeepRankingSnaps
   const merged = rows.map((b) => {
     const key = normalizeName(b.name);
     const espn = espnByName.get(key);
-    // Prefer ESPN's official points where available (authoritative top-rank source).
+    // Prefer ESPN's official rank AND points where available (ESPN is the authoritative
+    // source for top-rank players and updates faster than UTS). This prevents implausible
+    // movement indicators when UTS has stale data (e.g., UTS shows rank #896 but ESPN
+    // shows #25 for the same player after a strong tournament performance).
+    const officialRank = espn ? espn.rank : b.officialRank;
     const officialPoints = espn ? espn.points : b.officialPoints;
     const live = liveByName.get(key);
     const earned = live?.earned ?? 0;
     return {
       guid: espn?.guid,
-      officialRank: b.officialRank,
+      officialRank,
       name: b.name,
       countryCode: b.countryCode,
       flag: b.flag,
