@@ -145,6 +145,16 @@ export default async function CyclingPage() {
               {tdfData.raceStatus === "active" && " General Classification updates as the race progresses."}
               {tdfData.source === "mock" && " Currently showing preview data."}
             </p>
+            <p className="mt-2">
+              <strong className="text-primary">Last updated:</strong>{" "}
+              {new Date(tdfData.lastUpdated).toLocaleString("en-US", {
+                month: "short",
+                day: "numeric",
+                hour: "numeric",
+                minute: "2-digit",
+                timeZoneName: "short",
+              })}
+            </p>
           </div>
         </div>
       </div>

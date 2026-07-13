@@ -157,14 +157,87 @@ function parseJerseyLeaders(html: string): {
 }
 
 // Parse GC standings from the Wikipedia page
-// Note: Full GC data is not available on the main Wikipedia page during the race
-// (detailed GC is in the stage-by-stage sub-articles)
-// For now, jersey leaders provide the key information
-function parseGC(): TdfGCRider[] {
-  // Return empty array - jersey leaders show the key standings
-  // A future enhancement could fetch and parse the dedicated GC table
-  // from the stage sub-articles (e.g., "2026 Tour de France, Stage 1 to Stage 11")
-  return [];
+function parseGC(html: string): TdfGCRider[] {
+  const riders: TdfGCRider[] = [];
+
+  // Find the "General classification after Stage" table
+  const tableStart = html.indexOf('General classification after Stage');
+  if (tableStart === -1) return [];
+
+  // Extract table section
+  const tableEnd = html.indexOf('</tbody>', tableStart);
+  if (tableEnd === -1) return [];
+  const tableSection = html.substring(tableStart, tableEnd);
+
+  // Split into rows
+  const rows = tableSection.split('<tr>');
+
+  for (const row of rows) {
+    // Look for rank in <th scope="row">RANK</th>
+    const rankMatch = row.match(/<th scope="row">(\d+)/);
+    if (!rankMatch) continue;
+
+    const rank = parseInt(rankMatch[1]);
+
+    // Extract all <td> cells
+    const cells = row.match(/<td[^>]*>([\s\S]*?)<\/td>/g);
+    if (!cells || cells.length < 3) continue;
+
+    // Cell 0: Rider name (contains flag, name, country code, jerseys)
+    // Extract country from <abbr title="COUNTRY">CODE</abbr>
+    const countryAbbrMatch = cells[0].match(/<abbr title="([^"]+)">([^<]+)<\/abbr>/);
+    const country = countryAbbrMatch ? countryAbbrMatch[1] : "";
+    const countryCode = countryAbbrMatch ? countryAbbrMatch[2] : "";
+
+    // Extract flag image URL
+    const flagMatch = cells[0].match(/src="([^"]*Flag[^"]+\.(?:svg|png))"/);
+    const flag = flagMatch ? `https:${flagMatch[1]}` : "";
+
+    // Extract rider name from <a> tag
+    const riderMatch = cells[0].match(/<a[^>]*>([^<]+)<\/a>/);
+    if (!riderMatch) continue;
+    const name = riderMatch[1]
+      .replace(/&#160;/g, ' ')
+      .replace(/&ndash;/g, '–')
+      .replace(/&mdash;/g, '—')
+      .trim();
+
+    // Cell 1: Team
+    const teamMatch = cells[1].match(/<a[^>]*>([^<]+)<\/a>/);
+    const team = teamMatch
+      ? teamMatch[1].replace(/&#160;/g, ' ').trim()
+      : cells[1].replace(/<[^>]+>/g, '').trim();
+
+    // Cell 2: Time (either absolute time like "32h 17' 04"" or gap like "+ 2' 42"")
+    const timeText = cells[2]
+      .replace(/<[^>]+>/g, '')
+      .replace(/&#160;/g, ' ')
+      .replace(/&apos;/g, "'")
+      .replace(/&quot;/g, '"')
+      .trim();
+
+    // Parse the gap (if it starts with +, it's a gap; otherwise it's the leader's time)
+    let gap: string | undefined;
+    if (timeText.startsWith('+')) {
+      gap = timeText;
+    } else if (rank > 1) {
+      // This shouldn't happen (non-leaders should have + gap), but handle it
+      gap = timeText;
+    }
+
+    riders.push({
+      rank,
+      name,
+      team,
+      country,
+      countryCode,
+      flag,
+      time: timeText,
+      ...(gap && { gap }),
+    });
+  }
+
+  return riders.sort((a, b) => a.rank - b.rank);
 }
 
 
@@ -210,7 +283,7 @@ export async function getTdfSnapshot(
       },
     ];
 
-    const gc = parseGC();
+    const gc = parseGC(html);
 
     // Determine race status: if we have jersey leaders OR we're past the start date, race is active
     const hasJerseyLeaders = jerseyLeaders.yellow || jerseyLeaders.green || jerseyLeaders.polkadot || jerseyLeaders.white;

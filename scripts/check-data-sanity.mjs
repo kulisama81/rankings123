@@ -233,6 +233,72 @@ function checkBracket(bracket, groups) {
   }
 }
 
+// --- Cycling (Tour de France) ----------------------------------------------
+function checkCycling(snap) {
+  if (snap.source === "mock") warn("cycling", "served from mock fallback (live feed unavailable)");
+
+  const stages = snap?.stages ?? [];
+  const gc = snap?.gc ?? [];
+  const jerseys = snap?.jerseys ?? [];
+
+  // Check if race should be active (after July 4, 2026 start date).
+  const now = new Date();
+  const raceStart = new Date(2026, 6, 4); // Month is 0-indexed (6 = July)
+  const raceEnd = new Date(2026, 6, 27); // July 27, 2026
+  const shouldBeActive = now >= raceStart && now <= raceEnd;
+
+  if (shouldBeActive) {
+    // During the race, we must have real data, not stale placeholders.
+    // Regression guard for bug-tdf-live-data-stale.
+
+    // 1. Check that we're NOT serving mock data during a live race.
+    if (snap.source === "mock") {
+      err("cycling", "serving mock data when Tour de France should be live (race started July 4)");
+    }
+
+    // 2. Check that we have GC standings if the race is active.
+    // Empty GC during an active race = stale/broken data.
+    if (snap.raceStatus === "active" && gc.length === 0) {
+      err("cycling", "GC standings empty when race is active (stale data — see bug-tdf-live-data-stale)");
+    }
+
+    // 3. Check that completed stages have winners (not all "—" dashes).
+    // If the race has been running for >3 days, we should have at least one stage winner.
+    const daysIntoRace = (now - raceStart) / (1000 * 60 * 60 * 24);
+    if (daysIntoRace > 3) {
+      const completedStages = stages.filter((s) => s.winner);
+      if (completedStages.length === 0) {
+        err("cycling", `${daysIntoRace.toFixed(0)} days into race, but all stage winners show "—" (stale data)`);
+      }
+    }
+
+    // 4. Check that jersey leaders are populated during an active race.
+    const hasYellowJersey = jerseys.find((j) => j.jersey === "yellow")?.rider;
+    if (snap.raceStatus === "active" && !hasYellowJersey) {
+      err("cycling", "no yellow jersey leader when race is active (stale or broken data)");
+    }
+  }
+
+  // Data integrity checks (regardless of race status).
+  for (const stage of stages) {
+    if (stage.stage < 1 || stage.stage > 21) {
+      err("cycling", `stage ${stage.stage} out of range (must be 1-21)`);
+    }
+    if (isBadName(stage.course)) {
+      err("cycling", `stage ${stage.stage} has placeholder course name`);
+    }
+  }
+
+  for (const rider of gc) {
+    if (isBadName(rider.name)) {
+      err("cycling", `GC rank ${rider.rank} has placeholder rider name`);
+    }
+    if (rider.rank < 1) {
+      err("cycling", `invalid GC rank ${rider.rank}`);
+    }
+  }
+}
+
 // --- Homepage placeholder content (CX-FIRST violation guard) ---------------
 function checkHomepagePlaceholders(html) {
   // Per CX-FIRST rule: never ship placeholder, "coming soon", empty, or fabricated UI to users.
@@ -329,19 +395,21 @@ ${priorLog}
 async function main() {
   const stamp = new Date().toISOString();
   try {
-    const [atp, wta, wc, bracket, wcStats, homepage] = await Promise.all([
+    const [atp, wta, wc, bracket, wcStats, homepage, cycling] = await Promise.all([
       getJson("/api/atp/live"),
       getJson("/api/wta/live"),
       getJson("/api/worldcup/live"),
       getJson("/api/worldcup/bracket"),
       getJson("/api/worldcup/stats"),
       getHtml("/"),
+      getJson("/api/tdf/live"),
     ]);
     checkTennis("atp", atp);
     checkTennis("wta", wta);
     const groups = checkWorldCup(wc);
     checkBracket(bracket, groups);
     checkWorldCupGoldenBoot(wcStats);
+    checkCycling(cycling);
     checkHomepagePlaceholders(homepage);
     await checkMatchPagesNoDemoLabels();
   } catch (e) {
