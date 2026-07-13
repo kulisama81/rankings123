@@ -612,3 +612,110 @@ body {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+/* ===================== Interactive Tooltip Overlays ===================== */
+/* Award-winning 2026 data viz pattern: contextual information on hover/tap */
+
+/* Tooltip card: rounded, subtle shadow, per-sport accent border */
+.tooltip-card {
+  max-width: 280px;
+  padding: 0.75rem 1rem;
+  background-color: var(--surface);
+  border: 1.5px solid var(--accent);
+  border-radius: 0.75rem; /* 12px */
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15),
+              0 0 12px rgba(var(--accent-rgb), 0.2);
+  color: var(--text);
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.5;
+  pointer-events: auto;
+
+  /* Smooth fade-in animation (GPU-efficient) */
+  animation: tooltip-fade-in 150ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes tooltip-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Light theme: adjust shadow for paper background */
+[data-theme="light"] .tooltip-card {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08),
+              0 0 12px rgba(var(--accent-rgb), 0.15);
+}
+
+/* Classic design variant: softer corners, subtle shadow */
+[data-design="classic"] .tooltip-card {
+  border-radius: 0.5rem; /* 8px */
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08),
+              0 0 8px rgba(var(--accent-rgb), 0.12);
+}
+
+/* Broadcast design variant: sharp corners, bold border */
+[data-design="broadcast"] .tooltip-card {
+  border-radius: 3px;
+  border-width: 2px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25),
+              0 0 16px rgba(var(--accent-rgb), 0.3);
+}
+
+/* Tooltip trigger: ensure focusable and keyboard-navigable */
+.tooltip-trigger {
+  display: inline-flex;
+  cursor: help;
+  outline: none;
+}
+
+.tooltip-trigger:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Tooltip content styling utilities */
+.tooltip-title {
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.25rem;
+}
+
+.tooltip-meta {
+  font-size: 0.75rem; /* 12px */
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+.tooltip-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.125rem 0;
+}
+
+.tooltip-stat-label {
+  color: var(--text-muted);
+  font-size: 0.8125rem; /* 13px */
+}
+
+.tooltip-stat-value {
+  font-weight: 600;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Respect prefers-reduced-motion: instant display, no animation */
+@media (prefers-reduced-motion: reduce) {
+  .tooltip-card {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -6,6 +6,8 @@ import type { AtpDeepRankingSnapshot, AtpLivePlayer } from "@/types";
 import { playerToSlug } from "@/lib/playerSlug";
 import AnimatedNumber from "./AnimatedNumber";
 import EmptyState from "./EmptyState";
+import Tooltip from "./Tooltip";
+import { RankTooltip, PointsTooltip, MovementTooltip, PlayerTooltip } from "./TooltipContent";
 
 const REFRESH_INTERVAL_S = 30;
 const PAGE_SIZE = 50;
@@ -177,17 +179,60 @@ export default function AtpDeepRankingTable({ initialSnapshot, band, apiEndpoint
                     p.tournament?.active ? "bg-accent/[0.035] hover:bg-surface2" : "hover:bg-surface2"
                   }`}
                 >
-                  <td className="px-3 py-2.5 text-right font-bold tabular-nums text-fg">{p.liveRank}</td>
-                  <td className="px-2 py-2.5 text-center"><Movement value={p.movement} /></td>
+                  <td className="px-3 py-2.5 text-right font-bold tabular-nums text-fg">
+                    <Tooltip
+                      content={
+                        <RankTooltip
+                          currentRank={p.liveRank}
+                          movement={p.movement}
+                          officialRank={p.officialRank}
+                        />
+                      }
+                      placement="top"
+                    >
+                      <span>{p.liveRank}</span>
+                    </Tooltip>
+                  </td>
+                  <td className="px-2 py-2.5 text-center">
+                    {p.movement !== 0 ? (
+                      <Tooltip
+                        content={
+                          <MovementTooltip
+                            movement={p.movement}
+                            previousRank={p.officialRank}
+                            currentRank={p.liveRank}
+                          />
+                        }
+                        placement="top"
+                      >
+                        <span><Movement value={p.movement} /></span>
+                      </Tooltip>
+                    ) : (
+                      <Movement value={p.movement} />
+                    )}
+                  </td>
                   <td className="px-4 py-2.5">
                     <span className="flex items-center gap-2">
                       <span className="text-base leading-none">{p.flag}</span>
-                      <Link
-                        href={`/atp/player/${playerToSlug(p.name)}`}
-                        className="font-semibold text-fg transition hover:text-accent"
+                      <Tooltip
+                        content={
+                          <PlayerTooltip
+                            name={p.name}
+                            countryCode={p.countryCode}
+                            age={p.age}
+                            tournament={p.tournament?.name}
+                            tournamentRound={p.tournament?.round}
+                          />
+                        }
+                        placement="right"
                       >
-                        {p.name}
-                      </Link>
+                        <Link
+                          href={`/atp/player/${playerToSlug(p.name)}`}
+                          className="font-semibold text-fg transition hover:text-accent"
+                        >
+                          {p.name}
+                        </Link>
+                      </Tooltip>
                     </span>
                   </td>
                   <td className="px-3 py-2.5 text-center text-xs text-muted">{p.countryCode}</td>
@@ -195,7 +240,19 @@ export default function AtpDeepRankingTable({ initialSnapshot, band, apiEndpoint
                     {p.careerHigh ? `#${p.careerHigh}` : "—"}
                   </td>
                   <td className="px-4 py-2.5 text-right font-bold text-fg">
-                    <AnimatedNumber value={p.livePoints} />
+                    <Tooltip
+                      content={
+                        <PointsTooltip
+                          livePoints={p.livePoints}
+                          officialPoints={p.officialPoints}
+                          delta={p.pointsDelta}
+                          tournament={p.tournament?.name}
+                        />
+                      }
+                      placement="top"
+                    >
+                      <span><AnimatedNumber value={p.livePoints} /></span>
+                    </Tooltip>
                   </td>
                   <td className="px-2 py-2.5 text-right"><PointsDelta value={p.pointsDelta} /></td>
                   <td className="px-3 py-2.5 text-right tabular-nums text-muted">

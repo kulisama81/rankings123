@@ -7,6 +7,8 @@ import type { AtpLivePlayer, AtpLiveSnapshot, Tour } from "@/types";
 import { playerToSlug } from "@/lib/playerSlug";
 import AnimatedNumber from "./AnimatedNumber";
 import EmptyState from "./EmptyState";
+import Tooltip from "./Tooltip";
+import { RankTooltip, PointsTooltip, MovementTooltip, PlayerTooltip } from "./TooltipContent";
 
 const REFRESH_INTERVAL_S = 20;
 const PAGE_SIZE = 50;
@@ -273,25 +275,78 @@ export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingT
                     }`}
                   >
                     <td className="px-3 py-2 text-right">
-                      <RankBadge rank={p.liveRank} />
+                      <Tooltip
+                        content={
+                          <RankTooltip
+                            currentRank={p.liveRank}
+                            movement={p.movement}
+                            officialRank={p.officialRank}
+                          />
+                        }
+                        placement="top"
+                      >
+                        <span><RankBadge rank={p.liveRank} /></span>
+                      </Tooltip>
                     </td>
-                    <td className="px-2 py-2 text-center"><Movement value={p.movement} /></td>
+                    <td className="px-2 py-2 text-center">
+                      {p.movement !== 0 ? (
+                        <Tooltip
+                          content={
+                            <MovementTooltip
+                              movement={p.movement}
+                              previousRank={p.officialRank}
+                              currentRank={p.liveRank}
+                            />
+                          }
+                          placement="top"
+                        >
+                          <span><Movement value={p.movement} /></span>
+                        </Tooltip>
+                      ) : (
+                        <Movement value={p.movement} />
+                      )}
+                    </td>
                     <td className="px-3 py-2">
                       <span className="flex items-center gap-2">
                         <span className="text-base leading-none">{p.flag}</span>
-                        <Link
-                          href={`/${tour}/player/${playerToSlug(p.name)}`}
-                          className="font-semibold text-fg transition hover:text-accent"
-                          onClick={(e) => e.stopPropagation()}
+                        <Tooltip
+                          content={
+                            <PlayerTooltip
+                              name={p.name}
+                              countryCode={p.countryCode}
+                              age={p.age}
+                              tournament={p.tournament?.name}
+                              tournamentRound={p.tournament?.round}
+                            />
+                          }
+                          placement="right"
                         >
-                          {p.name}
-                        </Link>
+                          <Link
+                            href={`/${tour}/player/${playerToSlug(p.name)}`}
+                            className="font-semibold text-fg transition hover:text-accent"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            {p.name}
+                          </Link>
+                        </Tooltip>
                         <span className="text-xs text-muted">{p.countryCode}</span>
                       </span>
                     </td>
                     <td className="px-2 py-2 text-center text-muted">{p.age || "—"}</td>
                     <td className="px-3 py-2 text-right text-[15px] font-bold text-fg">
-                      <AnimatedNumber value={p.livePoints} />
+                      <Tooltip
+                        content={
+                          <PointsTooltip
+                            livePoints={p.livePoints}
+                            officialPoints={p.officialPoints}
+                            delta={p.pointsDelta}
+                            tournament={p.tournament?.name}
+                          />
+                        }
+                        placement="top"
+                      >
+                        <span><AnimatedNumber value={p.livePoints} /></span>
+                      </Tooltip>
                     </td>
                     <td className="px-2 py-2 text-right"><Delta value={p.pointsDelta} /></td>
                     <td className="px-3 py-2 text-right tabular-nums text-muted">
@@ -315,17 +370,68 @@ export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingT
                 }`}
               >
                 <div className="flex items-center gap-2.5">
-                  <RankBadge rank={p.liveRank} />
-                  <Movement value={p.movement} />
-                  <span className="text-base leading-none">{p.flag}</span>
-                  <Link
-                    href={`/${tour}/player/${playerToSlug(p.name)}`}
-                    className="flex-1 font-semibold text-fg transition hover:text-accent"
-                    onClick={(e) => e.stopPropagation()}
+                  <Tooltip
+                    content={
+                      <RankTooltip
+                        currentRank={p.liveRank}
+                        movement={p.movement}
+                        officialRank={p.officialRank}
+                      />
+                    }
+                    placement="top"
                   >
-                    {p.name}
-                  </Link>
-                  <AnimatedNumber value={p.livePoints} className="font-bold text-fg" />
+                    <span><RankBadge rank={p.liveRank} /></span>
+                  </Tooltip>
+                  {p.movement !== 0 ? (
+                    <Tooltip
+                      content={
+                        <MovementTooltip
+                          movement={p.movement}
+                          previousRank={p.officialRank}
+                          currentRank={p.liveRank}
+                        />
+                      }
+                      placement="top"
+                    >
+                      <span><Movement value={p.movement} /></span>
+                    </Tooltip>
+                  ) : (
+                    <Movement value={p.movement} />
+                  )}
+                  <span className="text-base leading-none">{p.flag}</span>
+                  <Tooltip
+                    content={
+                      <PlayerTooltip
+                        name={p.name}
+                        countryCode={p.countryCode}
+                        age={p.age}
+                        tournament={p.tournament?.name}
+                        tournamentRound={p.tournament?.round}
+                      />
+                    }
+                    placement="bottom"
+                  >
+                    <Link
+                      href={`/${tour}/player/${playerToSlug(p.name)}`}
+                      className="flex-1 font-semibold text-fg transition hover:text-accent"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      {p.name}
+                    </Link>
+                  </Tooltip>
+                  <Tooltip
+                    content={
+                      <PointsTooltip
+                        livePoints={p.livePoints}
+                        officialPoints={p.officialPoints}
+                        delta={p.pointsDelta}
+                        tournament={p.tournament?.name}
+                      />
+                    }
+                    placement="top"
+                  >
+                    <span><AnimatedNumber value={p.livePoints} className="font-bold text-fg" /></span>
+                  </Tooltip>
                 </div>
                 <div className="mt-2 flex items-center justify-between pl-[38px] text-xs text-muted">
                   <Tournament player={p} />

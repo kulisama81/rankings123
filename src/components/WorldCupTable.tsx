@@ -9,6 +9,8 @@ import type {
   WorldCupTeam,
 } from "@/types";
 import EmptyState from "./EmptyState";
+import Tooltip from "./Tooltip";
+import { TeamTooltip, TeamPointsTooltip } from "./TooltipContent";
 
 const REFRESH_INTERVAL_S = 30;
 
@@ -95,13 +97,30 @@ function GroupCard({ group }: { group: WorldCupGroup }) {
               >
                 <td className="px-3 py-2 text-right tabular-nums text-muted">{t.rank}</td>
                 <td className="px-3 py-2 font-semibold">
-                  <Link
-                    href={`/world-cup/team/${t.code.toLowerCase()}`}
-                    className="inline-flex items-center text-fg hover:text-accent transition-colors"
+                  <Tooltip
+                    content={
+                      <TeamTooltip
+                        name={t.name}
+                        code={t.code}
+                        played={t.played}
+                        won={t.won}
+                        drawn={t.drawn}
+                        lost={t.lost}
+                        goalsFor={t.goalsFor}
+                        goalsAgainst={t.goalsAgainst}
+                        status={t.status}
+                      />
+                    }
+                    placement="right"
                   >
-                    <span className="mr-2 text-base leading-none" aria-hidden="true">{t.flag}</span>
-                    {t.name}
-                  </Link>
+                    <Link
+                      href={`/world-cup/team/${t.code.toLowerCase()}`}
+                      className="inline-flex items-center text-fg hover:text-accent transition-colors"
+                    >
+                      <span className="mr-2 text-base leading-none" aria-hidden="true">{t.flag}</span>
+                      {t.name}
+                    </Link>
+                  </Tooltip>
                 </td>
                 <td className="px-2 py-2 text-center tabular-nums text-muted">{t.played}</td>
                 <td className="px-2 py-2 text-center tabular-nums text-muted">{t.won}</td>
@@ -110,7 +129,20 @@ function GroupCard({ group }: { group: WorldCupGroup }) {
                 <td className="px-2 py-2 text-center tabular-nums text-muted">
                   {t.goalDiff > 0 ? `+${t.goalDiff}` : t.goalDiff}
                 </td>
-                <td className="px-3 py-2 text-right font-bold tabular-nums text-fg">{t.points}</td>
+                <td className="px-3 py-2 text-right font-bold tabular-nums text-fg">
+                  <Tooltip
+                    content={
+                      <TeamPointsTooltip
+                        points={t.points}
+                        won={t.won}
+                        drawn={t.drawn}
+                      />
+                    }
+                    placement="top"
+                  >
+                    <span>{t.points}</span>
+                  </Tooltip>
+                </td>
               </tr>
             ))}
           </tbody>

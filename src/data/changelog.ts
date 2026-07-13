@@ -14,6 +14,13 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-07-13",
+    title: "Interactive Data Tooltips",
+    description:
+      "Tap or hover on rankings, points, and player names to reveal contextual information — movement history, points breakdown, and quick stats. Award-winning 2026 data viz pattern for richer engagement.",
+    area: "all",
+  },
+  {
+    date: "2026-07-13",
     title: "Tour de France Event Page: Complete GC Standings Added",
     description:
       "Enhanced /events/tdf-2026 with full General Classification table showing top 10 overall standings (rank, rider, team, country, time/gap). Jersey leaders, stage results, and live race status all in one dedicated Tour page. Race data updates every 5 minutes through July 27.",
