@@ -64,7 +64,7 @@ function LiveDot() {
 
 function Tournament({ player }: { player: AtpLivePlayer }) {
   const t = player.tournament;
-  if (!t) return <span className="text-xs text-muted/40">—</span>;
+  if (!t) return <span className="text-xs text-muted/50" title="Not competing this week">—</span>;
   if (!t.active) return <span className="text-xs text-muted/70">{t.name} · out</span>;
   return (
     <span className="inline-flex items-center gap-1.5 text-xs text-fg/80">

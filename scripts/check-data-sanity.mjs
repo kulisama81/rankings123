@@ -51,6 +51,34 @@ function checkTennis(sport, snap) {
   const ranks = players.map((p) => p.liveRank);
   if (new Set(ranks).size !== ranks.length) err(sport, "duplicate liveRank values");
 
+  // Check for implausible rank movements (regression guard for bug-atp-jodar-rank-jump).
+  // Single-period movements >200 positions are statistically implausible for professional rankings
+  // (except for newly-ranked players entering from unranked status — would need special handling).
+  const MOVEMENT_THRESHOLD = 200;
+  const implausibleMovements = players.filter((p) => Math.abs(p.movement ?? 0) > MOVEMENT_THRESHOLD);
+  if (implausibleMovements.length > 0) {
+    for (const p of implausibleMovements.slice(0, 3)) {
+      err(sport, `${p.name} (rank ${p.liveRank}) shows implausible movement of ${p.movement > 0 ? '+' : ''}${p.movement} positions`);
+    }
+  }
+
+  // Data completeness check (regression guard for bug-wta-missing-tournament-data).
+  // While many players won't be competing during tour breaks or quiet weeks, if >95% of top-100
+  // have NO tournament data when the scoreboard shows active events, it indicates a feed/merge failure.
+  // Note: During Grand Slams or Masters weeks, participation is typically 30-50% of top-100.
+  // During smaller events or end-of-week periods, 70-80% not competing is normal.
+  const top100 = players.slice(0, 100);
+  const missingTournament = top100.filter((p) => !p.tournament);
+  const missingPct = (missingTournament.length / top100.length) * 100;
+  if (missingPct > 95) {
+    err(
+      sport,
+      `${missingTournament.length}/${top100.length} (${missingPct.toFixed(0)}%) of top-100 players have no tournament data — likely feed/scoreboard merge failure`
+    );
+  } else if (missingPct > 85 && snap.source === "espn") {
+    warn(sport, `${missingPct.toFixed(0)}% of top-100 not competing (tour break or end-of-week)`);
+  }
+
   let prevRank = 0;
   let prevPts = Infinity;
   let nameDupes = new Set();
