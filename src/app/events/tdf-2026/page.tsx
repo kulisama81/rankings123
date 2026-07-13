@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getTdfSnapshot } from "@/lib/cyclingFeed";
 import HeroBanner from "@/components/HeroBanner";
 import TdfJerseys from "@/components/TdfJerseys";
+import TdfGCTable from "@/components/TdfGCTable";
 
 export const metadata: Metadata = {
   title: "Tour de France 2026 — Live Standings & Stage Results",
@@ -57,9 +58,22 @@ export default async function TdfOverviewPage() {
             <TdfJerseys jerseys={tdfData.jerseys} raceStatus={tdfData.raceStatus} />
           </section>
 
-          {/* Stage List */}
+          {/* General Classification */}
+          {tdfData.gc.length > 0 && (
+            <section className="mb-12">
+              <h2 className="mb-6 text-2xl font-bold text-primary">
+                General Classification
+                <span className="ml-3 text-sm font-normal text-secondary">
+                  Overall standings after Stage {tdfData.currentStage ? tdfData.currentStage - 1 : 0}
+                </span>
+              </h2>
+              <TdfGCTable riders={tdfData.gc} />
+            </section>
+          )}
+
+          {/* Stage Results */}
           <section>
-            <h2 className="mb-6 text-2xl font-bold text-primary">Stages</h2>
+            <h2 className="mb-6 text-2xl font-bold text-primary">Stage Results</h2>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {tdfData.stages.map((stage) => {
                 const isCompleted = !!stage.winner;

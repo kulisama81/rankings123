@@ -14,6 +14,13 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-07-13",
+    title: "Tour de France Event Page: Complete GC Standings Added",
+    description:
+      "Enhanced /events/tdf-2026 with full General Classification table showing top 10 overall standings (rank, rider, team, country, time/gap). Jersey leaders, stage results, and live race status all in one dedicated Tour page. Race data updates every 5 minutes through July 27.",
+    area: "cycling",
+  },
+  {
+    date: "2026-07-13",
     title: "Tour de France Live GC Standings Now Updating",
     description:
       "Fixed critical bug where Tour de France page showed stale preview data instead of live race standings. GC table now displays real-time overall standings with Pogačar in yellow, all 9 completed stage winners, and a 'Last updated' timestamp. Race data refreshes every 5 minutes during the Tour (through July 27).",
