@@ -1,6 +1,6 @@
 ---
 id: bug-wta-missing-tournament-data
-status: in_progress
+status: closed
 deps: []
 links: []
 created: 2026-06-29T15:30:00Z

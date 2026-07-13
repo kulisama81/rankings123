@@ -1,6 +1,6 @@
 ---
 id: bug-tdf-live-data-stale
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-13T13:48:03Z

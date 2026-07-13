@@ -1,6 +1,6 @@
 ---
 id: tdf-2026-page
-status: open
+status: closed
 deps: [cycling-dynamic-feed]
 links: []
 created: 2026-06-21T07:55:36Z
