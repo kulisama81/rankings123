@@ -27,6 +27,7 @@ const tennisLinks = [
 
 const worldCupLinks = [
   { href: "/world-cup", label: "FIFA 2026", sub: "Live standings & schedule", sport: "worldcup", isLive: true },
+  { href: "/world-cup/final-2026-predictions", label: "Final Predictions", sub: "Expert analysis & tactical preview", sport: "worldcup", isLive: false },
 ];
 
 const cyclingLinks = [

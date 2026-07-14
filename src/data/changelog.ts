@@ -14,6 +14,13 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-07-14",
+    title: "World Cup Final 2026 Predictions Page",
+    description:
+      "New dedicated page for the FIFA World Cup 2026 Final with match preview, finalists display, and tactical context. Updates live as the final approaches on July 19.",
+    area: "worldcup",
+  },
+  {
+    date: "2026-07-14",
     title: "Improved Rank Movement Display",
     description:
       'Fixed implausible rank movement indicators (e.g., "+867") by showing "NEW" for players entering the rankings from far outside the top positions. Enhances data credibility and clarity across ATP/WTA live rankings.',

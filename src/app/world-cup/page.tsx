@@ -114,6 +114,24 @@ export default async function WorldCupPage() {
         <div className="my-6">
           <WorldCupCountdown currentMatches={snapshot.matches} />
         </div>
+        {/* Final Predictions Link - prominent during final week */}
+        <Link
+          href="/world-cup/final-2026-predictions"
+          className="my-6 block rounded-2xl border border-trophy/30 bg-gradient-to-br from-trophy/10 to-surface p-6 transition hover:border-trophy hover:from-trophy/20"
+        >
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="mb-1 flex items-center gap-2">
+                <span className="text-2xl">🏆</span>
+                <h3 className="text-xl font-black text-fg">World Cup Final 2026 Predictions</h3>
+              </div>
+              <p className="text-sm text-fg-muted">
+                Expert tactical analysis and match preview for the final
+              </p>
+            </div>
+            <span className="text-2xl text-trophy">→</span>
+          </div>
+        </Link>
         <SectionNav sections={sections} />
         <WorldCupTable initialSnapshot={snapshot} />
         <Suspense
