@@ -13,6 +13,13 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-07-14",
+    title: "Improved Rank Movement Display",
+    description:
+      'Fixed implausible rank movement indicators (e.g., "+867") by showing "NEW" for players entering the rankings from far outside the top positions. Enhances data credibility and clarity across ATP/WTA live rankings.',
+    area: "tennis",
+  },
+  {
     date: "2026-07-13",
     title: "Interactive Data Tooltips",
     description:

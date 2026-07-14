@@ -37,8 +37,10 @@ function StaticRankingTable({ players }: { players: AtpLivePlayer[] }) {
                   </span>
                 </td>
                 <td className="px-2 py-2 text-center">
-                  {p.movement > 0 && <span className="text-xs text-up">▲{p.movement}</span>}
-                  {p.movement < 0 && <span className="text-xs text-down">▼{Math.abs(p.movement)}</span>}
+                  {p.movement > 200 && <span className="text-xs text-up">NEW</span>}
+                  {p.movement > 0 && p.movement <= 200 && <span className="text-xs text-up">▲{p.movement}</span>}
+                  {p.movement < -200 && <span className="text-xs text-down">▼▼</span>}
+                  {p.movement < 0 && p.movement >= -200 && <span className="text-xs text-down">▼{Math.abs(p.movement)}</span>}
                   {p.movement === 0 && <span className="text-xs text-muted/50">—</span>}
                 </td>
                 <td className="px-3 py-2">

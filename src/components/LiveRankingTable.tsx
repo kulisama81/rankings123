@@ -19,10 +19,27 @@ interface LiveRankingTableProps {
 }
 
 function Movement({ value }: { value: number }) {
+  // For implausibly large movements (>200), display "NEW" instead of the raw number
+  // to indicate a newly-ranked player or re-entry from far down the rankings.
+  // Prevents credibility-damaging displays like "▲867" (bug-atp-jodar-rank-jump).
+  const MOVEMENT_THRESHOLD = 200;
+
+  if (value > MOVEMENT_THRESHOLD)
+    return (
+      <span className="inline-flex items-center gap-0.5 rounded-md bg-up/15 px-1.5 py-0.5 text-xs font-semibold text-up">
+        NEW
+      </span>
+    );
   if (value > 0)
     return (
       <span className="inline-flex items-center gap-0.5 rounded-md bg-up/15 px-1.5 py-0.5 text-xs font-semibold tabular-nums text-up">
         ▲{value}
+      </span>
+    );
+  if (value < -MOVEMENT_THRESHOLD)
+    return (
+      <span className="inline-flex items-center gap-0.5 rounded-md bg-down/15 px-1.5 py-0.5 text-xs font-semibold tabular-nums text-down">
+        ▼▼
       </span>
     );
   if (value < 0)
