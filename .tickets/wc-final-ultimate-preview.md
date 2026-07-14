@@ -1,6 +1,6 @@
 ---
 id: wc-final-ultimate-preview
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-13T13:48:04Z
@@ -14,6 +14,10 @@ tags: [worldcup, revenue, betting]
 ## Notes
 
 **2026-07-13T13:48:33Z**
+
+**2026-07-14T13:52:44Z**
+
+Duplicate of wc-final-predictions-page (same goal, more detailed spec)
 
 ## TIME-SENSITIVE: World Cup Final July 19 (6 days away)
 

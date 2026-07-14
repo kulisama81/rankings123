@@ -1,6 +1,6 @@
 ---
 id: betting-affiliate-signup-now
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-29T13:50:20Z
@@ -43,3 +43,7 @@ Acceptance:
 Revenue: $50-$500 CPA or 25-40% RevShare. Market: $155B→$256B (2026-2030).
 
 Impact: VERY HIGH. Effort: MEDIUM. Timeline: Start NOW (long lead time).
+
+**2026-07-14T13:52:49Z**
+
+Duplicate of wc-betting-affiliates

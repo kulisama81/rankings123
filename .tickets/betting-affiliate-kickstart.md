@@ -1,6 +1,6 @@
 ---
 id: betting-affiliate-kickstart
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-01T13:50:47Z
@@ -47,3 +47,7 @@ What this gates:
 - ALL betting content monetization
 
 Action: USER must sign up TODAY (manual task, requires business verification). Can't be automated.
+
+**2026-07-14T13:52:49Z**
+
+Duplicate of wc-betting-affiliates (same action, World Cup context)

@@ -1,6 +1,6 @@
 ---
 id: wc-final-preview-ultimate
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-11T13:50:13Z
@@ -20,6 +20,10 @@ Final preview page live by July 17, comprehensive analysis (teams/players/tactic
 ## Notes
 
 **2026-07-11T13:50:18Z**
+
+**2026-07-14T13:52:45Z**
+
+Duplicate of wc-final-predictions-page
 
 ## PEAK TOURNAMENT MOMENT: Final July 19 (8 days away)
 
