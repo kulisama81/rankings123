@@ -1,6 +1,6 @@
 # Rankings123 Design Identity (North Star)
 
-*Last updated: 2026-07-12*
+*Last updated: 2026-07-15*
 
 This document defines the visual identity for rankings123.com — a **distinctive, premium sports rankings hub** that stands out from commodity sites like live-tennis.eu. Data is always the hero; beauty serves scannability.
 
@@ -22,6 +22,8 @@ This document defines the visual identity for rankings123.com — a **distinctiv
 - **Monospace/Tabular:** Geist Mono (for data tables)
 - **Broadcast variant:** Oswald (condensed uppercase, TV scoreboard aesthetic)
 - **Classic variant:** Source Serif 4 (editorial almanac feel)
+
+**Performance optimization (2026-07-15):** All 5 fonts configured with `display: 'swap'` to prevent render-blocking and improve LCP. Fonts show fallback text immediately, then swap in when loaded — no invisible text (FOIT), better Core Web Vitals.
 
 ### Scale & Hierarchy
 Current scale is functional but **can go bolder** on key data:

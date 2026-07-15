@@ -14,6 +14,13 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-07-15",
+    title: "Faster Page Load Performance",
+    description:
+      "Optimized font loading across all pages — fonts now display swap behavior for immediate text visibility and improved Core Web Vitals. Pages load faster, especially on slower connections.",
+    area: "site",
+  },
+  {
+    date: "2026-07-15",
     title: "UCI World Ranking",
     description:
       "New UCI Cycling World Rankings page showing top 100+ professional cyclists ranked by points across all disciplines. Updated daily from CyclingRanking.com.",

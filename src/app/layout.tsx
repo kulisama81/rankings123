@@ -10,11 +10,13 @@ import "./globals.css";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
 // Distinctive sporty display face for headings / hero (not Inter/Roboto/Arial).
@@ -22,6 +24,7 @@ const archivo = Archivo({
   variable: "--font-archivo",
   subsets: ["latin"],
   weight: ["600", "700", "800", "900"],
+  display: "swap",
 });
 
 // Display faces for the alternate designs: Oswald (Broadcast, condensed) + a serif (Classic).
@@ -29,11 +32,13 @@ const oswald = Oswald({
   variable: "--font-oswald",
   subsets: ["latin"],
   weight: ["500", "600", "700"],
+  display: "swap",
 });
 const sourceSerif = Source_Serif_4({
   variable: "--font-serif",
   subsets: ["latin"],
   weight: ["600", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
