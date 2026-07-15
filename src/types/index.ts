@@ -276,3 +276,20 @@ export interface TdfSnapshot {
   jerseys: TdfJerseyLeader[]; // Jersey leaders
   source: "wikipedia" | "letour" | "mock";
 }
+
+// --- UCI Cycling World Ranking ---
+export interface UciRider {
+  rank: number;
+  name: string;
+  team: string;
+  country: string;
+  countryCode: string;
+  points: number;
+  movement?: number; // positive = up, negative = down, 0 = same (requires historical tracking)
+}
+
+export interface UciRankingSnapshot {
+  lastUpdated: string; // ISO timestamp
+  source: "cyclingranking" | "firstcycling" | "mock";
+  riders: UciRider[];
+}

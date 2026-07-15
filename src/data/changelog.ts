@@ -13,6 +13,13 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-07-15",
+    title: "UCI World Ranking",
+    description:
+      "New UCI Cycling World Rankings page showing top 100+ professional cyclists ranked by points across all disciplines. Updated daily from CyclingRanking.com.",
+    area: "cycling",
+  },
+  {
     date: "2026-07-14",
     title: "World Cup Final 2026 Predictions Page",
     description:
