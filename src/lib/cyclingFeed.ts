@@ -76,19 +76,20 @@ function parseStages(html: string): TdfStage[] {
     if (winnerCellIndex >= 0 && cells[winnerCellIndex]) {
       const winnerCell = cells[winnerCellIndex];
       // Find all <a> tags, and take the last one (the winner name, not the flag)
-      const allLinks = [...winnerCell.matchAll(/<a[^>]*>([^<]+)<\/a>/g)];
-      if (allLinks.length > 0) {
-        // Take the last link (the winner name, after the flag)
-        const winnerMatch = allLinks[allLinks.length - 1];
-        if (winnerMatch && winnerMatch[1]) {
-          winner = winnerMatch[1]
-            .replace(/&#160;/g, ' ')
-            .replace(/&ndash;/g, '–')
-            .replace(/&mdash;/g, '—')
-            .replace(/&#8211;/g, '–')
-            .replace(/&#8212;/g, '—')
-            .trim();
-        }
+      // Iterate through matches to find the last one (more compatible than spread operator)
+      let winnerMatch = null;
+      const linkMatches = winnerCell.matchAll(/<a[^>]*>([^<]+)<\/a>/g);
+      for (const match of linkMatches) {
+        winnerMatch = match;
+      }
+      if (winnerMatch && winnerMatch[1]) {
+        winner = winnerMatch[1]
+          .replace(/&#160;/g, ' ')
+          .replace(/&ndash;/g, '–')
+          .replace(/&mdash;/g, '—')
+          .replace(/&#8211;/g, '–')
+          .replace(/&#8212;/g, '—')
+          .trim();
       }
     }
 
