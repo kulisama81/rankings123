@@ -13,6 +13,13 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-07-16",
+    title: "Tour de France Stage Winners Fixed",
+    description:
+      "Fixed a bug where stage winners were showing as '—' instead of displaying the actual rider/team names. All completed stage results now display correctly.",
+    area: "cycling",
+  },
+  {
     date: "2026-07-15",
     title: "Faster Page Load Performance",
     description:

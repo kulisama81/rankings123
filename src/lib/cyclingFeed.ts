@@ -68,22 +68,27 @@ function parseStages(html: string): TdfStage[] {
       type = "Flat stage";
     }
 
-    // Cell 5: Winner (if stage is completed)
+    // Cell 5 or 6: Winner (if stage is completed)
     // Winner cell contains: <span class="flagicon">...</span> <a href="/wiki/...">RIDER_NAME</a>
-    // Extract the rider/team name from the <a> tag
+    // Extract the rider/team name from the <a> tag (skip the flag link)
     let winner: string | undefined;
-    if (cells.length >= 6 && cells[5]) {
-      const winnerCell = cells[5];
-      // Look for the <a> tag with the rider/team name (after the flag icon)
-      const winnerMatch = winnerCell.match(/<a[^>]*>([^<]+)<\/a>/);
-      if (winnerMatch) {
-        winner = winnerMatch[1]
-          .replace(/&#160;/g, ' ')
-          .replace(/&ndash;/g, '–')
-          .replace(/&mdash;/g, '—')
-          .replace(/&#8211;/g, '–')
-          .replace(/&#8212;/g, '—')
-          .trim();
+    const winnerCellIndex = cells.length >= 7 ? 6 : (cells.length >= 6 ? 5 : -1);
+    if (winnerCellIndex >= 0 && cells[winnerCellIndex]) {
+      const winnerCell = cells[winnerCellIndex];
+      // Find all <a> tags, and take the last one (the winner name, not the flag)
+      const allLinks = [...winnerCell.matchAll(/<a[^>]*>([^<]+)<\/a>/g)];
+      if (allLinks.length > 0) {
+        // Take the last link (the winner name, after the flag)
+        const winnerMatch = allLinks[allLinks.length - 1];
+        if (winnerMatch && winnerMatch[1]) {
+          winner = winnerMatch[1]
+            .replace(/&#160;/g, ' ')
+            .replace(/&ndash;/g, '–')
+            .replace(/&mdash;/g, '—')
+            .replace(/&#8211;/g, '–')
+            .replace(/&#8212;/g, '—')
+            .trim();
+        }
       }
     }
 
