@@ -49,7 +49,7 @@ export default async function WorldCupScenariosPage() {
         </Link>
 
         <HeroBanner
-          icon="⚽"
+          sport="worldcup"
           title="Group Qualification Scenarios"
           subtitle="Simulate match results to see who advances from each group"
           stats={[

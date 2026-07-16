@@ -48,7 +48,7 @@ export default async function KnockoutBracketPage() {
           ← Back to World Cup
         </Link>
         <HeroBanner
-          icon="🏆"
+          sport="general"
           title="World Cup 2026 Knockout Bracket"
           subtitle="Live results · Upcoming fixtures · Path to the final"
           stats={[

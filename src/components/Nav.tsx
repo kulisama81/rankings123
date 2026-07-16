@@ -5,12 +5,13 @@ import { usePathname } from "next/navigation";
 import ThemeToggle from "./ThemeToggle";
 import DesignSwitcher from "./DesignSwitcher";
 import Logo from "./Logo";
+import SportIcon from "./SportIcon";
 
 const tabs = [
-  { href: "/atp-live", label: "ATP", sport: "atp" },
-  { href: "/wta-live", label: "WTA", sport: "wta" },
-  { href: "/world-cup", label: "World Cup", sport: "worldcup" },
-  { href: "/cycling", label: "Cycling", sport: "cycling" },
+  { href: "/atp-live", label: "ATP", sport: "atp", icon: "tennis" as const },
+  { href: "/wta-live", label: "WTA", sport: "wta", icon: "tennis" as const },
+  { href: "/world-cup", label: "World Cup", sport: "worldcup", icon: "football" as const },
+  { href: "/cycling", label: "Cycling", sport: "cycling", icon: "cycling" as const },
 ];
 
 export default function Nav() {
@@ -32,10 +33,11 @@ export default function Nav() {
                 href={t.href}
                 aria-current={active ? "page" : undefined}
                 data-nav-sport={t.sport}
-                className={`btn-base whitespace-nowrap rounded-full ${
+                className={`btn-base whitespace-nowrap rounded-full flex items-center gap-1.5 ${
                   active ? "btn-nav-active" : "btn-nav-inactive"
                 }`}
               >
+                <SportIcon type={t.icon} size={16} className="opacity-80" />
                 {t.label}
               </Link>
             );

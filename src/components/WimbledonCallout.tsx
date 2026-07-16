@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SportIcon from "./SportIcon";
 
 function getCurrentRound(now: Date): string {
   const year = 2026;
@@ -51,7 +52,9 @@ export default function WimbledonCallout({ variant = "full" }: { variant?: "full
           className="group flex items-center justify-between rounded-2xl border border-purple-500/30 bg-gradient-to-r from-purple-500/10 to-green-600/10 p-4 transition hover:border-purple-500/50 hover:from-purple-500/15 hover:to-green-600/15"
         >
           <div className="flex items-center gap-3">
-            <span className="text-2xl" aria-hidden="true">🎾</span>
+            <div className="text-accent" aria-hidden="true">
+              <SportIcon type="tennis" size={28} />
+            </div>
             <div>
               <div className="flex items-center gap-2">
                 <span className="font-display text-base font-bold text-fg">
@@ -89,7 +92,9 @@ export default function WimbledonCallout({ variant = "full" }: { variant?: "full
         <div className="relative">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-4">
-              <span className="text-4xl drop-shadow-sm sm:text-5xl" aria-hidden="true">🎾</span>
+              <div className="text-accent drop-shadow-sm" aria-hidden="true">
+                <SportIcon type="tennis" size={48} />
+              </div>
               <div>
                 <div className="flex flex-wrap items-center gap-2.5">
                   <h2 className="font-display text-2xl font-extrabold leading-none text-fg sm:text-3xl">

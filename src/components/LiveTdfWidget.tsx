@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import SportIcon from "./SportIcon";
 import type { TdfSnapshot } from "@/types";
 
 export default function LiveTdfWidget() {
@@ -66,8 +67,18 @@ export default function LiveTdfWidget() {
             <div className="mb-1 text-sm font-medium text-muted">
               {tdfData.currentStage ? `Stage ${tdfData.currentStage}` : "In Progress"}
             </div>
-            <div className="text-xl font-bold text-fg sm:text-2xl">
-              {hasGCData ? "🏆 General Classification" : "🟡 Yellow Jersey Leader"}
+            <div className="flex items-center gap-2 text-xl font-bold text-fg sm:text-2xl">
+              {hasGCData ? (
+                <>
+                  <SportIcon type="trophy" size={24} className="text-trophy" />
+                  <span>General Classification</span>
+                </>
+              ) : (
+                <>
+                  <SportIcon type="jersey-yellow" size={24} className="text-accent" />
+                  <span>Yellow Jersey Leader</span>
+                </>
+              )}
             </div>
           </div>
           <span className="text-2xl text-accent transition group-hover:translate-x-1">
@@ -84,7 +95,11 @@ export default function LiveTdfWidget() {
                 className="flex items-center gap-3 rounded-lg border border-edge bg-surface2 p-3"
               >
                 <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-accent text-sm font-bold text-base">
-                  {idx === 0 ? "🟡" : rider.rank}
+                  {idx === 0 ? (
+                    <SportIcon type="jersey-yellow" size={16} className="text-base" />
+                  ) : (
+                    rider.rank
+                  )}
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="truncate text-sm font-bold text-fg sm:text-base">
@@ -104,8 +119,8 @@ export default function LiveTdfWidget() {
           /* Fallback: Yellow jersey leader only (pre-race or GC data not yet available) */
           yellowJersey?.rider && (
             <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-accent text-2xl font-bold">
-                🚴
+              <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-accent">
+                <SportIcon type="cycling" size={28} className="text-base" />
               </div>
               <div className="min-w-0">
                 <div className="truncate text-lg font-bold text-fg">

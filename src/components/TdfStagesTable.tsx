@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import SportIcon from "./SportIcon";
 import type { TdfStage } from "@/types";
 
 interface TdfStagesTableProps {
@@ -8,21 +9,21 @@ interface TdfStagesTableProps {
   currentStage?: number;
 }
 
-// Icon/emoji for stage type
-function stageTypeIcon(type: TdfStage["type"]): string {
+// Icon type for stage type
+function stageTypeIcon(type: TdfStage["type"]): 'team-tt' | 'individual-tt' | 'mountain' | 'uphill-finish' | 'flat' | 'cycling' {
   switch (type) {
     case "Team time trial":
-      return "👥";
+      return "team-tt";
     case "Individual time trial":
-      return "⏱️";
+      return "individual-tt";
     case "Mountain stage":
-      return "⛰️";
+      return "mountain";
     case "Hilly stage":
-      return "📈";
+      return "uphill-finish";
     case "Flat stage":
-      return "🏁";
+      return "flat";
     default:
-      return "🚴";
+      return "cycling";
   }
 }
 
@@ -83,7 +84,7 @@ export default function TdfStagesTable({ stages, currentStage }: TdfStagesTableP
                   <td className="px-3 py-3 text-center text-secondary">{stage.distance}</td>
                   <td className="px-3 py-3">
                     <span className={`flex items-center gap-1.5 ${stageTypeColor(stage.type)}`}>
-                      <span>{stageTypeIcon(stage.type)}</span>
+                      <SportIcon type={stageTypeIcon(stage.type)} size={18} />
                       <span>{stage.type}</span>
                     </span>
                   </td>

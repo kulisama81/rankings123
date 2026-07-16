@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { AtpLiveSnapshot } from "@/types";
 import HeroBanner from "./HeroBanner";
 import LiveRankingTable from "./LiveRankingTable";
+import SportIcon from "./SportIcon";
 
 interface WimbledonTournamentViewProps {
   atpSnapshot: AtpLiveSnapshot;
@@ -79,7 +80,7 @@ export default function WimbledonTournamentView({
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
       <HeroBanner
-        icon="🎾"
+        sport="tennis"
         title="Wimbledon 2026"
         subtitle="The Championships • Live Rankings & Results"
         stats={stats}
@@ -134,8 +135,9 @@ export default function WimbledonTournamentView({
       {isTournamentConcluded && (
         <div className="mb-8 rounded-lg bg-surface-elevated p-6">
           <div className="mb-4 text-center">
-            <h2 className="text-xl font-bold text-default">
-              🏆 Wimbledon 2026 Champions
+            <h2 className="flex items-center justify-center gap-2 text-xl font-bold text-fg">
+              <SportIcon type="trophy" size={24} className="text-trophy" />
+              <span>Wimbledon 2026 Champions</span>
             </h2>
             <p className="mt-1 text-sm text-muted">
               The Championships • June 29 - July 12, 2026

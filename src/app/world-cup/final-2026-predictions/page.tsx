@@ -51,7 +51,7 @@ export default async function WorldCupFinalPredictionsPage() {
     <div data-sport="worldcup" className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       {/* Hero Banner */}
       <HeroBanner
-        icon="🏆"
+        sport="general"
         title="World Cup 2026 Final"
         subtitle="Expert predictions · Tactical analysis · Match preview"
         stats={

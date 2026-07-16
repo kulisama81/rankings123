@@ -1,25 +1,50 @@
+import SportIcon from './SportIcon';
+import HeroSportTexture from './HeroSportTexture';
+
 interface Stat {
   label: string;
   value: string;
 }
 
+type SportType = 'tennis' | 'worldcup' | 'cycling' | 'general';
+
 interface HeroBannerProps {
-  icon: string;
+  icon?: string; // Deprecated: use sport instead
+  sport?: SportType;
   title: string;
   subtitle?: string;
   live?: boolean;
   stats?: Stat[];
 }
 
-export default function HeroBanner({ icon, title, subtitle, live = true, stats }: HeroBannerProps) {
+export default function HeroBanner({ icon, sport = 'general', title, subtitle, live = true, stats }: HeroBannerProps) {
+  // Map icon emoji to sport type for backward compatibility
+  const sportFromIcon = icon === '🎾' ? 'tennis'
+    : icon === '⚽' ? 'worldcup'
+    : icon === '🚴' ? 'cycling'
+    : 'general';
+
+  const activeSport = sport !== 'general' ? sport : sportFromIcon;
+
+  // Map sport to icon type
+  const iconType = activeSport === 'tennis' ? 'tennis'
+    : activeSport === 'worldcup' ? 'football'
+    : activeSport === 'cycling' ? 'cycling'
+    : 'trophy';
+
   return (
     <div className="animate-entrance-hero relative mb-6 overflow-hidden rounded-3xl border border-edge bg-surface">
+      {/* Sport-specific texture background */}
+      <HeroSportTexture sport={activeSport} />
+
       {/* accent depth */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-accent/20 via-accent/5 to-transparent" />
       <div className="pointer-events-none absolute -right-20 -top-24 h-64 w-64 rounded-full bg-accent/25 blur-3xl" />
       <div className="relative px-5 py-6 sm:px-8 sm:py-8">
         <div className="flex items-center gap-3.5">
-          <span className="text-4xl drop-shadow-sm sm:text-5xl" aria-hidden="true">{icon}</span>
+          <div className="text-accent drop-shadow-sm" aria-hidden="true">
+            <SportIcon type={iconType} size={48} />
+          </div>
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2.5">
               <h1 className="font-display text-3xl font-extrabold leading-none text-fg sm:text-[2.6rem]">

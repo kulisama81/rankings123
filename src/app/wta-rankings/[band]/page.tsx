@@ -60,7 +60,7 @@ export default async function WtaRankingBandPage({ params }: BandPageProps) {
       />
       <div data-sport="wta" className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
         <HeroBanner
-          icon="🎾"
+          sport="tennis"
           title={`WTA Rankings ${band.label}`}
           subtitle={snapshot.weekLabel}
           stats={[

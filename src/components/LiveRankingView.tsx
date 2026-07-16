@@ -109,7 +109,7 @@ export default function LiveRankingView({ tour, snapshot }: LiveRankingViewProps
   return (
     <div data-sport={tour} className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
       <HeroBanner
-        icon="🎾"
+        sport="tennis"
         title={`${tourLabel} Live Ranking`}
         subtitle={snapshot.weekLabel}
         stats={stats}

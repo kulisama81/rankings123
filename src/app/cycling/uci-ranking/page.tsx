@@ -40,7 +40,7 @@ export default async function UciRankingPage() {
       />
       <div className="min-h-screen bg-base">
         <HeroBanner
-          icon="🚴"
+          sport="cycling"
           title="UCI World Ranking"
           subtitle={`Top ${rankingData.riders.length} professional cyclists`}
           live={false}

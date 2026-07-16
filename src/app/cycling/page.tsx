@@ -49,7 +49,7 @@ export default async function CyclingPage() {
       />
       <div className="min-h-screen bg-base">
         <HeroBanner
-          icon="🚴"
+          sport="cycling"
           title="Tour de France 2026"
           subtitle={
             tdfData.raceStatus === "upcoming"

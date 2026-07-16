@@ -1,6 +1,7 @@
 "use client";
 
 import type { TdfJerseyLeader } from "@/types";
+import SportIcon from "./SportIcon";
 
 interface TdfJerseysProps {
   jerseys: TdfJerseyLeader[];
@@ -14,11 +15,18 @@ const jerseyColors = {
   white: "bg-surface border-edge",
 };
 
-const jerseyIcons = {
-  yellow: "🟡",
-  green: "🟢",
-  "polka-dot": "🔴",
-  white: "⚪",
+const jerseyIconTypes = {
+  yellow: "jersey-yellow" as const,
+  green: "jersey-green" as const,
+  "polka-dot": "jersey-polkadot" as const,
+  white: "jersey-white" as const,
+};
+
+const jerseyIconColors = {
+  yellow: "text-warning",
+  green: "text-emerald-500",
+  "polka-dot": "text-error",
+  white: "text-fg",
 };
 
 export default function TdfJerseys({ jerseys, raceStatus }: TdfJerseysProps) {
@@ -28,7 +36,8 @@ export default function TdfJerseys({ jerseys, raceStatus }: TdfJerseysProps) {
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {jerseys.map((jersey) => {
         const colorClass = jerseyColors[jersey.jersey];
-        const icon = jerseyIcons[jersey.jersey];
+        const iconType = jerseyIconTypes[jersey.jersey];
+        const iconColor = jerseyIconColors[jersey.jersey];
 
         return (
           <div
@@ -36,9 +45,9 @@ export default function TdfJerseys({ jerseys, raceStatus }: TdfJerseysProps) {
             className={`rounded-2xl border ${colorClass} p-4 transition hover:scale-[1.02]`}
           >
             <div className="mb-3 flex items-center gap-2">
-              <span className="text-2xl" role="img" aria-label={jersey.jersey}>
-                {icon}
-              </span>
+              <div className={iconColor} aria-label={jersey.jersey}>
+                <SportIcon type={iconType} size={28} />
+              </div>
               <div className="text-xs font-semibold uppercase tracking-wide text-muted">
                 {jersey.jersey} jersey
               </div>

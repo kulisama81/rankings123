@@ -102,7 +102,7 @@ export default async function WorldCupPage() {
       />
       <div data-sport="worldcup" className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
         <HeroBanner
-          icon="⚽"
+          sport="worldcup"
           title="World Cup 2026 Live"
           subtitle={`FIFA World Cup 2026 · ${snapshot.stageLabel}`}
           stats={[
