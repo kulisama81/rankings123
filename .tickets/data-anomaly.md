@@ -1,6 +1,6 @@
 ---
 id: data-anomaly
-status: closed
+status: open
 deps: []
 links: []
 created: 2026-06-26T22:00:00.906Z
@@ -16,10 +16,12 @@ fabricated, mis-parsed, or mis-sourced. **Planner: investigate the relevant feed
 fix it, re-run `npm run check:data-sanity` until clean, log the resolution in the Log below,
 then close this ticket.** Do NOT close while `check:data-sanity` still reports errors.
 
-## Anomalies (latest run · 2026-07-13T20:11:06.587Z)
-- [cycling] GC standings empty when race is active (stale data — see bug-tdf-live-data-stale)
+## Anomalies (latest run · 2026-07-16T04:00:00.399Z)
+- [cycling] serving mock data when Tour de France should be live (race started July 4)
+- [cycling] 12 days into race, but all stage winners show "—" (stale data)
 
 ## Log
+- 2026-07-16T04:00:00.399Z: 2 anomalies — [cycling] serving mock data when Tour de France should be live (race started July 4) (…)
 - 2026-07-13T20:30:00.000Z: **RESOLVED** — Fixed in commit a4e6077. The TdF GC standings were empty because the scraper was using outdated Wikipedia selectors. Updated `src/lib/tdfFeed.ts` to parse the current Wikipedia table structure. Added regression test in `tests/tdf-gc-parse.test.js`. Verified: `npm run check:data-sanity` passes cleanly.
 - 2026-07-13T20:11:06.587Z: 1 anomalies — [cycling] GC standings empty when race is active (stale data — see bug-tdf-live-data-stale)
 - 2026-07-13T18:18:25.054Z: 3 anomalies — [atp] Rafael Jodar (rank 26) shows implausible movement of +870 positions (…)
