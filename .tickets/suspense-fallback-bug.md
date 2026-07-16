@@ -1,6 +1,6 @@
 ---
 id: suspense-fallback-bug
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-27T05:05:35Z
@@ -10,6 +10,26 @@ parent: rankings123
 tags: [bug, ui, atp, wta]
 ---
 # ATP/WTA Live: Suspense fallback 'Loading table...' renders with loaded content
+
+## Acceptance Criteria
+
+1. Visit https://rankings123.com/atp-live - NO "Loading table..." text visible anywhere on the page when table has loaded
+2. Visit https://rankings123.com/wta-live - NO "Loading table..." text visible anywhere on the page when table has loaded
+3. ATP Live page renders ranking data only once (no duplicate table/list rendering)
+4. **REGRESSION TEST REQUIRED** (per CLAUDE.md - all bug fixes must ship with a test):
+   - Add test in `tests/suspense-fallback.test.js` (run via `npm test`)
+   - Test must verify:
+     - Render LiveRankingView component with snapshot data
+     - Assert "Loading table..." text does NOT appear in rendered output
+     - Assert ranking table renders with player data
+     - Test should FAIL on current code, PASS when fixed
+5. Run `npm test` — all tests green
+6. Run `npm run build` — succeeds
+7. Run `npx eslint src --max-warnings=0` — clean
+8. Verify on LIVE production after deploy:
+   - ATP Live: no "Loading table..." text, single data rendering
+   - WTA Live: no "Loading table..." text
+9. Commit includes the regression test
 
 ## Bug Report
 
@@ -58,26 +78,6 @@ The Suspense fallback is rendering alongside the loaded content instead of being
 1. The LiveRankingTable component is still in a suspended state
 2. Both the fallback and children are rendering (React Suspense boundary bug)
 3. The component isn't properly resolving the Suspense condition
-
-## Acceptance Criteria
-
-1. Visit https://rankings123.com/atp-live - NO "Loading table..." text visible anywhere on the page when table has loaded
-2. Visit https://rankings123.com/wta-live - NO "Loading table..." text visible anywhere on the page when table has loaded
-3. ATP Live page renders ranking data only once (no duplicate table/list rendering)
-4. **REGRESSION TEST REQUIRED** (per CLAUDE.md - all bug fixes must ship with a test):
-   - Add test in `tests/suspense-fallback.test.js` (run via `npm test`)
-   - Test must verify:
-     - Render LiveRankingView component with snapshot data
-     - Assert "Loading table..." text does NOT appear in rendered output
-     - Assert ranking table renders with player data
-     - Test should FAIL on current code, PASS when fixed
-5. Run `npm test` — all tests green
-6. Run `npm run build` — succeeds
-7. Run `npx eslint src --max-warnings=0` — clean
-8. Verify on LIVE production after deploy:
-   - ATP Live: no "Loading table..." text, single data rendering
-   - WTA Live: no "Loading table..." text
-9. Commit includes the regression test
 
 ## Related Tickets
 
