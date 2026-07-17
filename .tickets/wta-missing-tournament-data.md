@@ -1,6 +1,6 @@
 ---
 id: wta-missing-tournament-data
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-06T18:00:00Z
@@ -10,6 +10,32 @@ parent: rankings123
 tags: [bug, wta, data]
 ---
 # WTA Live: Missing tournament data for some players (shows "—")
+
+## Acceptance Criteria
+
+1. All WTA players show consistent tournament status:
+   - Either proper tournament name + status
+   - OR a consistent indicator for "not in tournament" (applied to ALL such players)
+2. No "—" or "——" placeholders in the table
+3. Ranking movement arrows (▲/▼) consistent with point deltas
+4. Data source properly handles missing/null tournament data
+5. **REGRESSION TEST REQUIRED:**
+   - Add test in `tests/wta-tournament-data.test.js` (run via `npm test`)
+   - Test must verify:
+     - WTA ranking data structure has consistent tournament fields
+     - No "—" or "——" strings in rendered tournament status
+     - Ranking movement direction matches point delta sign
+   - Include `scripts/check-data-sanity.mjs` invariant:
+     - Check WTA data for "—" placeholders
+     - Verify movement/delta consistency
+   - Test should FAIL on current data, PASS when fixed
+6. Run `npm test` — all tests green
+7. Run `npm run check:data-sanity` — passes
+8. Run `npm run build` — succeeds
+9. Verify on LIVE production after deploy:
+   - Visit https://rankings123.com/wta-live
+   - All players show consistent tournament data
+   - No "—" placeholders visible
 
 ## Bug Report
 
@@ -45,29 +71,3 @@ Inconsistent display with "—" and "——" mixed with proper tournament data
 - Data inconsistency confuses users
 - Unclear whether "—" means "no data," "not playing," or something else
 - Contradictory ranking movement vs. point changes
-
-## Acceptance Criteria
-
-1. All WTA players show consistent tournament status:
-   - Either proper tournament name + status
-   - OR a consistent indicator for "not in tournament" (applied to ALL such players)
-2. No "—" or "——" placeholders in the table
-3. Ranking movement arrows (▲/▼) consistent with point deltas
-4. Data source properly handles missing/null tournament data
-5. **REGRESSION TEST REQUIRED:**
-   - Add test in `tests/wta-tournament-data.test.js` (run via `npm test`)
-   - Test must verify:
-     - WTA ranking data structure has consistent tournament fields
-     - No "—" or "——" strings in rendered tournament status
-     - Ranking movement direction matches point delta sign
-   - Include `scripts/check-data-sanity.mjs` invariant:
-     - Check WTA data for "—" placeholders
-     - Verify movement/delta consistency
-   - Test should FAIL on current data, PASS when fixed
-6. Run `npm test` — all tests green
-7. Run `npm run check:data-sanity` — passes
-8. Run `npm run build` — succeeds
-9. Verify on LIVE production after deploy:
-   - Visit https://rankings123.com/wta-live
-   - All players show consistent tournament data
-   - No "—" placeholders visible

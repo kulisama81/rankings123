@@ -108,3 +108,44 @@ When a player appears in ESPN's rankings, use BOTH `espn.rank` AND `espn.points`
 ---
 
 **Summary:** Both tickets were Tier 1 (data integrity/quality issues). The WTA ticket was actually a UX confusion issue, not a data bug. The ATP ticket was a real data merge bug from source lag. Both now have regression tests guarding against recurrence.
+## TENNIS LANE PLANNER SESSION SUMMARY
+
+**Session:** 2026-07-17 (Tennis-only lane)  
+**Duration:** ~15 minutes  
+**Tickets shipped:** 1
+
+### ✅ COMPLETED
+
+**wta-missing-tournament-data** (p2 bug → Tier 1: Broken)
+- **Problem:** WTA/ATP live rankings showed ambiguous "—" placeholders causing user confusion about whether data was missing or zero
+- **Fix:** 
+  - Delta column: Show "0" instead of "—" when pointsDelta is 0 (makes it clear points didn't change)
+  - Movement column: Use "–" (en dash) instead of "—" for zero movement  
+  - Tournament column: Use "–" instead of "—" for not competing
+  - Age column: Empty cell instead of "—" for missing age
+  - Added help text explaining relative ranking changes
+- **Verification:**
+  - ✓ npm run build
+  - ✓ npx eslint src --max-warnings=0  
+  - ✓ npm run check:readability
+  - ✓ npm run check:data-sanity
+  - ✓ node --test tests/wta-tournament-data.test.js (4 new tests pass)
+  - ✓ Independent verifier found issues, fixed all em dashes
+  - ✓ Committed: c2ae726
+  - ✓ Pushed to main
+  - ✓ Vercel deploy: success
+  - ✓ Production verified: https://rankings123.com/wta-live (200)
+  - ✓ Changelog updated
+  - ✓ Ticket closed
+
+**ROI:** Medium - Improves UX clarity for all tennis ranking pages (ATP + WTA), addresses user confusion about data vs. zero values. Low effort (UI text changes + tests).
+
+### 📊 BACKLOG STATUS
+
+- **Tennis tickets remaining:** 28 open (p0-p2)
+- **Top buildable tennis tickets:**
+  - `tennis-race-live-now` (p1) - ATP/WTA Race Rankings pages (parity gap, low effort)
+  - `atp-wta-size-optimization` (p1) - Reduce page size 50% (performance, high impact)
+  - `tennis-next-week-projection` (p1) - Next-week ranking projection (parity)
+
+**Next session:** Should pick `tennis-race-live-now` or `atp-wta-size-optimization` for high ROI.
