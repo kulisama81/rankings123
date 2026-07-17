@@ -14,6 +14,13 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-07-17",
+    title: "Tour de France Stage Status Accuracy Fixed",
+    description:
+      "Fixed Tour de France page showing stale stage status ('Stage 11 in progress') when later stages had already completed. The page now correctly tracks the most recent completed stage.",
+    area: "cycling",
+  },
+  {
+    date: "2026-07-17",
     title: "Clearer WTA/ATP Ranking Data",
     description:
       "Improved clarity in tennis live rankings: point changes now show '0' (not '—') when rankings shift due to other players' results. Removed ambiguous placeholder symbols, making it clearer when data is zero vs. missing.",

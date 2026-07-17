@@ -301,14 +301,31 @@ export async function getTdfSnapshot(
 
     const raceStatus = (hasJerseyLeaders || isPastStartDate) ? "active" : "upcoming";
 
-    // Calculate current stage
+    // Calculate current stage — use the most recent completed stage from BOTH sources
     let currentStage: number | undefined;
-    if (hasJerseyLeaders && typeof jerseyLeaders.latestStage === 'number') {
-      // We have jersey data with a valid stage number
-      currentStage = jerseyLeaders.latestStage < 21 ? jerseyLeaders.latestStage + 1 : undefined;
-    } else if (hasJerseyLeaders || isPastStartDate) {
-      // Race is active but no complete stages yet, or we have jersey leaders without stage info
-      // Default to Stage 1
+
+    // Find the highest completed stage from the stages table (has a winner)
+    const completedStages = stages.filter(s => s.winner);
+    const latestCompletedFromStages = completedStages.length > 0
+      ? Math.max(...completedStages.map(s => s.stage))
+      : 0;
+
+    // Get latest completed stage from jersey leaders
+    const latestCompletedFromJerseys = typeof jerseyLeaders.latestStage === 'number'
+      ? jerseyLeaders.latestStage
+      : 0;
+
+    // Use whichever source shows the most recent completed stage
+    const latestCompletedStage = Math.max(latestCompletedFromStages, latestCompletedFromJerseys);
+
+    if (latestCompletedStage > 0 && latestCompletedStage < 21) {
+      // Next stage after the latest completed one
+      currentStage = latestCompletedStage + 1;
+    } else if (latestCompletedStage === 21) {
+      // Race finished
+      currentStage = undefined;
+    } else if (isPastStartDate) {
+      // Race started but no completed stages yet
       currentStage = 1;
     } else {
       // Pre-race
