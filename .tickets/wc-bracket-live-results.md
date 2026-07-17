@@ -37,3 +37,7 @@ tags: [worldcup]
 - Future/in-progress rounds can stay projected but labeled 'Projected'
 - Source flag shows 'espn' when using live data
 - Regression test: tests/worldcup-bracket-live.test.js confirms non-TBD Final when semifinals are complete
+
+**2026-07-17T13:49:52Z**
+
+2026-07-17 URGENT UPDATE: Final is in 48 HOURS (July 19, 3PM ET). Bracket STILL shows TBD for Spain vs Argentina Final. This is the #1 credibility killer during peak traffic. Every hour this persists, we lose search traffic to competitors showing the real matchup. FIRST-PRINCIPLES ROI: Users' root need is 'who's playing in the Final' - we're failing that basic test right now.

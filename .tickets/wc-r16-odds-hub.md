@@ -1,6 +1,6 @@
 ---
 id: wc-r16-odds-hub
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-04T13:50:28Z
