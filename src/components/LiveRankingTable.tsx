@@ -48,7 +48,7 @@ function Movement({ value }: { value: number }) {
         ▼{Math.abs(value)}
       </span>
     );
-  return <span className="text-xs text-muted/50">—</span>;
+  return <span className="text-xs text-muted/50" title="No change in ranking">–</span>;
 }
 
 function RankBadge({ rank }: { rank: number }) {
@@ -83,7 +83,7 @@ function LiveDot() {
 
 function Tournament({ player }: { player: AtpLivePlayer }) {
   const t = player.tournament;
-  if (!t) return <span className="text-xs text-muted/50" title="Not competing this week">—</span>;
+  if (!t) return <span className="text-xs text-muted/50" title="Not competing this week">–</span>;
   if (!t.active) return <span className="text-xs text-muted/70">{t.name} · out</span>;
   return (
     <span className="inline-flex items-center gap-1.5 text-xs text-fg/80">
@@ -96,7 +96,7 @@ function Tournament({ player }: { player: AtpLivePlayer }) {
 function Delta({ value }: { value: number }) {
   if (value > 0) return <span className="text-xs font-medium tabular-nums text-up">+{value}</span>;
   if (value < 0) return <span className="text-xs font-medium tabular-nums text-down">{value}</span>;
-  return <span className="text-xs text-muted/40">—</span>;
+  return <span className="text-xs tabular-nums text-muted/50" title="No points earned or lost this week">0</span>;
 }
 
 export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingTableProps) {
@@ -349,7 +349,7 @@ export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingT
                         <span className="text-xs text-muted">{p.countryCode}</span>
                       </span>
                     </td>
-                    <td className="px-2 py-2 text-center text-muted">{p.age || "—"}</td>
+                    <td className="px-2 py-2 text-center text-muted">{p.age || ""}</td>
                     <td className="px-3 py-2 text-right text-[15px] font-bold text-fg">
                       <Tooltip
                         content={
@@ -528,7 +528,7 @@ export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingT
       <p className="mt-3 text-xs text-muted/70">
         Live = projected ranking including points earned at this week&apos;s tournaments, estimated
         from completed results and the {snapshot.tourLabel ?? tour.toUpperCase()} points table.
-        Official = last published ranking. Tap a row to pin it.
+        Official = last published ranking. Δ = points earned/lost this week (rankings can change even when Δ=0 as other players gain/lose points). Tap a row to pin it.
         {snapshot.source === "espn" && " Data via ESPN."}
       </p>
     </div>

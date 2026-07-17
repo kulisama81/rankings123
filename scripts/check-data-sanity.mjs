@@ -79,6 +79,19 @@ function checkTennis(sport, snap) {
     warn(sport, `${missingPct.toFixed(0)}% of top-100 not competing (tour break or end-of-week)`);
   }
 
+  // Check for em dash strings in tournament data (regression guard for bug-wta-missing-tournament-data).
+  // Tournament fields should be structured objects or undefined, never placeholder strings like "—".
+  for (const p of players) {
+    if (p.tournament) {
+      if (typeof p.tournament === "string") {
+        err(sport, `${p.name}: tournament field is string "${p.tournament}" (should be object or undefined)`);
+      }
+      if (p.tournament.name === "—" || p.tournament.round === "—") {
+        err(sport, `${p.name}: tournament contains em dash placeholders (name: "${p.tournament.name}", round: "${p.tournament.round}")`);
+      }
+    }
+  }
+
   let prevRank = 0;
   let prevPts = Infinity;
   let nameDupes = new Set();
