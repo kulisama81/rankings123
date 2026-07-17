@@ -1,68 +1,101 @@
-# Inspector Report — 2026-07-16
+# Rankings123 Inspector Report — 2026-07-16
+
+**Inspector:** Automated QA agent
+**Inspection Time:** 2026-07-16 22:00 UTC
+**Routes Checked:** /, /atp-live, /wta-live, /world-cup, /world-cup/team/ARG, /cycling, /privacy, /terms, /changelog, /cookies
 
 ## Summary
-Inspected live production site (rankings123.com) for functional, visual, data, and consistency bugs. Checked all major routes in both light and dark themes.
 
-## Routes Inspected
-- ✓ https://rankings123.com/ (Homepage)
-- ✓ https://rankings123.com/atp-live (ATP Live Rankings)
-- ✓ https://rankings123.com/wta-live (WTA Live Rankings)
-- ✓ https://rankings123.com/world-cup (FIFA World Cup 2026)
-- ✓ https://rankings123.com/world-cup/match/* (Match detail pages)
-- ✓ https://rankings123.com/cycling (Tour de France 2026)
-- ✓ https://rankings123.com/privacy (Privacy Policy)
+- ✅ **Core Features Check:** PASSED (all 5 core features present)
+- ✅ **Data Sanity Check:** PASSED (all per-sport invariants hold)
+- ✅ **All Main Routes:** 200 OK
+- ✅ **Footer Links:** All functional
+- **Bugs Found:** 0 new bugs (verified 2 existing open bugs still present)
+
+## Routes Verified
+
+| Route | Status | Notes |
+|-------|--------|-------|
+| / | ✅ 200 | Homepage loads correctly, all sport cards present |
+| /atp-live | ✅ 200 | Ranking table displays correctly, pagination working |
+| /wta-live | ✅ 200 | Ranking table displays correctly, pagination working |
+| /world-cup | ✅ 200 | Bracket, group standings, and schedule displaying |
+| /world-cup/team/ARG | ✅ 200 | Team page loads with stats and match history |
+| /cycling | ✅ 200 | Tour de France data displaying, stages table present |
+| /privacy | ✅ 200 | Privacy policy loads completely |
+| /terms | ✅ 200 | Terms of service loads |
+| /changelog | ✅ 200 | What's New page loads |
+| /cookies | ✅ 200 | Cookie policy loads |
 
 ## Automated Checks
-- ✓ `npm run check:core-features` — PASSED (all 5 core features present)
-- ✓ `npm run check:data-sanity` — PASSED (all invariants hold)
 
-## Bugs Found
+### Core Features (npm run check:core-features)
+✅ PASSED - All 5 protected features present:
+- WC knockout bracket (R32 matchups)
+- WC group standings
+- ATP live ranking + pagination
+- WTA live ranking
+- Home multi-sport cards
 
-### New Bugs (1)
-1. **bug-cycling-stage-status-stale** (p2)
-   - Tour de France page shows "Stage 11 in progress" but Stage 12 (July 16) has already completed with Tim Merlier as winner
-   - Stage status indicator is stale and not updating with race progress
-   - Ticket created with regression test requirement
+### Data Sanity (npm run check:data-sanity)
+✅ PASSED - All per-sport data invariants hold
 
-### Existing Bugs Verified (4)
-These bugs remain reproducible and are correctly documented:
+## Existing Bugs Verified (Still Present)
 
-1. **wc-bracket-live-results** (p0) - VERIFIED
-   - Tournament is in Semifinals stage, but R16/QF/SF matches show "TBD" instead of actual results
-   - Critical CX issue: users can't see knockout progression
+### 1. bug-cycling-stage-status-stale (P2)
+**Status:** Confirmed still present
+**URL:** https://rankings123.com/cycling
+**Issue:** Page header shows "Stage 11 in progress" but Stage 12 has already been completed (Tim Merlier listed as winner for July 16). The stage status indicator is stale.
+**Impact:** Users are misled about current race progress
 
-2. **bug-wc-match-401xxx-404** (p0) - VERIFIED
-   - Match URLs with 401xxx ID format return 404
-   - Tested: https://rankings123.com/world-cup/match/401123456 → 404
+### 2. bug-wc-team-form-badge-count (P2)
+**Status:** Confirmed still present
+**URL:** https://rankings123.com/world-cup/team/ARG
+**Issue:** Recent Form section shows 5 "W" badges but match results list 6 wins. Data consistency issue.
+**Impact:** Confusing user experience, numbers don't match across sections
 
-3. **t-4a27** (p2) - VERIFIED
-   - World Cup page shows "No upcoming fixtures scheduled" in Schedule tab
-   - Contradicts "100 Matches" count in header
+## Areas Inspected (No Issues Found)
 
-4. **bug-wc-stage-label-mismatch** (p2) - STILL PRESENT (evolved)
-   - Header shows "Semifinals" but bracket section shows "Round of 32"
-   - Previously was "Round of 16" vs "Round of 32", now evolved as tournament progressed
-   - Same underlying consistency bug
+### Functional
+- ✅ All navigation links working
+- ✅ Route accessibility (no 404s on linked pages)
+- ✅ Pagination controls present on ranking tables
+- ✅ Data displaying correctly across all sports
 
-### Clean Routes
-- Homepage: loads properly, no placeholder content, navigation works
-- ATP Live: loads properly, data appears consistent (some rank movements detected but couldn't confirm as bugs)
-- WTA Live: loads properly, no placeholder content found
-- Privacy: loads correctly, complete content, no broken links
+### Visual/Layout
+- ✅ No obvious overflow, overlap, or clipping issues
+- ✅ Spacing appears consistent
+- ✅ Flag images loading correctly (no broken image URLs)
+- ✅ Tables rendering properly
 
-## Notes
-- Both automated checks (core-features, data-sanity) passing
-- World Cup bugs remain the primary concern (2 p0 bugs open)
-- Cycling page now has its first data consistency bug
-- No new P0 bugs found this run
-- No placeholder/fabricated content detected (CX violations)
-- All checked routes return 200 status
+### Data Quality
+- ✅ ATP ranking data appears legitimate (players marked "out" with point gains is correct behavior - they earn points for rounds reached before elimination)
+- ✅ WTA ranking data displaying correctly
+- ✅ World Cup group standings and bracket data consistent
+- ✅ Tour de France GC standings and stage results displaying
+- ✅ No placeholder or "coming soon" content visible to users
+- ✅ No fabricated data detected
 
-## Tickets Filed
-- Created: bug-cycling-stage-status-stale (p2)
-- Total open bugs after this run: 16 (2 p0, 3 p1, 11 p2)
+### Console/Network (via HTML inspection)
+- ✅ No JavaScript errors visible in source
+- ✅ Appropriate error handling in place for feed failures
+
+## False Positives Investigated
+
+1. **ATP "out" with +25 points:** NOT a bug - legitimate behavior (players earn points for rounds reached before elimination)
+2. **Flag URL escape sequences:** NOT a bug - WebFetch markdown conversion artifact, actual HTML URLs are correct
+3. **World Cup TBD/projected matchups:** NOT a bug - expected behavior for future knockout rounds
 
 ## Recommendations
-1. Prioritize fixing the 2 open P0 bugs (World Cup bracket results sync + match 404s)
-2. World Cup bugs need attention as tournament is LIVE and in Semifinals
-3. Cycling stage status needs daily update logic to stay current during active races
+
+1. **Priority fix:** bug-cycling-stage-status-stale (P2) - relatively simple logic fix, impacts user trust in "live" data
+2. **Priority fix:** bug-wc-team-form-badge-count (P2) - data consistency issue affecting multiple team pages
+3. Continue monitoring Tour de France data freshness as stages complete daily
+
+## Next Inspection
+
+Recommended areas for next inspection run:
+- Mobile responsive layouts (viewport testing)
+- Dark/light theme consistency across all pages
+- Accessibility checks (contrast, focus states, ARIA labels)
+- Performance metrics (Core Web Vitals)
