@@ -5,7 +5,7 @@ deps: []
 links: []
 created: 2026-07-11T13:51:46Z
 type: task
-priority: 1
+priority: 0
 parent: rankings123
 tags: [seo, analytics]
 ---
@@ -20,6 +20,20 @@ GSC verified for rankings123.com, sitemap.xml submitted, initial crawl complete,
 ## Notes
 
 **2026-07-11T13:51:51Z**
+
+**2026-07-18T13:50:22Z**
+
+**PRIORITY ESCALATION TO P0 (2026-07-18 autoresearch):**
+
+CRISIS: Only 5 organic search sessions out of 69 (7%). Without GSC verification + sitemap submission, we're invisible to Google.
+
+**Time-sensitive:** World Cup Final is TOMORROW (July 19). Post-Final we need organic search to replace direct traffic spike. Without GSC, we're flying blind on SEO performance.
+
+**BLOCKING:** This gates seo-fundamentals (P0), seo-meta-enhancement (P1), xml-sitemap-dynamic (P1). Can't measure if those SEO improvements work without GSC data.
+
+**First action:** Verify rankings123.com in GSC (DNS TXT or meta tag), submit sitemap.xml, check Index Coverage for errors.
+
+Escalating from P1 → P0 as SEO measurement foundation.
 
 ## SEO Visibility - Currently Blind
 
