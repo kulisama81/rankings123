@@ -1,6 +1,6 @@
 ---
 id: atp-wta-size-optimization
-status: open
+status: in_progress
 deps: []
 links: [perf-atp-page-size]
 created: 2026-07-15T13:58:00Z
@@ -30,6 +30,41 @@ tags: [performance, mobile, ux]
 - **SEO:** Page speed is ranking factor (Core Web Vitals)
 - **Cost to users:** 300KB savings = $0.01-0.03 per visit (data costs)
 - **Engagement:** Fast pages = more pages/session
+
+## Acceptance Criteria
+
+1. **Size Targets (Post-Optimization):**
+   - ATP Live: ≤ 300KB (currently 613KB, need -51% reduction)
+   - WTA Live: ≤ 200KB (currently 350KB, need -43% reduction)
+
+2. **Investigation Phase:**
+   - Profile current bundle with Next.js bundle analyzer
+   - Identify top 3 contributors to page size
+   - Document findings in ticket notes
+
+3. **Implementation:**
+   - Apply optimization strategy (likely virtualization + code splitting)
+   - Measure size after each change
+   - Target incremental improvements (not all-or-nothing)
+
+4. **UX Preservation:**
+   - All data still accessible (no information loss)
+   - Scrolling smooth (virtualization doesn't feel broken)
+   - Mobile-tested (iPhone, Android)
+   - Dark/light themes work
+
+5. **Verification:**
+   - `npm run build` succeeds
+   - `npm run check:performance` shows:
+     - ATP Live: ≤ 300KB
+     - WTA Live: ≤ 200KB
+   - Visit localhost: scroll performance smooth
+   - Live: verify on https://rankings123.com/atp-live (real mobile device)
+
+6. **Performance Testing:**
+   - Lighthouse mobile score: target 90+
+   - Real device test (iPhone 12, Android mid-range)
+   - 3G throttling test (simulate slow connection)
 
 ## Root Causes (Needs Investigation)
 
@@ -68,41 +103,6 @@ Optimization strategies (investigate and apply):
    - Verify compression is enabled
    - Expected savings: 30-50% of uncompressed size
 
-## Acceptance Criteria
-
-1. **Size Targets (Post-Optimization):**
-   - ATP Live: ≤ 300KB (currently 613KB, need -51% reduction)
-   - WTA Live: ≤ 200KB (currently 350KB, need -43% reduction)
-
-2. **Investigation Phase:**
-   - Profile current bundle with Next.js bundle analyzer
-   - Identify top 3 contributors to page size
-   - Document findings in ticket notes
-
-3. **Implementation:**
-   - Apply optimization strategy (likely virtualization + code splitting)
-   - Measure size after each change
-   - Target incremental improvements (not all-or-nothing)
-
-4. **UX Preservation:**
-   - All data still accessible (no information loss)
-   - Scrolling smooth (virtualization doesn't feel broken)
-   - Mobile-tested (iPhone, Android)
-   - Dark/light themes work
-
-5. **Verification:**
-   - `npm run build` succeeds
-   - `npm run check:performance` shows:
-     - ATP Live: ≤ 300KB
-     - WTA Live: ≤ 200KB
-   - Visit localhost: scroll performance smooth
-   - Live: verify on https://rankings123.com/atp-live (real mobile device)
-
-6. **Performance Testing:**
-   - Lighthouse mobile score: target 90+
-   - Real device test (iPhone 12, Android mid-range)
-   - 3G throttling test (simulate slow connection)
-
 ## Technical Approach
 
 **Option A: Virtualization (Recommended)**
@@ -131,11 +131,13 @@ const visibleRows = rankings.slice(0, page * ROWS_PER_PAGE)
 - Standard pattern for large tables
 
 ## Related Tickets
+
 - `perf-atp-page-size` (P2) — duplicate, this supersedes it
 - `mobile-table-scroll-system` (P1) — virtualization supports this
 - `polish` (P3) — Core Web Vitals includes page size
 
 ## ROI Summary
+
 **High ROI:** Reduces mobile bounce (43% of traffic), improves SEO (page speed ranking factor), better UX (faster load/parse), competitive parity (live-tennis.eu is 3× smaller), low cost (library integration, not full rewrite).
 
 **Priority:** P1 because 100%+ over budget = user-facing problem (slow mobile load) and quick win (virtualization is proven solution).
