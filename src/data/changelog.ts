@@ -14,6 +14,13 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-07-18",
+    title: "UCI Cycling Team Rankings Now Available",
+    description:
+      "Added UCI team rankings page showing the top professional cycling teams ranked by points. View standings for UAE Team Emirates, Visma–Lease a Bike, and all major WorldTour teams.",
+    area: "cycling",
+  },
+  {
+    date: "2026-07-18",
     title: "ATP/WTA Live Pages Now Load Faster",
     description:
       "Optimized ATP and WTA live ranking pages for faster loading, especially on mobile. Removed duplicate content rendering to reduce page size and improve performance.",

@@ -1,0 +1,152 @@
+import type { UciTeamRankingSnapshot } from "@/types";
+
+// Mock fallback data for UCI Team Ranking
+// Used only when CyclingRanking.com is unavailable
+export function getMockUciTeamRanking(): UciTeamRankingSnapshot {
+  return {
+    lastUpdated: new Date().toISOString(),
+    source: "mock",
+    teams: [
+      {
+        rank: 1,
+        name: "UAE Team Emirates",
+        country: "United Arab Emirates",
+        countryCode: "UAE",
+        points: 9876,
+      },
+      {
+        rank: 2,
+        name: "Visma–Lease a Bike",
+        country: "Netherlands",
+        countryCode: "NED",
+        points: 9234,
+      },
+      {
+        rank: 3,
+        name: "Soudal–Quick-Step",
+        country: "Belgium",
+        countryCode: "BEL",
+        points: 8765,
+      },
+      {
+        rank: 4,
+        name: "INEOS Grenadiers",
+        country: "Great Britain",
+        countryCode: "GBR",
+        points: 8321,
+      },
+      {
+        rank: 5,
+        name: "BORA–hansgrohe",
+        country: "Germany",
+        countryCode: "GER",
+        points: 7890,
+      },
+      {
+        rank: 6,
+        name: "Alpecin–Deceuninck",
+        country: "Belgium",
+        countryCode: "BEL",
+        points: 7654,
+      },
+      {
+        rank: 7,
+        name: "Team Jayco AlUla",
+        country: "Australia",
+        countryCode: "AUS",
+        points: 7234,
+      },
+      {
+        rank: 8,
+        name: "Bahrain Victorious",
+        country: "Bahrain",
+        countryCode: "BHR",
+        points: 6890,
+      },
+      {
+        rank: 9,
+        name: "Lidl–Trek",
+        country: "United States",
+        countryCode: "USA",
+        points: 6543,
+      },
+      {
+        rank: 10,
+        name: "Movistar Team",
+        country: "Spain",
+        countryCode: "ESP",
+        points: 6234,
+      },
+      {
+        rank: 11,
+        name: "Groupama–FDJ",
+        country: "France",
+        countryCode: "FRA",
+        points: 5987,
+      },
+      {
+        rank: 12,
+        name: "Intermarché–Wanty",
+        country: "Belgium",
+        countryCode: "BEL",
+        points: 5765,
+      },
+      {
+        rank: 13,
+        name: "EF Education–EasyPost",
+        country: "United States",
+        countryCode: "USA",
+        points: 5543,
+      },
+      {
+        rank: 14,
+        name: "Astana Qazaqstan Team",
+        country: "Kazakhstan",
+        countryCode: "KAZ",
+        points: 5321,
+      },
+      {
+        rank: 15,
+        name: "Cofidis",
+        country: "France",
+        countryCode: "FRA",
+        points: 5098,
+      },
+      {
+        rank: 16,
+        name: "Team dsm–firmenich PostNL",
+        country: "Netherlands",
+        countryCode: "NED",
+        points: 4876,
+      },
+      {
+        rank: 17,
+        name: "Red Bull–BORA–hansgrohe",
+        country: "Germany",
+        countryCode: "GER",
+        points: 4654,
+      },
+      {
+        rank: 18,
+        name: "Israel–Premier Tech",
+        country: "Israel",
+        countryCode: "ISR",
+        points: 4432,
+      },
+      {
+        rank: 19,
+        name: "Lotto Dstny",
+        country: "Belgium",
+        countryCode: "BEL",
+        points: 4210,
+      },
+      {
+        rank: 20,
+        name: "TotalEnergies",
+        country: "France",
+        countryCode: "FRA",
+        points: 3987,
+      },
+    ],
+  };
+}

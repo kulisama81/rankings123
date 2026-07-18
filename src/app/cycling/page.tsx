@@ -99,26 +99,40 @@ export default async function CyclingPage() {
             </section>
           )}
 
-          {/* UCI Ranking Link */}
+          {/* UCI Ranking Links */}
           <section className="mb-12">
             <h2 className="mb-6 text-3xl font-bold text-primary">
               World Rankings
               <span className="ml-3 text-sm font-normal text-secondary">
-                Live rider standings
+                Live standings
               </span>
             </h2>
-            <a
-              href="/cycling/uci-ranking"
-              className="block rounded-xl border border-edge bg-surface p-6 transition-colors hover:border-accent hover:bg-surface-hover"
-            >
-              <div className="mb-2 flex items-center gap-2">
-                <span className="text-2xl">🌍</span>
-                <h3 className="text-xl font-bold text-primary">UCI World Ranking</h3>
-              </div>
-              <p className="text-sm text-secondary">
-                Top professional cyclists ranked by points across all disciplines and major tours
-              </p>
-            </a>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <a
+                href="/cycling/uci-ranking"
+                className="block rounded-xl border border-edge bg-surface p-6 transition-colors hover:border-accent hover:bg-surface-hover"
+              >
+                <div className="mb-2 flex items-center gap-2">
+                  <span className="text-2xl">🚴</span>
+                  <h3 className="text-xl font-bold text-primary">UCI Rider Rankings</h3>
+                </div>
+                <p className="text-sm text-secondary">
+                  Top professional cyclists ranked by points across all disciplines and major tours
+                </p>
+              </a>
+              <a
+                href="/cycling/uci-team-ranking"
+                className="block rounded-xl border border-edge bg-surface p-6 transition-colors hover:border-accent hover:bg-surface-hover"
+              >
+                <div className="mb-2 flex items-center gap-2">
+                  <span className="text-2xl">🏆</span>
+                  <h3 className="text-xl font-bold text-primary">UCI Team Rankings</h3>
+                </div>
+                <p className="text-sm text-secondary">
+                  Top professional cycling teams ranked by points across all competitions
+                </p>
+              </a>
+            </div>
           </section>
 
           {/* Completed Races */}

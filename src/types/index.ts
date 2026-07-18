@@ -293,3 +293,18 @@ export interface UciRankingSnapshot {
   source: "cyclingranking" | "firstcycling" | "mock";
   riders: UciRider[];
 }
+
+// --- UCI Cycling Team Ranking ---
+export interface UciTeam {
+  rank: number;
+  name: string;
+  country: string;
+  countryCode: string;
+  points: number;
+}
+
+export interface UciTeamRankingSnapshot {
+  lastUpdated: string; // ISO timestamp
+  source: "cyclingranking" | "firstcycling" | "mock";
+  teams: UciTeam[];
+}

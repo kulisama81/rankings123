@@ -1,6 +1,6 @@
 ---
 id: cycling-dynamic-feed
-status: in_progress
+status: closed
 deps: []
 links: []
 created: 2026-06-21T07:54:28Z
@@ -65,6 +65,7 @@ race GC standings, startlists, and per-stage **distance + elevation gain + profi
 needed. (firstcycling-mcp / a Python function are overkill — close them in favor of this.)
 
 ## DATA SOURCE — CORRECTED (2026-06-27, tested server-side)
+
 ProCyclingStats is **Cloudflare-blocked (403)** from server fetch — do NOT use it. FirstCycling is
 ambiguous (challenge). **Use the Wikipedia API** (keyless, reliable, no Cloudflare):
 `https://en.wikipedia.org/w/api.php?action=parse&page=2026_Tour_de_France&prop=wikitext|text&format=json`
