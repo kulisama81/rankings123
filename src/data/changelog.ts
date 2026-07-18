@@ -14,6 +14,13 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-07-18",
+    title: "Dynamic Social Share Cards",
+    description:
+      "Every rankings page now has custom Open Graph images that auto-generate with live data — player names, ranks, and points in the sport's signature accent color. Share a link and the preview card shows real rankings, not a generic placeholder.",
+    area: "all",
+  },
+  {
+    date: "2026-07-18",
     title: "UCI Cycling Team Rankings Now Available",
     description:
       "Added UCI team rankings page showing the top professional cycling teams ranked by points. View standings for UAE Team Emirates, Visma–Lease a Bike, and all major WorldTour teams.",
