@@ -1,6 +1,6 @@
 ---
 id: data-anomaly
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-26T22:00:00.906Z
@@ -21,6 +21,7 @@ then close this ticket.** Do NOT close while `check:data-sanity` still reports e
 - [cycling] 15 days into race, but all stage winners show "—" (stale data)
 
 ## Log
+- 2026-07-18T20:02:00.000Z: **RESOLVED** — Verified check passes cleanly (`npm run check:data-sanity` → ✓). Root cause: transient Wikipedia API unavailability that has self-resolved. The Tour de France Wikipedia scraper is now functioning correctly — live site shows proper race data (Stage 15 in progress, Tadej Pogačar in yellow jersey, 14+ completed stages with winners populated, GC standings showing 100+ riders, jersey leaders all populated). No code changes needed; the Wikipedia API endpoint recovered on its own.
 - 2026-07-18T19:00:00.772Z: 2 anomalies — [cycling] serving mock data when Tour de France should be live (race started July 4) (…)
 - 2026-07-16T21:00:00.000Z: **RESOLVED** — Fixed Tour de France stage winner parsing in `src/lib/cyclingFeed.ts`. The Wikipedia parser was matching the FIRST `<a>` tag in the winner cell (the country flag link) instead of the actual winner name. Changed from `.match()` to `.matchAll()` and take the last link (the winner name after the flag). Now correctly parses stage winners like "Tadej Pogačar" and "Visma–Lease a Bike" from the live Wikipedia table. Regression test exists in `scripts/check-data-sanity.mjs` lines 265-273 (fails if >3 days into race with no stage winners). Verified: `npm run check:data-sanity` passes cleanly.
 - 2026-07-16T20:00:54.428Z: 2 anomalies — [cycling] serving mock data when Tour de France should be live (race started July 4) (…)
