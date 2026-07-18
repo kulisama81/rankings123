@@ -95,10 +95,10 @@ test("LiveRankingView component: no Suspense fallback with 'Loading table...' te
 });
 
 /**
- * LiveRankingView must render both StaticRankingTable (SSR) and LiveRankingTable (client)
- * to maintain SEO + interactivity without showing loading fallbacks.
+ * LiveRankingView must render LiveRankingTable which SSRs automatically via Next.js App Router.
+ * This provides both SEO (content in HTML) and interactivity (client-side features) without duplication.
  */
-test("LiveRankingView component: renders both SSR and client tables", async () => {
+test("LiveRankingView component: renders LiveRankingTable (SSR + client)", async () => {
   const fs = await import("node:fs/promises");
   const path = await import("node:path");
 
@@ -108,22 +108,15 @@ test("LiveRankingView component: renders both SSR and client tables", async () =
   );
   const componentSource = await fs.readFile(componentPath, "utf-8");
 
-  // Verify SSR table is rendered
-  assert.ok(
-    componentSource.includes("StaticRankingTable"),
-    "LiveRankingView must render StaticRankingTable for SSR/SEO"
-  );
-
-  // Verify client table is rendered
+  // Verify LiveRankingTable is rendered (Next.js SSRs client components automatically)
   assert.ok(
     componentSource.includes("LiveRankingTable"),
-    "LiveRankingView must render LiveRankingTable for client interactivity"
+    "LiveRankingView must render LiveRankingTable for SSR + client interactivity"
   );
 
-  // Verify the SSR table has the data-ssr-fallback attribute
-  // (used by LiveRankingTable to hide it on hydration)
+  // Verify no duplicate static table (optimization: removed to reduce page size)
   assert.ok(
-    componentSource.includes("data-ssr-fallback"),
-    "StaticRankingTable must have data-ssr-fallback attribute for proper hydration"
+    !componentSource.includes("StaticRankingTable"),
+    "LiveRankingView should not duplicate content with StaticRankingTable"
   );
 });

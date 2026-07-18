@@ -13,6 +13,13 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-07-18",
+    title: "ATP/WTA Live Pages Now Load Faster",
+    description:
+      "Optimized ATP and WTA live ranking pages for faster loading, especially on mobile. Removed duplicate content rendering to reduce page size and improve performance.",
+    area: "tennis",
+  },
+  {
     date: "2026-07-17",
     title: "Tour de France Stage Status Accuracy Fixed",
     description:

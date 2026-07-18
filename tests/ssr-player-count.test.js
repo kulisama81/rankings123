@@ -17,8 +17,8 @@ async function checkSSRPlayerCount(tour) {
   const html = await readFile(htmlPath, 'utf-8');
 
   // Count occurrences of player data in SSR HTML
-  // Players are rendered with class="font-semibold text-fg" for their names
-  const playerNameMatches = html.match(/class="font-semibold text-fg"/g);
+  // Players are rendered as Links with font-semibold text-fg (plus transition/hover classes)
+  const playerNameMatches = html.match(/href="\/(?:atp|wta)\/player\/[^"]+">([^<]+)</g);
   const playerCount = playerNameMatches ? playerNameMatches.length : 0;
 
   return { tour, playerCount };

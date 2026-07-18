@@ -115,21 +115,19 @@ test("ATP/WTA Live pages performance budget (TTFB ≤ 0.8s)", async () => {
   );
 });
 
-test("ATP Live ranking table: SSR contains both tables, JavaScript hides fallback", async () => {
-  // Regression test for atp-duplicate-table bug.
+test("ATP Live ranking table: SSR renders single optimized table", async () => {
+  // Optimization: removed duplicate StaticRankingTable to reduce page size (was 613KB, target 300KB).
   //
-  // Bug context: The ATP Live page was rendering both a StaticRankingTable
-  // (SSR version) and LiveRankingTable (interactive version), both visible
-  // to users simultaneously, causing duplicate content.
+  // Previous architecture: rendered both StaticRankingTable (SSR) and LiveRankingTable (client),
+  // duplicating all player data in the HTML payload.
   //
-  // Solution: SSR HTML intentionally contains BOTH tables (for SEO - search engines
-  // need the StaticRankingTable content), but JavaScript hides the StaticRankingTable
-  // on hydration so users only see one table.
+  // New architecture: LiveRankingTable SSRs automatically via Next.js App Router, providing
+  // both SEO (content in HTML) and interactivity (client features) without duplication.
   //
   // This test verifies:
-  // 1. SSR HTML has 2 tbody elements (StaticRankingTable + LiveRankingTable) for SEO
-  // 2. The data-ssr-fallback attribute exists so JavaScript can find and hide it
-  // 3. Player name counts are reasonable (not excessive duplication like 50+)
+  // 1. SSR HTML has 1 table (LiveRankingTable SSR'd, no duplicate)
+  // 2. Player data is present in SSR HTML for SEO
+  // 3. No excessive duplication (player names appear reasonable number of times)
 
   const port = process.env.TEST_PORT || 3000;
   const url = `http://localhost:${port}/atp-live`;
@@ -139,29 +137,30 @@ test("ATP Live ranking table: SSR contains both tables, JavaScript hides fallbac
 
   const html = await response.text();
 
-  // SSR HTML should have 2 tbody elements: StaticRankingTable (for SEO) + LiveRankingTable
+  // SSR HTML should have 1 tbody for desktop table + 1 mobile card section
+  // (LiveRankingTable renders responsively, not duplicate tables)
   const tbodyMatches = html.match(/<tbody[^>]*>/g) || [];
   const tbodyCount = tbodyMatches.length;
 
   assert.strictEqual(
     tbodyCount,
-    2,
-    `ATP Live SSR HTML should have exactly 2 tbody elements (StaticRankingTable + LiveRankingTable), found ${tbodyCount}.`
+    1,
+    `ATP Live SSR HTML should have exactly 1 tbody element (optimized single table), found ${tbodyCount}.`
   );
 
-  // Verify the data-ssr-fallback attribute exists so JavaScript can hide the SSR table
+  // Verify no data-ssr-fallback attribute (no longer needed since we removed duplicate table)
   assert.ok(
-    html.includes('data-ssr-fallback'),
-    'SSR HTML should include data-ssr-fallback attribute for JavaScript to hide the fallback table'
+    !html.includes('data-ssr-fallback'),
+    'SSR HTML should not include data-ssr-fallback (removed with StaticRankingTable)'
   );
 
-  // Player names will appear multiple times (in both tables + stats banner + meta tags).
-  // Expect ~10-15 occurrences. If it's 50+, something is severely wrong.
+  // Player names appear in: 1 table + 1 mobile section + stats banner + meta tags.
+  // Expect ~5-10 occurrences (reduced from ~10-15 with dual tables).
   const sinnerMatches = html.match(/Jannik Sinner/g) || [];
   const sinnerCount = sinnerMatches.length;
 
   assert.ok(
-    sinnerCount >= 5 && sinnerCount <= 20,
-    `"Jannik Sinner" should appear 5-20 times (2 tables + meta tags), found ${sinnerCount}.`
+    sinnerCount >= 3 && sinnerCount <= 15,
+    `"Jannik Sinner" should appear 3-15 times (1 table + mobile + meta), found ${sinnerCount}.`
   );
 });
