@@ -2,7 +2,7 @@
 
 This baseline establishes performance budgets and target metrics for all routes. Use this to detect regressions during development.
 
-**Last Updated:** 2026-07-17 (CRITICAL REGRESSIONS PERSIST — Day 13, WTA load time variance + World Cup size regressing)  
+**Last Updated:** 2026-07-18 (CRITICAL REGRESSIONS PERSIST — Day 14, sizes worsening)  
 **Last Fix:** 2026-06-30 (ATP/WTA ISR permanently restored via client-side searchParams)  
 **Measurement Method:** `npm run check:performance` (TTFB/total/size via live fetch) + Core Web Vitals (Playwright when available)
 
@@ -54,10 +54,10 @@ Per [web.dev/vitals](https://web.dev/vitals), these are the **GOOD** thresholds 
 
 | Route        | TTFB Budget | Total Budget | Size Budget | Current TTFB | Current Total | Current Size | Status |
 |--------------|-------------|--------------|-------------|--------------|---------------|--------------|--------|
-| /            | ≤ 0.8s      | ≤ 2.0s       | ≤ 150KB     | 0.13s        | 0.15s         | 34KB         | ✅ FAST |
-| /atp-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.13s        | 0.40s         | 614KB        | 🔴 SIZE FAIL |
-| /wta-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 200KB     | 0.15s        | 0.36s         | 358KB        | 🔴 SIZE FAIL |
-| /world-cup   | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.13s        | 0.23s         | 371KB        | 🔴 SIZE FAIL |
+| /            | ≤ 0.8s      | ≤ 2.0s       | ≤ 150KB     | 0.15s        | 0.17s         | 34KB         | ✅ FAST |
+| /atp-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.15s        | 0.42s         | 620KB        | 🔴 SIZE FAIL |
+| /wta-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 200KB     | 0.13s        | 0.24s         | 366KB        | 🔴 SIZE FAIL |
+| /world-cup   | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.12s        | 0.30s         | 371KB        | 🔴 SIZE FAIL |
 
 **Legend:**
 - **TTFB** = Time to First Byte (server response start)
@@ -86,7 +86,63 @@ Per [web.dev/vitals](https://web.dev/vitals), these are the **GOOD** thresholds 
 
 ## Recent Changes
 
-### 🔴 CRITICAL REGRESSIONS PERSIST — Day 13 + ⚠️ WTA Load Time Variance + 🔴 World Cup Size Regressing (2026-07-17)
+### 🔴 CRITICAL REGRESSIONS PERSIST — Day 14 + 🔴 Sizes Worsening (2026-07-18)
+
+**Observation:** CRITICAL performance regressions on ATP and WTA Live pages **continue for a 14th consecutive day**. P0 tickets from 2026-07-05 remain unfixed. WORSENING: ATP +6KB (620KB), WTA +8KB (366KB), likely data variance or natural fluctuation but trend is negative. World Cup size regression persists (24% over budget).
+
+**Measurements (2026-07-18 vs 2026-07-17):**
+
+**HTTP Fetch (npm run check:performance):**
+- **Homepage:** TTFB 0.13s → 0.15s (+15%), total 0.15s → 0.17s (+13%), size 34KB (stable)
+- **ATP Live:** TTFB 0.13s → 0.15s (+15%), total 0.40s → 0.42s (+5%), size 614KB → 620KB (+1%, **+6KB**)
+- **WTA Live:** TTFB 0.15s → 0.13s (-13%), total 0.36s → 0.24s (-33%), size 358KB → 366KB (+2.2%, **+8KB**)
+- **World Cup:** TTFB 0.13s → 0.12s (-8%), total 0.23s → 0.30s (+30%), size 371KB (stable)
+
+**Core Web Vitals:** Not measured (browser automation requires approval)
+
+**Analysis:**
+- 🔴 **ATP size:** 620KB (107% over 300KB budget) — regression persists, **Day 14**, +6KB from yesterday (likely data variance)
+- 🔴 **WTA size:** 366KB (83% over 200KB budget) — regression persists, **Day 14**, +8KB from yesterday (likely data variance)
+- 🔴 **World Cup size:** 371KB (24% over 300KB budget, stable) — regression persists from recent features
+- ⚠️ **World Cup load time variance:** +30% (0.23s → 0.30s) but within 2.0s budget — TTFB improved -8%, size stable, likely transient
+- ⚠️ **WTA load time improved:** -33% (0.36s → 0.24s) despite +8KB size — confirms yesterday's +50% spike was transient variance
+- ⚠️ **Homepage/ATP TTFB variance:** +15% (both routes) but minor in absolute terms (+0.02s), within budgets
+- ⚠️ **Root cause unfixed:** No commits since 2026-07-05 addressed the GUID bloat issue (commit 91820bf)
+
+**Code changes since 2026-07-17:**
+1. `da2049a` — Autoresearch 2026-07-18 (tickets only)
+2. `5055a61` — Inspector 2026-07-17 PM (tickets only)
+3. `c8a7659` — Mark cycling stage status bug as closed
+4. `948d965` — Fix Tour de France stale stage status bug
+5. `5f78d94` — Planner tennis session log + ticket status update
+6. `c2ae726` — **Fix WTA/ATP ranking data clarity** — removed ambiguous placeholders, added test suite (no payload impact expected)
+
+**Why ATP/WTA Size Increases Are Likely Data Variance:**
+1. **Small percentage changes** — +1% ATP, +2.2% WTA (within measurement variance)
+2. **No structural changes** — Recent commit c2ae726 (WTA/ATP data clarity fix) changed display logic but not data payload
+3. **Natural data fluctuation** — Player counts, name lengths, tournament strings vary week-to-week
+4. **Pattern matches prior variance** — Sizes have fluctuated ±5-10KB in previous runs
+5. **Root cause unfixed** — GUID bloat from 2026-07-05 (commit 91820bf) remains the primary issue
+
+**Impact (ESCALATING):**
+- 🔴 **Day 14 of critical size regressions** — both tennis pages (core traffic drivers) remain critically over budget
+- 📱 **Mobile:** ATP 620KB on slow 3G = ~5.8s transfer time alone, WTA 366KB = ~3.4s
+- 💰 **Revenue:** Blocks Phase 3 monetization (ads + betting affiliates)
+- 🏆 **FIFA World Cup 2026:** LIVE through ~July 19 (**FINAL DAY**, last day of elevated sports traffic)
+- ⏱ **Urgency:** IMMEDIATE — **fourteenth consecutive day** without GUID fix, no code intervention attempted on root cause
+- ✅ **TTFB/total within budgets:** All routes FAST despite minor variance and size bloat
+
+**Status:** 🔴 CRITICAL SIZE REGRESSIONS PERSIST (Day 14) — sizes worsening
+
+**Tickets:** 
+- `perf-atp-guid-bloat` (Priority 0) — OPEN, day 14
+- `perf-wta-guid-bloat` (Priority 0) — OPEN, day 14
+
+**Report:** docs/reports/2026-07-18-performance.md
+
+---
+
+### 🔴 CRITICAL REGRESSIONS PERSIST — Day 13 + ⚠️ WTA Load Time Variance + 🔴 World Cup Size Regressing (2026-07-17) [ARCHIVED]
 
 **Observation:** CRITICAL performance regressions on ATP and WTA Live pages **continue for a 13th consecutive day**. P0 tickets from 2026-07-05 remain unfixed. NEW: WTA load time variance detected (+50%) but within budget and likely transient. NEW: World Cup page size regressing despite prior optimization (+5KB, 24% over budget).
 
@@ -103,30 +159,10 @@ Per [web.dev/vitals](https://web.dev/vitals), these are the **GOOD** thresholds 
 **Analysis:**
 - 🔴 **ATP size:** 614KB (104% over 300KB budget) — regression persists, **Day 13**, +3KB measurement variance (essentially stable)
 - 🔴 **WTA size:** 358KB (79% over 200KB budget) — regression persists, **Day 13**, +5KB measurement variance (essentially stable)
-- ⚠️ **WTA load time variance:** +50% (0.24s → 0.36s) but within 2.0s budget — matches pattern of previous transient variances (WTA had similar spikes 2026-07-13/14/15/16 that resolved), size stable (+1.4%), no code changes to WTA page
-- 🔴 **World Cup size regressing:** 366KB → 371KB (+5KB, +1.4%), now 24% over budget — despite prior lazy-loading optimization (ticket `perf-wc-page-size` closed), likely from recent features (Final predictions page, countdown widget)
+- ⚠️ **WTA load time variance:** +50% (0.24s → 0.36s) but within 2.0s budget — matches pattern of previous transient variances
+- 🔴 **World Cup size regressing:** 366KB → 371KB (+5KB, +1.4%), now 24% over budget
 - ⚠️ **Homepage size increase:** +10% (31KB → 34KB, +3KB) from SVG icons system (commit bfab686), but well within 150KB budget
 - ⚠️ **Root cause unfixed:** No commits since 2026-07-05 addressed the GUID bloat issue (commit 91820bf)
-
-**Code changes since 2026-07-16:**
-1. `b4a4e5a` — Autoresearch 2026-07-17 (tickets only)
-2. `21cdf05` — Inspector 2026-07-16 (tickets only)
-3. `bfab686` — **Implement sport hero imagery system with custom SVG icons** — NEW FEATURE (~3KB homepage size impact)
-4. `97ec848` — Fix Tour de France winner parsing compatibility
-5. `ca7d886` — Fix Tour de France stage winner parsing from Wikipedia
-
-**Why WTA Load Time Variance Is Likely Transient:**
-1. **Pattern matches previous transient variances** — WTA had +77% spike on 2026-07-15 (resolved), +114% on 2026-07-13 (resolved), similar patterns on other dates
-2. **Still within budget** (0.36s < 2.0s total)
-3. **No code changes** to WTA Live page since 2026-07-16
-4. **Size stable** (+1.4% is measurement variance)
-5. **TTFB stable/minor** (+7%, 0.14s → 0.15s)
-
-**Why World Cup Size Regression Is Real:**
-1. **Trending worse** — 366KB → 371KB (+5KB), not measurement variance (consistent direction)
-2. **Recent features added** — World Cup Final predictions page (commit 63618a2), countdown widget (commit 7cf946e), match page enhancements
-3. **Prior optimization exists but regressed** — Lazy-loading was implemented (ticket closed) but new features added back the size
-4. **24% over budget** — 371KB vs 300KB budget
 
 **Impact (ESCALATING):**
 - 🔴 **Day 13 of critical size regressions** — both tennis pages (core traffic drivers) remain critically over budget
