@@ -1,6 +1,6 @@
 ---
 id: post-wc-tdf-retention-pivot
-status: in_progress
+status: closed
 deps: []
 links: []
 created: 2026-07-18T13:48:24Z
