@@ -14,6 +14,13 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-07-19",
+    title: "Homepage: Live NOW Indicator & Priority Cards",
+    description:
+      "The homepage now shows exactly what's live right now with a dynamic LIVE NOW headline and pulsing indicator. Live sport cards are enlarged and float to the top, making it instant to see active matches. Fixes the 'nothing looks live' bounce problem.",
+    area: "all",
+  },
+  {
+    date: "2026-07-19",
     title: "ATP/WTA Live Rankings: Clearer Tournament Status",
     description:
       "Fixed confusing display where players scheduled for upcoming matches showed '0' point change. Tournament status now only appears once players have started or finished their matches, making live point tracking easier to understand.",

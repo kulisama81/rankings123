@@ -11,6 +11,7 @@
   --color-down: var(--down);
   --color-accent: var(--accent);
   --color-accentfg: var(--accent-contrast);
+  --color-live: var(--live);
   --color-trophy: #d4af37;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
@@ -32,6 +33,8 @@
   --accent-contrast: #0a0b0f;
   --accent-rgb: 182, 242, 60;
   --bg-elevate: rgba(150, 160, 195, 0.1);
+  --live: #00ff87;
+  --live-rgb: 0, 255, 135;
 }
 
 /* ---- Light ---- */
@@ -48,6 +51,8 @@
   --accent-contrast: #ffffff;
   --accent-rgb: 77, 124, 15;
   --bg-elevate: rgba(10, 16, 32, 0.04);
+  --live: #16a34a;
+  --live-rgb: 22, 163, 74;
 }
 
 /* ---- Per-section accent (set via data-sport on a wrapper) ---- */
@@ -149,6 +154,22 @@ body {
 @keyframes pulse-dot {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.35; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.03; }
+  50% { opacity: 0.06; }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ===================== 6-State Button System (Clay 2026) ===================== */
