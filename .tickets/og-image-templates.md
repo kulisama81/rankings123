@@ -1,6 +1,6 @@
 ---
 id: og-image-templates
-status: open
+status: closed
 deps: [logo-wordmark]
 links: []
 created: 2026-06-21T12:00:00Z

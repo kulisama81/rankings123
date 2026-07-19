@@ -1,6 +1,6 @@
 ---
 id: uci-cycling-rankings
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-11T13:50:59Z
