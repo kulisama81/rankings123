@@ -1,6 +1,6 @@
 # Rankings123 Design Identity (North Star)
 
-*Last updated: 2026-07-15*
+*Last updated: 2026-07-19*
 
 This document defines the visual identity for rankings123.com — a **distinctive, premium sports rankings hub** that stands out from commodity sites like live-tennis.eu. Data is always the hero; beauty serves scannability.
 
@@ -277,6 +277,35 @@ Articles read and applied to rankings123 design strategy:
 - **Common patterns:** Motion design, responsive layouts, photography/imagery for hero moments, athletic energy + functional clarity
 - **Application:** Filed tickets for sport background imagery (`sport-background-visuals`), premium table hover interactions (`table-hover-premium`), mobile-first table patterns (`mobile-table-patterns`), nav sport icons (`nav-sport-icons`), and accent glow system (`accent-glow-system`). Focus: move from "clean template" to "designed product people remember" with signature visual moments.
 
+### 2026-07-19 (Weekly Run — WC Finals Day)
+
+13. **["Partstack Picks Up Features and Awards Across the Design Community"](https://clay.global/blog/partstack-digest)** (July 14, 2026)
+   - **Key takeaway:** "Two-typeface system that pairs Aeonik's personality with Inter's readability at small sizes" — strategic font pairing for both brand personality AND functional legibility in dense interfaces. Also: "Good design isn't reserved for consumer brands" — B2B/technical platforms benefit from same thoughtful design attention.
+   - **Application:** Rankings123 has Geist Sans + Archivo but system is underutilized. Need more intentional pairing: Archivo extrabold for bold display moments (hero, page titles, podium ranks #1-3), Geist Sans for data-dense tables/body. Filed ticket: `typography-system-refinement` (p2).
+
+**2026 Web Design Trends — Post-Event Retention & Gamification:**
+
+14. **Context-Aware Sticky Navigation** (timgraf.com/ui/beyond-sticky-context-aware-ui-patterns-redefine-user-experience-in-2026/)
+   - **Key takeaway:** Sticky navigation in 2026 must be contextually aware, not just fixed. Contextual sticky bars appear/adapt as user scrolls past sections. A/B tests show 3-7% conversion lift (up to 25% in e-commerce).
+   - **Application:** Rankings123 nav is already sticky + backdrop-blur (2026 pattern). Future evolution: contextual bars for live events ("Final in 2h" appears when scrolling past hero).
+
+15. **Gamification for Retention** (StriveCloud benchmarks 2026, gr8.tech sports retention)
+   - **Key takeaways:**
+     - **Milestones drive 30%+ retention lift** — framing interaction as a journey with achievements (levels, badges, progress)
+     - **Sports betting platforms:** Users engage more when it feels like a journey vs transactional (Club Brugge tripled return visits)
+     - **Post-event critical window:** First 48 hours after major event determine lifetime value (MLS World Cup retention playbook)
+     - **Discovery modules:** "What's next" content must go live WITHIN HOURS of tournament end to prevent bounce
+   - **Application:** Filed tickets for post-event discovery modules (`post-event-discovery-module` p1, TIME-SENSITIVE for WC Finals today), gamification milestones (`gamification-retention-milestones` p3), and homepage urgency overhaul (`homepage-live-urgency-overhaul` p0 to fix 70% bounce crisis).
+
+**World Cup Finals Day (July 19, 2026):**
+
+Today is the FIFA World Cup 2026 Final (Spain vs Argentina, 3PM ET) — peak traffic moment for rankings123.com. This is a critical 48-hour window: post-tournament retention research shows the first 48 hours after a major event determine whether one-time visitors become recurring fans or bounce forever.
+
+Filed TIME-SENSITIVE tickets:
+- `wc-finals-celebration-treatment` (p1) — Special visual celebration for finals day (confetti, trophy prominence, gold accents)
+- `post-event-discovery-module` (p1) — "What's Next" discovery for post-tournament pages (bridges WC → TdF final week → US Open)
+- `homepage-live-urgency-overhaul` (p0) — Fix 70% homepage bounce by adding live urgency (dynamic headlines, countdowns, live card hierarchy)
+
 ---
 
 ## Evolution Roadmap
@@ -313,10 +342,16 @@ Articles read and applied to rankings123 design strategy:
 - [ ] **Ambient gradient pulse** (ticket `ambient-gradient-pulse`)
 
 ### Phase 3: Signature Moments & Interactive Features
-- [ ] **World Cup finals countdown urgency** (ticket `wc-finals-countdown-urgency`) — NEW 2026-07-12, p1 TIME-SENSITIVE (finals ~July 19)
+- [ ] **World Cup finals countdown urgency** (ticket `wc-finals-countdown-urgency`) — p1 TIME-SENSITIVE (finals ~July 19)
+- [ ] **WC Finals celebration treatment** (ticket `wc-finals-celebration-treatment`) — NEW 2026-07-19, p1 TIME-SENSITIVE (finals TODAY)
+- [ ] **Post-event discovery module** (ticket `post-event-discovery-module`) — NEW 2026-07-19, p1 TIME-SENSITIVE (post-WC retention)
+- [ ] **Homepage live urgency overhaul** (ticket `homepage-live-urgency-overhaul`) — NEW 2026-07-19, p0 CRISIS (70% bounce)
+- [ ] **Typography system refinement** (ticket `typography-system-refinement`) — NEW 2026-07-19, p2 (Clay Partstack guidance)
+- [ ] **Mobile table gestures** (ticket `mobile-table-gestures`) — NEW 2026-07-19, p2 (42% mobile traffic)
+- [ ] **Gamification retention milestones** (ticket `gamification-retention-milestones`) — NEW 2026-07-19, p3 (2026 retention trend)
 - [ ] **Live match tracker widget** (ticket `live-match-tracker-widget`)
 - [ ] **Player comparison tool** (ticket `player-comparison-tool`)
-- [ ] **OG image templates** (ticket `og-image-templates`)
+- [x] **OG image templates** (ticket `og-image-templates`) — SHIPPED 2026-07-18 ✅
 - [ ] **Social share cards** (ticket `social-share-cards`)
 - [ ] **Data storytelling callouts** (ticket `data-storytelling-callouts`)
 
