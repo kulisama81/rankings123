@@ -2,18 +2,19 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import HeroBanner from "@/components/HeroBanner";
 import LiveWorldCupWidget from "@/components/LiveWorldCupWidget";
+import WorldCupFinalWidget from "@/components/WorldCupFinalWidget";
 import LiveTdfWidget from "@/components/LiveTdfWidget";
 import WimbledonCallout from "@/components/WimbledonCallout";
 
 export const metadata: Metadata = {
   title: "Rankings123 — Live Sports Rankings",
   description:
-    "Live ATP & WTA tennis rankings, FIFA World Cup 2026 standings. Updated in real time.",
+    "Live ATP & WTA tennis rankings, FIFA World Cup 2026 standings & results, Tour de France 2026. Updated in real time.",
   alternates: { canonical: "/" },
   openGraph: {
     title: "Rankings123 — Live Sports Rankings",
     description:
-      "Live ATP & WTA tennis rankings, FIFA World Cup 2026 standings.",
+      "Live ATP & WTA tennis rankings, FIFA World Cup 2026 results, Tour de France 2026 coverage.",
     url: "/",
     type: "website",
   },
@@ -106,6 +107,9 @@ export default function HomePage() {
 
       {/* Wimbledon 2026 LIVE Callout - shows during tournament (June 29 - July 12) */}
       <WimbledonCallout />
+
+      {/* World Cup Final Widget - shows before/during/after Final with cross-sport pivot */}
+      <WorldCupFinalWidget />
 
       {/* Live World Cup Matches Widget - shows only when matches are in progress */}
       <LiveWorldCupWidget />
