@@ -16,11 +16,12 @@ fabricated, mis-parsed, or mis-sourced. **Planner: investigate the relevant feed
 fix it, re-run `npm run check:data-sanity` until clean, log the resolution in the Log below,
 then close this ticket.** Do NOT close while `check:data-sanity` still reports errors.
 
-## Anomalies (latest run · 2026-07-19T04:00:00.798Z)
+## Anomalies (latest run · 2026-07-19T16:00:00.800Z)
 - [cycling] serving mock data when Tour de France should be live (race started July 4)
 - [cycling] 15 days into race, but all stage winners show "—" (stale data)
 
 ## Log
+- 2026-07-19T16:00:00.800Z: 2 anomalies — [cycling] serving mock data when Tour de France should be live (race started July 4) (…)
 - 2026-07-19T04:00:00.798Z: 2 anomalies — [cycling] serving mock data when Tour de France should be live (race started July 4) (…)
 - 2026-07-19T01:00:00.706Z: 2 anomalies — [cycling] serving mock data when Tour de France should be live (race started July 4) (…)
 - 2026-07-18T20:02:00.000Z: **RESOLVED** — Verified check passes cleanly (`npm run check:data-sanity` → ✓). Root cause: transient Wikipedia API unavailability that has self-resolved. The Tour de France Wikipedia scraper is now functioning correctly — live site shows proper race data (Stage 15 in progress, Tadej Pogačar in yellow jersey, 14+ completed stages with winners populated, GC standings showing 100+ riders, jersey leaders all populated). No code changes needed; the Wikipedia API endpoint recovered on its own.
