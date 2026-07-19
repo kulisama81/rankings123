@@ -13,6 +13,13 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-07-19",
+    title: "ATP/WTA Live Rankings: Clearer Tournament Status",
+    description:
+      "Fixed confusing display where players scheduled for upcoming matches showed '0' point change. Tournament status now only appears once players have started or finished their matches, making live point tracking easier to understand.",
+    area: "tennis",
+  },
+  {
     date: "2026-07-18",
     title: "Dynamic Social Share Cards",
     description:

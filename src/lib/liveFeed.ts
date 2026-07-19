@@ -166,10 +166,19 @@ function buildLiveStatuses(scoreboard: any, cfg: TourConfig): Map<string, LiveSt
     }
 
     for (const [guid, playerMatches] of byPlayer) {
-      playerMatches.sort(
+      // Filter out scheduled matches - only show status for matches actually played or in progress.
+      // This prevents confusing "R32, Δ=0" displays for players who are scheduled but haven't
+      // started playing yet (especially problematic for t250/t500 where R32 awards 0 points).
+      const activeMatches = playerMatches.filter((m) => m.status !== "STATUS_SCHEDULED");
+      if (activeMatches.length === 0) {
+        // Player only has scheduled matches - don't show tournament status yet
+        continue;
+      }
+
+      activeMatches.sort(
         (a, b) => ROUND_ORDER.indexOf(a.round) - ROUND_ORDER.indexOf(b.round)
       );
-      const last = playerMatches[playerMatches.length - 1];
+      const last = activeMatches[activeMatches.length - 1];
 
       let reached: Round = last.round;
       let active = true;

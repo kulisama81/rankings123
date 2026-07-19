@@ -1,6 +1,6 @@
 ---
 id: bug-atp-r32-zero-delta
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-18T00:00:00Z
