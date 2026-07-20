@@ -92,6 +92,21 @@ function checkTennis(sport, snap) {
     }
   }
 
+  // "In play" vs point delta consistency check (regression guard for bug-wta-inplay-delta-mismatch).
+  // When players are actively competing, at least some should show point changes. If many players
+  // are marked as "in play" (have active tournaments) but very few show non-zero Δ, it indicates
+  // either: (1) point calculation bug, or (2) misleading UX where all players are in early rounds
+  // of lower-tier tournaments (R32 = 0-1 points). We expect at least 20% of "in play" players to
+  // show visible point movement.
+  const inPlay = players.filter((p) => p.tournament?.active).length;
+  const withDelta = players.filter((p) => (p.pointsDelta ?? 0) !== 0).length;
+  if (inPlay > 10 && withDelta < Math.floor(inPlay * 0.2)) {
+    warn(
+      sport,
+      `${inPlay} players "in play" but only ${withDelta} show point changes (Δ≠0) — check if tournaments are in early rounds or if Δ calculation is missing data`
+    );
+  }
+
   let prevRank = 0;
   let prevPts = Infinity;
   let nameDupes = new Set();

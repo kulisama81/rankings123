@@ -17,7 +17,7 @@ export default function LiveRankingView({ tour, snapshot }: LiveRankingViewProps
     ? [
         { label: "Live #1", value: `${top.flag} ${top.name}` },
         { label: "Points", value: top.livePoints.toLocaleString() },
-        { label: "In play", value: String(liveCount) },
+        { label: "Players in play", value: String(liveCount) },
         { label: "Ranked", value: String(players.length) },
       ]
     : undefined;
