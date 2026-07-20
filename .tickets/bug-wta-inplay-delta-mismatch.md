@@ -1,6 +1,6 @@
 ---
 id: bug-wta-inplay-delta-mismatch
-status: open
+status: in_progress
 deps: []
 links: []
 created: 2026-07-18T00:00:00Z
