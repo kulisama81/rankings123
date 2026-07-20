@@ -14,6 +14,13 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-07-20",
+    title: "What's Next Discovery — Post-Tournament Retention",
+    description:
+      "After the World Cup Final, discover what's live NOW with our new What's Next module. Shows active sports with live pulse indicators, per-sport accent colors, and smooth animations. Never miss the action — Tour de France, ATP, WTA, and more are just a click away.",
+    area: "all",
+  },
+  {
+    date: "2026-07-20",
     title: "Tour de France 2026 Winner Predictions & Final Week Analysis",
     description:
       "New betting analysis article covering Pogačar's historic 5th title run, current odds from multiple sportsbooks, stage-by-stage final week preview (stages 16-21), podium battle analysis, and historical Pogačar vs Vingegaard rivalry context. SEO-optimized for Tour de France betting searches.",
