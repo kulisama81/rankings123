@@ -1,6 +1,6 @@
 ---
 id: tdf-final-week-betting
-status: in_progress
+status: closed
 deps: []
 links: []
 created: 2026-07-19T13:49:35Z
