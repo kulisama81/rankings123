@@ -1,6 +1,6 @@
 ---
 id: tdf-final-week-betting
-status: open
+status: in_progress
 deps: []
 links: []
 created: 2026-07-19T13:49:35Z
@@ -24,6 +24,10 @@ Build TdF final week (July 21-27) winner betting article targeting 'Tour de Fran
 - Meta tags + structured data (SportsEvent schema)
 
 ## Notes
+
+**2026-07-20T20:10:00Z (planner - cycling lane)**
+
+**RACE UPDATE**: Vingegaard crashed out and abandoned the Tour on stage 15 (per NBC Sports, Cyclingnews). The ticket premise has changed - this is now about Pogacar's historic 5th win and the podium battle (Evenepoel +5:00, del Toro +5:58), NOT Pogacar vs Vingegaard. Article reflects current reality while including historical Pogacar/Vingegaard rivalry context for SEO value and user interest.
 
 **2026-07-19T13:49:42Z**
 

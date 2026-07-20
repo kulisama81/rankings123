@@ -13,6 +13,13 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-07-20",
+    title: "Tour de France 2026 Winner Predictions & Final Week Analysis",
+    description:
+      "New betting analysis article covering Pogačar's historic 5th title run, current odds from multiple sportsbooks, stage-by-stage final week preview (stages 16-21), podium battle analysis, and historical Pogačar vs Vingegaard rivalry context. SEO-optimized for Tour de France betting searches.",
+    area: "cycling",
+  },
+  {
     date: "2026-07-19",
     title: "Homepage: Live NOW Indicator & Priority Cards",
     description:
