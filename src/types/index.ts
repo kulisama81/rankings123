@@ -17,6 +17,7 @@ export interface AtpTournamentStatus {
   name: string; // e.g., "Stuttgart"
   round: string; // e.g., "R32", "R16", "QF", "SF", "F", "W"
   active: boolean; // still alive in the draw
+  liveScore?: string; // e.g., "6-3, 2-1" (for in-progress matches)
 }
 
 export interface AtpLivePlayer {

@@ -151,7 +151,7 @@ function buildLiveStatuses(scoreboard: any, cfg: TourConfig): Map<string, LiveSt
       mainDraw.map((m: any) => String(m?.round?.displayName ?? ""))
     );
 
-    const byPlayer = new Map<string, { round: Round; status: string; winner: boolean }[]>();
+    const byPlayer = new Map<string, { round: Round; status: string; winner: boolean; match: any }[]>();
     for (const match of mainDraw) {
       const round = parseRound(String(match?.round?.displayName ?? ""), numberedRounds);
       if (!round) continue;
@@ -160,7 +160,12 @@ function buildLiveStatuses(scoreboard: any, cfg: TourConfig): Map<string, LiveSt
         const guid = competitor?.athlete?.guid;
         if (!guid) continue;
         const list = byPlayer.get(guid) ?? [];
-        list.push({ round, status, winner: competitor.winner === true });
+        list.push({
+          round,
+          status,
+          winner: competitor.winner === true,
+          match // Store full match to access opponent's score
+        });
         byPlayer.set(guid, list);
       }
     }
@@ -183,6 +188,8 @@ function buildLiveStatuses(scoreboard: any, cfg: TourConfig): Map<string, LiveSt
       let reached: Round = last.round;
       let active = true;
       let inPlay = false;
+      let liveScore: string | undefined;
+
       if (last.status === "STATUS_FINAL") {
         if (last.winner) {
           reached = nextRound(last.round);
@@ -192,6 +199,24 @@ function buildLiveStatuses(scoreboard: any, cfg: TourConfig): Map<string, LiveSt
         }
       } else if (last.status === "STATUS_IN_PROGRESS") {
         inPlay = true;
+        // Format live score from this player's perspective: their score first
+        const competitors = last.match?.competitors ?? [];
+        if (competitors.length === 2) {
+          // Find which competitor is this player
+          const thisPlayerIndex = competitors.findIndex((c: any) => c?.athlete?.guid === guid);
+          if (thisPlayerIndex !== -1) {
+            const opponentIndex = thisPlayerIndex === 0 ? 1 : 0;
+            const thisScores = competitors[thisPlayerIndex]?.linescores ?? [];
+            const oppScores = competitors[opponentIndex]?.linescores ?? [];
+            const sets: string[] = [];
+            for (let i = 0; i < Math.max(thisScores.length, oppScores.length); i++) {
+              const thisScore = Math.round(thisScores[i]?.value ?? 0);
+              const oppScore = Math.round(oppScores[i]?.value ?? 0);
+              sets.push(`${thisScore}-${oppScore}`);
+            }
+            liveScore = sets.join(", ");
+          }
+        }
       }
 
       result.set(guid, {
@@ -200,6 +225,7 @@ function buildLiveStatuses(scoreboard: any, cfg: TourConfig): Map<string, LiveSt
           name: tournamentName,
           round: inPlay ? `${reached} · in play` : reached,
           active: active || inPlay,
+          liveScore,
         },
       });
     }

@@ -89,6 +89,7 @@ function Tournament({ player }: { player: AtpLivePlayer }) {
     <span className="inline-flex items-center gap-1.5 text-xs text-fg/80">
       <LiveDot />
       {t.name} · {t.round}
+      {t.liveScore && <span className="font-mono font-semibold text-accent">({t.liveScore})</span>}
     </span>
   );
 }
