@@ -13,6 +13,12 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-07-21",
+    title: "Live match scores",
+    description: "ATP and WTA live ranking pages now show real-time set scores for in-progress matches",
+    area: "tennis",
+  },
+  {
     date: "2026-07-20",
     title: "What's Next Discovery — Post-Tournament Retention",
     description:
