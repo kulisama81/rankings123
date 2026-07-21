@@ -1,6 +1,6 @@
 ---
 id: homepage-countdown-timer
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-19T22:15:41Z

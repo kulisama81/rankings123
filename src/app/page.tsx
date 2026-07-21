@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import UpcomingEventCountdown from "@/components/UpcomingEventCountdown";
 import LiveNowHero from "@/components/LiveNowHero";
 import LiveSportCard from "@/components/LiveSportCard";
 import LiveWorldCupWidget from "@/components/LiveWorldCupWidget";
@@ -57,6 +58,9 @@ export default function HomePage() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+      {/* Countdown timer - shows when major event is upcoming (within 24h but not started) */}
+      <UpcomingEventCountdown />
+
       {/* Dynamic LIVE NOW hero - shows what's actually live */}
       <LiveNowHero />
 
