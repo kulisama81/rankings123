@@ -16,11 +16,12 @@ fabricated, mis-parsed, or mis-sourced. **Planner: investigate the relevant feed
 fix it, re-run `npm run check:data-sanity` until clean, log the resolution in the Log below,
 then close this ticket.** Do NOT close while `check:data-sanity` still reports errors.
 
-## Anomalies (latest run · 2026-07-21T04:00:00.155Z)
+## Anomalies (latest run · 2026-07-21T22:00:01.195Z)
 - [cycling] serving mock data when Tour de France should be live (race started July 4)
-- [cycling] 17 days into race, but all stage winners show "—" (stale data)
+- [cycling] 18 days into race, but all stage winners show "—" (stale data)
 
 ## Log
+- 2026-07-21T22:00:01.195Z: 2 anomalies — [cycling] serving mock data when Tour de France should be live (race started July 4) (…)
 - 2026-07-21T04:00:00.155Z: 2 anomalies — [cycling] serving mock data when Tour de France should be live (race started July 4) (…)
 - 2026-07-19T20:00:56.293Z: 2 anomalies — [cycling] serving mock data when Tour de France should be live (race started July 4) (…)
 - 2026-07-19T16:00:00.800Z: 2 anomalies — [cycling] serving mock data when Tour de France should be live (race started July 4) (…)
