@@ -70,7 +70,7 @@ export default function TdfStagesTable({ stages, currentStage }: TdfStagesTableP
                 >
                   <td className="px-3 py-3 text-center font-semibold">
                     <Link
-                      href={`/events/tdf-2026/stage-${stage.stage}`}
+                      href={`/events/tdf-2026/stage/${stage.stage}`}
                       className="text-accent transition hover:text-accentfg"
                     >
                       {stage.stage}
