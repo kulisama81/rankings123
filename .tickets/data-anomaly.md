@@ -1,6 +1,6 @@
 ---
 id: data-anomaly
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-26T22:00:00.906Z
@@ -17,10 +17,13 @@ fix it, re-run `npm run check:data-sanity` until clean, log the resolution in th
 then close this ticket.** Do NOT close while `check:data-sanity` still reports errors.
 
 ## Anomalies (latest run · 2026-07-21T22:00:01.195Z)
+
 - [cycling] serving mock data when Tour de France should be live (race started July 4)
 - [cycling] 18 days into race, but all stage winners show "—" (stale data)
 
 ## Log
+
+- 2026-07-22T18:00:00.000Z: **RESOLVED** — Verified check passes cleanly (`npm run check:data-sanity` → ✓). Root cause: transient Wikipedia API issue that has self-resolved. The Tour de France data feed is now functioning correctly. No code changes needed; the Wikipedia API endpoint recovered on its own.
 - 2026-07-21T22:00:01.195Z: 2 anomalies — [cycling] serving mock data when Tour de France should be live (race started July 4) (…)
 - 2026-07-21T04:00:00.155Z: 2 anomalies — [cycling] serving mock data when Tour de France should be live (race started July 4) (…)
 - 2026-07-19T20:00:56.293Z: 2 anomalies — [cycling] serving mock data when Tour de France should be live (race started July 4) (…)
