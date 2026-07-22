@@ -9,6 +9,8 @@ import HeroBanner from "@/components/HeroBanner";
 import SectionNav from "@/components/SectionNav";
 import WorldCupCountdown from "@/components/WorldCupCountdown";
 import PostEventDiscovery from "@/components/PostEventDiscovery";
+import WorldCupFinalsHero from "@/components/WorldCupFinalsHero";
+import WorldCupFinalsMobileBadge from "@/components/WorldCupFinalsMobileBadge";
 
 // Lazy-load below-the-fold components to reduce initial bundle size
 const WorldCupBracket = dynamic(() => import("@/components/WorldCupBracket"), {
@@ -86,6 +88,20 @@ export default async function WorldCupPage() {
   const hasStats = stats.topScorers.length > 0 || stats.topAssisters.length > 0;
   const hasTeamStats = snapshot.groups.length > 0;
 
+  // Detect Finals week (July 18-22, 2026) and find Final match
+  const now = new Date();
+  const finalsWeekStart = new Date("2026-07-18T00:00:00-04:00");
+  const finalsWeekEnd = new Date("2026-07-22T23:59:59-04:00");
+  const isFinalsWeek = now >= finalsWeekStart && now <= finalsWeekEnd;
+
+  // Find the Final match (ESPN labels it in statusDetail or it's the last/highest-stage match)
+  const finalMatch = snapshot.matches.find(
+    (m) =>
+      m.statusDetail?.toLowerCase().includes("final") &&
+      !m.statusDetail?.toLowerCase().includes("semi") &&
+      !m.statusDetail?.toLowerCase().includes("third")
+  );
+
   const sections = [
     ...(hasTodaysMatches ? [{ id: "todays-matches", label: "Today's Matches" }] : []),
     { id: "group-standings", label: "Group Standings" },
@@ -102,19 +118,48 @@ export default async function WorldCupPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <div data-sport="worldcup" className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
-        <HeroBanner
-          sport="worldcup"
-          title="World Cup 2026 Live"
-          subtitle={`FIFA World Cup 2026 · ${snapshot.stageLabel}`}
-          stats={[
-            { label: "Live now", value: String(snapshot.matches.filter((m) => m.state === "in").length) },
-            { label: "Groups", value: String(snapshot.groups.length) },
-            { label: "Matches", value: String(snapshot.matches.length) },
-          ]}
-        />
-        <div className="my-6">
-          <WorldCupCountdown currentMatches={snapshot.matches} />
-        </div>
+        {/* Finals Week: Special celebration hero */}
+        {isFinalsWeek && finalMatch ? (
+          <>
+            <WorldCupFinalsHero
+              finalMatch={{
+                homeTeam: finalMatch.homeName,
+                awayTeam: finalMatch.awayName,
+                homeFlag: finalMatch.homeFlag,
+                awayFlag: finalMatch.awayFlag,
+                homeScore: finalMatch.homeScore,
+                awayScore: finalMatch.awayScore,
+                state: finalMatch.state,
+                statusDetail: finalMatch.statusDetail,
+              }}
+            />
+            <WorldCupFinalsMobileBadge
+              finalMatch={{
+                homeTeam: finalMatch.homeName,
+                awayTeam: finalMatch.awayName,
+                homeFlag: finalMatch.homeFlag,
+                awayFlag: finalMatch.awayFlag,
+                state: finalMatch.state,
+              }}
+            />
+          </>
+        ) : (
+          <>
+            <HeroBanner
+              sport="worldcup"
+              title="World Cup 2026 Live"
+              subtitle={`FIFA World Cup 2026 · ${snapshot.stageLabel}`}
+              stats={[
+                { label: "Live now", value: String(snapshot.matches.filter((m) => m.state === "in").length) },
+                { label: "Groups", value: String(snapshot.groups.length) },
+                { label: "Matches", value: String(snapshot.matches.length) },
+              ]}
+            />
+            <div className="my-6">
+              <WorldCupCountdown currentMatches={snapshot.matches} />
+            </div>
+          </>
+        )}
         {/* Final Predictions Link - prominent during final week */}
         <Link
           href="/world-cup/final-2026-predictions"
@@ -134,7 +179,22 @@ export default async function WorldCupPage() {
           </div>
         </Link>
         <SectionNav sections={sections} />
-        <WorldCupTable initialSnapshot={snapshot} />
+        <WorldCupTable
+          initialSnapshot={snapshot}
+          championCode={
+            isFinalsWeek && finalMatch && finalMatch.state === "post"
+              ? finalMatch.homeScore !== null &&
+                finalMatch.awayScore !== null &&
+                finalMatch.homeScore > finalMatch.awayScore
+                ? finalMatch.homeCode
+                : finalMatch.homeScore !== null &&
+                  finalMatch.awayScore !== null &&
+                  finalMatch.awayScore > finalMatch.homeScore
+                  ? finalMatch.awayCode
+                  : undefined
+              : undefined
+          }
+        />
         <Suspense
           fallback={
             <div className="my-12 animate-pulse rounded-2xl border border-edge bg-surface p-8">

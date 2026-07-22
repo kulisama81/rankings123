@@ -13,6 +13,12 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-07-22",
+    title: "World Cup Finals Celebration",
+    description: "Special visual treatment for Finals week: gold trophy-themed hero with confetti animation, live countdown, champion highlights with 3x trophy on winner's row, and mobile Finals badge.",
+    area: "worldcup",
+  },
+  {
     date: "2026-07-21",
     title: "Upcoming event countdown timer",
     description: "Homepage now shows a countdown to upcoming major events (e.g., 'Tour de France Final Stage in 5 days'). Never miss the start of big tournaments and finals.",

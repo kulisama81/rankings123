@@ -16,6 +16,7 @@ const REFRESH_INTERVAL_S = 30;
 
 interface WorldCupTableProps {
   initialSnapshot: WorldCupSnapshot;
+  championCode?: string; // Team code of World Cup champion (for post-Finals celebration)
 }
 
 // Advancement shows only as a vertical accent bar on the row — green = confirmed
@@ -68,7 +69,13 @@ function LiveDot() {
   );
 }
 
-function GroupCard({ group }: { group: WorldCupGroup }) {
+function GroupCard({
+  group,
+  championCode,
+}: {
+  group: WorldCupGroup;
+  championCode?: string;
+}) {
   return (
     <div className="overflow-hidden rounded-2xl border border-edge bg-surface">
       <div className="border-b border-edge bg-surface2 px-4 py-2.5 text-sm font-bold tracking-tight text-fg">
@@ -89,39 +96,54 @@ function GroupCard({ group }: { group: WorldCupGroup }) {
             </tr>
           </thead>
           <tbody>
-            {group.teams.map((t) => (
-              <tr
-                key={t.code + t.name}
-                className={`border-t border-edge ${outlookClasses(t.outlook)}`}
-                title={t.status}
-              >
-                <td className="px-3 py-2 text-right tabular-nums text-muted">{t.rank}</td>
-                <td className="px-3 py-2 font-semibold">
-                  <Tooltip
-                    content={
-                      <TeamTooltip
-                        name={t.name}
-                        code={t.code}
-                        played={t.played}
-                        won={t.won}
-                        drawn={t.drawn}
-                        lost={t.lost}
-                        goalsFor={t.goalsFor}
-                        goalsAgainst={t.goalsAgainst}
-                        status={t.status}
-                      />
-                    }
-                    placement="right"
-                  >
-                    <Link
-                      href={`/world-cup/team/${t.code.toLowerCase()}`}
-                      className="inline-flex items-center text-fg hover:text-accent transition-colors"
+            {group.teams.map((t) => {
+              const isChampion = championCode && t.code === championCode;
+              return (
+                <tr
+                  key={t.code + t.name}
+                  className={`border-t border-edge ${outlookClasses(t.outlook)} ${
+                    isChampion ? "bg-trophy/5 border-trophy/30" : ""
+                  }`}
+                  title={t.status}
+                >
+                  <td className="px-3 py-2 text-right tabular-nums text-muted">{t.rank}</td>
+                  <td className="px-3 py-2 font-semibold">
+                    <Tooltip
+                      content={
+                        <TeamTooltip
+                          name={t.name}
+                          code={t.code}
+                          played={t.played}
+                          won={t.won}
+                          drawn={t.drawn}
+                          lost={t.lost}
+                          goalsFor={t.goalsFor}
+                          goalsAgainst={t.goalsAgainst}
+                          status={t.status}
+                        />
+                      }
+                      placement="right"
                     >
-                      <span className="mr-2 text-base leading-none" aria-hidden="true">{t.flag}</span>
-                      {t.name}
-                    </Link>
-                  </Tooltip>
-                </td>
+                      <Link
+                        href={`/world-cup/team/${t.code.toLowerCase()}`}
+                        className="inline-flex items-center text-fg hover:text-accent transition-colors gap-2"
+                      >
+                        <span className="mr-2 text-base leading-none" aria-hidden="true">
+                          {t.flag}
+                        </span>
+                        {t.name}
+                        {isChampion && (
+                          <span
+                            className="text-4xl leading-none text-trophy drop-shadow-[0_0_8px_rgba(212,175,55,0.6)]"
+                            aria-label="World Cup Champion"
+                            title="World Cup Champion"
+                          >
+                            🏆
+                          </span>
+                        )}
+                      </Link>
+                    </Tooltip>
+                  </td>
                 <td className="px-2 py-2 text-center tabular-nums text-muted">{t.played}</td>
                 <td className="px-2 py-2 text-center tabular-nums text-muted">{t.won}</td>
                 <td className="px-2 py-2 text-center tabular-nums text-muted">{t.drawn}</td>
@@ -144,7 +166,8 @@ function GroupCard({ group }: { group: WorldCupGroup }) {
                   </Tooltip>
                 </td>
               </tr>
-            ))}
+              );
+            })}
           </tbody>
         </table>
       </div>
@@ -230,7 +253,10 @@ function MatchRow({ match, showOdds }: { match: WorldCupMatch; showOdds: boolean
   );
 }
 
-export default function WorldCupTable({ initialSnapshot }: WorldCupTableProps) {
+export default function WorldCupTable({
+  initialSnapshot,
+  championCode,
+}: WorldCupTableProps) {
   const [snapshot, setSnapshot] = useState(initialSnapshot);
   const [secondsLeft, setSecondsLeft] = useState(REFRESH_INTERVAL_S);
   const [scheduleTab, setScheduleTab] = useState<"upcoming" | "results">("upcoming");
@@ -344,7 +370,7 @@ export default function WorldCupTable({ initialSnapshot }: WorldCupTableProps) {
         </h2>
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {snapshot.groups.map((g) => (
-            <GroupCard key={g.name} group={g} />
+            <GroupCard key={g.name} group={g} championCode={championCode} />
           ))}
         </div>
         <div className="mt-4 flex flex-wrap items-center gap-4 text-xs text-muted">
