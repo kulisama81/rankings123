@@ -15,8 +15,15 @@ interface FinalData {
   status: string;
 }
 
+function getInitialPhase(): FinalPhase {
+  // Check if we're past the Final end time (July 19, 2026 10PM UTC)
+  const now = new Date();
+  const finalEnd = new Date(Date.UTC(2026, 6, 19, 22, 0, 0)); // July 19, 10PM UTC
+  return now >= finalEnd ? "after" : "before";
+}
+
 export default function WorldCupFinalWidget() {
-  const [phase, setPhase] = useState<FinalPhase>("before");
+  const [phase, setPhase] = useState<FinalPhase>(getInitialPhase());
   const [finalData, setFinalData] = useState<FinalData | null>(null);
 
   useEffect(() => {
@@ -55,22 +62,23 @@ export default function WorldCupFinalWidget() {
             status: finalMatch.statusDetail || finalMatch.state,
           });
 
-          // Determine phase based on match state
+          // Determine phase based on match state with date fallback for unexpected states
+          const now = new Date();
+          const finalEnd = new Date(Date.UTC(2026, 6, 19, 22, 0, 0)); // July 19, 10PM UTC
+
           if (finalMatch.state === "in") {
             setPhase("live");
           } else if (finalMatch.state === "post") {
             setPhase("after");
           } else {
-            setPhase("before");
+            // Unknown/unexpected state - trust the date, not bad API data
+            setPhase(now >= finalEnd ? "after" : "before");
           }
         } else {
-          // Fallback: check if we're past July 19, 2026 6PM ET (Final end time ~)
-          // 6PM ET = 6PM EDT (UTC-4 in summer) = 10PM UTC
+          // Fallback: no Final match found, use date
           const now = new Date();
-          const finalEnd = new Date(Date.UTC(2026, 6, 19, 22, 0, 0)); // July 19, 10PM UTC = 6PM ET
-          if (now > finalEnd) {
-            setPhase("after");
-          }
+          const finalEnd = new Date(Date.UTC(2026, 6, 19, 22, 0, 0)); // July 19, 10PM UTC
+          setPhase(now >= finalEnd ? "after" : "before");
         }
       } catch {
         // Silently fail - widget will hide on error
