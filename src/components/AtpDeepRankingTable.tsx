@@ -144,7 +144,7 @@ export default function AtpDeepRankingTable({ initialSnapshot, band, apiEndpoint
         </select>
         <label className="flex cursor-pointer items-center gap-1.5 text-sm text-muted">
           <input type="checkbox" checked={liveOnly} onChange={(e) => setLiveOnly(e.target.checked)} className="accent-accent" />
-          In play ({liveCount})
+          In play ({liveCount} total)
         </label>
         <div className="ml-auto flex items-center gap-3 text-xs text-muted">
           {snapshot.source === "mock" && (

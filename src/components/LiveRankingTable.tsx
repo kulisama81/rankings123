@@ -236,7 +236,7 @@ export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingT
             onChange={(e) => setLiveOnly(e.target.checked)}
             className="accent-accent"
           />
-          In play ({liveCount})
+          In play ({liveCount} total)
         </label>
         <div className="ml-auto flex items-center gap-3 text-xs text-muted">
           {snapshot.source === "mock" && (

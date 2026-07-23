@@ -13,6 +13,12 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-07-23",
+    title: "Clarified 'In play' count label",
+    description: "Tennis ranking pages now show 'In play (X total)' instead of just 'In play (X)' to clarify the count includes all active players across all pages, not just the current page.",
+    area: "tennis",
+  },
+  {
     date: "2026-07-22",
     title: "World Cup Finals Celebration",
     description: "Special visual treatment for Finals week: gold trophy-themed hero with confetti animation, live countdown, champion highlights with 3x trophy on winner's row, and mobile Finals badge.",
