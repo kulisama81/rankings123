@@ -740,3 +740,32 @@ body {
     transform: none;
   }
 }
+
+/* ---- Rank change animations ---- */
+/* Row flash when rank changes (200-300ms, per-sport accent) */
+@keyframes rank-row-flash {
+  0% {
+    background-color: rgba(var(--accent-rgb), 0.18);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+.rank-changed {
+  animation: rank-row-flash 280ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Stagger animation for multiple simultaneous rank changes */
+.rank-changed-stagger-1 { animation-delay: 40ms; }
+.rank-changed-stagger-2 { animation-delay: 80ms; }
+.rank-changed-stagger-3 { animation-delay: 120ms; }
+.rank-changed-stagger-4 { animation-delay: 160ms; }
+.rank-changed-stagger-5 { animation-delay: 200ms; }
+
+/* Respect prefers-reduced-motion: instant update, no animation */
+@media (prefers-reduced-motion: reduce) {
+  .rank-changed {
+    animation: none;
+  }
+}

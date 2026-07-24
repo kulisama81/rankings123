@@ -72,9 +72,11 @@ function LiveDot() {
 function GroupCard({
   group,
   championCode,
+  rankChanges,
 }: {
   group: WorldCupGroup;
   championCode?: string;
+  rankChanges: Set<string>;
 }) {
   return (
     <div className="overflow-hidden rounded-2xl border border-edge bg-surface">
@@ -98,12 +100,19 @@ function GroupCard({
           <tbody>
             {group.teams.map((t) => {
               const isChampion = championCode && t.code === championCode;
+              const teamKey = `${group.name}-${t.code}`;
+              const hasRankChange = rankChanges.has(teamKey);
+              const changedArray = Array.from(rankChanges);
+              const changeIndex = changedArray.indexOf(teamKey);
+              const staggerClass = hasRankChange && rankChanges.size > 5 && changeIndex >= 0 && changeIndex < 5
+                ? `rank-changed-stagger-${changeIndex + 1}` : "";
+
               return (
                 <tr
                   key={t.code + t.name}
                   className={`border-t border-edge ${outlookClasses(t.outlook)} ${
                     isChampion ? "bg-trophy/5 border-trophy/30" : ""
-                  }`}
+                  } ${hasRankChange ? `rank-changed ${staggerClass}` : ""}`}
                   title={t.status}
                 >
                   <td className="px-3 py-2 text-right tabular-nums text-muted">{t.rank}</td>
@@ -260,14 +269,37 @@ export default function WorldCupTable({
   const [snapshot, setSnapshot] = useState(initialSnapshot);
   const [secondsLeft, setSecondsLeft] = useState(REFRESH_INTERVAL_S);
   const [scheduleTab, setScheduleTab] = useState<"upcoming" | "results">("upcoming");
+  const [rankChanges, setRankChanges] = useState<Set<string>>(new Set());
   const fetching = useRef(false);
+  const prevRanksRef = useRef<Map<string, number>>(new Map());
 
   const refresh = useCallback(async () => {
     if (fetching.current) return;
     fetching.current = true;
     try {
       const res = await fetch("/api/worldcup/live", { cache: "no-store" });
-      if (res.ok) setSnapshot(await res.json());
+      if (res.ok) {
+        const newSnapshot = await res.json();
+
+        // Detect rank changes (team position changes in group standings)
+        const changedTeams = new Set<string>();
+        newSnapshot.groups.forEach((group: WorldCupGroup) => {
+          group.teams.forEach((team: WorldCupTeam) => {
+            const teamKey = `${group.name}-${team.code}`;
+            const prevRank = prevRanksRef.current.get(teamKey);
+            if (prevRank !== undefined && prevRank !== team.rank) {
+              changedTeams.add(teamKey);
+            }
+            prevRanksRef.current.set(teamKey, team.rank);
+          });
+        });
+
+        setSnapshot(newSnapshot);
+        if (changedTeams.size > 0) {
+          setRankChanges(changedTeams);
+          setTimeout(() => setRankChanges(new Set()), 500);
+        }
+      }
     } catch {
       /* keep last good snapshot */
     } finally {
@@ -370,7 +402,7 @@ export default function WorldCupTable({
         </h2>
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {snapshot.groups.map((g) => (
-            <GroupCard key={g.name} group={g} championCode={championCode} />
+            <GroupCard key={g.name} group={g} championCode={championCode} rankChanges={rankChanges} />
           ))}
         </div>
         <div className="mt-4 flex flex-wrap items-center gap-4 text-xs text-muted">

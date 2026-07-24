@@ -1,6 +1,6 @@
 ---
 id: rank-change-animations
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-21T12:00:00Z

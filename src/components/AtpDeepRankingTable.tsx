@@ -63,14 +63,34 @@ export default function AtpDeepRankingTable({ initialSnapshot, band, apiEndpoint
   const [liveOnly, setLiveOnly] = useState(false);
   const [page, setPage] = useState(0);
   const [secondsLeft, setSecondsLeft] = useState(REFRESH_INTERVAL_S);
+  const [rankChanges, setRankChanges] = useState<Set<string>>(new Set());
   const fetching = useRef(false);
+  const prevRanksRef = useRef<Map<string, number>>(new Map());
 
   const refresh = useCallback(async () => {
     if (fetching.current) return;
     fetching.current = true;
     try {
       const res = await fetch(apiEndpoint, { cache: "no-store" });
-      if (res.ok) setSnapshot(await res.json());
+      if (res.ok) {
+        const newSnapshot = await res.json();
+
+        // Detect rank changes
+        const changedPlayers = new Set<string>();
+        newSnapshot.players.forEach((p: AtpLivePlayer) => {
+          const prevRank = prevRanksRef.current.get(p.name);
+          if (prevRank !== undefined && prevRank !== p.liveRank) {
+            changedPlayers.add(p.name);
+          }
+          prevRanksRef.current.set(p.name, p.liveRank);
+        });
+
+        setSnapshot(newSnapshot);
+        if (changedPlayers.size > 0) {
+          setRankChanges(changedPlayers);
+          setTimeout(() => setRankChanges(new Set()), 500);
+        }
+      }
     } catch {
       /* keep last good snapshot */
     } finally {
@@ -181,12 +201,19 @@ export default function AtpDeepRankingTable({ initialSnapshot, band, apiEndpoint
               </tr>
             </thead>
             <tbody>
-              {pageRows.map((p) => (
+              {pageRows.map((p) => {
+                const hasRankChange = rankChanges.has(p.name);
+                const changedArray = Array.from(rankChanges);
+                const changeIndex = changedArray.indexOf(p.name);
+                const staggerClass = hasRankChange && rankChanges.size > 5 && changeIndex >= 0 && changeIndex < 5
+                  ? `rank-changed-stagger-${changeIndex + 1}` : "";
+
+                return (
                 <tr
                   key={`${p.officialRank}-${p.name}`}
                   className={`border-t border-edge transition ${
                     p.tournament?.active ? "bg-accent/[0.035] hover:bg-surface2" : "hover:bg-surface2"
-                  }`}
+                  } ${hasRankChange ? `rank-changed ${staggerClass}` : ""}`}
                 >
                   <td className="px-3 py-2.5 text-right font-bold tabular-nums text-fg">
                     <Tooltip
@@ -269,7 +296,8 @@ export default function AtpDeepRankingTable({ initialSnapshot, band, apiEndpoint
                   </td>
                   <td className="px-4 py-2.5"><TournamentStatus player={p} /></td>
                 </tr>
-              ))}
+                );
+              })}
             </tbody>
           </table>
         </div>

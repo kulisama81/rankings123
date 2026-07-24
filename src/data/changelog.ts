@@ -14,6 +14,12 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-07-24",
+    title: "Live ranking animations",
+    description: "Rankings now animate smoothly when they update — rows flash with per-sport accent colors when players change position, making live movement easier to track in real time.",
+    area: "all",
+  },
+  {
+    date: "2026-07-24",
     title: "ATP Race to Turin & WTA Race to Finals",
     description: "New race rankings pages show year-to-date points only (current season performance). Track who's qualifying for the ATP Finals in Turin and WTA Finals. Race rankings reset January 1 each year.",
     area: "tennis",
