@@ -43,6 +43,16 @@ export default async function WtaLivePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <div data-sport="wta">
+        <div className="mx-auto max-w-6xl px-4 pt-4 sm:px-6 lg:px-8">
+          <div className="mb-4">
+            <a
+              href="/wta-race"
+              className="inline-flex items-center text-sm font-medium text-fg hover:text-accent transition"
+            >
+              View WTA Race to Finals (YTD Points) →
+            </a>
+          </div>
+        </div>
         <LiveRankingView tour="wta" snapshot={snapshot} />
         <div className="mx-auto max-w-6xl px-4 pb-12 sm:px-6 lg:px-8">
           <WimbledonCallout variant="compact" />

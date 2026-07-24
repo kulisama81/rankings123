@@ -43,6 +43,16 @@ export default async function AtpLivePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <div data-sport="atp">
+        <div className="mx-auto max-w-6xl px-4 pt-4 sm:px-6 lg:px-8">
+          <div className="mb-4">
+            <a
+              href="/atp-race"
+              className="inline-flex items-center text-sm font-medium text-fg hover:text-accent transition"
+            >
+              View ATP Race to Turin (YTD Points) →
+            </a>
+          </div>
+        </div>
         <LiveRankingView tour="atp" snapshot={snapshot} />
         <div className="mx-auto max-w-6xl px-4 pb-12 sm:px-6 lg:px-8">
           <WimbledonCallout variant="compact" />
