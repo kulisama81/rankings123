@@ -13,6 +13,12 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-07-24",
+    title: "ATP Race to Turin & WTA Race to Finals",
+    description: "New race rankings pages show year-to-date points only (current season performance). Track who's qualifying for the ATP Finals in Turin and WTA Finals. Race rankings reset January 1 each year.",
+    area: "tennis",
+  },
+  {
     date: "2026-07-23",
     title: "Clarified 'In play' count label",
     description: "Tennis ranking pages now show 'In play (X total)' instead of just 'In play (X)' to clarify the count includes all active players across all pages, not just the current page.",
