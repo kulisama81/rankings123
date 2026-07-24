@@ -26,3 +26,7 @@ Build US Open 2026 preview article targeting post-World Cup Final tennis searche
 - **Competitive gap:** ESPN/BBC will have this, we won't unless we build it now
 
 **Why now (not later):** Search volume ramps 4-6 weeks pre-tournament. Ship by July 25 = capture the full ramp.
+
+**2026-07-24T13:49:52Z**
+
+ROI (First Principles): Traffic = US Open is the highest-traffic tennis event in US (our primary geography). SEO = 'us open 2026' searches spike 2-4 weeks before tournament (millions of queries). Timing = ship Aug 25 to capture pre-tournament search. Revenue = high-volume traffic + betting affiliate opportunity (match odds, winner odds). Differentiation = most sites wait until draw release; early preview captures search first. Effort = Medium (2-3h research + content). ROI = VERY HIGH (time-sensitive traffic capture).
