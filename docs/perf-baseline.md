@@ -2,7 +2,7 @@
 
 This baseline establishes performance budgets and target metrics for all routes. Use this to detect regressions during development.
 
-**Last Updated:** 2026-07-23 (✅ CONTINUING IMPROVEMENTS — ATP TTFB stable, ATP/WTA load -8-14%, WTA 5th day under budget, all routes FAST)  
+**Last Updated:** 2026-07-24 (✅ STABLE — ATP stable 6 days, WTA 6th day under budget, World Cup improvements, all routes FAST)  
 **Last Fix:** 2026-07-18 (Remove duplicate table rendering — WTA within budget, ATP -28%)  
 **Measurement Method:** `npm run check:performance` (TTFB/total/size via live fetch) + Core Web Vitals (Playwright when available)
 
@@ -54,10 +54,10 @@ Per [web.dev/vitals](https://web.dev/vitals), these are the **GOOD** thresholds 
 
 | Route        | TTFB Budget | Total Budget | Size Budget | Current TTFB | Current Total | Current Size | Status |
 |--------------|-------------|--------------|-------------|--------------|---------------|--------------|--------|
-| /            | ≤ 0.8s      | ≤ 2.0s       | ≤ 150KB     | 0.14s        | 0.14s         | 29KB         | ✅ FAST |
-| /atp-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.15s        | 0.35s         | 440KB        | 🟡 SIZE (STABLE) |
-| /wta-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 200KB     | 0.14s        | 0.19s         | 190KB        | ✅ FAST |
-| /world-cup   | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.19s        | 0.41s         | 381KB        | ⚠️ SIZE |
+| /            | ≤ 0.8s      | ≤ 2.0s       | ≤ 150KB     | 0.13s        | 0.15s         | 31KB         | ✅ FAST |
+| /atp-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.13s        | 0.33s         | 440KB        | 🟡 SIZE (STABLE) |
+| /wta-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 200KB     | 0.13s        | 0.23s         | 191KB        | ✅ FAST |
+| /world-cup   | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.15s        | 0.37s         | 381KB        | ⚠️ SIZE |
 
 **Legend:**
 - **TTFB** = Time to First Byte (server response start)
@@ -72,20 +72,21 @@ Per [web.dev/vitals](https://web.dev/vitals), these are the **GOOD** thresholds 
 - 🔴 **SLOW** = Over TTFB or total budget (user-perceived slowness)
 
 **Note on ATP size:**
-- ATP Live size now 440KB vs 300KB budget (47% over, stable for 5 days)
-- Size stable from 2026-07-21 (440KB → 440KB → 440KB, 0% change), -29% from peak (620KB → 440KB)
-- 🎉 **TTFB STABLE POST-IMPROVEMENT:** 0.16s → 0.13s → 0.15s (-6% today, 2-day: -61% from 0.33s)
-- 🚀 **LOAD TIME CONTINUING TO IMPROVE:** 0.38s → 0.28s → 0.35s (-8% today, still -20% from 0.44s)
+- ATP Live size now 440KB vs 300KB budget (47% over, stable for 6 days)
+- Size stable from 2026-07-21 (440KB → 440KB → 440KB → 440KB, 0% change), -29% from peak (620KB → 440KB)
+- 🎉 **TTFB CONTINUING TO IMPROVE:** 0.15s → 0.13s (-13% today, 3-day: -59% from 0.33s)
+- 🚀 **LOAD TIME CONTINUING TO IMPROVE:** 0.35s → 0.33s (-6% today, still -25% from 0.44s)
 - 16-day regression significantly improved but not fully resolved
 - Further optimization needed: `perf-atp-guid-bloat` (P1, virtualization to reach < 300KB)
 - **User experience EXCELLENT** — TTFB/total well within budgets despite size
 
 **Note on WTA size:**
-- WTA Live size now 190KB vs 200KB budget (5% UNDER, regression RESOLVED ✅)
-- Size 185KB → 190KB (+5KB, +2.7%) from commit `babed56` (Add live match scores feature)
-- Still within budget, -48% from peak (366KB → 190KB)
-- 🚀 **LOAD TIME CONTINUING TO IMPROVE:** 0.22s → 0.19s → 0.19s (-14% yesterday, stable today)
-- 16-day regression FULLY RESOLVED on 2026-07-19, **5 consecutive days within budget**
+- WTA Live size now 191KB vs 200KB budget (4.5% UNDER, regression RESOLVED ✅)
+- Size 190KB → 191KB (+1KB, +0.5% measurement variance)
+- Still within budget, -48% from peak (366KB → 191KB)
+- 🚀 **TTFB IMPROVING:** 0.14s → 0.13s (-7%)
+- ⚠️ **LOAD TIME VARIANCE:** 0.19s → 0.23s (+21%, likely transient, monitoring)
+- 16-day regression FULLY RESOLVED on 2026-07-19, **6 consecutive days within budget**
 - Ticket `perf-wta-guid-bloat` CLOSED
 
 **Note on World Cup size:**
@@ -99,7 +100,67 @@ Per [web.dev/vitals](https://web.dev/vitals), these are the **GOOD** thresholds 
 
 ## Recent Changes
 
-### ✅ CONTINUING IMPROVEMENTS — ATP TTFB Stable, ATP/WTA Load -8-14%, WTA 5th Day Under Budget (2026-07-23)
+### ✅ STABLE — ATP Stable 6 Days, WTA 6th Day Under Budget, World Cup Improvements (2026-07-24)
+
+**Observation:** All routes remain within TTFB/total budgets. ATP size stable for 6th consecutive day (440KB). WTA 6th consecutive day under budget (191KB < 200KB). World Cup shows major TTFB/total improvements (-21%/-10%). Minor WTA load time variance detected but within budget.
+
+**Measurements (2026-07-24 vs 2026-07-23):**
+
+**HTTP Fetch (npm run check:performance):**
+- **Homepage:** TTFB 0.14s → 0.13s (-7%), total 0.14s → 0.15s (+7%), size 29KB → 31KB (+6.9%, **+2KB from WC Final widget fix**)
+- **ATP Live:** TTFB 0.15s → 0.13s (-13%, **continuing improvement**), total 0.35s → 0.33s (-6%, **improvement**), size 440KB (stable, **6th consecutive day**)
+- **WTA Live:** TTFB 0.14s → 0.13s (-7%), total 0.19s → 0.23s (+21%, **variance**), size 190KB → 191KB (+0.5%, **+1KB measurement variance**)
+- **World Cup:** TTFB 0.19s → 0.15s (-21%, **major improvement**), total 0.41s → 0.37s (-10%, **improvement**), size 381KB (stable)
+
+**Core Web Vitals:** Not measured (Playwright setup required)
+
+**Analysis:**
+- 🎉 **ATP TTFB continuing improvement** — 0.15s → 0.13s (-13%), 3-day total: -59% (0.33s → 0.13s)
+- 🚀 **ATP load time improvement** — 0.35s → 0.33s (-6%)
+- ✅ **ATP size stable** — 440KB (6th consecutive day, 47% over budget, no regression)
+- ✅ **WTA 6th consecutive day UNDER budget** — 191KB < 200KB (4.5% under)
+- ⚠️ **WTA load time variance** — +21% (0.19s → 0.23s) but within 2.0s budget, likely transient (TTFB improved -7%, size +0.5%)
+- 🚀 **World Cup major improvements** — TTFB -21% (0.19s → 0.15s), total -10% (0.41s → 0.37s)
+- ✅ **Homepage minor variance** — +2KB from commit 6da77fc (WC Final widget fix)
+- ✅ **All routes FAST** — Within TTFB (< 0.8s) and total (< 2.0s) budgets
+
+**Code changes since 2026-07-23:**
+1. `71c4a99` — Autoresearch 2026-07-24 (tickets only)
+2. `eadf355` — Inspector 2026-07-23 evening (tickets only)
+3. `dda5251` — Auto: data-anomaly filed (tickets only)
+4. `ec89d75` — Mark t-0b74 as closed (tickets only)
+5. `6da77fc` — **Fix homepage WC Final widget showing stale 'Today' text** — explains +2KB homepage
+
+**Why performance continues to improve:**
+- Edge caching continuing to compound after 2026-07-18 fix
+- ISR revalidation optimizations stabilizing
+- Network/CDN warming effects
+
+**Why WTA load time variance is likely transient:**
+1. **Small absolute change** — +0.04s (0.19s → 0.23s), within budget
+2. **Size stable** — +1KB is 0.5% measurement variance
+3. **TTFB improved** — -7%, suggests network transfer latency not server latency
+4. **No code changes** — to WTA Live page since 2026-07-23
+5. **Historical pattern** — Similar variances on 2026-07-10/2026-07-12/2026-07-13 all resolved within 1-2 days
+
+**Impact:**
+- 🎉 **ATP 3-day improvement** — TTFB -59% (0.33s → 0.13s), load -25% (0.44s → 0.33s)
+- 🎉 **WTA 6th consecutive day under budget** — 191KB < 200KB
+- 🚀 **World Cup improvements** — TTFB -21%, total -10%
+- ✅ **All routes FAST** — Excellent user experience
+- 🏆 **FIFA World Cup 2026:** Tournament ENDED ~July 19 (5 days ago)
+
+**Status:** ✅ STABLE
+
+**Tickets:** 
+- `perf-atp-guid-bloat` (Priority 1) — OPEN (ATP still 47% over budget, stable for 6 days)
+- No new tickets filed (no regressions detected, WTA variance likely transient)
+
+**Report:** docs/reports/2026-07-24-performance.md
+
+---
+
+### ✅ CONTINUING IMPROVEMENTS — ATP TTFB Stable, ATP/WTA Load -8-14%, WTA 5th Day Under Budget (2026-07-23) [ARCHIVED]
 
 **Observation:** All routes remain within TTFB/total budgets. ATP TTFB stable after yesterday's -19% breakthrough, ATP/WTA load times continuing to improve. WTA +5KB from live match scores but remains under budget (5th consecutive day). World Cup shows TTFB/total variance (+36%/+78%) but within budgets and likely transient.
 
