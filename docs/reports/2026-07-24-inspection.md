@@ -118,3 +118,63 @@ The following were initially flagged but determined to be correct or intentional
 - Commit this report + new bug ticket to git
 - Push to remote (inspector commits only `.tickets/` + `docs/`, never app code)
 - Planner will pick up `bug-atp-country-filter-malformed` in next build cycle based on priority
+
+---
+
+# Inspector Run — 2026-07-24 Late Evening (Second Run)
+
+**Inspection Time:** 2026-07-24 ~22:05 PDT  
+**Inspector:** Automated QA agent  
+**Target:** https://rankings123.com (live production)
+
+## Routes Checked
+
+✅ **All routes functional (HTTP 200):**
+- `/` (Home)
+- `/atp-live` (ATP Live Rankings)
+- `/wta-live` (WTA Live Rankings)
+- `/atp-race` (ATP Race to Turin) — NEW
+- `/wta-race` (WTA Race to Finals) — NEW
+- `/world-cup` (World Cup)
+- `/world-cup/team/mex` (Mexico Team Page)
+- `/privacy` (Privacy Policy)
+
+## Automated Checks
+
+✅ **Core Features Check:** PASSED  
+✅ **Data Sanity Check:** PASSED
+
+## Findings
+
+### No New Bugs Filed
+
+Comprehensive sweep found **zero new bugs**. All previously filed bugs remain open and are still present:
+
+1. ✓ `bug-atp-country-filter-malformed` — Still present
+2. ✓ `bug-atp-in-play-count-mismatch` — Still present
+3. ✓ `bug-privacy-branding-typo` — Still present (confirmed: logo still shows "RANKINGS23R23")
+4. ✓ `bug-wc-match-401xxx-404` — Still present
+
+### New Features Verified
+
+**ATP/WTA Race Rankings** (deployed since last inspection):
+- ✅ Both `/atp-race` and `/wta-race` pages live and functional
+- ✅ Proper SEO metadata and sitemap inclusion
+- ✅ Linked from respective ATP/WTA live pages
+- ✅ Correctly labeled as year-to-date points
+- 📋 **Note:** Age field shows blank (ESPN race API limitation, documented in `raceFeed.ts:121`)
+
+**Smooth Rank Change Animations** (commit 9ca7a8b):
+- ✅ Feature deployed, no visual regressions detected
+
+### Site Health Summary
+
+- **No regressions** from recent deployments
+- **All core features** intact across both themes
+- **Data feeds** operational (ATP, WTA, World Cup)
+- **Layout clean** in dark/light themes, no overflow issues
+- **Console:** No JavaScript errors observed
+
+## Conclusion
+
+**Zero new bugs found.** Site remains stable. Four previously filed bugs await planner attention. Recent race rankings deployment successful with no introduced regressions.
