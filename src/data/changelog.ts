@@ -27,7 +27,7 @@ export const changelog: ChangelogEntry[] = [
   {
     date: "2026-07-23",
     title: "Clarified 'In play' count label",
-    description: "Tennis ranking pages now show 'In play (X total)' instead of just 'In play (X)' to clarify the count includes all active players across all pages, not just the current page.",
+    description: "Tennis ranking pages now show 'In play (X overall)' instead of just 'In play (X)' to clarify the count includes all active players across all pages, not just the current page.",
     area: "tennis",
   },
   {

@@ -39,7 +39,7 @@ export default async function WtaRankingsPage() {
     ? [
         { label: "WTA #1", value: `${top.flag} ${top.name}` },
         { label: "Points", value: top.livePoints.toLocaleString() },
-        { label: "In play", value: String(liveCount) },
+        { label: "In play overall", value: String(liveCount) },
         { label: "Ranked", value: String(players.length) },
       ]
     : undefined;

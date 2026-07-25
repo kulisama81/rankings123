@@ -43,11 +43,12 @@ test("In play count label includes clarifying text indicating total count", asyn
     const hasClarifyingText =
       match[0].includes("total") ||
       match[0].includes("across all") ||
-      match[0].includes("all rankings");
+      match[0].includes("all rankings") ||
+      match[0].includes("overall");
 
     assert.ok(
       hasClarifyingText,
-      `"In play" count label in ${componentPath} must include clarifying text like "total", "across all", or "all rankings" to indicate it's not just the current page count. Found: ${match[0]}`
+      `"In play" count label in ${componentPath} must include clarifying text like "total", "overall", "across all", or "all rankings" to indicate it's not just the current page count. Found: ${match[0]}`
     );
   }
 });
