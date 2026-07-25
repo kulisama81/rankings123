@@ -1,6 +1,6 @@
 ---
 id: bug-atp-in-play-count-mismatch
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-20T18:06:55Z
