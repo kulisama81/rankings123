@@ -1,5 +1,6 @@
 import type { TdfSnapshot, TdfStage, TdfGCRider } from "@/types";
 import { getMockTdfSnapshot } from "@/data/tdf";
+import { flagEmoji } from "@/lib/flags";
 
 const WIKIPEDIA_API_URL =
   "https://en.wikipedia.org/w/api.php?action=parse&page=2026_Tour_de_France&prop=text&format=json";
@@ -195,9 +196,8 @@ function parseGC(html: string): TdfGCRider[] {
     const country = countryAbbrMatch ? countryAbbrMatch[1] : "";
     const countryCode = countryAbbrMatch ? countryAbbrMatch[2] : "";
 
-    // Extract flag image URL
-    const flagMatch = cells[0].match(/src="([^"]*Flag[^"]+\.(?:svg|png))"/);
-    const flag = flagMatch ? `https:${flagMatch[1]}` : "";
+    // Convert country code to flag emoji
+    const flag = flagEmoji(countryCode);
 
     // Extract rider name from <a> tag
     const riderMatch = cells[0].match(/<a[^>]*>([^<]+)<\/a>/);

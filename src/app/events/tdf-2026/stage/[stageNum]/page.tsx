@@ -5,6 +5,10 @@ import { getTdfSnapshot } from "@/lib/cyclingFeed";
 import type { TdfStage } from "@/types";
 import HeroBanner from "@/components/HeroBanner";
 import TdfJerseys from "@/components/TdfJerseys";
+import LiveRefreshIndicator from "@/components/LiveRefreshIndicator";
+import LiveCountdown from "@/components/LiveCountdown";
+import TdfLiveLeader from "@/components/TdfLiveLeader";
+import TdfGCTable from "@/components/TdfGCTable";
 
 // Stage type icon helper
 function getStageTypeIcon(type: TdfStage["type"]): string {
@@ -43,13 +47,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return { title: "Stage Not Found" };
   }
 
-  const title = stage.winner
-    ? `Stage ${num} Results: ${stage.winner} wins — Tour de France 2026`
-    : `Stage ${num}: ${stage.course} — Tour de France 2026`;
+  // Enhanced SEO for Stage 21 (final stage into Paris)
+  const isStage21 = num === 21;
+  const isLiveOrUpcoming = !stage.winner && (tdfData.currentStage === num || (tdfData.currentStage && num > tdfData.currentStage) || tdfData.raceStatus === "upcoming");
 
-  const description = stage.winner
-    ? `Tour de France 2026 Stage ${num} results: ${stage.winner} wins the ${stage.distance} ${stage.type.toLowerCase()} from ${stage.course}.`
-    : `Tour de France 2026 Stage ${num}: ${stage.distance} ${stage.type.toLowerCase()} on ${stage.date} — ${stage.course}.`;
+  let title: string;
+  let description: string;
+
+  if (isStage21 && isLiveOrUpcoming) {
+    title = `Tour de France 2026 Stage 21 Live: Final Stage into Paris`;
+    description = `Live coverage of Tour de France 2026 Stage 21 — the final stage into Paris. Real-time GC standings, live leader updates, and race countdown. Watch the climactic finish of the 2026 Tour.`;
+  } else if (stage.winner) {
+    title = `Stage ${num} Results: ${stage.winner} wins — Tour de France 2026`;
+    description = `Tour de France 2026 Stage ${num} results: ${stage.winner} wins the ${stage.distance} ${stage.type.toLowerCase()} from ${stage.course}.`;
+  } else {
+    title = `Stage ${num}: ${stage.course} — Tour de France 2026`;
+    description = `Tour de France 2026 Stage ${num}: ${stage.distance} ${stage.type.toLowerCase()} on ${stage.date} — ${stage.course}.`;
+  }
 
   return {
     title,
@@ -61,6 +75,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: `/events/tdf-2026/stage/${num}`,
       type: "article",
     },
+    keywords: isStage21 && isLiveOrUpcoming
+      ? "tour de france stage 21 live, tdf final stage 2026, tour de france finish paris, tour de france 2026 live coverage, tour de france stage 21"
+      : undefined,
   };
 }
 
@@ -95,6 +112,14 @@ export default async function TdfStagePage({ params }: Props) {
   const isUpcoming = tdfData.currentStage
     ? num > tdfData.currentStage
     : tdfData.raceStatus === "upcoming";
+
+  // Special live features for Stage 21 (final stage)
+  const isStage21 = num === 21;
+  const enableLiveFeatures = isStage21 && (isCurrent || (isUpcoming && tdfData.raceStatus === "active"));
+
+  // Stage 21 expected finish: July 27, 2026 at ~5:00 PM CET (typical Paris finish time)
+  const stage21FinishTime = new Date("2026-07-27T17:00:00+02:00");
+  const gcLeader = tdfData.gc.length > 0 ? tdfData.gc[0] : undefined;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -136,6 +161,21 @@ export default async function TdfStagePage({ params }: Props) {
           >
             ← Back to Tour de France overview
           </Link>
+
+          {/* Live refresh indicator for Stage 21 */}
+          {enableLiveFeatures && (
+            <div className="mb-6">
+              <LiveRefreshIndicator refreshInterval={30} enabled={isCurrent} />
+            </div>
+          )}
+
+          {/* Live leader and countdown for Stage 21 */}
+          {isStage21 && !isCompleted && (
+            <div className="mb-8 grid gap-6 sm:grid-cols-2">
+              <TdfLiveLeader leader={gcLeader} isLive={isCurrent} />
+              {isCurrent && <LiveCountdown targetTime={stage21FinishTime} />}
+            </div>
+          )}
 
           {/* Stage details card */}
           <div className="mb-8 rounded-2xl border border-edge bg-surface p-6">
@@ -202,6 +242,24 @@ export default async function TdfStagePage({ params }: Props) {
               </div>
             )}
           </div>
+
+          {/* Live GC Standings for Stage 21 */}
+          {isStage21 && !isCompleted && tdfData.gc.length > 0 && (
+            <section className="mb-8">
+              <h3 className="mb-4 text-xl font-bold text-primary">
+                {isCurrent ? "Live General Classification" : "General Classification"}
+                <span className="ml-3 text-sm font-normal text-secondary">
+                  Top 10 Overall Standings
+                </span>
+              </h3>
+              <TdfGCTable riders={tdfData.gc.slice(0, 10)} />
+              {isCurrent && (
+                <p className="mt-4 text-sm text-accent">
+                  ⚡ Live updates — GC standings refresh automatically every 30 seconds
+                </p>
+              )}
+            </section>
+          )}
 
           {/* Jersey leaders after this stage (if completed) */}
           {isCompleted && (

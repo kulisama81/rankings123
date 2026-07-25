@@ -13,6 +13,12 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-07-25",
+    title: "Tour de France Stage 21 Live Coverage",
+    description: "Enhanced live coverage for the final stage into Paris with real-time GC standings, live leader updates, countdown to finish, and auto-refresh every 30 seconds. Ready for the July 27 finale.",
+    area: "cycling",
+  },
+  {
     date: "2026-07-24",
     title: "Live ranking animations",
     description: "Rankings now animate smoothly when they update — rows flash with per-sport accent colors when players change position, making live movement easier to track in real time.",
