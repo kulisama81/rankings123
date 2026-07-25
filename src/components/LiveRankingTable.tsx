@@ -52,6 +52,7 @@ function Movement({ value }: { value: number }) {
 }
 
 function RankBadge({ rank }: { rank: number }) {
+  const isPodium = rank <= 3;
   const tint =
     rank === 1
       ? "bg-[#f2c14e]/20 text-[#f2c14e]"
@@ -62,7 +63,11 @@ function RankBadge({ rank }: { rank: number }) {
           : "text-muted";
   return (
     <span
-      className={`inline-flex h-7 min-w-[28px] items-center justify-center rounded-lg px-1.5 text-sm font-bold tabular-nums ${tint}`}
+      className={`inline-flex items-center justify-center rounded-lg px-1.5 tabular-nums ${
+        isPodium
+          ? "type-podium min-w-[36px] h-9" // Podium: larger, Archivo extrabold
+          : "text-sm font-bold min-w-[28px] h-7" // Rest: standard size, Geist Sans
+      } ${tint}`}
     >
       {rank}
     </span>

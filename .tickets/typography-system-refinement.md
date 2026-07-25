@@ -1,6 +1,6 @@
 ---
 id: typography-system-refinement
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-19T14:35:27Z

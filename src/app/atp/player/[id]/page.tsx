@@ -81,7 +81,7 @@ function RankCard({
         {label}
       </div>
       <div
-        className={`font-display text-5xl font-black tabular-nums ${isLive ? "text-accent" : "text-fg"}`}
+        className={`type-hero tabular-nums ${isLive ? "text-accent" : "text-fg"}`}
       >
         {typeof rank === "number" ? `#${rank}` : rank}
       </div>
@@ -106,7 +106,7 @@ function MovementCard({ value }: { value: number }) {
       <div className="mb-1 text-xs font-semibold uppercase tracking-wide text-muted">
         Movement
       </div>
-      <div className="font-display text-5xl font-black tabular-nums">
+      <div className="type-hero tabular-nums">
         {isUp ? `▲${value}` : isDown ? `▼${Math.abs(value)}` : "—"}
       </div>
       <div className="mt-1 text-sm text-muted">
@@ -153,7 +153,7 @@ export default async function AtpPlayerPage({ params }: Props) {
         <div className="mb-8">
           <div className="mb-3 flex items-center gap-3">
             <span className="text-5xl leading-none">{player.flag}</span>
-            <h1 className="font-display text-4xl font-black text-fg sm:text-5xl">
+            <h1 className="type-title text-fg">
               {player.name}
             </h1>
           </div>

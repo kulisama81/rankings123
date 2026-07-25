@@ -47,7 +47,7 @@ export default function HeroBanner({ icon, sport = 'general', title, subtitle, l
           </div>
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2.5">
-              <h1 className="font-display text-3xl font-extrabold leading-none text-fg sm:text-[2.6rem]">
+              <h1 className="type-hero text-fg">
                 {title}
               </h1>
               {live && (

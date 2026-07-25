@@ -14,6 +14,12 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-07-25",
+    title: "Enhanced typography system",
+    description: "Refined typography with dramatic scale contrast — hero headlines are larger and bolder, podium ranks (#1-3) stand out more, and page titles use premium Archivo font consistently. Better visual hierarchy guides your eye to what matters.",
+    area: "all",
+  },
+  {
+    date: "2026-07-25",
     title: "Tour de France 2026 Winner Celebration Page",
     description: "Comprehensive winner recap page featuring the champion's profile, final GC top 10, all 21 stage winners, and jersey leaders. Ships automatically within minutes of the race finish on July 27.",
     area: "cycling",
