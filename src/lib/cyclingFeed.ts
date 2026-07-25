@@ -299,8 +299,6 @@ export async function getTdfSnapshot(
     const raceStart = new Date(2026, 6, 4); // Month is 0-indexed
     const isPastStartDate = now >= raceStart;
 
-    const raceStatus = (hasJerseyLeaders || isPastStartDate) ? "active" : "upcoming";
-
     // Calculate current stage — use the most recent completed stage from BOTH sources
     let currentStage: number | undefined;
 
@@ -317,6 +315,11 @@ export async function getTdfSnapshot(
 
     // Use whichever source shows the most recent completed stage
     const latestCompletedStage = Math.max(latestCompletedFromStages, latestCompletedFromJerseys);
+
+    // Determine race status based on completed stages
+    const raceStatus = latestCompletedStage === 21
+      ? "complete"
+      : (hasJerseyLeaders || isPastStartDate) ? "active" : "upcoming";
 
     if (latestCompletedStage > 0 && latestCompletedStage < 21) {
       // Next stage after the latest completed one

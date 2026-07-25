@@ -14,6 +14,12 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-07-25",
+    title: "Tour de France 2026 Winner Celebration Page",
+    description: "Comprehensive winner recap page featuring the champion's profile, final GC top 10, all 21 stage winners, and jersey leaders. Ships automatically within minutes of the race finish on July 27.",
+    area: "cycling",
+  },
+  {
+    date: "2026-07-25",
     title: "Tour de France Stage 21 Live Coverage",
     description: "Enhanced live coverage for the final stage into Paris with real-time GC standings, live leader updates, countdown to finish, and auto-refresh every 30 seconds. Ready for the July 27 finale.",
     area: "cycling",
