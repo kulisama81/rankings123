@@ -1,6 +1,6 @@
 ---
 id: tdf-finale-recap-2026
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-25T13:48:55Z
