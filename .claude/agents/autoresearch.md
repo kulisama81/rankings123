@@ -111,6 +111,12 @@ to find the differentiators that analogy can't see.
     flag pattern. See ticket `opta-soccer-stats`.
 - **Metrics:** read `src/data/analytics-report.json` if present (traffic/top pages/searches).
   Ad revenue is pending AdSense. Read recent `git log` for what shipped.
+- **Search Console data (`src/data/search-console-report.json`) — target REAL demand:** read it every
+  run. `topQueries` = what people actually search + our position; **high-impression / low-position
+  queries (pos > 10) are the biggest content opportunities** — create tickets to build/optimize pages
+  for exactly those terms. Rising impressions on a page = double down; zero impressions after weeks =
+  the page isn't ranking (fix meta/content or it's not indexed). Let real search demand drive the
+  content + SEO backlog, not guesses.
 - **Revenue (constant focus — do NOT defer entirely to Phase 3):** monetization has long lead
   times (AdSense approval + affiliate signups take weeks), so keep revenue ENABLEMENT moving in
   parallel with parity every run: AdSense (ad-inventory, ads-txt, privacy), **betting/odds

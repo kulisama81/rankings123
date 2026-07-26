@@ -161,6 +161,22 @@ async function main() {
     s.push(`<p style="color:#999;font-style:italic;font-size:13px;">No analytics yet — add GA4 .ga-credentials.json and run scripts/pull-analytics.mjs.</p>`);
   }
 
+  // Search (Google Search Console) — real demand + ranking
+  const gsc = await loadJson(join(ROOT, "src", "data", "search-console-report.json"));
+  if (gsc?.totals) {
+    s.push(`<h3 style="margin:16px 0 8px;color:#0b1020;">Search (Google, 28d)</h3>`);
+    s.push(`<table style="width:100%;border-collapse:collapse;margin-bottom:8px;"><tr>`);
+    s.push(box(gsc.totals.impressions, "impressions", "#eef7f0"));
+    s.push(box(gsc.totals.clicks, "clicks", "#eef0fa"));
+    s.push(box(`#${gsc.totals.position}`, "avg position", "#fceef5"));
+    s.push(`</tr></table>`);
+    const tq = (gsc.topQueries || []).slice(0, 5);
+    if (tq.length)
+      s.push(`<div style="font-size:12px;color:#666;margin-bottom:12px;"><strong>Top queries:</strong> ${tq.map((q) => `${q.query} (${q.impressions} impr, #${q.position})`).join(" &middot; ")}</div>`);
+  } else {
+    s.push(`<h3 style="margin:16px 0 8px;color:#0b1020;">Search (Google)</h3><p style="color:#999;font-style:italic;font-size:13px;">No Search Console data yet — add the service account to GSC + wait for indexing.</p>`);
+  }
+
   // Revenue — track progress toward the monthly goal + stream readiness.
   const revenue = analytics?.revenue?.total || 0; // wired once AdSense/affiliate APIs report
   const goalPct = REVENUE_GOAL > 0 ? Math.round((revenue / REVENUE_GOAL) * 100) : 0;
