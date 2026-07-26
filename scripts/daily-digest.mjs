@@ -64,6 +64,32 @@ async function ticketCounts() {
   return counts;
 }
 
+// Velocity — are we shipping as fast as we create? (7-day window)
+async function velocity(openNow) {
+  const WIN = 7;
+  const cutoff = Date.now() - WIN * 864e5;
+  let created = 0;
+  try {
+    for (const f of await readdir(join(ROOT, ".tickets"))) {
+      if (!f.endsWith(".md")) continue;
+      const txt = await readFile(join(ROOT, ".tickets", f), "utf-8").catch(() => "");
+      const m = txt.match(/^created:\s*(.+)$/m);
+      const d = m ? Date.parse(m[1]) : NaN;
+      if (!Number.isNaN(d) && d >= cutoff) created++;
+    }
+  } catch {
+    /* no tickets */
+  }
+  const shippedLines = run(`git log --since="${WIN} days ago" --pretty=%B origin/main | grep -ioE 'closes:[[:space:]]*\\[?[a-z0-9-]+' | sort -u`);
+  const shipped = shippedLines ? shippedLines.split("\n").filter(Boolean).length : 0;
+  return {
+    createdPerDay: (created / WIN).toFixed(1),
+    shippedPerDay: (shipped / WIN).toFixed(1),
+    net: created - shipped,
+    open: openNow,
+  };
+}
+
 async function siteHealth() {
   const out = [];
   for (const r of ROUTES) {
@@ -165,6 +191,16 @@ async function main() {
   s.push(box(tickets.closed, "tickets closed", "#eef0fa", trend(tickets.closed, last?.closedTickets)));
   s.push(box(tickets.open, "tickets open", "#fceef5", trend(tickets.open, last?.openTickets)));
   s.push(`</tr></table>`);
+  // Velocity — create vs ship vs backlog (7-day)
+  const vel = await velocity(tickets.open);
+  const netColor = vel.net > 0 ? "#C62828" : "#2E7D32";
+  const netTxt = `${vel.net > 0 ? "+" : ""}${vel.net}`;
+  s.push(
+    `<div style="margin-bottom:12px;padding:8px 12px;background:#f4f6fb;border-radius:6px;font-size:13px;color:#333;">` +
+      `<strong>Velocity (7d):</strong> created <strong>${vel.createdPerDay}/day</strong> · ` +
+      `shipped <strong>${vel.shippedPerDay}/day</strong> · ` +
+      `backlog net <strong style="color:${netColor};">${netTxt}</strong> (open ${vel.open})</div>`
+  );
   if (unpushedCount > 0)
     s.push(`<div style="padding:10px 16px;background:#FFF3E0;border-left:4px solid #E65100;border-radius:0 6px 6px 0;margin-bottom:12px;font-size:13px;"><strong>${unpushedCount} unpushed commit(s)</strong></div>`);
 
