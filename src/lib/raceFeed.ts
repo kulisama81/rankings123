@@ -29,35 +29,78 @@ export function isTour(value: string): value is Tour {
   return value === "atp" || value === "wta";
 }
 
-// Mock race data (fallback only)
+// Mock race data (fallback only) — real player names, realistic YTD points
 function mockRaceData(tour: Tour): AtpLiveSnapshot {
   const config = TOURS[tour];
-  const mockPlayers: AtpLivePlayer[] = [];
 
-  // Create realistic YTD points distribution (champion ~10k, #100 ~300)
-  for (let i = 1; i <= TOP_N; i++) {
-    const basePoints = Math.max(300, Math.round(11000 / Math.pow(i, 0.85)));
-    mockPlayers.push({
-      liveRank: i,
-      officialRank: i,
-      movement: 0,
-      name: `Player ${i}`,
-      countryCode: "USA",
-      flag: flagEmoji("USA"),
-      age: 25,
-      officialPoints: basePoints,
-      livePoints: basePoints,
-      pointsDelta: 0,
-    });
-  }
+  // Real player names with realistic 2026 YTD race points
+  const atpTop: [string, string, number, number][] = [
+    ["Jannik Sinner", "ITA", 26, 8500],
+    ["Carlos Alcaraz", "ESP", 23, 7200],
+    ["Alexander Zverev", "GER", 29, 6100],
+    ["Daniil Medvedev", "RUS", 30, 5800],
+    ["Taylor Fritz", "USA", 28, 4950],
+    ["Casper Ruud", "NOR", 27, 4200],
+    ["Alex de Minaur", "AUS", 27, 3900],
+    ["Hubert Hurkacz", "POL", 29, 3650],
+    ["Grigor Dimitrov", "BUL", 35, 3400],
+    ["Stefanos Tsitsipas", "GRE", 28, 3150],
+    ["Tommy Paul", "USA", 29, 2900],
+    ["Ben Shelton", "USA", 23, 2700],
+    ["Holger Rune", "DEN", 23, 2500],
+    ["Ugo Humbert", "FRA", 28, 2300],
+    ["Lorenzo Musetti", "ITA", 24, 2100],
+    ["Sebastian Korda", "USA", 26, 1950],
+    ["Andrey Rublev", "RUS", 28, 1800],
+    ["Frances Tiafoe", "USA", 28, 1650],
+    ["Felix Auger-Aliassime", "CAN", 26, 1500],
+    ["Karen Khachanov", "RUS", 30, 1400],
+  ];
+
+  const wtaTop: [string, string, number, number][] = [
+    ["Aryna Sabalenka", "BLR", 28, 7800],
+    ["Iga Swiatek", "POL", 25, 7100],
+    ["Coco Gauff", "USA", 22, 6300],
+    ["Elena Rybakina", "KAZ", 27, 5500],
+    ["Jessica Pegula", "USA", 32, 4800],
+    ["Qinwen Zheng", "CHN", 23, 4200],
+    ["Jasmine Paolini", "ITA", 30, 3900],
+    ["Emma Navarro", "USA", 25, 3600],
+    ["Daria Kasatkina", "RUS", 29, 3300],
+    ["Barbora Krejcikova", "CZE", 30, 3000],
+    ["Danielle Collins", "USA", 32, 2750],
+    ["Beatriz Haddad Maia", "BRA", 30, 2500],
+    ["Jelena Ostapenko", "LAT", 29, 2300],
+    ["Madison Keys", "USA", 31, 2100],
+    ["Victoria Azarenka", "BLR", 37, 1950],
+    ["Marketa Vondrousova", "CZE", 27, 1800],
+    ["Liudmila Samsonova", "RUS", 27, 1650],
+    ["Ekaterina Alexandrova", "RUS", 31, 1500],
+    ["Leylah Fernandez", "CAN", 24, 1400],
+    ["Ons Jabeur", "TUN", 32, 1300],
+  ];
+
+  const top = tour === "atp" ? atpTop : wtaTop;
+
+  const players: AtpLivePlayer[] = top.map(([name, cc, age, pts], i) => ({
+    liveRank: i + 1,
+    officialRank: i + 1,
+    movement: 0,
+    name,
+    countryCode: cc,
+    flag: flagEmoji(cc),
+    age,
+    officialPoints: pts,
+    livePoints: pts,
+    pointsDelta: 0,
+  }));
 
   return {
-    players: mockPlayers,
+    players,
     source: "mock" as const,
     lastUpdated: new Date().toISOString(),
     weekLabel: `${config.raceName} · demo data`,
   };
-
 }
 
 interface EspnAthlete {
