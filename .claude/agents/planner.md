@@ -102,7 +102,10 @@ service-account/email. Prefer p0/p1.
   `next.config`/`vercel`/build config, `.claude/**` (agents, commands, workflows), `.tickets`
   schema changes, or anything that could break the build pipeline.
 - Never bypass build/lint; never `--no-verify`; never force-push or destructive git ops.
-- Ship **4–6 tickets** per run (~90 min budget), then stop. Don't fabricate data or verifier results.
+- Ship **3–4 tickets per (lane) run** — as many as you can take FULLY through the verified loop
+  before your token budget runs low. **Never skip build / lint / checks / the adversarial verifier /
+  post-deploy verify to cram in more** — a half-verified ticket is worse than one fewer shipped.
+  Don't fabricate data or verifier results. (6 domain lanes/day × 3–4 ≈ the throughput target.)
 - **CX FIRST (hard rule — overrides revenue):** never ship placeholder, "coming soon", empty, or
   fabricated UI to users (no "Affiliate Partner: Placeholder", no made-up odds/stats, no dead links).
   Monetization/data UI ships only when backed by a real working source/link; otherwise keep it hidden
