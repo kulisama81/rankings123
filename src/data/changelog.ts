@@ -14,6 +14,13 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-07-26",
+    title: "Shareable ranking cards for social media",
+    description:
+      "Share your favorite players' rankings directly to social media with auto-generated cards. Each player now has a share button that creates premium graphics (OG + Instagram sizes) with sport-specific accent colors, perfect for Twitter, Instagram, or WhatsApp. Tap share to spread the word!",
+    area: "all",
+  },
+  {
+    date: "2026-07-26",
     title: "Tour de France 2026 Champion Article Live",
     description:
       "Final results article featuring champion profile, complete final GC podium, jersey winners, notable stage highlights, and preview of upcoming Vuelta a España.",

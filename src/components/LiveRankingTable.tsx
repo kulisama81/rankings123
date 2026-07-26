@@ -9,6 +9,7 @@ import AnimatedNumber from "./AnimatedNumber";
 import EmptyState from "./EmptyState";
 import Tooltip from "./Tooltip";
 import { RankTooltip, PointsTooltip, MovementTooltip, PlayerTooltip } from "./TooltipContent";
+import { ShareButton } from "./ShareButton";
 
 const REFRESH_INTERVAL_S = 20;
 const PAGE_SIZE = 50;
@@ -296,6 +297,7 @@ export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingT
                   <th className="px-2 py-2.5 text-right">Δ</th>
                   <th className="px-3 py-2.5 text-right">Official</th>
                   <th className="px-3 py-2.5 text-left">Tournament</th>
+                  <th className="px-2 py-2.5 text-center">Share</th>
                 </tr>
               </thead>
               <tbody>
@@ -397,6 +399,20 @@ export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingT
                       {p.officialPoints.toLocaleString()}
                     </td>
                     <td className="px-3 py-2"><Tournament player={p} /></td>
+                    <td className="px-2 py-2 text-center">
+                      <ShareButton
+                        type="rank-milestone"
+                        sport={tour}
+                        data={{
+                          playerName: p.name,
+                          rank: p.liveRank,
+                          points: p.livePoints,
+                          countryCode: p.countryCode,
+                          movement: p.movement,
+                        }}
+                        variant="icon"
+                      />
+                    </td>
                   </tr>
                   );
                 })}
@@ -490,6 +506,18 @@ export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingT
                   <span className="flex items-center gap-2">
                     <Delta value={p.pointsDelta} />
                     <span className="tabular-nums">{p.countryCode}{p.age ? ` · ${p.age}y` : ""}</span>
+                    <ShareButton
+                      type="rank-milestone"
+                      sport={tour}
+                      data={{
+                        playerName: p.name,
+                        rank: p.liveRank,
+                        points: p.livePoints,
+                        countryCode: p.countryCode,
+                        movement: p.movement,
+                      }}
+                      variant="icon"
+                    />
                   </span>
                 </div>
               </div>
