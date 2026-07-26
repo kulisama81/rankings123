@@ -283,6 +283,29 @@ Articles read and applied to rankings123 design strategy:
    - **Key takeaway:** "Two-typeface system that pairs Aeonik's personality with Inter's readability at small sizes" — strategic font pairing for both brand personality AND functional legibility in dense interfaces. Also: "Good design isn't reserved for consumer brands" — B2B/technical platforms benefit from same thoughtful design attention.
    - **Application:** Rankings123 has Geist Sans + Archivo but system is underutilized. Need more intentional pairing: Archivo extrabold for bold display moments (hero, page titles, podium ranks #1-3), Geist Sans for data-dense tables/body. Filed ticket: `typography-system-refinement` (p2).
 
+### 2026-07-26 (Weekly Run — Post-WC, US Open Prep)
+
+14. **["AI Is Changing Branding Whether You're Ready or Not"](https://clay.global/blog/brand-strategy-guide/ai-branding)** (July 22, 2026)
+   - **Key takeaway:** "AI accelerates execution, not strategy" — critical warning: "Speed without direction produces polished noise." Before using AI to scale brand assets (social cards, OG images, ads), establish clear answers: What's your unique positioning? Who's your audience? What emotional response do you want? AI tools can encode brand language and rapidly generate visuals, but only AFTER the strategic foundation exists.
+   - **Application:** Rankings123 has strong visual systems (tokens, typography, per-sport accents) but lacks documented strategic positioning. This creates risk: AI can generate hundreds of on-brand assets, but without clear strategy they'll be polished yet generic. Filed ticket: `brand-positioning-foundation` (p1) — create BRAND-STRATEGY.md BEFORE scaling AI-generated content. Clay's lesson: human expertise in domain knowledge (sports) and strategic positioning is irreplaceable; AI amplifies it, doesn't replace it.
+
+**Awwwards Recent Winners (July 2026):**
+
+15. **[Spotify Wrapped Party](https://www.awwwards.com/sites/spotify-wrapped-party)** (Site of the Day, Jul 24, 2026) — Developer Award
+   - **Key takeaway:** "Transforms individual user data into compelling, shareable visual narratives" — takes personal streaming data and creates social-ready graphics fans WANT to share. Interactive, personalized, viral by design.
+   - **Application:** Rankings123 should auto-generate shareable data cards for live moments (player reaches #1, tournament winner, milestone rank). Filed ticket: `shareable-data-cards-auto` (p1) — Spotify Wrapped pattern applied to sports rankings.
+
+**2026 Design Trends Research (Figma + Industry):**
+
+16. **Figma Web Design Trends 2026** + **Mobile-First Sports Patterns**
+   - **Key takeaways:**
+     - **3D/immersive elements:** Subtle 3D transforms (not heavy WebGL) create premium feel — card tilts on hover, layered depth, parallax
+     - **Kinetic typography:** Numbers don't just update, they REVEAL — odometer flips, scale pulses, color flashes make data updates feel exciting
+     - **Mobile-first imperative:** 62%+ global traffic is mobile, sports skews HIGHER — swipe gestures, haptic feedback, touch-optimized interactions are table stakes 2026
+     - **Interactive data viz:** Award winners make data explorable (hover reveals context, charts tell stories) vs static tables
+     - **Bold typography + vibrant colors:** Oversized headlines, neon gradients, high-contrast create energy matching sports' dynamic nature
+   - **Application:** Filed tickets for `3d-depth-micro-effects` (p2), `kinetic-number-reveals` (p2), `interactive-performance-charts` (p3), `premium-mobile-swipe-gestures` (p2). These patterns differentiate premium 2026 sites from template-based competitors.
+
 **2026 Web Design Trends — Post-Event Retention & Gamification:**
 
 14. **Context-Aware Sticky Navigation** (timgraf.com/ui/beyond-sticky-context-aware-ui-patterns-redefine-user-experience-in-2026/)
@@ -354,6 +377,14 @@ Filed TIME-SENSITIVE tickets:
 - [x] **OG image templates** (ticket `og-image-templates`) — SHIPPED 2026-07-18 ✅
 - [ ] **Social share cards** (ticket `social-share-cards`)
 - [ ] **Data storytelling callouts** (ticket `data-storytelling-callouts`)
+
+### Phase 4: Strategic Foundation & 2026 Premium Patterns (NEW — July 26)
+- [ ] **Brand positioning foundation** (ticket `brand-positioning-foundation`) — NEW 2026-07-26, p1 (Clay AI branding guidance — strategy BEFORE AI scaling)
+- [ ] **Shareable data cards auto** (ticket `shareable-data-cards-auto`) — NEW 2026-07-26, p1 (Spotify Wrapped viral pattern)
+- [ ] **3D depth micro-effects** (ticket `3d-depth-micro-effects`) — NEW 2026-07-26, p2 (Figma 2026 — premium subtle 3D)
+- [ ] **Kinetic number reveals** (ticket `kinetic-number-reveals`) — NEW 2026-07-26, p2 (Figma bold kinetic typography)
+- [ ] **Premium mobile swipe gestures** (ticket `premium-mobile-swipe-gestures`) — NEW 2026-07-26, p2 (62% mobile traffic + haptic feedback)
+- [ ] **Interactive performance charts** (ticket `interactive-performance-charts`) — NEW 2026-07-26, p3 (Awwwards data viz pattern)
 
 ---
 
