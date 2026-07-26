@@ -1,6 +1,6 @@
 ---
 id: adsense-application-2026
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-24T13:51:28Z

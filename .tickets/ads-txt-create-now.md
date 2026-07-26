@@ -1,6 +1,6 @@
 ---
 id: ads-txt-create-now
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-01T13:51:27Z

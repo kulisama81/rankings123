@@ -5,7 +5,7 @@ deps: []
 links: [blog-infrastructure, tdf-2026-predictions, wc-knockout-predictions]
 created: 2026-06-21T00:00:00Z
 type: task
-priority: 2
+priority: 1
 parent: rankings123
 tags: [revenue, adsense, handoff]
 ---
@@ -54,3 +54,12 @@ Document current AdSense readiness status, track article count toward 10-25 goal
 - https://webtimizesolutions.com/blog/google-adsense-approval-guide-2026-complete-genuine-updated-information/
 - https://www.stackedbuddy.com/google-adsense-approval-checklist/
 - https://educareerguides.com/adsense-approval-guide-2026/
+
+## Readiness gate (2026-07-26) — apply only when ALL are true
+- [ ] /about live (see about-page)
+- [ ] /contact live (see contact-page)
+- [ ] privacy + cookies + terms live (DONE — all 200)
+- [ ] several original articles published (thin now — SEO/content lanes producing; avoids "low-value content" rejection)
+- [ ] site has some organic footprint in GSC (just indexed 2026-07-26 — give it ~2 weeks)
+- [ ] ads.txt ready to publish post-approval (see ads-txt)
+NOTE: gambling/betting pages may get limited AdSense serving — betting affiliate is the better monetization for those. Duplicate ads.txt/adsense tickets closed; this + ads-txt + adsense-slot-infrastructure are the canonical set.
