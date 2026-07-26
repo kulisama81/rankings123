@@ -1,6 +1,6 @@
 ---
 id: google-search-console-setup
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-11T13:51:46Z
@@ -52,3 +52,7 @@ Escalating from P1 → P0 as SEO measurement foundation.
 **Effort:** LOW (one-time setup, ongoing monitoring)
 **Impact:** HIGH (enables data-driven SEO decisions)
 **ROI:** VERY HIGH (cheap visibility into $0→revenue blocker)
+
+## DONE (2026-07-26)
+GSC verified (HTML meta tag in layout.tsx, commit 0ca2973), sitemap.xml submitted, key pages
+requested for indexing. Next: monitor Coverage/Performance over the coming days as Google crawls.
