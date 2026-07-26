@@ -5,7 +5,7 @@ deps: []
 links: []
 created: 2026-07-11T13:51:46Z
 type: task
-priority: 0
+priority: 1
 parent: rankings123
 tags: [seo, analytics]
 ---

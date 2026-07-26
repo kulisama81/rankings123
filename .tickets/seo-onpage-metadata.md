@@ -1,6 +1,6 @@
 ---
 id: seo-onpage-metadata
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-26T23:02:03Z
