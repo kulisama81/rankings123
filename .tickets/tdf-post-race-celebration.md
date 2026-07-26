@@ -1,6 +1,6 @@
 ---
 id: tdf-post-race-celebration
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-22T13:50:28Z
