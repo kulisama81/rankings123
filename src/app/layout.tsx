@@ -43,6 +43,7 @@ const sourceSerif = Source_Serif_4({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://rankings123.com"),
+  verification: { google: "upX8e_rXWcOay31tZhlUBZ-iJSEfC42ifjtpnyYSOO4" },
   title: {
     default: "Rankings123 — Live Sports Rankings",
     template: "%s | Rankings123",
