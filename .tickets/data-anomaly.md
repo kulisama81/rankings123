@@ -16,10 +16,11 @@ fabricated, mis-parsed, or mis-sourced. **Planner: investigate the relevant feed
 fix it, re-run `npm run check:data-sanity` until clean, log the resolution in the Log below,
 then close this ticket.** Do NOT close while `check:data-sanity` still reports errors.
 
-## Anomalies (latest run · 2026-07-27T19:00:00.749Z)
-- [atp] 97/100 (97%) of top-100 players have no tournament data — likely feed/scoreboard merge failure
+## Anomalies (latest run · 2026-07-27T22:00:00.517Z)
+- [atp] 96/100 (96%) of top-100 players have no tournament data — likely feed/scoreboard merge failure
 
 ## Log
+- 2026-07-27T22:00:00.517Z: 1 anomalies — [atp] 96/100 (96%) of top-100 players have no tournament data — likely feed/scoreboard merge failure
 - 2026-07-27T19:00:00.749Z: 1 anomalies — [atp] 97/100 (97%) of top-100 players have no tournament data — likely feed/scoreboard merge failure
 - 2026-07-27T18:01:08.731Z: 1 anomalies — [atp] 97/100 (97%) of top-100 players have no tournament data — likely feed/scoreboard merge failure
 - 2026-07-27T16:00:00.368Z: 1 anomalies — [atp] 98/100 (98%) of top-100 players have no tournament data — likely feed/scoreboard merge failure
