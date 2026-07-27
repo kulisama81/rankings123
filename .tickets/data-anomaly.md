@@ -16,10 +16,12 @@ fabricated, mis-parsed, or mis-sourced. **Planner: investigate the relevant feed
 fix it, re-run `npm run check:data-sanity` until clean, log the resolution in the Log below,
 then close this ticket.** Do NOT close while `check:data-sanity` still reports errors.
 
-## Anomalies (latest run · 2026-07-27T04:00:00.998Z)
-- [cycling] GC standings empty when race is active (stale data — see bug-tdf-live-data-stale)
+## Anomalies (latest run · 2026-07-27T16:00:00.368Z)
+- [atp] 98/100 (98%) of top-100 players have no tournament data — likely feed/scoreboard merge failure
 
 ## Log
+- 2026-07-27T16:00:00.368Z: 1 anomalies — [atp] 98/100 (98%) of top-100 players have no tournament data — likely feed/scoreboard merge failure
+- 2026-07-27T05:02:46.335Z: 2 anomalies — [cycling] serving mock data when Tour de France should be live (race started July 4) (…)
 - 2026-07-27T04:00:00.998Z: 1 anomalies — [cycling] GC standings empty when race is active (stale data — see bug-tdf-live-data-stale)
 - 2026-07-27T01:00:00.238Z: 1 anomalies — [cycling] GC standings empty when race is active (stale data — see bug-tdf-live-data-stale)
 - 2026-07-26T22:00:00.767Z: 1 anomalies — [cycling] GC standings empty when race is active (stale data — see bug-tdf-live-data-stale)
