@@ -14,6 +14,13 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-07-26",
+    title: "About and Contact pages added",
+    description:
+      "Learn more about Rankings123 on our new About page (our mission, sport coverage, data sourcing transparency) and get in touch via the Contact page. Both linked in the footer.",
+    area: "site",
+  },
+  {
+    date: "2026-07-26",
     title: "Shareable ranking cards for social media",
     description:
       "Share your favorite players' rankings directly to social media with auto-generated cards. Each player now has a share button that creates premium graphics (OG + Instagram sizes) with sport-specific accent colors, perfect for Twitter, Instagram, or WhatsApp. Tap share to spread the word!",
