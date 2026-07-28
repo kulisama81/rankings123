@@ -1,6 +1,6 @@
 ---
 id: wc-final-spain-argentina-preview
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-16T13:48:26Z

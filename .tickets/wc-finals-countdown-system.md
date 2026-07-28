@@ -1,7 +1,6 @@
 ---
 id: wc-finals-countdown-system
-title: World Cup Finals countdown excitement system (7 days to go)
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-12T13:48:00Z
@@ -9,11 +8,25 @@ type: feature
 priority: 0
 parent: rankings123
 tags: [worldcup, urgent, engagement, ux]
+title: World Cup Finals countdown excitement system (7 days to go)
 ---
+# Untitled ticket
 
 # World Cup Finals countdown excitement system (7 days to go)
 
 **TIME-SENSITIVE (Finals July 19 — 7 days away):** Transform World Cup page from "emotionally flat" data tables into finals-countdown excitement hub. Research shows site has good data but lacks the ENERGY of finals week.
+
+## Acceptance Criteria
+
+- [ ] Countdown timer: days/hours to semifinals and finals
+- [ ] "No upcoming fixtures" replaced with upcoming matches prominently
+- [ ] Finals-week hero section or visual treatment (trophy, gold accents, prestige signals)
+- [ ] Semifinals matchups clearly shown with dates/times
+- [ ] Finals date/time/venue prominently displayed
+- [ ] "Make your prediction" or engagement CTA visible
+- [ ] Mobile-optimized (38% of traffic)
+- [ ] Countdown updates live (not static)
+- [ ] Independent verifier confirms: page feels EXCITING, not flat
 
 ## Root Problem (from live site research)
 
@@ -64,18 +77,6 @@ Replace "No upcoming fixtures" with:
 - Reduce WC page bounce from 41.7% → <30%
 - Increase return visits during finals week (measure daily active users)
 - Session depth: WC page → semifinals → finals → bracket (3-4 pages)
-
-## Acceptance Criteria
-
-- [ ] Countdown timer: days/hours to semifinals and finals
-- [ ] "No upcoming fixtures" replaced with upcoming matches prominently
-- [ ] Finals-week hero section or visual treatment (trophy, gold accents, prestige signals)
-- [ ] Semifinals matchups clearly shown with dates/times
-- [ ] Finals date/time/venue prominently displayed
-- [ ] "Make your prediction" or engagement CTA visible
-- [ ] Mobile-optimized (38% of traffic)
-- [ ] Countdown updates live (not static)
-- [ ] Independent verifier confirms: page feels EXCITING, not flat
 
 ## ROI Justification
 

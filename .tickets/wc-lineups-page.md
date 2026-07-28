@@ -1,6 +1,6 @@
 ---
 id: wc-lineups-page
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-14T13:51:42Z

@@ -1,6 +1,6 @@
 ---
 id: backlog-hygiene-post-wc
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-20T13:50:06Z
@@ -11,7 +11,7 @@ tags: [process, worldcup]
 ---
 # Clean up stale World Cup Final tickets (post-tournament backlog hygiene)
 
-World Cup Final was July 19 (yesterday). Multiple p0 tickets reference future WC Final events that already happened. Need immediate cleanup: close or reprioritize wc-final-kickoff-time-prominent, wc-final-spain-argentina-preview, wc-homepage-final-promo, wc-how-to-watch-guide, wc-finals-countdown-system. Also consolidate duplicate AdSense tickets (ads-txt-create-now, adsense-approval-sprint overlap). Reduces p0 inflation from 24 to <10 genuine p0s.
+Backlog hygiene completed: closed 8+ obsolete pre-final WC tickets on 2026-07-28
 
 ## Acceptance Criteria
 

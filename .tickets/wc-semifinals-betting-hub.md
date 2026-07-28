@@ -1,7 +1,6 @@
 ---
 id: wc-semifinals-betting-hub
-title: World Cup semifinals betting preview hub (July 14-15)
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-09T13:50:00Z
@@ -9,13 +8,29 @@ type: feature
 priority: 1
 parent: rankings123
 tags: [worldcup, betting, revenue]
+title: World Cup semifinals betting preview hub (July 14-15)
 ---
+# Untitled ticket
 
 # World Cup semifinals betting preview hub (July 14-15)
 
 **TIME-SENSITIVE**: Semifinals are July 14-15 (5 days away). Build a comprehensive betting preview to capture search traffic and affiliate revenue.
 
+## Acceptance Criteria
+
+- [ ] Hub page at /world-cup/semifinals (both matches + bracket context)
+- [ ] Detailed preview pages for each SF match
+- [ ] Betting odds comparison table (manual entry OK for now)
+- [ ] Key player matchups section
+- [ ] Tactical analysis + prediction
+- [ ] Affiliate CTAs (3+ placements per page)
+- [ ] Mobile-optimized
+- [ ] SEO metadata (title, description, og:image)
+- [ ] Publish by July 13 EOD (24hr before SF1)
+- [ ] Update after QF matches complete (teams confirmed)
+
 ## Opportunity
+
 - **Search intent**: "World Cup semifinals odds", "[team A] vs [team B] prediction"
 - **Timing**: 24-48hr before match = peak search + betting activity
 - **Monetization**: Highest-RPM content type ($15-40 RPM for sports betting)
@@ -65,40 +80,33 @@ tags: [worldcup, betting, revenue]
 - Mobile-optimized (38% traffic)
 
 ## First Principles Reasoning
+
 - **Root need**: "Who will win? Where can I bet on this?"
 - **Timing truth**: Betting content value = f(time to match) — peak at 24-48hr before
 - **Revenue driver**: Sports betting RPM = 3-4x general sports content
 - **Tournament arc**: Only 3 matches left (2 SF + Final) = scarcity = urgency
 
 ## Data Sources
+
 - **ESPN API**: Team stats, form, lineups, injury news
 - **Odds** (manual for now; future: odds API integration)
 - **Historical data**: FIFA archives, team records
 
 ## Success Metrics
+
 - Pageviews on semifinals hub/previews (target >100 views over 3 days)
 - Affiliate clicks (track outbound links to betting sites)
 - Session duration >2 min (content depth)
 - Organic search traffic (rank for "[team A] vs [team B] prediction")
 
-## Acceptance Criteria
-- [ ] Hub page at /world-cup/semifinals (both matches + bracket context)
-- [ ] Detailed preview pages for each SF match
-- [ ] Betting odds comparison table (manual entry OK for now)
-- [ ] Key player matchups section
-- [ ] Tactical analysis + prediction
-- [ ] Affiliate CTAs (3+ placements per page)
-- [ ] Mobile-optimized
-- [ ] SEO metadata (title, description, og:image)
-- [ ] Publish by July 13 EOD (24hr before SF1)
-- [ ] Update after QF matches complete (teams confirmed)
-
 ## ROI Justification
+
 **Impact**: HIGH — Semifinals = peak tournament attention; betting content = highest RPM  
 **Effort**: MEDIUM — Content creation + odds data + affiliate integration  
 **ROI**: VERY HIGH — Time-sensitive revenue opportunity (tournament ends July 19)
 
 ## Content Timeline
+
 - **July 11**: QF matches complete, semifinalists known
 - **July 12-13**: Write and publish previews (48hr before SF1)
 - **July 14**: SF1 kicks off

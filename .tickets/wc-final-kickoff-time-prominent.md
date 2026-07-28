@@ -1,6 +1,6 @@
 ---
 id: wc-final-kickoff-time-prominent
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-17T13:49:05Z
