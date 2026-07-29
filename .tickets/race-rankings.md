@@ -1,6 +1,6 @@
 ---
 id: race-rankings
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-14T22:51:04Z

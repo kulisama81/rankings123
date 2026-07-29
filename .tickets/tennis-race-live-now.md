@@ -1,6 +1,6 @@
 ---
 id: tennis-race-live-now
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-13T13:48:06Z

@@ -1,6 +1,6 @@
 ---
 id: tennis-race-consolidation
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-28T13:50:36Z

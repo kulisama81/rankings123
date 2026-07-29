@@ -1,6 +1,6 @@
 ---
 id: tennis-race-rankings
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-11T13:51:08Z
