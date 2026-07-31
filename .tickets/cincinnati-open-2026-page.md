@@ -50,3 +50,11 @@ ACCEPTANCE:
 - Live scores integration during Aug 11-23
 - SEO meta tags
 - Builds green, data-sanity pass
+
+**2026-07-31T13:50:53Z**
+
+**URGENCY: STARTS AUG 11 (11 DAYS)**
+
+Cincinnati Open (ATP/WTA 1000) starts Aug 11-23. Major tournament before US Open. Should ship preview + draws page by Aug 10 to capture pre-tournament search traffic.
+
+SEARCH OPPORTUNITY: 'cincinnati open 2026 draw', 'cincinnati open predictions', 'cincinnati tennis 2026' - all high-intent tennis searches in early August.

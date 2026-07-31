@@ -59,3 +59,11 @@ ROI Justification (First Principles):
 - Effort: Medium (Wikipedia parsing, reuse TdF UI components)
 - Impact: Medium-High (engagement retention, SEO surface expansion, proves multi-race strategy)
 - Urgency: High (starts in 7 days, need to be live BEFORE stage 1)
+
+**2026-07-31T13:50:51Z**
+
+**URGENCY: STARTS IN 3 DAYS (Aug 3)**
+
+Tour of Poland 2026 runs Aug 3-9. Need to ship coverage BEFORE Aug 3 to capture search traffic. This is a time-bound opportunity - unlike evergreen features, cycling race content only matters during the event window.
+
+TIMELY CONTENT STRATEGY: Ship race preview + GC standings page by Aug 2 (target) to rank for 'tour of poland 2026 live standings' searches during the race week.

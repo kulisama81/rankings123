@@ -44,3 +44,11 @@ BLOCKING: US Open preview content, TdF betting picks, tennis odds features all M
 ✓ Track application status (note approval dates when received)
 ✓ Add affiliate IDs to .env.local when approved
 ✓ Document in docs/revenue-status.md
+
+**2026-07-31T13:50:58Z**
+
+**PLANNER DOWN UPDATE (July 31):**
+
+This P0 ticket has been ready to execute for 6 days but planner has been down since July 26. Once planner resumes, this should be the FIRST revenue-enablement action (takes 1-2 hours, unlocks 50-100 USD RPM channel).
+
+Applications take 1-3 weeks approval, so every day of delay pushes back when affiliate links can be live for US Open (Aug 30).
