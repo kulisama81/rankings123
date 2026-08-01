@@ -18,13 +18,16 @@ Comprehensive inspection of live rankings123.com production site. All routes che
 - ✅ `npm run check:data-sanity` — PASSED (all invariants hold)
 
 ## Bugs Found
-**0 new bugs identified.** All discovered issues match existing open bug tickets.
+**1 NEW REGRESSION identified** (duplicate table rendering). All other discovered issues match existing open bug tickets.
 
-### Confirmed Existing Bugs (still present, no regression)
+### NEW REGRESSION Found
+1. **ATP/WTA duplicate table rendering** (p1) — Both ATP Live and WTA Live pages render TWO complete identical ranking tables (detailed + condensed/mobile versions). This persists despite commit 19712c8 (2026-07-18) "Optimize ATP/WTA Live page sizes by removing duplicate table rendering". The fix was either incomplete or regressed. IMPACTS: performance, page weight, UX. REQUIRES NEW TICKET.
+
+### Confirmed Existing Bugs (still present)
 1. **bug-privacy-branding-typo** (p2) — Privacy page header shows "RANKINGS23R23" instead of "Rankings123"
 2. **bug-wc-tournament-status-stale** (p0) — World Cup page shows tournament as "Live" when it ended July 19, 2026
 3. **bug-tdf-race-status-stale** (p1) — Tour de France showing as "Live" / "coverage through July 26" when it's complete (today is July 31)
-4. **bug-wc-match-count-mismatch** (p2) — World Cup page header/content count inconsistency
+4. **bug-wc-match-count-mismatch** (p2) — ✅ APPEARS RESOLVED: World Cup page now shows correct counts (Header "100 Matches" = Schedule "Upcoming 0 Results 100"). Should be closed.
 5. **bug-atp-country-filter-malformed** (p2) — ATP Live country filter contains "All countries???ALG..." (malformed "???" codes)
 6. **bug-atp-inplay-count-regression** (p2) — ATP Live "In play" count shows 12 but appears inaccurate vs actual tournament participation
 7. **wta-romanian-flag-display** (p3) — WTA rankings show white flag (🏳️) for Romanian players instead of 🇷🇴
