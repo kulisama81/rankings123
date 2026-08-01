@@ -2,7 +2,7 @@
 
 This baseline establishes performance budgets and target metrics for all routes. Use this to detect regressions during development.
 
-**Last Updated:** 2026-07-31 (🔴 CRITICAL REGRESSION PERSISTS — ShareButton feature, Day 5)  
+**Last Updated:** 2026-08-01 (🔴 CRITICAL REGRESSION PERSISTS — ShareButton feature, Day 6)  
 **Last Fix:** 2026-07-18 (Remove duplicate table rendering — WTA within budget, ATP -28%)  
 **Last Regression:** 2026-07-26 (commit 7469e43 — shareable ranking cards feature)  
 **Measurement Method:** `npm run check:performance` (TTFB/total/size via live fetch) + Core Web Vitals (Playwright when available)
@@ -55,10 +55,10 @@ Per [web.dev/vitals](https://web.dev/vitals), these are the **GOOD** thresholds 
 
 | Route        | TTFB Budget | Total Budget | Size Budget | Current TTFB | Current Total | Current Size | Status |
 |--------------|-------------|--------------|-------------|--------------|---------------|--------------|--------|
-| /            | ≤ 0.8s      | ≤ 2.0s       | ≤ 150KB     | 0.26s        | 0.27s         | 29KB         | ✅ FAST |
-| /atp-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.15s        | 0.45s         | 510KB        | 🔴 SIZE FAIL |
-| /wta-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 200KB     | 0.13s        | 0.26s         | 258KB        | 🔴 SIZE FAIL |
-| /world-cup   | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.13s        | 0.24s         | 382KB        | ⚠️ SIZE |
+| /            | ≤ 0.8s      | ≤ 2.0s       | ≤ 150KB     | 0.16s        | 0.17s         | 29KB         | ✅ FAST |
+| /atp-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.20s        | 0.39s         | 507KB        | 🔴 SIZE FAIL |
+| /wta-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 200KB     | 0.16s        | 0.24s         | 257KB        | 🔴 SIZE FAIL |
+| /world-cup   | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.14s        | 0.25s         | 382KB        | ⚠️ SIZE |
 
 **Legend:**
 - **TTFB** = Time to First Byte (server response start)
@@ -73,27 +73,27 @@ Per [web.dev/vitals](https://web.dev/vitals), these are the **GOOD** thresholds 
 - 🔴 **SLOW** = Over TTFB or total budget (user-perceived slowness)
 
 **Note on ATP size:**
-- 🔴 **CRITICAL REGRESSION:** ATP Live size 510KB vs 300KB budget (**70% over**, regression persists Day 5)
-- Size 439KB → 504KB (+65KB Day 1) → 507KB (+3KB Day 2) → 510KB (+3KB Day 3) → 512KB (+2KB Day 4) → 510KB (-2KB Day 5, data variance)
-- ✅ **TTFB improved:** 0.21s → 0.15s (-29%, -60ms)
-- ⚠️ **Load time variance:** 0.38s → 0.45s (+18%, +70ms) but within 2.0s budget, likely transient
+- 🔴 **CRITICAL REGRESSION:** ATP Live size 507KB vs 300KB budget (**69% over**, regression persists Day 6)
+- Size 439KB → 504KB (+65KB Day 1) → 507KB (+3KB Day 2) → 510KB (+3KB Day 3) → 512KB (+2KB Day 4) → 510KB (-2KB Day 5) → 507KB (-3KB Day 6, data variance)
+- ⚠️ **TTFB variance:** 0.15s → 0.20s (+33%, +50ms) but within 0.8s budget, likely transient
+- ✅ **Load time improved:** 0.45s → 0.39s (-13%, -60ms)
 - 🔴 **Root cause:** commit 7469e43 (shareable ranking cards) — ShareButton on every row
 - **Tracked in:** `perf-share-button-bloat` (P1)
 
 **Note on WTA size:**
-- 🔴 **CRITICAL REGRESSION:** WTA Live size 258KB vs 200KB budget (**29% over**, regression persists Day 5)
-- Size 189KB → 250KB (+61KB Day 1) → 255KB (+5KB Day 2) → 258KB (+3KB Day 3) → 257KB (-1KB Day 4) → 258KB (+1KB Day 5, data variance)
-- ✅ **TTFB improved:** 0.15s → 0.13s (-13%, -20ms)
-- ⚠️ **Load time variance:** 0.21s → 0.26s (+24%, +50ms) but within 2.0s budget, likely transient
+- 🔴 **CRITICAL REGRESSION:** WTA Live size 257KB vs 200KB budget (**29% over**, regression persists Day 6)
+- Size 189KB → 250KB (+61KB Day 1) → 255KB (+5KB Day 2) → 258KB (+3KB Day 3) → 257KB (-1KB Day 4) → 258KB (+1KB Day 5) → 257KB (-1KB Day 6, data variance)
+- ⚠️ **TTFB variance:** 0.13s → 0.16s (+23%, +30ms) but within 0.8s budget, likely transient
+- ✅ **Load time improved:** 0.26s → 0.24s (-8%, -20ms)
 - 🔴 **Root cause:** commit 7469e43 (shareable ranking cards) — ShareButton on every row
 - **Tracked in:** `perf-share-button-bloat` (P1)
 
 **Note on World Cup size:**
 - World Cup size 382KB vs 300KB budget (27% over, stable post-tournament)
-- **FIFA World Cup 2026 ENDED ~July 19** (12 days ago) — elevated traffic period over
+- **FIFA World Cup 2026 ENDED ~July 19** (13 days ago) — elevated traffic period over
 - ✅ **Size stable:** 382KB (unchanged, +0KB)
-- ✅ **TTFB improved:** 0.15s → 0.13s (-13%, -20ms)
-- ✅ **Load time improved:** 0.26s → 0.24s (-8%, -20ms)
+- ⚠️ **TTFB minor variance:** 0.13s → 0.14s (+8%, +10ms) but within 0.8s budget
+- ⚠️ **Load time minor variance:** 0.24s → 0.25s (+4%, +10ms) but within 2.0s budget
 - ISR pre-renders all data server-side → full HTML regardless of lazy-loading
 - Lazy-loading (ticket `perf-wc-page-size`) will benefit JS bundle size for client-side sections
 
@@ -101,7 +101,63 @@ Per [web.dev/vitals](https://web.dev/vitals), these are the **GOOD** thresholds 
 
 ## Recent Changes
 
-### 🔴 CRITICAL SIZE REGRESSIONS PERSIST — ShareButton Feature (Day 5, 2026-07-31)
+### 🔴 CRITICAL SIZE REGRESSIONS PERSIST — ShareButton Feature (Day 6, 2026-08-01)
+
+**Observation:** ShareButton regression from commit 7469e43 (2026-07-26) **persists for a sixth consecutive day**. ATP and WTA Live pages remain critically over size budgets. Sizes stable (±1-3KB measurement variance). **Load times improved** — ATP -13%, WTA -8%. **Homepage variance from yesterday RESOLVED** (TTFB -38%, total -37%). TTFB variances on tennis routes (+23-33%) likely transient.
+
+**Measurements (2026-08-01 vs 2026-07-31):**
+
+**HTTP Fetch (npm run check:performance):**
+- **Homepage:** TTFB 0.26s → 0.16s (-38%), total 0.27s → 0.17s (-37%), size 29KB (stable)
+- **ATP Live:** TTFB 0.15s → 0.20s (+33%), total 0.45s → 0.39s (-13%), size 510KB → 507KB (-0.6%, **-3KB**)
+- **WTA Live:** TTFB 0.13s → 0.16s (+23%), total 0.26s → 0.24s (-8%), size 258KB → 257KB (-0.4%, **-1KB**)
+- **World Cup:** TTFB 0.13s → 0.14s (+8%), total 0.24s → 0.25s (+4%), size 382KB (stable)
+
+**Core Web Vitals:** Not measured (webapp-testing requires Skill tool invocation)
+
+**Analysis:**
+- 🔴 **ATP size regression PERSISTS:** 507KB (69% over 300KB budget, Day 6, -3KB data variance)
+- 🔴 **WTA size regression PERSISTS:** 257KB (29% over 200KB budget, Day 6, -1KB data variance)
+- ✅ **Size changes are measurement variance:** ATP -3KB (-0.6%), WTA -1KB (-0.4%) — no code changes to ShareButton or tennis pages
+- ✅ **Homepage variance from yesterday RESOLVED:** TTFB -38%, total -37% — yesterday's +69%/+86% spikes confirmed transient
+- ✅ **Load times improved:** ATP -13%, WTA -8%, homepage -37%
+- ⚠️ **TTFB variances (likely transient):** ATP +33%, WTA +23%, WC +8% but all within 0.8s budget
+- ✅ **All routes FAST:** Within TTFB (< 0.8s) and total (< 2.0s) budgets
+
+**Code changes since 2026-07-31:**
+1. `9be5701` — Autoresearch 2026-08-01 (tickets only)
+2. `7cddce1` / `5ee8756` — Auto: deploy-failed detected (tickets only)
+3. `67b2962` — Inspector 2026-07-31 (tickets only)
+
+**No code changes** to ATP/WTA Live pages, ShareButton component, or data feeds.
+
+**Why TTFB variances are likely transient:**
+1. **All within budget** — ATP 0.20s, WTA 0.16s, WC 0.14s (all < 0.8s)
+2. **Load times improved** — ATP -13%, WTA -8%, homepage -37%
+3. **Sizes stable** — ATP -3KB, WTA -1KB, WC stable (no payload bloat)
+4. **Multiple routes affected** — ATP, WTA, WC all show variance (suggests upstream/edge latency, not isolated code issue)
+5. **Historical pattern** — Matches 15+ prior TTFB variances that resolved within 1-2 days
+6. **No code changes** — Zero commits to app code since 2026-07-31
+7. **Homepage reversed** — Yesterday's +86% TTFB spike fully resolved today (-38%), confirms transient network/edge variance
+
+**Impact:**
+- 🔴 **Day 6 of critical size regressions** — both tennis pages (core traffic drivers) remain critically over budget
+- 📱 **Mobile:** WTA 257KB = ~2.4s on slow 3G, ATP 507KB = ~4.7s
+- 💰 **Revenue:** Blocks Phase 3 monetization (ads + betting affiliates)
+- 🏆 **FIFA World Cup 2026:** Tournament ENDED ~July 19 (13 days ago)
+- ✅ **Load times within budget** — All routes < 2.0s despite size bloat
+- ✅ **Homepage variance resolved** — Yesterday's spikes fully reversed
+
+**Status:** 🔴 CRITICAL SIZE REGRESSIONS PERSIST (Day 6) + ⚠️ TTFB variance (monitoring)
+
+**Tickets:** 
+- `perf-share-button-bloat` (Priority 1) — OPEN (awaiting planner restoration)
+
+**Report:** docs/reports/2026-08-01-performance.md
+
+---
+
+### 🔴 CRITICAL SIZE REGRESSIONS PERSIST — ShareButton Feature (Day 5, 2026-07-31) [ARCHIVED]
 
 **Observation:** ShareButton regression from commit 7469e43 (2026-07-26) **persists for a fifth consecutive day**. ATP and WTA Live pages remain critically over size budgets. Sizes stable (±1-2KB measurement variance). Load times show variance (+18-24%) but within budget. TTFB improvements across tennis and World Cup routes.
 
