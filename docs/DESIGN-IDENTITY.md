@@ -1,6 +1,6 @@
 # Rankings123 Design Identity (North Star)
 
-*Last updated: 2026-07-19*
+*Last updated: 2026-08-02*
 
 This document defines the visual identity for rankings123.com — a **distinctive, premium sports rankings hub** that stands out from commodity sites like live-tennis.eu. Data is always the hero; beauty serves scannability.
 
@@ -306,6 +306,18 @@ Articles read and applied to rankings123 design strategy:
      - **Bold typography + vibrant colors:** Oversized headlines, neon gradients, high-contrast create energy matching sports' dynamic nature
    - **Application:** Filed tickets for `3d-depth-micro-effects` (p2), `kinetic-number-reveals` (p2), `interactive-performance-charts` (p3), `premium-mobile-swipe-gestures` (p2). These patterns differentiate premium 2026 sites from template-based competitors.
 
+### 2026-08-02 (Weekly Run)
+
+17. **["Cognitive Load: Hidden Reason Users Leave Your Website"](https://clay.global/blog/cognitive-load)** (July 28, 2026)
+   - **Key takeaway:** Visual hierarchy breakdown (everything competing for attention at once) causes cognitive overload → users disengage. Each choice adds cognitive load (mental effort to process and act). Nielsen Norman Group research: reducing cognitive load directly increases task completion rates. "Clear hierarchy and fewer distractions cut cognitive load, improve readability, and lift conversions."
+   - **Application:** Rankings123 site audit revealed CRITICAL cognitive load issues: "What's Live Now" carousel AND "All Sports" grid present similar content in different formats → redundancy forces users to scan multiple sections for same information. Filed ticket: `cognitive-load-homepage-ia` (p1) to consolidate into single prioritized section with progressive disclosure. Also filed `progressive-disclosure-tables` (p2) — showing 1000-row ATP tables all at once overwhelms users; collapsible rank bands (top 20 expanded, 21-50/51-100/etc collapsed) + "Jump to rank" navigation reduces cognitive load.
+
+**Awwwards August 2026:**
+
+18. **[Noomo Showcase](https://www.awwwards.com/sites/noomo-showcase)** (Site of the Day, Aug 1, 2026) — Developer Award (8.60/10)
+   - **Key takeaway:** Award-winning through sophisticated GSAP + Three.js transitions: "Immersive Hero Transition", "3D Project Preview" cards with hover states, smooth preloader animations. Design is MINIMAL — just 2 colors (electric blue #0004EB + near-black #020411) for maximum visual impact, zero distraction. High-contrast + refined motion > complex palettes.
+   - **Application:** Rankings123 lacks smooth transitions (pages feel abrupt, tables appear instantly). Filed tickets: `smooth-section-transitions` (p3, Framer Motion page cross-fades + table row staggers) and `high-contrast-minimal-mode` (p3, new "Focus Mode" theme with 2-color system for power users/accessibility). Also filed `realtime-data-indicators` (p2) — site audit showed no visible "Updated X ago" timestamps or pulse animations, undermining "live rankings" trust signal.
+
 **2026 Web Design Trends — Post-Event Retention & Gamification:**
 
 14. **Context-Aware Sticky Navigation** (timgraf.com/ui/beyond-sticky-context-aware-ui-patterns-redefine-user-experience-in-2026/)
@@ -385,6 +397,13 @@ Filed TIME-SENSITIVE tickets:
 - [ ] **Kinetic number reveals** (ticket `kinetic-number-reveals`) — NEW 2026-07-26, p2 (Figma bold kinetic typography)
 - [ ] **Premium mobile swipe gestures** (ticket `premium-mobile-swipe-gestures`) — NEW 2026-07-26, p2 (62% mobile traffic + haptic feedback)
 - [ ] **Interactive performance charts** (ticket `interactive-performance-charts`) — NEW 2026-07-26, p3 (Awwwards data viz pattern)
+
+### Phase 5: Cognitive Load Reduction & Minimal Premium (NEW — August 2)
+- [ ] **Cognitive load homepage IA** (ticket `cognitive-load-homepage-ia`) — NEW 2026-08-02, p1 (Clay Jul 28 — consolidate redundant sections, clear hierarchy)
+- [ ] **Real-time data indicators** (ticket `realtime-data-indicators`) — NEW 2026-08-02, p2 (trust signal: "Updated X ago" timestamps, pulse on changes)
+- [ ] **Progressive disclosure tables** (ticket `progressive-disclosure-tables`) — NEW 2026-08-02, p2 (collapsible rank bands, jump-to-rank, reduces overwhelm)
+- [ ] **High-contrast minimal mode** (ticket `high-contrast-minimal-mode`) — NEW 2026-08-02, p3 (Noomo 2-color system, Focus Mode theme)
+- [ ] **Smooth section transitions** (ticket `smooth-section-transitions`) — NEW 2026-08-02, p3 (Noomo GSAP pattern, Framer Motion page cross-fades)
 
 ---
 
