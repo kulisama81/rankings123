@@ -16,3 +16,9 @@ HIGH-RPM CONTENT for betting affiliates. Cincinnati Open Aug 11-23 = Masters 100
 ## Acceptance Criteria
 
 1. Article published at /tennis/cincinnati-open-2026-betting-guide by Aug 9 2. Covers: tournament odds, top picks (Sinner, Alcaraz, Sabalenka WTA), value bets, betting strategy 3. Affiliate links integrated (FanDuel + Bet365 when approved) 4. SEO optimized (meta description, structured data) 5. Mobile-friendly betting odds tables 6. Analytics tracking on affiliate click-through
+
+## Notes
+
+**2026-08-03T13:54:44Z**
+
+TIMELY REVENUE CATALYST: Cincinnati Open Aug 11-23 = Masters 1000 betting peak. Research shows Sinner vs Alcaraz projected final rematch. DEADLINE: publish by Aug 9 (2 days before tournament) to capture pre-tournament search traffic. Betting content RPM = higher than display ads. Miss this window = miss conversions (tournament happens ONCE). Content integrates FanDuel + Bet365 affiliate links + The Odds API live odds.

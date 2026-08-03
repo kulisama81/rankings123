@@ -16,3 +16,9 @@ READY TO EXECUTE — all AdSense requirements met. Apply now to start revenue cl
 ## Acceptance Criteria
 
 1. AdSense application submitted via google.com/adsense/start/ 2. Site verified (meta tag in layout.tsx) 3. Application status = Under Review (screenshot) 4. Ticket created for ads.txt setup (post-approval) 5. Ticket created for ad slot placement (post-approval)
+
+## Notes
+
+**2026-08-03T13:54:23Z**
+
+FIRST-PRINCIPLES ROI: Revenue = traffic × RPM. Current RPM = ZERO (no monetization). AdSense = first revenue stream, unlocks ad inventory for future optimization. No traffic minimum in 2026 (policy update), we meet ALL requirements NOW. Approval timeline 1-7 days — every day of delay = lost revenue during Cincinnati (Aug 11) + US Open (Aug 30) peaks. Start clock NOW. References: https://theguidex.com/google-adsense-approval/ and https://zeroclickgrowth.com/google-adsense-approval-guide-2026/
