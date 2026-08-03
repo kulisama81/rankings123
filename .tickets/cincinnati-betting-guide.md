@@ -1,0 +1,18 @@
+---
+id: cincinnati-betting-guide
+status: open
+deps: []
+links: []
+created: 2026-08-03T13:49:17Z
+type: feature
+priority: 0
+parent: rankings123
+tags: [revenue, betting, content, timely]
+---
+# Cincinnati Open 2026 Betting Guide (Aug 11-23 revenue catalyst)
+
+HIGH-RPM CONTENT for betting affiliates. Cincinnati Open Aug 11-23 = Masters 1000 betting peak. Research shows Sinner + Alcaraz favorites, potential final rematch. Create betting-optimized article: odds comparison, betting picks, value bets, Sinner vs Alcaraz H2H. Publish by Aug 9 to capture pre-tournament search traffic. Integrates FanDuel + Bet365 affiliate links. References: https://zcodesystem.com/blog/cincinnati-open-2026-betting-predictions-top-picks-for-sinner-alcaraz-sabalenka/ and https://polymarket.com/event/atp-cincinnati-sinner-vs-alcaraz
+
+## Acceptance Criteria
+
+1. Article published at /tennis/cincinnati-open-2026-betting-guide by Aug 9 2. Covers: tournament odds, top picks (Sinner, Alcaraz, Sabalenka WTA), value bets, betting strategy 3. Affiliate links integrated (FanDuel + Bet365 when approved) 4. SEO optimized (meta description, structured data) 5. Mobile-friendly betting odds tables 6. Analytics tracking on affiliate click-through
