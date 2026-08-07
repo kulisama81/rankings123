@@ -22,15 +22,6 @@ tags: [tennis, content, seo, post-wc-sustainability]
 - **SEO authority:** Systematic tournament coverage signals topical authority to Google
 - **Revenue:** Pre-tournament betting content = highest-intent traffic (users researching bets)
 
-## Solution
-
-Build a tournament content pipeline system with:
-
-1. **Tournament Calendar Integration** — maintain ATP/WTA calendar, flag upcoming majors 4-6 weeks out
-2. **Pre-Tournament Content** — draw analysis, player form, predictions, betting odds, historical context
-3. **Live Tournament Content** — bracket visualization, daily previews, ranking impact projections
-4. **Post-Tournament Content** — results, ranking changes, next tournament preview
-
 ## Acceptance Criteria
 
 1. **Calendar Data:**
@@ -56,16 +47,34 @@ Build a tournament content pipeline system with:
    - Live: https://rankings123.com/tournaments/us-open-2026 returns 200
    - Monitor GA4 for organic search traffic
 
+## Solution
+
+Build a tournament content pipeline system with:
+
+1. **Tournament Calendar Integration** — maintain ATP/WTA calendar, flag upcoming majors 4-6 weeks out
+2. **Pre-Tournament Content** — draw analysis, player form, predictions, betting odds, historical context
+3. **Live Tournament Content** — bracket visualization, daily previews, ranking impact projections
+4. **Post-Tournament Content** — results, ranking changes, next tournament preview
+
 ## Next Tournaments
+
 - US Open: Aug 30 - Sep 13
 - Laver Cup: Sep 25-27
 - ATP Finals: November
 - WTA Finals: November
 
 ## Related
+
 - `tennis-major-tournament-pages` — this supersedes it
 - `wimbledon-2026-live` — ended July 12, update for 2027
 - `player-pages-top-10` — complement tournament pages
 
 ## ROI Summary
+
 **High ROI:** Pre-tournament search capture, systematic year-round approach, SEO compounding, revenue-ready betting integration, post-WC sustainability (World Cup ends July 19).
+
+## Notes
+
+**2026-08-07T13:49:40Z**
+
+**FIRST-PRINCIPLES ROI:** Traffic = Content × Timeliness × Search Demand. Grand Slam/Masters 1000 tournaments = PREDICTABLE high-demand windows. Cincinnati search volume spikes Aug 7-23 (NOW through finals). US Open spikes Aug 20-Sep 13. Publishing BEFORE the spike captures it; publishing AFTER misses it entirely. Revenue: Betting affiliates earn highest during tournaments (bets placed live). AdSense CPM highest during events. One tournament template × 52 tournaments/year = systematic traffic engine. Effort: 2-3 days build template, 1 hour per tournament thereafter. Impact: 10-20× traffic multiplier during events, retention after.
