@@ -88,12 +88,6 @@ export default async function WorldCupPage() {
   const hasStats = stats.topScorers.length > 0 || stats.topAssisters.length > 0;
   const hasTeamStats = snapshot.groups.length > 0;
 
-  // Detect Finals week (July 18-22, 2026) and find Final match
-  const now = new Date();
-  const finalsWeekStart = new Date("2026-07-18T00:00:00-04:00");
-  const finalsWeekEnd = new Date("2026-07-22T23:59:59-04:00");
-  const isFinalsWeek = now >= finalsWeekStart && now <= finalsWeekEnd;
-
   // Find the Final match (ESPN labels it in statusDetail or it's the last/highest-stage match)
   const finalMatch = snapshot.matches.find(
     (m) =>
@@ -101,6 +95,18 @@ export default async function WorldCupPage() {
       !m.statusDetail?.toLowerCase().includes("semi") &&
       !m.statusDetail?.toLowerCase().includes("third")
   );
+
+  // Detect tournament completion: Final match exists, is finished, AND has valid scores
+  const hasValidFinalScores =
+    finalMatch?.homeScore !== null && finalMatch?.awayScore !== null;
+  const isTournamentComplete =
+    finalMatch?.state === "post" && hasValidFinalScores;
+
+  // Detect Finals week (July 18-22, 2026) - show special hero during Final week
+  const now = new Date();
+  const finalsWeekStart = new Date(Date.UTC(2026, 6, 18, 0, 0, 0));
+  const finalsWeekEnd = new Date(Date.UTC(2026, 6, 22, 23, 59, 59));
+  const isFinalsWeek = now >= finalsWeekStart && now <= finalsWeekEnd && !isTournamentComplete;
 
   const sections = [
     ...(hasTodaysMatches ? [{ id: "todays-matches", label: "Today's Matches" }] : []),
@@ -118,8 +124,68 @@ export default async function WorldCupPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <div data-sport="worldcup" className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
-        {/* Finals Week: Special celebration hero */}
-        {isFinalsWeek && finalMatch ? (
+        {/* Tournament Complete: Show final results hero */}
+        {isTournamentComplete && finalMatch && hasValidFinalScores ? (
+          (() => {
+            // Type-safe access: hasValidFinalScores guarantees non-null scores
+            const homeScore = finalMatch.homeScore as number;
+            const awayScore = finalMatch.awayScore as number;
+            const champion = homeScore > awayScore ? finalMatch.homeName : finalMatch.awayName;
+            const runnerUp = homeScore > awayScore ? finalMatch.awayName : finalMatch.homeName;
+
+            return (
+              <>
+                <HeroBanner
+                  sport="worldcup"
+                  title="World Cup 2026"
+                  subtitle="FIFA World Cup 2026 · Tournament Complete"
+                  stats={[
+                    { label: "Champion", value: champion },
+                    { label: "Runner-up", value: runnerUp },
+                    { label: "Final Score", value: `${homeScore}-${awayScore}` },
+                  ]}
+                />
+                <div className="my-6 rounded-2xl border border-trophy/30 bg-gradient-to-br from-trophy/10 to-surface p-6">
+                  <div className="mb-4 flex items-center gap-2">
+                    <span className="text-2xl">🏆</span>
+                    <h2 className="text-xl font-bold text-fg">Final Result</h2>
+                  </div>
+                  <div className="flex items-center justify-center gap-4 sm:gap-8">
+                    <div className="flex items-center gap-2 text-right">
+                      <span className="text-base font-medium text-muted sm:text-lg">
+                        {finalMatch.homeName}
+                      </span>
+                      <span className="text-3xl">{finalMatch.homeFlag}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-4xl font-bold tabular-nums text-fg sm:text-5xl">
+                        {homeScore}
+                      </span>
+                      <span className="text-2xl text-muted">-</span>
+                      <span className="text-4xl font-bold tabular-nums text-fg sm:text-5xl">
+                        {awayScore}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-3xl">{finalMatch.awayFlag}</span>
+                      <span className="text-base font-medium text-muted sm:text-lg">
+                        {finalMatch.awayName}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="mt-4 text-center text-sm text-muted">
+                    {new Date(finalMatch.date).toLocaleDateString("en-US", {
+                      month: "long",
+                      day: "numeric",
+                      year: "numeric"
+                    })}
+                  </div>
+                </div>
+              </>
+            );
+          })()
+        ) : isFinalsWeek && finalMatch ? (
+          /* Finals Week: Special celebration hero */
           <>
             <WorldCupFinalsHero
               finalMatch={{
