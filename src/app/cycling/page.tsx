@@ -6,19 +6,30 @@ import TdfStagesTable from "@/components/TdfStagesTable";
 import TdfGCTable from "@/components/TdfGCTable";
 import TdfJerseys from "@/components/TdfJerseys";
 
-export const metadata: Metadata = {
-  title: "Tour de France 2026 Live — Stages & GC Standings",
-  description:
-    "Live Tour de France 2026 stage schedule and General Classification standings updated in real time: stage winners, GC rankings, and race progress.",
-  alternates: { canonical: "/cycling" },
-  openGraph: {
-    title: "Tour de France 2026 Live — Stages & GC Standings — Rankings123",
-    description:
-      "Live Tour de France 2026 stage schedule and General Classification standings updated in real time.",
-    url: "/cycling",
-    type: "website",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const tdfData = await getTdfSnapshot();
+  const isComplete = tdfData.raceStatus === "complete";
+
+  return {
+    title: isComplete
+      ? "Tour de France 2026 Final Results — GC Standings"
+      : "Tour de France 2026 Live — Stages & GC Standings",
+    description: isComplete
+      ? "Tour de France 2026 final results and General Classification standings: stage winners, final GC rankings, and race results."
+      : "Live Tour de France 2026 stage schedule and General Classification standings updated in real time: stage winners, GC rankings, and race progress.",
+    alternates: { canonical: "/cycling" },
+    openGraph: {
+      title: isComplete
+        ? "Tour de France 2026 Final Results — Rankings123"
+        : "Tour de France 2026 Live — Stages & GC Standings — Rankings123",
+      description: isComplete
+        ? "Tour de France 2026 final results and General Classification standings."
+        : "Live Tour de France 2026 stage schedule and General Classification standings updated in real time.",
+      url: "/cycling",
+      type: "website",
+    },
+  };
+}
 
 export const revalidate = 300; // ISR: 5 minute cache (race updates less frequently than tennis/soccer)
 
