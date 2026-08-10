@@ -1,6 +1,6 @@
 ---
 id: rank-history
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-15T05:48:40Z
@@ -16,3 +16,6 @@ live-tennis.eu lets you view the ranking as of a past date / see rank history. A
 ## Acceptance Criteria
 
 Ranking viewable for a chosen past date; per-player rank history shown; indexable.
+
+## Closed in backlog triage 2026-08-10
+dup: historical-rankings-api

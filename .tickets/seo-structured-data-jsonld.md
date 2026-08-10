@@ -1,6 +1,6 @@
 ---
 id: seo-structured-data-jsonld
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-25T13:51:10Z
@@ -51,3 +51,6 @@ SCHEMA TYPES NEEDED:
 ✓ Validates in Google Rich Results Test
 ✓ No errors in Search Console Rich Results report
 ✓ Builds green
+
+## Closed in backlog triage 2026-08-10
+dup: seo meta cluster

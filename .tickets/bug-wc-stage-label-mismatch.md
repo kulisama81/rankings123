@@ -1,6 +1,6 @@
 ---
 id: bug-wc-stage-label-mismatch
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-08T20:00:00Z
@@ -10,6 +10,25 @@ parent: rankings123
 tags: [bug, worldcup, ui, consistency]
 ---
 # World Cup page: Stage label mismatch (header shows "Round of 16", bracket shows "Round of 32")
+
+## Acceptance Criteria
+
+1. Determine the correct current tournament stage (likely Round of 32 based on 48-team format)
+2. Fix the stage label to match the bracket OR
+3. Override ESPN's incorrect stage label with our own logic based on the bracket data
+4. Verify header and bracket show consistent stage information
+5. **REGRESSION TEST REQUIRED:**
+   - Add test in `tests/worldcup-stage-consistency.test.js` (run via `npm test`)
+   - Test must verify:
+     - Fetch World Cup data and bracket
+     - Extract stage label from both sources
+     - Assert they match (or follow expected progression)
+   - Test should FAIL on current code, PASS when fixed
+6. Run `npm test` — all tests green
+7. Run `npm run build` — succeeds
+8. Verify on LIVE production:
+   - Visit https://rankings123.com/world-cup
+   - Header and bracket show consistent stage labels
 
 ## Bug Report
 
@@ -42,21 +61,5 @@ Header says "Round of 16", bracket shows "Round of 32"
 - Inconsistent messaging across the same page
 - Undermines trust in data accuracy
 
-## Acceptance Criteria
-
-1. Determine the correct current tournament stage (likely Round of 32 based on 48-team format)
-2. Fix the stage label to match the bracket OR
-3. Override ESPN's incorrect stage label with our own logic based on the bracket data
-4. Verify header and bracket show consistent stage information
-5. **REGRESSION TEST REQUIRED:**
-   - Add test in `tests/worldcup-stage-consistency.test.js` (run via `npm test`)
-   - Test must verify:
-     - Fetch World Cup data and bracket
-     - Extract stage label from both sources
-     - Assert they match (or follow expected progression)
-   - Test should FAIL on current code, PASS when fixed
-6. Run `npm test` — all tests green
-7. Run `npm run build` — succeeds
-8. Verify on LIVE production:
-   - Visit https://rankings123.com/world-cup
-   - Header and bracket show consistent stage labels
+## Closed in backlog triage 2026-08-10
+obsolete: WC over

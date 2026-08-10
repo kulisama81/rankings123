@@ -1,6 +1,6 @@
 ---
 id: bug-wc-team-form-badge-count
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-15T12:00:00Z
@@ -78,3 +78,6 @@ Shows 5 W badges when 6 wins are listed in the match results below.
    - Spot-check 2-3 other teams (USA, BRA, ENG) for consistency
    - Verify Vercel build succeeded: `gh api repos/kulisama81/rankings123/commits/HEAD/status`
    - No console errors in browser
+
+## Closed in backlog triage 2026-08-10
+obsolete: WC over

@@ -1,6 +1,6 @@
 ---
 id: revenue-dashboard-tracking
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-06T13:49:15Z
@@ -16,3 +16,6 @@ Create internal revenue tracking dashboard. Tracks: AdSense (when live), betting
 ## Acceptance Criteria
 
 Dashboard at /internal/revenue (auth-protected or local-only). Shows: traffic by source, pageviews by page, RPM estimates, revenue YTD. Pulls from GA4 API. Updates daily. Mock data until AdSense/affiliates are live (clearly flagged). Effort: MEDIUM. Impact: MEDIUM (visibility for optimization).
+
+## Closed in backlog triage 2026-08-10
+dup: revenue-dashboard

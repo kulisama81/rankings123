@@ -1,6 +1,6 @@
 ---
 id: tennis-h2h-consolidation
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-28T13:50:34Z
@@ -16,3 +16,6 @@ BACKLOG CLEANUP: 7 head-to-head tickets exist with overlapping scope. Consolidat
 ## Acceptance Criteria
 
 Review 7 H2H tickets (head-to-head, tennis-h2h-tool, tennis-h2h-stats, tennis-h2h-betting-db, tennis-h2h-espn-prototype, player-comparison-tool), create single canonical 'tennis-h2h-v1' ticket with phased roadmap (v1 basic → v2 betting → v3 advanced stats), close duplicates with reference to canonical. Result: ONE source of truth for H2H feature.
+
+## Closed in backlog triage 2026-08-10
+dup: tennis-h2h-tool

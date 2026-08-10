@@ -1,6 +1,6 @@
 ---
 id: wc-tickets-post-final-cleanup
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-24T13:51:52Z
@@ -27,3 +27,6 @@ World Cup ended July 19 (Spain 1-0 Argentina). Many p0/p1 WC tickets are now out
 **2026-07-24T13:51:56Z**
 
 ROI: Backlog hygiene = planner efficiency. Outdated WC tickets waste planner time (it might try to build a "final countdown" 5 days after the final). Closing past-date tickets = cleaner backlog = planner focuses on high-ROI work. Also prevents CX bugs (shipping outdated content). Effort = Low (review + close). ROI = HIGH (backlog quality, prevents wasted work).
+
+## Closed in backlog triage 2026-08-10
+dup: superseded by triage

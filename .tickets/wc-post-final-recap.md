@@ -1,6 +1,6 @@
 ---
 id: wc-post-final-recap
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-14T13:51:48Z
@@ -36,3 +36,6 @@ TIMELINE: Publish within 2 hours of final whistle (July 19)
 - Real stats, no fabrication
 - 2030 futures betting section with affiliate links
 - SEO optimized for "World Cup 2026" historical searches
+
+## Closed in backlog triage 2026-08-10
+obsolete: WC over

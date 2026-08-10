@@ -1,6 +1,6 @@
 ---
 id: icon-system
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-21T00:00:00Z
@@ -28,3 +28,6 @@ Move from emoji icons (🏆🎾🚴) to a cohesive, designed icon system for spo
 - Apple Sports app icons (bold, clean, sporty)
 - Heroicons, Lucide, Phosphor (style inspiration, not direct use)
 - Current emoji usage: 🏆 (trophy), 🎾 (tennis), 🚴 (cycling) — replace with SVG
+
+## Closed in backlog triage 2026-08-10
+stale: vague chore

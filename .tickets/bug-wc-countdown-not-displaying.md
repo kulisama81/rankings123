@@ -1,7 +1,6 @@
 ---
 id: bug-wc-countdown-not-displaying
-title: World Cup countdown widget not displaying on live site
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-12T15:30:00Z
@@ -9,7 +8,9 @@ type: bug
 priority: 1
 parent: rankings123
 tags: [bug, worldcup, ui, regression]
+title: World Cup countdown widget not displaying on live site
 ---
+# Untitled ticket
 
 # World Cup countdown widget not displaying on live site
 
@@ -101,3 +102,6 @@ The countdown widget is completely absent from the live page. WebFetch inspectio
      - July 15-16: "SEMI-FINALS TODAY" (high urgency)
      - July 19: "FINALS TODAY" or "FINALS LIVE NOW" (critical urgency)
      - July 20+: Widget auto-hides (tournament ended)
+
+## Closed in backlog triage 2026-08-10
+obsolete: WC over

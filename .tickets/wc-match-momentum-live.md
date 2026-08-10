@@ -1,6 +1,6 @@
 ---
 id: wc-match-momentum-live
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-11T13:51:56Z
@@ -35,3 +35,6 @@ Live match pages show momentum indicators (possession %, shots, dangerous attack
 **Effort:** MEDIUM (ESPN API + calculation + visualization)
 **Impact:** HIGH (differentiation, engagement, perfect for live betting context)
 **ROI:** HIGH (differentiator that ships for tournament climax)
+
+## Closed in backlog triage 2026-08-10
+obsolete: WC over

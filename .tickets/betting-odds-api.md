@@ -1,6 +1,6 @@
 ---
 id: betting-odds-api
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-24T13:50:33Z
@@ -30,3 +30,6 @@ Integrate The Odds API (theoddsapi.com) for tennis/soccer match odds. Free tier 
 **2026-07-24T13:50:38Z**
 
 ROI (First Principles - Revenue): Revenue = traffic × RPM. Sports betting affiliates have 10-50× higher RPM than display ads (industry standard). User need = odds comparison before betting (saves users money → trust). Traffic = odds pages rank well ('us open odds', 'tennis betting odds'). Engagement = odds change frequently → return visits. CX protection = only show when real API connected (no placeholder UI). Effort = Medium (API well-documented, free tier for testing). ROI = VERY HIGH (revenue multiplier, long-term monetization foundation).
+
+## Closed in backlog triage 2026-08-10
+dup: odds-api-integration

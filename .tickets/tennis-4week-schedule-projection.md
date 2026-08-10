@@ -1,6 +1,6 @@
 ---
 id: tennis-4week-schedule-projection
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-17T13:49:17Z
@@ -16,3 +16,6 @@ PARITY GAP: live-tennis.eu shows 'Rankings Projection for the next 4 weeks' and 
 ## Acceptance Criteria
 
 New page or section: (1) 4-week tournament calendar (ATP/WTA), (2) Per-player: which tournaments they're entered in, (3) Ranking projection: if they perform at seed level, what's their rank in 4 weeks. Data source: ATP/WTA official calendars or ESPN. Verify: Can see Sinner's next 4 tournaments + projected rank movement.
+
+## Closed in backlog triage 2026-08-10
+dup: ranking-forecast

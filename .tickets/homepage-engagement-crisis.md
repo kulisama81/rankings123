@@ -1,7 +1,6 @@
 ---
 id: homepage-engagement-crisis
-title: Homepage engagement system - fix 70% bounce rate
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-09T13:47:00Z
@@ -9,13 +8,26 @@ type: feature
 priority: 0
 parent: rankings123
 tags: [ux, engagement, homepage]
+title: Homepage engagement system - fix 70% bounce rate
 ---
+# Untitled ticket
 
 # Homepage engagement system: fix 70% bounce rate
 
 **CRISIS**: Homepage has 70% bounce rate vs 40% on World Cup page (analytics). Implement engagement hooks to convert visitors into users.
 
+## Acceptance Criteria
+
+- [ ] Hero section clearly states unique value (live DURING tournaments)
+- [ ] Live activity feed widget shows cross-sport real-time updates
+- [ ] Trending/Quick Stats section adds context
+- [ ] Social proof (data sources, update frequency) visible
+- [ ] Mobile-optimized (38% of traffic)
+- [ ] Page speed <2s (bounce rate killer)
+- [ ] A/B test readiness: track bounce rate before/after
+
 ## Root Cause Analysis (from WebFetch + analytics)
+
 - **No differentiation**: Users can't tell why to use us vs ESPN/official sites
 - **Vague value prop**: Generic "Live Sports Rankings" doesn't explain unique value
 - **Content thinness**: Directory of links, not a destination
@@ -48,26 +60,23 @@ Make the homepage feel ALIVE, not static.
 - Coverage depth: "ATP/WTA Top 1000+ | All WC matches | Grand Tours"
 
 ## First Principles Reasoning
+
 - **Root need**: Users want "what's happening NOW and why it matters"
 - **Bounce rate truth**: High bounce = value prop failed OR need satisfied instantly
 - **Sports fan behavior**: Return daily during tournaments, weekly otherwise
 - **Engagement driver**: Anticipation (what could change) + immediacy (changing now)
 
 ## Success Metrics
+
 - Reduce homepage bounce from 70% → <50% (match World Cup page)
 - Increase avg session from 24s → 60s+
 - Drive clicks to ATP/WTA/WC pages (measure CTR on cards)
 
-## Acceptance Criteria
-- [ ] Hero section clearly states unique value (live DURING tournaments)
-- [ ] Live activity feed widget shows cross-sport real-time updates
-- [ ] Trending/Quick Stats section adds context
-- [ ] Social proof (data sources, update frequency) visible
-- [ ] Mobile-optimized (38% of traffic)
-- [ ] Page speed <2s (bounce rate killer)
-- [ ] A/B test readiness: track bounce rate before/after
-
 ## ROI Justification
+
 **Impact**: CRITICAL — 70% bounce = we lose 7 out of 10 first-time visitors immediately  
 **Effort**: MEDIUM — 3-4 components, real-time data already available  
 **ROI**: VERY HIGH — Homepage is the landing page for 39% of all traffic (71/182 views)
+
+## Closed in backlog triage 2026-08-10
+dup: homepage-bounce-optimization

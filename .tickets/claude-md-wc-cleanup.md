@@ -1,6 +1,6 @@
 ---
 id: claude-md-wc-cleanup
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-03T13:50:09Z
@@ -16,3 +16,6 @@ CLAUDE.md currently says planner spends ≥half capacity on World Cup (through ~
 ## Acceptance Criteria
 
 1. CLAUDE.md updated: remove World Cup priority rule from CURRENT PRIORITY section 2. Add note that World Cup ended July 19, WC tickets should be post-tournament focus 3. Reference wc-tickets-post-final-cleanup ticket 4. Commit with message explaining the update
+
+## Closed in backlog triage 2026-08-10
+dup: update-wc-capacity-rule

@@ -1,6 +1,6 @@
 ---
 id: tennis-live-official-toggle
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-14T13:53:34Z
@@ -20,3 +20,6 @@ PARITY: Sofascore, live-tennis.eu have this.
 ## Acceptance Criteria
 
 Toggle UI (Apple Sports), official rankings API, preference persists (localStorage), clear labeling, both <2.5s LCP
+
+## Closed in backlog triage 2026-08-10
+dup: tennis-live-scores-integration

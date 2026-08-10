@@ -1,6 +1,6 @@
 ---
 id: betting-affiliate-comparison
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-30T06:00:00Z
@@ -14,6 +14,14 @@ tags: [revenue, betting, research]
 Research and compare the top 3 betting affiliate programs to determine priority order for signup based on commission structure, requirements, approval speed, and traffic fit.
 
 **Key Question:** Which affiliate should we apply to FIRST to minimize time-to-revenue?
+
+## Acceptance Criteria
+
+1. Document full commission structures, requirements, and approval criteria for all 3 programs
+2. Recommend priority order (1st, 2nd, 3rd) based on current traffic geography + quick-revenue path
+3. Identify any blockers (state licenses, traffic minimums, niche experience)
+4. Update `betting-affiliate-signups-execute` ticket with the recommended application sequence
+5. Include ROI justification using first-principles: revenue per user, approval probability, time-to-first-dollar
 
 ## Comparison (2026 data)
 
@@ -60,14 +68,6 @@ Research and compare the top 3 betting affiliate programs to determine priority 
    - Bet365 = more lenient, global focus
    - DraftKings = similar to FanDuel
 
-## Acceptance Criteria
-
-1. Document full commission structures, requirements, and approval criteria for all 3 programs
-2. Recommend priority order (1st, 2nd, 3rd) based on current traffic geography + quick-revenue path
-3. Identify any blockers (state licenses, traffic minimums, niche experience)
-4. Update `betting-affiliate-signups-execute` ticket with the recommended application sequence
-5. Include ROI justification using first-principles: revenue per user, approval probability, time-to-first-dollar
-
 ## ROI Justification
 
 **Impact:** HIGH — eliminates guesswork on which affiliate to apply to first, avoiding wasted time on wrong program or rejection. Directly unblocks the P0 `revenue-sprint-now` ticket.
@@ -86,3 +86,6 @@ Research and compare the top 3 betting affiliate programs to determine priority 
 - FanDuel: https://getlasso.co/affiliate/fanduel/, https://track360.io/blog/fanduel-affiliate-program-operator-review-2026
 - DraftKings: https://uppromote.com/affiliate-programs/sports-betting/
 - Market overview: https://affpapa.com/best-sports-betting-affiliate-programs/
+
+## Closed in backlog triage 2026-08-10
+dup: betting-affiliate-top3-apply

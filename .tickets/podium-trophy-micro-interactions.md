@@ -1,6 +1,6 @@
 ---
 id: podium-trophy-micro-interactions
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-12T07:40:00Z
@@ -37,3 +37,6 @@ Premium polish that makes top ranks feel special — differentiation from compet
 - Current trophy color (#d4af37 gold) in design tokens
 - Award-winning sports apps: Apple Sports (podium positions highlighted)
 - 2026 micro-interaction trend: purposeful, minimalist animations
+
+## Closed in backlog triage 2026-08-10
+stale: speculative polish

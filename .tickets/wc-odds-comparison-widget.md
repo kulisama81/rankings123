@@ -1,6 +1,6 @@
 ---
 id: wc-odds-comparison-widget
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-14T13:51:38Z
@@ -43,3 +43,6 @@ SOURCES: Competitor analysis - flashscore.com, sofascore.com
 - Deployed on prediction pages by July 18
 - CX-first: graceful fallback if odds unavailable (hide widget, no "Coming Soon")
 - Performance: no CLS, lazy-load below fold
+
+## Closed in backlog triage 2026-08-10
+obsolete: WC over

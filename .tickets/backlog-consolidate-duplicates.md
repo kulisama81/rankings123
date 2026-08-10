@@ -1,6 +1,6 @@
 ---
 id: backlog-consolidate-duplicates
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-25T13:51:30Z
@@ -37,3 +37,6 @@ ACTION PLAN:
 EFFORT: LOW (2-3 hours audit)
 IMPACT: HIGH (clears planner confusion, accurate backlog depth)
 ROI: HIGH (improves loop efficiency)
+
+## Closed in backlog triage 2026-08-10
+dup: superseded by triage

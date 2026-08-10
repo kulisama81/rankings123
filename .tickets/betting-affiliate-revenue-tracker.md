@@ -1,6 +1,6 @@
 ---
 id: betting-affiliate-revenue-tracker
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-17T13:49:27Z
@@ -16,3 +16,6 @@ REVENUE ENABLER: Once betting affiliates are live (wc-betting-affiliates), we ne
 ## Acceptance Criteria
 
 Admin dashboard or analytics report showing: (1) Affiliate clicks by source page, (2) Conversion estimates (if available via affiliate APIs), (3) Revenue projection (clicks × industry conversion rate × commission rate). Update docs/reports/revenue-status.md weekly. No fabricated numbers - show 'pending' if affiliate APIs not integrated.
+
+## Closed in backlog triage 2026-08-10
+dup: revenue-dashboard

@@ -1,6 +1,6 @@
 ---
 id: bug-wc-match-401xxx-404
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-13T18:04:20Z
@@ -92,3 +92,6 @@ All valid World Cup match IDs should either:
    - Verify fixes for `worldcup-match-404` actually work now
    - Verify fixes for `wc-match-pages-404-regression` actually work now
    - Consider what went wrong with those tickets (insufficient test coverage)
+
+## Closed in backlog triage 2026-08-10
+obsolete: WC over

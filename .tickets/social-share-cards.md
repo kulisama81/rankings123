@@ -1,6 +1,6 @@
 ---
 id: social-share-cards
-status: open
+status: closed
 deps: [logo-wordmark, icon-system]
 links: []
 created: 2026-06-21T12:00:00Z
@@ -30,3 +30,6 @@ Enable users to generate + download/share branded graphics of specific rankings 
 - NBA app "Share Stat" graphics
 - 2026 data viz trends: "automated, social-media-ready cards"
 - Logo-wordmark + icon-system tickets (dependencies)
+
+## Closed in backlog triage 2026-08-10
+dup: social-sharing-og-dynamic

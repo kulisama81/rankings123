@@ -1,6 +1,6 @@
 ---
 id: seo-duplicate-consolidation
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-05T13:47:56Z
@@ -16,3 +16,6 @@ tags: [process]
 ## Acceptance Criteria
 
 Review all SEO tickets. Merge into one canonical ticket. Close duplicates. Update priority. Document canonical ID in closed tickets.
+
+## Closed in backlog triage 2026-08-10
+dup: superseded

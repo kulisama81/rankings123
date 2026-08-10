@@ -1,6 +1,6 @@
 ---
 id: points-to-defend-calendar
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-24T13:51:06Z
@@ -29,3 +29,6 @@ Show points-to-defend calendar for each player: which tournaments they need to d
 **2026-07-24T13:51:09Z**
 
 ROI (First Principles): User need = understand ranking changes ('why did X drop?'). Parity = live-tennis.eu has this; critical for credibility. Engagement = points-to-defend changes weekly → return visits. Differentiation = most sites don't explain ranking volatility; this does. Education = helps casual fans understand ATP/WTA system. Effort = High (requires 52-week historical data). ROI = MEDIUM-HIGH (parity requirement, but effort is significant).
+
+## Closed in backlog triage 2026-08-10
+dup: points-defend-data-source

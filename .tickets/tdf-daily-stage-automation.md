@@ -1,6 +1,6 @@
 ---
 id: tdf-daily-stage-automation
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-06T13:49:05Z
@@ -16,3 +16,6 @@ Automate daily TdF stage updates (Stage 3 through 21, now through July 26). Each
 ## Acceptance Criteria
 
 Automated daily stage result updates for TdF 2026. Runs daily at 8pm CEST (after stages finish). Updates GC standings, stage winner, yellow jersey. Source: Wikipedia or letour.fr. Ships by July 7 (Stage 3). Verified: Stage 3+ results appear within 2 hours of stage finish. Effort: MEDIUM. Impact: VERY HIGH (captures 21-day search spike).
+
+## Closed in backlog triage 2026-08-10
+obsolete: TdF over

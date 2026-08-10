@@ -1,6 +1,6 @@
 ---
 id: wc-tournament-winner-odds
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-01T13:50:15Z
@@ -29,3 +29,6 @@ Build live tournament winner odds comparison table across multiple sportsbooks w
 **Effort:** LOW-MEDIUM — single table page with odds API integration
 **ROI:** VERY HIGH — high-traffic betting content
 **Time-sensitive:** Tournament through July 19
+
+## Closed in backlog triage 2026-08-10
+obsolete: WC over

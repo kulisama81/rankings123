@@ -1,6 +1,6 @@
 ---
 id: hero-depth-treatment
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-21T00:00:00Z
@@ -28,3 +28,6 @@ Elevate HeroBanner and landing page SportCards with subtle 3D depth treatments i
 - Awwwards: World Cup 2026, simplified (colorful + 3D + clean)
 - Current HeroBanner gradient (expand on this)
 - SportCard hover state (already has subtle translate, can amplify)
+
+## Closed in backlog triage 2026-08-10
+stale: speculative polish

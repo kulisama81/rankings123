@@ -1,6 +1,6 @@
 ---
 id: tennis-streak-form
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-26T13:49:27Z
@@ -22,3 +22,6 @@ ATP/WTA live tables show streak indicator (e.g., W5 = won last 5, L2 = lost last
 **2026-06-26T13:49:27Z**
 
 ROI: Differentiating stat that competitors don't surface in ranking tables. First principles: current rank is static; FORM is what fans use to judge who's hot/cold and predict future performance. Makes our rankings more engaging and predictive. ESPN/SofaScore have this data.
+
+## Closed in backlog triage 2026-08-10
+dup: tennis-form-streaks

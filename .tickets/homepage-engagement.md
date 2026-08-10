@@ -1,6 +1,6 @@
 ---
 id: homepage-engagement
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-24T13:50:19Z
@@ -47,3 +47,6 @@ IMPACT vs EFFORT:
 - ROI: HIGH - every % of bounce rate saved = more sessions, more ad impressions, more page views
 
 FIRST PRINCIPLES: Why do users come to rankings123? To know WHO'S #1 NOW and WHAT'S HAPPENING LIVE. Homepage should scream that, not be static navigation.
+
+## Closed in backlog triage 2026-08-10
+dup: homepage-bounce-optimization

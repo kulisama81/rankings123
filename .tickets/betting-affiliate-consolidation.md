@@ -1,6 +1,6 @@
 ---
 id: betting-affiliate-consolidation
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-05T13:48:03Z
@@ -16,3 +16,6 @@ tags: [revenue, process]
 ## Acceptance Criteria
 
 Merge all betting-affiliate-signup tickets into one canonical ticket. List: Bet365, FanDuel, DraftKings with signup URLs. Close duplicates.
+
+## Closed in backlog triage 2026-08-10
+dup: betting-affiliate-top3-apply

@@ -1,6 +1,6 @@
 ---
 id: bug-wc-tournament-status-stale
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-27T13:50:52Z
@@ -46,3 +46,6 @@ User's root need = know what's happening NOW. Showing an ended event as 'Live' v
 - Effort: Low (display logic fix, ESPN feed already has completion data)
 - Impact: High (could cut bounce rate in half, restores credibility for return visits)
 - Urgency: Critical (every day we bleed visitors)
+
+## Closed in backlog triage 2026-08-10
+obsolete: WC over

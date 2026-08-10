@@ -1,6 +1,6 @@
 ---
 id: bug-usa-roster-balogun
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-09T23:00:00Z
@@ -69,3 +69,6 @@ Folarin Balogun is listed on USA's roster despite being an England international
 6. Live verification after deploy:
    - Verify USA roster is accurate on production
    - `npm run check:data-sanity` passes in production
+
+## Closed in backlog triage 2026-08-10
+obsolete: WC over

@@ -1,6 +1,6 @@
 ---
 id: wc-team-of-tournament
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-21T00:00:00Z
@@ -30,3 +30,6 @@ Derive from player ratings if ESPN provides them, or integrate SofaScore ratings
 **2026-06-21**
 
 SofaScore publishes [Team of the Day](https://www.sofascore.com/news/world-cup-2026-team-of-the-day-sofascore-ratings) and [Team of the Round](https://www.sofascore.com/news/fifa-world-cup-2026-team-of-the-round-round-1). Could scrape or use as inspiration for manual curation.
+
+## Closed in backlog triage 2026-08-10
+obsolete: WC over

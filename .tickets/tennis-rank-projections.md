@@ -1,6 +1,6 @@
 ---
 id: tennis-rank-projections
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-14T13:53:32Z
@@ -20,3 +20,6 @@ ENGAGEMENT: Return-visit behavior during tournaments.
 ## Acceptance Criteria
 
 Projection algorithm (round pts × tier), widget on /atp-live /wta-live, per-player on player pages, updates live with results, accuracy tested
+
+## Closed in backlog triage 2026-08-10
+dup: tennis-ranking-scenarios

@@ -1,6 +1,6 @@
 ---
 id: wc-mbappe-golden-boot
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-14T13:51:32Z
@@ -34,3 +34,6 @@ REVENUE: Player props = growing betting segment. Complements match betting conte
 - Updates if another player closes gap
 - Publish by July 17
 - Mobile-optimized
+
+## Closed in backlog triage 2026-08-10
+obsolete: WC over

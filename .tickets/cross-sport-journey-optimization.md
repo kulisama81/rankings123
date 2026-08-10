@@ -1,6 +1,6 @@
 ---
 id: cross-sport-journey-optimization
-status: open
+status: closed
 deps: []
 links: [cross-sport-live-module, homepage-engagement]
 created: 2026-07-15T13:56:00Z
@@ -36,31 +36,22 @@ tags: [engagement, ux, cross-sport, retention]
 - **Retention:** Multi-sport fans = higher LTV (return for different events)
 - **Low cost:** UI enhancement, no new data sources needed
 
-## Solution
+## Design
 
-Cross-sport discovery features:
+**"Also Live Now" Widget:**
+```
+┌─────────────────────────────────────────────────────────┐
+│ ⚡ Also Live:  🏆 World Cup Final  •  🚴 TdF Stage 15  │
+└─────────────────────────────────────────────────────────┘
+```
 
-1. **"Also Live Now" Widget:**
-   - Shows on every sport page (ATP, WTA, World Cup, Cycling)
-   - Format: "⚡ Also Live: [Sport Icon] World Cup Semifinals • Tour de France Stage 12"
-   - Click → navigate to that sport's page
-   - Only shows ACTUAL live events (not "coming soon")
-
-2. **Sport Switcher Navigation:**
-   - Sticky tabs at top: ATP | WTA | World Cup | Cycling
-   - Current sport highlighted
-   - One-click switching (no need to return to homepage)
-   - Mobile: hamburger menu with sport icons
-
-3. **Related Content Module:**
-   - Bottom of each page: "Explore More"
-   - Show 2-3 cards for other sports
-   - Format: "[Sport] Live Rankings" or "[Sport] Latest Updates"
-   - Prioritize live events over static pages
-
-4. **Homepage Cross-Sport Context:**
-   - When multiple sports are live: show "3 Sports Live Now" badge
-   - Encourage exploration: "Explore all live sports →"
+**Sport Tabs:**
+```
+┌────────────────────────────────────────────────┐
+│  🎾 ATP  |  🎾 WTA  |  ⚽ World Cup  |  🚴 TdF  │
+│  (active)     (live•)      (live•)              │
+└────────────────────────────────────────────────┘
+```
 
 ## Acceptance Criteria
 
@@ -101,22 +92,31 @@ Cross-sport discovery features:
    - Measure: Click-through rate on widget (target > 10%)
    - If successful: expand to more prominent placement
 
-## Design
+## Solution
 
-**"Also Live Now" Widget:**
-```
-┌─────────────────────────────────────────────────────────┐
-│ ⚡ Also Live:  🏆 World Cup Final  •  🚴 TdF Stage 15  │
-└─────────────────────────────────────────────────────────┘
-```
+Cross-sport discovery features:
 
-**Sport Tabs:**
-```
-┌────────────────────────────────────────────────┐
-│  🎾 ATP  |  🎾 WTA  |  ⚽ World Cup  |  🚴 TdF  │
-│  (active)     (live•)      (live•)              │
-└────────────────────────────────────────────────┘
-```
+1. **"Also Live Now" Widget:**
+   - Shows on every sport page (ATP, WTA, World Cup, Cycling)
+   - Format: "⚡ Also Live: [Sport Icon] World Cup Semifinals • Tour de France Stage 12"
+   - Click → navigate to that sport's page
+   - Only shows ACTUAL live events (not "coming soon")
+
+2. **Sport Switcher Navigation:**
+   - Sticky tabs at top: ATP | WTA | World Cup | Cycling
+   - Current sport highlighted
+   - One-click switching (no need to return to homepage)
+   - Mobile: hamburger menu with sport icons
+
+3. **Related Content Module:**
+   - Bottom of each page: "Explore More"
+   - Show 2-3 cards for other sports
+   - Format: "[Sport] Live Rankings" or "[Sport] Latest Updates"
+   - Prioritize live events over static pages
+
+4. **Homepage Cross-Sport Context:**
+   - When multiple sports are live: show "3 Sports Live Now" badge
+   - Encourage exploration: "Explore all live sports →"
 
 ## Technical Approach
 
@@ -134,11 +134,16 @@ Cross-sport discovery features:
 - Cache live status (30s revalidation)
 
 ## Related Tickets
+
 - `cross-sport-live-module` (P1) — duplicate, consolidate with this
 - `homepage-engagement` (P1) — this is one solution for homepage bounce
 - `homepage-live-carousel` (P1) — homepage version of this pattern
 
 ## ROI Summary
+
 **High ROI:** Increases pages/session by 25-50% (ad impression multiplier), low implementation cost (UI enhancement only), improves user experience (easy discovery), multi-sport fans = higher LTV, proven pattern (ESPN/FlashScore use it).
 
 **Quick Win:** "Also Live Now" widget is highest ROI component — implement this first, measure impact, then expand if successful.
+
+## Closed in backlog triage 2026-08-10
+dup: cross-sport-discovery

@@ -1,6 +1,6 @@
 ---
 id: wimbledon-2026-live
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-24T13:49:14Z
@@ -49,3 +49,6 @@ IMPACT vs EFFORT:
 COMPETITIVE ANALYSIS: EVERY major tennis site has dedicated Wimbledon live rankings/results (ATP.com, WTA.com, ESPN, FlashScore, Sofascore). This is table-stakes for credibility as a tennis rankings site.
 
 TIME-SENSITIVE: Must ship before June 29 to capture traffic spike!
+
+## Closed in backlog triage 2026-08-10
+obsolete: event over

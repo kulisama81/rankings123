@@ -1,6 +1,6 @@
 ---
 id: head-to-head
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-15T02:06:32Z
@@ -16,3 +16,6 @@ Compare two players: career H2H, recent meetings. Competitor has this. Source fr
 ## Acceptance Criteria
 
 /h2h or player-page H2H widget renders real meetings for a pair; tokens-themed.
+
+## Closed in backlog triage 2026-08-10
+dup: tennis-h2h-tool

@@ -1,6 +1,6 @@
 ---
 id: betting-affiliate
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-15T05:51:32Z
@@ -22,3 +22,6 @@ Reusable affiliate-odds slot renders with real/placeholder odds + tracked affili
 **2026-06-15T05:52:46Z**
 
 UX guardrail: at most ONE tasteful, clearly-labeled affiliate/odds slot per page; never intrusive; geo/age-gated; don't degrade the core experience. A good UX beats short-term revenue.
+
+## Closed in backlog triage 2026-08-10
+dup: betting-affiliate-integration

@@ -1,6 +1,6 @@
 ---
 id: tennis-career-high-milestones
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-18T13:48:52Z
@@ -50,3 +50,6 @@ tags: [tennis, parity, engagement]
 6. Data source documented: where career-high data comes from (UTS for ATP, [source] for WTA)
 
 **Parity:** live-tennis.eu has this, we don't. Phase 1 = match competitor features.
+
+## Closed in backlog triage 2026-08-10
+dup: tennis-form-streaks

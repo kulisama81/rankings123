@@ -1,6 +1,6 @@
 ---
 id: tennis-ranking-projections
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-07T13:50:05Z
@@ -22,3 +22,6 @@ Show what happens to rankings if Player X wins/reaches finals. ESPN shows this d
 **2026-08-07T13:50:09Z**
 
 **FIRST-PRINCIPLES ROI (Differentiation):** Engagement = giving users something to wonder about + speculate on. 'What if Djokovic wins?' is inherently compelling during tournaments. Competitors show historical results; we show FUTURE scenarios. This = retention (users return to check projections) + shareability (social media 'if X wins' posts). Requires: points-to-defend data + tournament prize points. Effort: MEDIUM (complex calculation, but reusable). Impact: HIGH (unique feature, session depth +20-30%, return rate boost).
+
+## Closed in backlog triage 2026-08-10
+dup: tennis-ranking-scenarios

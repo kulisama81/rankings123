@@ -1,6 +1,6 @@
 ---
 id: seo-meta-structured-data
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-11T13:50:49Z
@@ -36,3 +36,6 @@ All pages have optimized title/description (unique, keyword-rich, <60/160 chars)
 **Effort:** MEDIUM (template-based, apply across all page types)
 **Impact:** HIGH (foundation for ALL SEO)
 **ROI:** VERY HIGH (multiplier for all other SEO work)
+
+## Closed in backlog triage 2026-08-10
+dup: seo-dynamic-meta-per-page

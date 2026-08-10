@@ -1,6 +1,6 @@
 ---
 id: wc-team-profiles-qf
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-11T13:50:22Z
@@ -33,3 +33,6 @@ Team pages exist for all 8 QF teams at /world-cup/teams/[country-code], show squ
 **Effort:** MEDIUM (8 teams × template = scalable)
 **Impact:** HIGH (SEO + engagement + parity)
 **ROI:** HIGH
+
+## Closed in backlog triage 2026-08-10
+obsolete: WC over

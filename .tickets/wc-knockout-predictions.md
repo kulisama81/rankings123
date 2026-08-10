@@ -1,6 +1,6 @@
 ---
 id: wc-knockout-predictions
-status: open
+status: closed
 deps: [blog-infrastructure]
 links: []
 created: 2026-06-21T00:00:00Z
@@ -35,3 +35,6 @@ Dependency: blog-infrastructure. Alternative: could publish as standalone page /
 Competitive examples: CBS Sports, Squawka publish match-by-match predictions. Current leaders: France (19.3% on Kalshi), Spain (13.1%), England (12.6%).
 
 Update cadence: publish R16 predictions → update after R16 for QF → update after QF for SF → update after SF for Final. Each update refreshes SEO and brings users back.
+
+## Closed in backlog triage 2026-08-10
+obsolete: WC over

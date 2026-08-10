@@ -1,6 +1,6 @@
 ---
 id: points-defend
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-14T22:51:04Z
@@ -16,3 +16,6 @@ Needs a 52-week results source to compute real defending points. Hardest data it
 ## Acceptance Criteria
 
 Each player shows real points dropping this week/period, validated against a known case.
+
+## Closed in backlog triage 2026-08-10
+dup: points-defend-data-source

@@ -1,6 +1,6 @@
 ---
 id: cross-sport-live-module
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-06T13:48:29Z
@@ -16,3 +16,6 @@ Add a compact 'Also Live Now' module on each sport page that shows OTHER live ev
 ## Acceptance Criteria
 
 Cross-sport live module on ATP/WTA/World Cup/Cycling pages. Shows up to 3 other live events with links. Conditionally renders (only shows if other events are actually live). Session depth measured before/after. Effort: LOW (data exists). Impact: MEDIUM-HIGH.
+
+## Closed in backlog triage 2026-08-10
+dup: cross-sport-discovery

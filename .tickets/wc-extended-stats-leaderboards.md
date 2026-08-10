@@ -1,6 +1,6 @@
 ---
 id: wc-extended-stats-leaderboards
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-01T13:50:23Z
@@ -32,3 +32,6 @@ Add 8+ stat leaderboards beyond goals/assists: clean sheets, saves, tackles, dis
 **Impact:** MEDIUM-HIGH — closes parity gap, drives repeat visits from stat enthusiasts
 **Effort:** MEDIUM — extend worldCupFeed with additional stats
 **ROI:** HIGH — differentiation + engagement depth
+
+## Closed in backlog triage 2026-08-10
+obsolete: WC over

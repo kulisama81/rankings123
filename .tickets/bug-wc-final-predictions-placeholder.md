@@ -1,6 +1,6 @@
 ---
 id: bug-wc-final-predictions-placeholder
-status: open
+status: closed
 deps: []
 links: [wc-final-predictions-page]
 created: 2026-07-14T19:30:00Z
@@ -97,12 +97,17 @@ Shipping placeholder content trains users not to trust our site.
    - Screenshot the page in both dark and light themes: no placeholders
 
 ## Related Tickets
+
 - Parent: `wc-final-predictions-page` (CLOSED) — acceptance criteria violated
 - Similar: `wc-knockout-placeholder-text` (CLOSED) — same pattern, different page
 
 ## Notes
+
 This is the SECOND time we've shipped placeholder text to users (first was knockout bracket "Winner M74"). The data-integrity gate catches fabricated data, but we need a similar check for placeholder UI text.
 
 Consider adding to `scripts/check-data-sanity.mjs`:
 - Fail build if any component renders user-facing text matching /TBD|To Be Determined|Placeholder|Coming Soon/i
 - Exceptions: honest messaging like "This page will be available on [date]" (not "TBD")
+
+## Closed in backlog triage 2026-08-10
+obsolete: WC over

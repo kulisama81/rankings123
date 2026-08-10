@@ -1,6 +1,6 @@
 ---
 id: tennis-point-stats-live
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-19T13:49:56Z
@@ -33,3 +33,6 @@ Integrate live point-by-point match statistics for in-progress ATP/WTA matches: 
 - **Data already available:** ESPN scoreboard API (which we already call) includes stats. Low implementation cost for high engagement lift.
 
 **Why this matters:** A tennis fan watching a match wants to track 'is Djokovic serving well today?' while ALSO seeing 'if he wins this match, he moves to #3'. We're the only site that can show both in one place.
+
+## Closed in backlog triage 2026-08-10
+dup: mcp-point-stats

@@ -1,6 +1,6 @@
 ---
 id: betting-odds-api-free
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-11T13:51:37Z
@@ -36,3 +36,6 @@ Research and integrate free/freemium odds API (The Odds API, API-Football, or si
 **Effort:** MEDIUM (API integration + rate limiting + caching)
 **Impact:** HIGH (enables entire betting content vertical)
 **ROI:** VERY HIGH (prerequisite for $15-40 RPM betting content vs $5-10 general)
+
+## Closed in backlog triage 2026-08-10
+dup: odds-api-integration

@@ -1,6 +1,6 @@
 ---
 id: bug-wc-france-standing-fixture-mismatch
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-08T19:00:00Z
@@ -92,3 +92,6 @@ All 6 fixtures show final scores (Morocco 2-0, Paraguay 1-0, Sweden 3-0, Norway 
    - Spot-check 2-3 other teams for consistency
    - Verify Vercel build succeeded: `gh api repos/kulisama81/rankings123/commits/HEAD/status`
    - No console errors in browser
+
+## Closed in backlog triage 2026-08-10
+obsolete: WC over

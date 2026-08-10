@@ -1,6 +1,6 @@
 ---
 id: player-pages-top-100-200
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-05T13:51:18Z
@@ -29,3 +29,6 @@ Extend player pages beyond top-50 to top-200. Each page = indexable long-tail co
 **2026-07-05**
 
 **ROI (First Principles):** Traffic = indexable pages × search demand × SEO quality. Each player (even outside top-50) has search volume: "[name] ranking" = 100-1K/mo. Top 50→100 = +50 pages = 2x SEO surface = +15K searches/mo captured. Top 100→200 = 4x total. Effort: LOW (templated). Impact: VERY HIGH (direct traffic multiplier). Evergreen content that compounds.
+
+## Closed in backlog triage 2026-08-10
+dup: player-pages-v1

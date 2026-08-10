@@ -1,6 +1,6 @@
 ---
 id: wc-post-final-retention-content
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-17T13:49:35Z
@@ -16,3 +16,6 @@ RETENTION CRITICAL: World Cup Final ends July 19 evening. By midnight, need: (1)
 ## Acceptance Criteria
 
 Ships within 6 hours of Final whistle (July 19 ~6-7PM ET): (1) /world-cup/final-2026-recap page with winner, score, key moments, MVP, (2) Homepage hero switches from WC Final to 'Tour de France Stage X live' + 'US Open 2026 preview', (3) Cross-sport 'Next big event' module on WC pages. Verify: homepage no longer shows WC Final countdown by July 20 morning.
+
+## Closed in backlog triage 2026-08-10
+obsolete: WC over

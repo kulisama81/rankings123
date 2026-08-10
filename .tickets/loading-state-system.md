@@ -1,6 +1,6 @@
 ---
 id: loading-state-system
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-21T00:00:00Z
@@ -28,3 +28,6 @@ Design cohesive loading state system: skeleton screens for tables/cards, spinner
 - Current pulse-dot animation (apply similar logic to loaders)
 - Per-sport accent system (ATP lime, WTA magenta, etc.)
 - Skeleton loaders: Linear, Vercel dashboard (content-aware shapes)
+
+## Closed in backlog triage 2026-08-10
+stale: low-value polish

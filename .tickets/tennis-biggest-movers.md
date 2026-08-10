@@ -1,6 +1,6 @@
 ---
 id: tennis-biggest-movers
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-26T13:49:37Z
@@ -22,3 +22,6 @@ ATP/WTA pages show 'Biggest Movers' section or badge in table (e.g., +15 ranks h
 **2026-06-26T13:49:37Z**
 
 ROI: Engagement — users love 'who's surging/crashing' stories. Differentiator: makes rankings dynamic and interesting beyond just #1. First principles: rank number alone is dry; CHANGE is the story. This surfaces the narrative.
+
+## Closed in backlog triage 2026-08-10
+dup: tennis-biggest-movers-widget

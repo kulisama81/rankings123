@@ -1,6 +1,6 @@
 ---
 id: tennis-age-rankings
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-04T13:49:22Z
@@ -44,3 +44,6 @@ EFFORT: LOW (filter existing data by calculated age)
 ROI: MEDIUM-HIGH (high ROI due to low effort)
 
 Data: Player DOB already in WTA API; ATP needs DOB enrichment (can get from UTS or ATP scraping)
+
+## Closed in backlog triage 2026-08-10
+dup: age-rankings

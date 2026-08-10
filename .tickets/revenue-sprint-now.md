@@ -1,6 +1,6 @@
 ---
 id: revenue-sprint-now
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-13T13:48:05Z
@@ -38,3 +38,6 @@ Acceptance:
 4. Revenue dashboard tracking both streams
 
 ROI: Both have multi-week lead times. Execute NOW so revenue flows during peak traffic (WC finals, Wimbledon finals).
+
+## Closed in backlog triage 2026-08-10
+dup: revenue-dashboard

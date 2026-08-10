@@ -1,6 +1,6 @@
 ---
 id: kinetic-number-reveals
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-26T00:00:00Z
@@ -29,3 +29,6 @@ Current: AnimatedNumber component does basic count-up. 2026 bar: kinetic, athlet
 - Apply to: ranking tables (rank column), live scores, stat badges, countdown timers
 - Spring physics easing: `cubic-bezier(0.34, 1.56, 0.64, 1)` for bounce feel
 - Example: Djokovic rank changes 3→2 → "2" digit flips in, scales 1.15x, flashes lime accent, settles
+
+## Closed in backlog triage 2026-08-10
+stale: speculative polish

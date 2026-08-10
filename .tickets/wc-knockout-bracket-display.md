@@ -1,6 +1,6 @@
 ---
 id: wc-knockout-bracket-display
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-07T13:45:00Z
@@ -12,9 +12,6 @@ tags: [worldcup, urgent, cx, seo]
 # World Cup knockout bracket visualization (R16→Final)
 
 Display the live knockout bracket showing Round of 16, Quarterfinals, Semifinals, and Final matchups with results and upcoming matches.
-
-## Context
-Round of 16 concludes TODAY (July 7). Quarterfinals start TOMORROW (July 8). Peak search volume for "World Cup 2026 bracket", "World Cup quarterfinals 2026". ESPN API provides match data and bracket structure.
 
 ## Acceptance Criteria
 
@@ -28,6 +25,10 @@ Round of 16 concludes TODAY (July 7). Quarterfinals start TOMORROW (July 8). Pea
 ✓ Link from main /world-cup page prominently placed
 ✓ Auto-updates as matches complete
 ✓ Verifier must check: bracket accuracy vs ESPN, mobile usability, no fabricated data
+
+## Context
+
+Round of 16 concludes TODAY (July 7). Quarterfinals start TOMORROW (July 8). Peak search volume for "World Cup 2026 bracket", "World Cup quarterfinals 2026". ESPN API provides match data and bracket structure.
 
 ## Notes
 
@@ -71,3 +72,6 @@ FIRST PRINCIPLES ROI ANALYSIS:
 - Bracket structure in competitions[].format field
 - Match data in events[] with stage info
 - Reference existing /world-cup page bracket column but make full-page comprehensive
+
+## Closed in backlog triage 2026-08-10
+obsolete: WC over

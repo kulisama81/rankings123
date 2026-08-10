@@ -1,6 +1,6 @@
 ---
 id: tennis-live-streak-badges
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-05T13:51:23Z
@@ -28,3 +28,6 @@ Add visual streak indicators to ATP/WTA live ranking tables: green 🔥 badges f
 **2026-07-05**
 
 **ROI (First Principles):** Engagement driver. World Cup golden-boot page has 281.9s avg session + 0% bounce because it's a LIVE, DYNAMIC leaderboard users return to. Streak badges add similar "living data" to tennis rankings — users can see who's hot/cold at a glance. Differentiates from live-tennis.eu (they don't have this). ESPN/Sofascore have form indicators; we should match. Effort: MEDIUM (need to fetch/parse recent match results). Impact: MEDIUM-HIGH (engagement, distinctiveness).
+
+## Closed in backlog triage 2026-08-10
+dup: tennis-form-streaks

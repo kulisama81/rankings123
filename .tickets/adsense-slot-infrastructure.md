@@ -1,6 +1,6 @@
 ---
 id: adsense-slot-infrastructure
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-06T13:48:51Z
@@ -16,3 +16,6 @@ Prepare AdSense ad slot infrastructure so we can activate ads IMMEDIATELY when a
 ## Acceptance Criteria
 
 Ad slot components defined (Leaderboard, InContent, Sidebar). Lazy-load implemented. Zero CLS (reserved space). Slots conditionally render (only if AdSense approved). Code ready to flip env var and go live. Tested with placeholder divs locally. Does NOT show to users until AdSense ID is live. Effort: LOW. Impact: UNBLOCKS revenue path.
+
+## Closed in backlog triage 2026-08-10
+dup: ad-inventory

@@ -1,6 +1,6 @@
 ---
 id: 3d-depth-micro-effects
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-26T00:00:00Z
@@ -27,3 +27,6 @@ Current state: Flat 2D cards with simple hover translate. 2026 bar: Nike, IKEA, 
 - Performance budget: no CLS, LCP < 2.5s maintained
 - Test on Safari (3D transform support), Firefox, Chrome
 - Add `.transform-3d` utility class to globals.css with vendor prefixes
+
+## Closed in backlog triage 2026-08-10
+stale: speculative polish

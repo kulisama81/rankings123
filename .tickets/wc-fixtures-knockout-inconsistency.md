@@ -1,6 +1,6 @@
 ---
 id: wc-fixtures-knockout-inconsistency
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-18T18:07:05Z
@@ -29,3 +29,6 @@ tags: [bug, worldcup, ui, consistency]
 - Remove the 'No upcoming fixtures scheduled' message when knockout bracket matchups are determined
 - OR hide the knockout bracket projections until they're confirmed as actual scheduled fixtures
 - Add a regression test in tests/world-cup-consistency.test.mjs that verifies: if knockout bracket has matchups, fixtures section should not show 'no upcoming' message (or vice versa)
+
+## Closed in backlog triage 2026-08-10
+obsolete: WC over

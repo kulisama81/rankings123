@@ -1,6 +1,6 @@
 ---
 id: backlog-prune-wc-stale
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-26T13:49:35Z
@@ -52,3 +52,6 @@ ACCEPTANCE:
 ROI: Process health
 - Effort: Low (30 min review)
 - Impact: Cleaner backlog, accurate priorities, faster planner iterations
+
+## Closed in backlog triage 2026-08-10
+dup: superseded by triage

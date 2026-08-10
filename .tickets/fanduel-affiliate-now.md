@@ -1,6 +1,6 @@
 ---
 id: fanduel-affiliate-now
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-03T13:49:09Z
@@ -22,3 +22,6 @@ FanDuel = BEST affiliate terms: up to 35% RevShare OR $25-35 CPA, 730-DAY cookie
 **2026-08-03T13:54:28Z**
 
 CRITICAL ADVANTAGE: 730-day cookie = 2 YEARS attribution (vs Bet365 45 days, DraftKings ~90 days). Rankings123 users return REPEATEDLY (daily rank checks). This means: user clicks our affiliate link Aug 2026 → we get credit for their bets until AUG 2028. For a return-visitor site, this is a MASSIVE revenue multiplier vs competitors. Plus: 35% RevShare (industry-leading), 24-48h approval. Tennis betting = proven high conversion during tournaments. Apply NOW to be live before Cincinnati (Aug 11). Reference: https://track360.io/blog/fanduel-affiliate-program-operator-review-2026/
+
+## Closed in backlog triage 2026-08-10
+dup: betting-affiliate-top3-apply

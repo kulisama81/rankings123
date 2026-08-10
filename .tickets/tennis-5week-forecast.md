@@ -1,6 +1,6 @@
 ---
 id: tennis-5week-forecast
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-04T13:49:10Z
@@ -46,3 +46,6 @@ EFFORT: MEDIUM (needs points-defend data)
 ROI: HIGH for parity + engagement
 
 Blocked by: points-defend ticket (requires 52-week points schedule)
+
+## Closed in backlog triage 2026-08-10
+dup: ranking-forecast

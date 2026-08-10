@@ -1,6 +1,6 @@
 ---
 id: tennis-h2h-stats
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-11T13:50:37Z
@@ -36,3 +36,6 @@ H2H data integrated from Ultimate Tennis Statistics or SteveG Tennis API (free t
 **Effort:** MEDIUM (API integration or scraping + UI)
 **Impact:** MEDIUM-HIGH (parity + engagement)
 **ROI:** HIGH
+
+## Closed in backlog triage 2026-08-10
+dup: tennis-h2h-tool

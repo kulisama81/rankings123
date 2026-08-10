@@ -1,6 +1,6 @@
 ---
 id: seo-structured-data-wc
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-26T13:49:05Z
@@ -45,3 +45,6 @@ The structured data foundation is in place and working. Next session should:
 3. Deploy and validate with Google Rich Results Test
 
 Commits: JSON-LD schemas added but not yet pushed (awaiting completion of OG images)
+
+## Closed in backlog triage 2026-08-10
+dup+obsolete: WC

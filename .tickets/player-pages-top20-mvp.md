@@ -1,6 +1,6 @@
 ---
 id: player-pages-top20-mvp
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-28T13:51:41Z
@@ -16,3 +16,6 @@ Player pages are the SEO long-tail engine (search for 'Sinner ranking', 'Swiatek
 ## Acceptance Criteria
 
 40 player pages live at /players/[slug]: top 20 ATP, top 20 WTA. Each page: name, country, current ranking, points, recent tournaments (last 5), YTD win-loss, link to ATP/WTA profile, proper meta/JSON-LD for SEO. Auto-generated from current ranking data. ROI: SEO surface area (players get 100x more searches than generic 'tennis rankings'), AdSense content requirement (40 pages = substantial content), builds foundation for H2H/stats features.
+
+## Closed in backlog triage 2026-08-10
+dup: player-pages-v1

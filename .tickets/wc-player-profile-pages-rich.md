@@ -1,6 +1,6 @@
 ---
 id: wc-player-profile-pages-rich
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-01T13:51:08Z
@@ -30,3 +30,6 @@ Build rich player profile pages with tournament performance, career history, clu
 **Impact:** HIGH — SEO engine + engagement depth
 **Effort:** MEDIUM-HIGH — data modeling + page template
 **ROI:** VERY HIGH — long-tail SEO traffic from player name searches
+
+## Closed in backlog triage 2026-08-10
+obsolete: WC over

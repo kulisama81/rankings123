@@ -1,6 +1,6 @@
 ---
 id: homepage-live-banner
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-04T13:50:10Z
@@ -54,3 +54,6 @@ EFFORT: LOW (single banner component, reads from existing tournament status)
 ROI: VERY HIGH (massive bounce reduction from simple visual change)
 
 TIME-SENSITIVE: Wimbledon + WC + TdF all LIVE NOW (peak live-event density)
+
+## Closed in backlog triage 2026-08-10
+dup: homepage-live-urgency-widget

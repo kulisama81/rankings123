@@ -1,6 +1,6 @@
 ---
 id: wc-group-scenarios
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-26T13:49:20Z
@@ -22,3 +22,6 @@ User can select hypothetical results for remaining group matches; table updates 
 **2026-06-26T13:49:20Z**
 
 ROI: HIGH ENGAGEMENT tool during group stage final matchdays (peak tournament attention). First principles: during group stages, fans obsess over 'what needs to happen for my team to qualify' — an interactive calculator answers this and drives time-on-site. Differentiator: most sites just show current standings; this projects forward.
+
+## Closed in backlog triage 2026-08-10
+obsolete: WC over

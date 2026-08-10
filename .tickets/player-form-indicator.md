@@ -1,6 +1,6 @@
 ---
 id: player-form-indicator
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-09T13:49:27Z
@@ -50,3 +50,6 @@ COMPETITORS WITH THIS:
 DATA SOURCES:
 - ESPN /sports/tennis/{atp|wta}/athletes/{id}/results (recent match results)
 - Or parse from scoreboard API (recent completed matches)
+
+## Closed in backlog triage 2026-08-10
+dup: tennis-form-streaks

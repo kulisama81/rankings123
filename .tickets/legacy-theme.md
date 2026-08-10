@@ -1,6 +1,6 @@
 ---
 id: legacy-theme
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-15T02:06:32Z
@@ -16,3 +16,6 @@ Restyle Olympics/Cycling/Rugby/Tennis archive tables + MedalBadge + /events page
 ## Acceptance Criteria
 
 Legacy tables readable in dark+light; check-readability allowlist emptied for them; build/lint green.
+
+## Closed in backlog triage 2026-08-10
+stale: internal migration

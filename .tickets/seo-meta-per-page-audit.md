@@ -1,6 +1,6 @@
 ---
 id: seo-meta-per-page-audit
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-18T13:49:17Z
@@ -63,3 +63,6 @@ tags: [seo, traffic, blocker]
 7. Google Search Console shows no 'duplicate meta description' warnings
 
 **BLOCKING seo-fundamentals:** This ticket is the TACTICAL implementation of the broad seo-fundamentals (P0) ticket. Break down the work into auditable steps.
+
+## Closed in backlog triage 2026-08-10
+dup: seo-dynamic-meta-per-page

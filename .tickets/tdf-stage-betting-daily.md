@@ -1,6 +1,6 @@
 ---
 id: tdf-stage-betting-daily
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-01T13:50:31Z
@@ -30,3 +30,6 @@ Create template-driven daily stage winner betting picks for all 21 TdF stages. E
 **Effort:** MEDIUM — template + daily content generation/automation
 **ROI:** VERY HIGH — sustained revenue over 3-week race
 **Time-sensitive:** Race July 4-26
+
+## Closed in backlog triage 2026-08-10
+obsolete: TdF over

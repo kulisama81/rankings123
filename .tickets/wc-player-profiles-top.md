@@ -1,6 +1,6 @@
 ---
 id: wc-player-profiles-top
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-11T13:50:30Z
@@ -33,3 +33,6 @@ Player pages exist for top 20 Golden Boot contenders at /world-cup/players/[play
 **Effort:** MEDIUM (top 20 players × template)
 **Impact:** VERY HIGH (player searches = biggest WC SEO opportunity)
 **ROI:** VERY HIGH
+
+## Closed in backlog triage 2026-08-10
+obsolete: WC over

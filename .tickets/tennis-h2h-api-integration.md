@@ -1,6 +1,6 @@
 ---
 id: tennis-h2h-api-integration
-status: open
+status: closed
 deps: []
 links: [tennis-h2h-tool]
 created: 2026-08-01T14:20:00Z
@@ -15,22 +15,12 @@ Integrate free tennis H2H API to unblock the `tennis-h2h-tool` feature. Research
 
 ## Acceptance Criteria
 
-- Research SteveG Tennis API docs: https://www.stevegtennis.com/h2h-predictions/tennis-api/
-  - Confirm H2H endpoint exists
-  - Check rate limits on free tier
-  - Review data format (JSON response structure)
-- Create `/src/lib/tennisH2HAPI.ts` (or similar) with:
-  - `fetchH2H(player1: string, player2: string)` function
-  - Returns: overall record, recent matches, surface splits (if available)
-  - Error handling: API down, rate limit, no data found
-  - Mock fallback if API unavailable
-- Type definitions for H2H data structure
-- Unit test: mock API responses
-- Integration with H2H UI (when built via `tennis-h2h-tool`)
-- **Source flag:** Display "Data from SteveG Tennis" or similar attribution
-- **Never fabricate:** If API returns no data, show "No H2H data available" NOT fake results
-- Builds green, ESLint clean
-- Document in code: API source, rate limits, fallback behavior
+- [ ] Evaluate StevegTennis free API for H2H data (ATP/WTA coverage, request limits, response format)
+- [ ] Integrate H2H API endpoint: `/api/tennis/h2h?player1={id}&player2={id}`
+- [ ] Returns: total meetings, surface breakdown, recent matches (last 5), head-to-head record
+- [ ] Handles API failures with graceful degradation (empty state, not fabricated data)
+- [ ] Source flag: `h2hSource: "stevegtennis" | "mock" | null`
+- [ ] NOT A UI TICKET — this is API/data-layer only; the UI ticket is separate (`head-to-head`)
 
 ## ROI Justification (First Principles)
 
@@ -63,17 +53,11 @@ Alternative APIs researched (if SteveG Tennis doesn't work):
 **2026-08-04T13:49:16Z**
 
 ## Context
+
 live-tennis.eu has head-to-head player comparison (Phase 1 parity gap). Free H2H APIs available: StevegTennis (free tier), Tennis-API.com, MatchStat.
 
-## Acceptance Criteria
-- [ ] Evaluate StevegTennis free API for H2H data (ATP/WTA coverage, request limits, response format)
-- [ ] Integrate H2H API endpoint: `/api/tennis/h2h?player1={id}&player2={id}`
-- [ ] Returns: total meetings, surface breakdown, recent matches (last 5), head-to-head record
-- [ ] Handles API failures with graceful degradation (empty state, not fabricated data)
-- [ ] Source flag: `h2hSource: "stevegtennis" | "mock" | null`
-- [ ] NOT A UI TICKET — this is API/data-layer only; the UI ticket is separate (`head-to-head`)
-
 ## ROI Justification
+
 **First Principles:** H2H is a CORE tennis fan need — "who wins when these two play?" is the #1 question before any match. Parity feature that unblocks the `head-to-head` UI ticket. StevegTennis free tier = zero cost, high engagement value.
 
 **Impact:** Phase 1 parity gap closure, high engagement (fans obsess over H2H before big matches)  
@@ -84,3 +68,6 @@ live-tennis.eu has head-to-head player comparison (Phase 1 parity gap). Free H2H
 - https://matchstat.com/tennis/head-to-head/
 - https://www.stevegtennis.com/h2h-predictions/tennis-api/
 - https://tennis-api.com/tennis-h2h-api/
+
+## Closed in backlog triage 2026-08-10
+dup: tennis-h2h-tool

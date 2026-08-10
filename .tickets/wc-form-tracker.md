@@ -1,6 +1,6 @@
 ---
 id: wc-form-tracker
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-21T00:00:00Z
@@ -24,3 +24,6 @@ SofaScore shows "form" as W/D/L badges; FotMob highlights streaks; ESPN has "mom
 3. Optional: streak callouts ("3-game winning streak", "unbeaten in 4").
 4. Real ESPN match results; client-side or server-derived; tokens-themed.
 5. Build/lint/check:data-integrity green; live-verified.
+
+## Closed in backlog triage 2026-08-10
+obsolete: WC over

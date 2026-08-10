@@ -1,6 +1,6 @@
 ---
 id: data-storytelling-callouts
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-21T12:00:00Z
@@ -30,3 +30,6 @@ Automatically highlight notable stories in the data: biggest climbers/fallers th
 - SofaScore "Hot Matches" callouts
 - 2026 sports data viz trends: storytelling over raw data
 - DESIGN-IDENTITY.md Phase 3: "Data storytelling — visual callouts for biggest movers, upsets, milestones"
+
+## Closed in backlog triage 2026-08-10
+stale: vague speculative

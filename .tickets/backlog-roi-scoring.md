@@ -1,6 +1,6 @@
 ---
 id: backlog-roi-scoring
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-26T13:49:55Z
@@ -22,3 +22,6 @@ Each ticket has an ROI note with Impact (traffic/revenue/engagement/parity), Eff
 **2026-06-26T13:49:55Z**
 
 ROI: Loop self-improvement. First principles: planner picks by priority number, but priority doesn't capture impact-vs-effort tradeoff. Explicit ROI scoring helps autoresearch and planner align on highest-leverage work. Should include 'time-sensitivity' factor (e.g., World Cup/TdF get urgency boost).
+
+## Closed in backlog triage 2026-08-10
+stale: speculative meta

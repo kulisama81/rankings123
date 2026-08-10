@@ -1,6 +1,6 @@
 ---
 id: bet365-affiliate-now
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-03T13:49:03Z
@@ -16,3 +16,6 @@ Bet365 = largest global sportsbook, 30% RevShare on net revenue, 45-day cookie. 
 ## Acceptance Criteria
 
 1. Apply at bet365 Partners program 2. Application approved 3. Affiliate links obtained 4. Test on international tennis content 5. Document in revenue tracker
+
+## Closed in backlog triage 2026-08-10
+dup: betting-affiliate-top3-apply

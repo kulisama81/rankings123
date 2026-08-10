@@ -1,6 +1,6 @@
 ---
 id: nav-accent
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-15T02:06:32Z
@@ -16,3 +16,6 @@ The sticky nav currently always uses the ATP (lime) accent. Make its accent foll
 ## Acceptance Criteria
 
 Nav accent matches the page's sport on all live pages.
+
+## Closed in backlog triage 2026-08-10
+stale: trivial chore

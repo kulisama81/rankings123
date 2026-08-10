@@ -1,6 +1,6 @@
 ---
 id: accent-glow-system
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-28T14:32:41Z
@@ -21,3 +21,6 @@ Introduce subtle accent-colored glow effects on active/focused elements (cards, 
 - Respects prefers-reduced-motion (glow stays, transition disabled)
 - Works in dark + light themes (glow opacity adjusted per theme)
 - Reinforces 'live' feel with accent color
+
+## Closed in backlog triage 2026-08-10
+stale: speculative polish

@@ -1,6 +1,6 @@
 ---
 id: haptic-feedback-micro-interactions
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-12T07:45:00Z
@@ -36,3 +36,6 @@ Add tactile vibrations (haptic feedback) for key mobile interactions — button 
 - Web Vibration API: https://developer.mozilla.org/en-US/docs/Web/API/Vibration_API
 - 2026 micro-interactions trend: visual + tactile pairing (Acodez report)
 - iOS Safari: supports basic vibration patterns (10-50ms)
+
+## Closed in backlog triage 2026-08-10
+stale: speculative polish

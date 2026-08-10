@@ -1,6 +1,6 @@
 ---
 id: wc-mobile-horizontal-scroll
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-04T18:06:28Z
@@ -45,3 +45,6 @@ The first option (contained scroll) is likely the quickest fix and matches the o
 - [ ] Tested on real mobile device (iOS Safari or Android Chrome) - no page bounce/scroll
 - [ ] npm run build + eslint clean
 - [ ] Live-verified on rankings123.com/world-cup on mobile
+
+## Closed in backlog triage 2026-08-10
+obsolete: WC over

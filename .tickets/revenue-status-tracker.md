@@ -1,6 +1,6 @@
 ---
 id: revenue-status-tracker
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-23T13:53:19Z
@@ -52,3 +52,6 @@ Create a revenue status document at `docs/revenue-status.md` that tracks:
    - vs. What's Waiting: tickets blocked on external approvals/keys/signups
 
 Update this doc weekly or when status changes. Commit to docs/.
+
+## Closed in backlog triage 2026-08-10
+dup: revenue-dashboard

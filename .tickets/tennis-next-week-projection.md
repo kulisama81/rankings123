@@ -1,6 +1,6 @@
 ---
 id: tennis-next-week-projection
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-26T13:49:02Z
@@ -22,3 +22,6 @@ ATP/WTA live pages show 'projected rank' column when tournaments are active; cal
 **2026-06-26T13:49:02Z**
 
 ROI: Parity gap vs live-tennis.eu (they have this). First principles: during live tournaments, rankings are volatile — users want to see 'what happens if X wins/loses' to understand stakes. Differentiator: makes our rankings forward-looking, not just current.
+
+## Closed in backlog triage 2026-08-10
+dup: ranking-forecast

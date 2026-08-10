@@ -1,6 +1,6 @@
 ---
 id: wc-bracket-live-results
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-16T13:48:17Z
@@ -41,3 +41,6 @@ tags: [worldcup]
 **2026-07-17T13:49:52Z**
 
 2026-07-17 URGENT UPDATE: Final is in 48 HOURS (July 19, 3PM ET). Bracket STILL shows TBD for Spain vs Argentina Final. This is the #1 credibility killer during peak traffic. Every hour this persists, we lose search traffic to competitors showing the real matchup. FIRST-PRINCIPLES ROI: Users' root need is 'who's playing in the Final' - we're failing that basic test right now.
+
+## Closed in backlog triage 2026-08-10
+obsolete: WC over

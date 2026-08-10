@@ -1,6 +1,6 @@
 ---
 id: sport-background-visuals
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-28T14:32:22Z
@@ -21,3 +21,6 @@ Add subtle, distinctive background imagery or visual treatments to sport pages (
 - Works in dark + light themes + all 3 design variants
 - No CWV regression (LCP stays <2.5s)
 - Passes accessibility contrast checks (WCAG AA)
+
+## Closed in backlog triage 2026-08-10
+stale: vague decorative

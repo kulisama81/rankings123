@@ -1,6 +1,6 @@
 ---
 id: wc-player-comparison
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-25T13:51:35Z
@@ -60,3 +60,6 @@ IMPACT vs EFFORT:
 DEPENDENCIES: Requires World Cup player stats (we already have this from golden-boot page).
 
 BLOCKING NONE: Standalone feature.
+
+## Closed in backlog triage 2026-08-10
+obsolete: WC over

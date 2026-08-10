@@ -1,6 +1,6 @@
 ---
 id: mobile-cx-optimization
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-30T13:49:33Z
@@ -54,3 +54,6 @@ We're optimizing FOR traffic (SEO, player pages, Wimbledon) but losing 68.5% of 
 **ROI:** HIGH — conversion lever that compounds with all traffic work
 
 Different from polish (vague chore) and mobile-table-patterns (tables only) — this is comprehensive mobile conversion optimization with measurable bounce rate goals.
+
+## Closed in backlog triage 2026-08-10
+dup: mobile-first-optimization

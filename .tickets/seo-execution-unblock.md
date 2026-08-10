@@ -1,6 +1,6 @@
 ---
 id: seo-execution-unblock
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-20T13:50:31Z
@@ -22,3 +22,6 @@ CRISIS: seo-fundamentals has been p0 for 16 days (created June 25), google-searc
 **2026-07-20T13:50:35Z**
 
 **First-principles:** Traffic = pages × search demand × ranking. We have pages. Search demand exists (millions search 'tennis rankings', 'world cup standings'). But ranking = 0 because Google can't index us properly (no GSC, no structured data, bad meta). **This is the #1 revenue blocker** — more important than ANY feature ticket. Without SEO, every feature ships into a void. **Impact:** CRITICAL (unlocks 10x traffic), **Urgency:** EXTREME (losing peak event traffic NOW), **Effort:** Depends on root cause. **ROI:** INFINITE (everything else depends on this).
+
+## Closed in backlog triage 2026-08-10
+dup: superseded

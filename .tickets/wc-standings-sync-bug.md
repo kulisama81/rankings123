@@ -1,6 +1,6 @@
 ---
 id: wc-standings-sync-bug
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-29T18:05:30Z
@@ -26,3 +26,6 @@ Severity: P1 - data consistency during World Cup high-traffic period.
 1. Fix sync between live match data and group standings
 2. Add regression test (unit test in tests/ OR new invariant in scripts/check-data-sanity.mjs) that verifies match results propagate to standings correctly and detects contradictions
 3. Verify on live site: no contradictions between live scores and standings
+
+## Closed in backlog triage 2026-08-10
+obsolete: WC over

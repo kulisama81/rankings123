@@ -1,6 +1,6 @@
 ---
 id: nav-sport-icons
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-28T14:32:39Z
@@ -21,3 +21,6 @@ Add distinctive sport icons/glyphs to nav tabs (ATP, WTA, World Cup, Cycling) to
 - Icon color inherits from accent when tab is active
 - Accessible (aria-label for icon-only mobile views)
 - Adds to the icon-system initiative (not one-off)
+
+## Closed in backlog triage 2026-08-10
+stale: minor polish

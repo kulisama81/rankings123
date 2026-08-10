@@ -1,6 +1,6 @@
 ---
 id: tennis-h2h-betting-db
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-14T13:53:30Z
@@ -22,3 +22,6 @@ SEO: Long-tail 'Nadal vs Djokovic clay' queries.
 ## Acceptance Criteria
 
 H2H database with ESP/UTS data, dynamic pages top 200×200, surface filtering, responsive, meta optimized, links from player pages, LCP <2.5s, betting odds when approved
+
+## Closed in backlog triage 2026-08-10
+dup: tennis-h2h-tool

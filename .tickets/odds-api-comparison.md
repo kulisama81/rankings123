@@ -1,6 +1,6 @@
 ---
 id: odds-api-comparison
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-08T13:50:52Z
@@ -57,3 +57,6 @@ Sources:
 - https://sportsapis.dev/ (API directory)
 - https://oddspapi.io/us (OddsPapi)
 - https://sportsgameodds.com/ (SGO)
+
+## Closed in backlog triage 2026-08-10
+dup: odds-api-integration

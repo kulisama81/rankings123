@@ -1,6 +1,6 @@
 ---
 id: bug-tdf-race-status-stale
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-27T13:48:57Z
@@ -38,3 +38,6 @@ Data accuracy = table stakes for a rankings site. If users can't trust the race 
 - Effort: Low (display logic fix, Wikipedia feed already returns completion status)
 - Impact: Medium-High (preserves trust in our best-performing section)
 - Urgency: High (race just finished, users checking back now)
+
+## Closed in backlog triage 2026-08-10
+obsolete: TdF over

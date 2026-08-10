@@ -1,6 +1,6 @@
 ---
 id: wimbledon-betting-picks
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-29T13:50:02Z
@@ -36,3 +36,6 @@ Acceptance:
 ✓ Link from homepage + /tournaments/wimbledon-2026
 
 ROI: "Wimbledon betting tips 2026" = 50K+ searches/day. Betting content = highest affiliate conversion. Window: 14 days, PEAKS first week. Impact: HIGH. Effort: MEDIUM.
+
+## Closed in backlog triage 2026-08-10
+obsolete: event over

@@ -1,7 +1,6 @@
 ---
 id: social-sharing-system
-title: Social sharing system (rankings, brackets, predictions)
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-12T13:54:00Z
@@ -9,11 +8,35 @@ type: feature
 priority: 2
 parent: rankings123
 tags: [engagement, viral, seo, retention]
+title: Social sharing system (rankings, brackets, predictions)
 ---
+# Untitled ticket
 
 # Social sharing system (rankings, brackets, predictions)
 
 Enable users to share rankings, brackets, and predictions on social media for VIRAL GROWTH and SEO backlinks. Research insight: "No social sharing functionality visible" — missing a key organic growth lever.
+
+## Acceptance Criteria
+
+### Phase 1 (MVP - Share Buttons):
+
+- [ ] Share buttons on World Cup bracket page
+- [ ] Share buttons on ATP Live and WTA Live pages
+- [ ] Share buttons on Golden Boot page
+- [ ] Share buttons on match pages
+- [ ] Web Share API on mobile (native share sheet)
+- [ ] Fallback social links (Twitter, Facebook, Reddit) on desktop
+- [ ] Pre-populated share text (title + URL)
+- [ ] Open Graph tags for rich link previews (image, title, description)
+- [ ] Mobile-responsive placement
+- [ ] Analytics tracking (measure share button clicks)
+
+### Phase 2 (Future - Shareable Images):
+
+- [ ] Bracket predictor generates shareable bracket image
+- [ ] Player card image generation (Golden Boot, top scorers)
+- [ ] Unique URL per shared item (e.g., /share/bracket/abc123)
+- [ ] Image includes rankings123.com branding (subtle, bottom corner)
 
 ## Why Social Sharing Matters (First Principles)
 
@@ -139,28 +162,6 @@ if (navigator.share) {
 
 **ROI:** MEDIUM-HIGH — Phase 1 is quick win, Phase 2 is high upside if Phase 1 validates
 
-## Acceptance Criteria
-
-### Phase 1 (MVP - Share Buttons):
-
-- [ ] Share buttons on World Cup bracket page
-- [ ] Share buttons on ATP Live and WTA Live pages
-- [ ] Share buttons on Golden Boot page
-- [ ] Share buttons on match pages
-- [ ] Web Share API on mobile (native share sheet)
-- [ ] Fallback social links (Twitter, Facebook, Reddit) on desktop
-- [ ] Pre-populated share text (title + URL)
-- [ ] Open Graph tags for rich link previews (image, title, description)
-- [ ] Mobile-responsive placement
-- [ ] Analytics tracking (measure share button clicks)
-
-### Phase 2 (Future - Shareable Images):
-
-- [ ] Bracket predictor generates shareable bracket image
-- [ ] Player card image generation (Golden Boot, top scorers)
-- [ ] Unique URL per shared item (e.g., /share/bracket/abc123)
-- [ ] Image includes rankings123.com branding (subtle, bottom corner)
-
 ## Related Tickets
 
 - `wc-bracket-predictor-interactive` (p2) — Interactive bracket tool (makes bracket sharing possible)
@@ -171,3 +172,6 @@ if (navigator.share) {
 - Share button click rate: target 5-10% of page visitors
 - Referral traffic increase: 3.1% → 10%+ within 30 days
 - Viral coefficient: measure new users from shared links
+
+## Closed in backlog triage 2026-08-10
+dup: social-sharing-og-dynamic

@@ -1,6 +1,6 @@
 ---
 id: typography-scale-amplification
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-21T12:00:00Z
@@ -30,3 +30,6 @@ Establish more dramatic type scale contrast: rank 1 is HUGE, rank 50 is smaller,
 - DESIGN-IDENTITY.md: "whisper-to-shout typographic rhythm"
 - Apple Sports app: bold data, small metadata
 - ESPN scoreboards: score dominates, team names secondary
+
+## Closed in backlog triage 2026-08-10
+stale: vague polish

@@ -1,6 +1,6 @@
 ---
 id: mobile-table-patterns
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-28T14:32:34Z
@@ -22,3 +22,6 @@ Dense ranking tables don't just shrink well on mobile. Implement mobile-optimize
 - Test on real devices (iOS Safari, Android Chrome)
 - No layout shift on orientation change
 - Mobile UX feels native, not desktop-cramped
+
+## Closed in backlog triage 2026-08-10
+dup: mobile-table-scroll-system

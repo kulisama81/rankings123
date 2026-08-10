@@ -1,6 +1,6 @@
 ---
 id: tennis-ranking-history
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-28T13:50:09Z
@@ -10,3 +10,6 @@ parent: rankings123
 tags: []
 ---
 # Tennis ranking history lookup (date picker)
+
+## Closed in backlog triage 2026-08-10
+dup: historical-rankings-api

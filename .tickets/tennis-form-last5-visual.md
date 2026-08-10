@@ -1,6 +1,6 @@
 ---
 id: tennis-form-last5-visual
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-03T13:54:53Z
@@ -63,3 +63,6 @@ Impact:
 Effort: MEDIUM (new column + visual component)
 Impact: MEDIUM-HIGH (key differentiator, drives engagement)
 ROI: HIGH (differentiates vs competitor, reuses existing data)
+
+## Closed in backlog triage 2026-08-10
+dup: tennis-form-streaks

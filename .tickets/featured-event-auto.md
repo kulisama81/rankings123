@@ -1,6 +1,6 @@
 ---
 id: featured-event-auto
-status: open
+status: in_progress
 deps: []
 links: []
 created: 2026-07-26T23:02:03Z

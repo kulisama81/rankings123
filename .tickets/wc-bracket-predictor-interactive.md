@@ -1,6 +1,6 @@
 ---
 id: wc-bracket-predictor-interactive
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-01T13:50:55Z
@@ -28,3 +28,6 @@ Build interactive bracket predictor where users can fill out their knockout pred
 **Impact:** HIGH — major engagement driver, viral sharing potential
 **Effort:** MEDIUM-HIGH — interactive UI + state management
 **ROI:** HIGH — differentiation feature, session depth, social sharing
+
+## Closed in backlog triage 2026-08-10
+obsolete: WC over

@@ -1,6 +1,6 @@
 ---
 id: physics-based-easing-system
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-12T07:50:00Z
@@ -39,3 +39,6 @@ Upgrade animation easing from basic cubic-bezier to physics-based motion (spring
 - CSS spring() easing: https://developer.chrome.com/blog/css-spring-easing
 - Framer Motion spring configs: https://www.framer.com/motion/transition/
 - Award-winning sites (Awwwards): use spring easing for natural feel
+
+## Closed in backlog triage 2026-08-10
+stale: speculative polish

@@ -1,6 +1,6 @@
 ---
 id: wc-golden-boot-odds-live
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-01T13:49:56Z
@@ -28,3 +28,6 @@ Build a live Golden Boot leaderboard with current betting odds from affiliate sp
 **Effort:** MEDIUM — extend existing golden boot page
 **ROI:** VERY HIGH — traffic × high-RPM betting affiliate commissions
 **Time-sensitive:** Tournament through July 19 (18 days left)
+
+## Closed in backlog triage 2026-08-10
+obsolete: WC over

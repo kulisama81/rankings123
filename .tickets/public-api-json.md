@@ -1,6 +1,6 @@
 ---
 id: public-api-json
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-27T13:49:59Z
@@ -20,3 +20,6 @@ Public JSON API for developers to fetch rankings data. Endpoints: /api/atp/live.
 Acceptance: ✓ Public JSON endpoints for key data ✓ Rate limiting (e.g., 100 req/min per IP) ✓ API docs page (/api/docs) ✓ CORS enabled ✓ Cache headers ✓ Attribution required in ToS
 
 ROI: BACKLINKS + BRAND AWARENESS. Developers who use the API link to us (SEO benefit). Positions rankings123 as authoritative data source. FlashScore, SofaScore have public APIs. Effort: LOW (we already have /api routes, just document + rate-limit). Impact: MEDIUM (indirect SEO + brand).
+
+## Closed in backlog triage 2026-08-10
+stale: no user demand

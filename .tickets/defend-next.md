@@ -1,6 +1,6 @@
 ---
 id: defend-next
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-15T02:06:32Z
@@ -16,3 +16,6 @@ Show what each top player is defending and their next event — a core live-tenn
 ## Acceptance Criteria
 
 Top players show points-to-defend this period + next tournament, validated on a known case.
+
+## Closed in backlog triage 2026-08-10
+dup: points-defend-data-source

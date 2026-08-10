@@ -1,6 +1,6 @@
 ---
 id: table-hover-premium
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-28T14:32:29Z
@@ -21,3 +21,6 @@ Elevate table hover states with smooth, premium micro-interactions. Currently ro
 - GPU-cheap (transform/opacity only, no width/height)
 - Consistent across all table components
 - Feels smoother than competitors (live-tennis.eu, FlashScore)
+
+## Closed in backlog triage 2026-08-10
+stale: speculative polish

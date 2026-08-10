@@ -1,6 +1,6 @@
 ---
 id: tennis-h2h-espn-prototype
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-23T13:52:21Z
@@ -30,3 +30,6 @@ Build tennis H2H comparison tool using ESPN data. User selects 2 players → see
 ROI: HIGH impact (P0 parity gap, betting driver), LOW effort (ESPN data we already fetch), NO cost (free).
 
 First-principles: Bettors NEED H2H to make informed wagers. live-tennis.eu has H2H (Phase 1 parity gap). Free ESPN prototype ships NOW; paid upgrade waits for revenue > $0. H2H = betting decision tool → high affiliate CTR.
+
+## Closed in backlog triage 2026-08-10
+dup: tennis-h2h-tool

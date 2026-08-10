@@ -1,6 +1,6 @@
 ---
 id: wc-player-stats-extended
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-23T13:51:38Z
@@ -34,3 +34,6 @@ Extended player statistics leaderboards beyond goals/assists: fastest sprint spe
 **2026-06-25T04:16:49Z**
 
 **2026-06-24 (planner investigation):** ESPN statistics API only provides goalsLeaders and assistsLeaders. Per-athlete stats are limited to: appearances, totalGoals, goalAssists. Extended stats (sprint speed, distance covered, passes completed, saves, tackles, interceptions) are NOT available in ESPN API. Alternative sources needed: Opta/Stats Perform (paid), FotMob API, SofaScore, or FIFA official post-tournament stats. **Recommendation:** defer until viable keyless source identified, or wait for FIFA to publish full tournament stats after July 19.
+
+## Closed in backlog triage 2026-08-10
+obsolete: WC over

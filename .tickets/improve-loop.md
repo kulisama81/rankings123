@@ -1,6 +1,6 @@
 ---
 id: improve-loop
-status: open
+status: closed
 deps: [analytics]
 links: []
 created: 2026-06-14T22:53:14Z
@@ -16,3 +16,6 @@ Scheduled meta-loop (slow cadence) that gathers site metrics + competitor state 
 ## Acceptance Criteria
 
 Each run produces ranked, ROI-justified ticket recommendations committed to the backlog, plus feeds the daily report. Bounded; does not duplicate existing open tickets.
+
+## Closed in backlog triage 2026-08-10
+stale: vague meta

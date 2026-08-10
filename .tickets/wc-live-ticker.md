@@ -1,6 +1,6 @@
 ---
 id: wc-live-ticker
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-26T13:48:58Z
@@ -22,3 +22,6 @@ Ticker shows goals/red cards/penalties across all live matches with timestamps; 
 **2026-06-26T13:48:58Z**
 
 ROI: Peak engagement during live match windows (multiple games simultaneously). First principles: users checking rankings during live games want to know 'what just happened' without leaving the page — a live ticker captures attention and drives session time.
+
+## Closed in backlog triage 2026-08-10
+obsolete: WC over

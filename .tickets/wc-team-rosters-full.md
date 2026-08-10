@@ -1,6 +1,6 @@
 ---
 id: wc-team-rosters-full
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-01T13:51:01Z
@@ -26,3 +26,6 @@ Add complete 26-player rosters to team pages, organized by position (goalkeepers
 **Impact:** MEDIUM — SEO value + content depth
 **Effort:** MEDIUM — extend team pages with roster data
 **ROI:** MEDIUM-HIGH — SEO long-tail + reference utility
+
+## Closed in backlog triage 2026-08-10
+obsolete: WC over

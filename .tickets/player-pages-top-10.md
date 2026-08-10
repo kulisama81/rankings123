@@ -1,6 +1,6 @@
 ---
 id: player-pages-top-10
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-24T13:49:57Z
@@ -54,3 +54,6 @@ IMPACT vs EFFORT:
 COMPETITIVE ANALYSIS: EVERY tennis site has player pages (live-tennis.eu, ATP.com, Sofascore, FlashScore). This is table-stakes for Phase 1 parity.
 
 FIRST PRINCIPLES: Why do users search for player pages? To know WHERE a player ranks NOW, their recent form, and trajectory. We have the data - we just need the page!
+
+## Closed in backlog triage 2026-08-10
+dup: player-pages-v1

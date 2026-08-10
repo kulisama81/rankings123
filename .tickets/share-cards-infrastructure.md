@@ -1,6 +1,6 @@
 ---
 id: share-cards-infrastructure
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-26T22:18:23Z
@@ -18,3 +18,6 @@ Complete the share cards infrastructure per original AC:
 4. Analytics: Add GA4 events for share button clicks, track social referral traffic lift
 
 Acceptance: Fonts render correctly, top 10 cards pre-generate daily, analytics dashboard shows social referral metrics.
+
+## Closed in backlog triage 2026-08-10
+dup: social-sharing-og-dynamic

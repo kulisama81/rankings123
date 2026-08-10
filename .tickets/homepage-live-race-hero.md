@@ -1,6 +1,6 @@
 ---
 id: homepage-live-race-hero
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-03T13:54:32Z
@@ -58,3 +58,6 @@ Estimated impact:
 - Zero API cost (data already fetched)
 
 This is THE highest-leverage homepage improvement.
+
+## Closed in backlog triage 2026-08-10
+dup: homepage-live-urgency-widget
