@@ -1,6 +1,6 @@
 ---
 id: sport-hero-imagery
-status: in_progress
+status: open
 deps: []
 links: []
 created: 2026-07-12T07:55:00Z

@@ -1,6 +1,6 @@
 ---
 id: tennis-player-pages-seo
-status: in_progress
+status: open
 deps: []
 links: []
 created: 2026-07-11T13:49:29Z

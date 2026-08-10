@@ -1,6 +1,6 @@
 ---
 id: flag-svg-icons
-status: in_progress
+status: open
 deps: []
 links: []
 created: 2026-07-16T00:00:00Z

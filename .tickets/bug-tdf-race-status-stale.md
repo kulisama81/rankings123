@@ -40,4 +40,5 @@ Data accuracy = table stakes for a rankings site. If users can't trust the race 
 - Urgency: High (race just finished, users checking back now)
 
 ## Closed in backlog triage 2026-08-10
+
 obsolete: TdF over

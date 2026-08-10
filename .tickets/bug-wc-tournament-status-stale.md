@@ -1,6 +1,6 @@
 ---
 id: bug-wc-tournament-status-stale
-status: in_progress
+status: closed
 deps: []
 links: []
 created: 2026-07-27T13:50:52Z
