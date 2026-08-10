@@ -13,6 +13,12 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-08-10",
+    title: "Dynamic Featured Events",
+    description: "Homepage now automatically features the most relevant current event and removes finished tournaments (no more stale World Cup or Tour de France promotions)",
+    area: "site",
+  },
+  {
     date: "2026-07-26",
     title: "About and Contact pages added",
     description:

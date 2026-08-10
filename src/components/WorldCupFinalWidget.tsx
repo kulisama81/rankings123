@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { getCurrentEvents } from "@/lib/featuredEvents";
 
 type FinalPhase = "before" | "live" | "after";
 
@@ -220,54 +221,35 @@ export default function WorldCupFinalWidget() {
             </div>
           </div>
 
-          {/* What's Next - Cross-Sport Promotion */}
+          {/* What's Next - Cross-Sport Promotion (dynamic, based on current events) */}
           <div>
             <h3 className="mb-4 text-lg font-bold text-fg">What&apos;s Live Now</h3>
             <div className="grid gap-3 sm:grid-cols-2">
-              {/* Tour de France */}
-              <Link
-                href="/cycling"
-                className="group flex items-center gap-4 rounded-xl border border-edge bg-surface2 p-4 transition hover:border-accent hover:bg-surface"
-              >
-                <span className="text-3xl">🚴</span>
-                <div className="flex-1">
-                  <div className="flex items-center gap-2">
-                    <span className="relative flex h-1.5 w-1.5">
-                      <span className="absolute inline-flex h-full w-full rounded-full bg-accent opacity-60 animate-pulse" />
-                      <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
-                    </span>
-                    <span className="font-semibold text-fg">Tour de France 2026</span>
+              {getCurrentEvents().slice(0, 3).map((event) => (
+                <Link
+                  key={event.id}
+                  href={event.href}
+                  className="group flex items-center gap-4 rounded-xl border border-edge bg-surface2 p-4 transition hover:border-accent hover:bg-surface"
+                >
+                  <span className="text-3xl">{event.emoji}</span>
+                  <div className="flex-1">
+                    {event.status === "live" && (
+                      <div className="flex items-center gap-2">
+                        <span className="relative flex h-1.5 w-1.5">
+                          <span className="absolute inline-flex h-full w-full rounded-full bg-accent opacity-60 animate-pulse" />
+                          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
+                        </span>
+                        <span className="font-semibold text-fg">{event.name}</span>
+                      </div>
+                    )}
+                    {event.status !== "live" && (
+                      <span className="font-semibold text-fg">{event.name}</span>
+                    )}
+                    <p className="mt-1 text-xs text-muted">{event.description}</p>
                   </div>
-                  <p className="mt-1 text-xs text-muted">Stage-by-stage coverage through July 26</p>
-                </div>
-                <span className="text-accent transition group-hover:translate-x-0.5">→</span>
-              </Link>
-
-              {/* ATP Tennis */}
-              <Link
-                href="/atp-live"
-                className="group flex items-center gap-4 rounded-xl border border-edge bg-surface2 p-4 transition hover:border-accent hover:bg-surface"
-              >
-                <span className="text-3xl">🎾</span>
-                <div className="flex-1">
-                  <span className="font-semibold text-fg">ATP Live Rankings</span>
-                  <p className="mt-1 text-xs text-muted">Men&apos;s tennis rankings updated in real time</p>
-                </div>
-                <span className="text-accent transition group-hover:translate-x-0.5">→</span>
-              </Link>
-
-              {/* WTA Tennis */}
-              <Link
-                href="/wta-live"
-                className="group flex items-center gap-4 rounded-xl border border-edge bg-surface2 p-4 transition hover:border-accent hover:bg-surface"
-              >
-                <span className="text-3xl">🎾</span>
-                <div className="flex-1">
-                  <span className="font-semibold text-fg">WTA Live Rankings</span>
-                  <p className="mt-1 text-xs text-muted">Women&apos;s tennis rankings updated in real time</p>
-                </div>
-                <span className="text-accent transition group-hover:translate-x-0.5">→</span>
-              </Link>
+                  <span className="text-accent transition group-hover:translate-x-0.5">→</span>
+                </Link>
+              ))}
             </div>
           </div>
         </div>

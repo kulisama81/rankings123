@@ -6,16 +6,17 @@ import LiveWorldCupWidget from "@/components/LiveWorldCupWidget";
 import WorldCupFinalWidget from "@/components/WorldCupFinalWidget";
 import LiveTdfWidget from "@/components/LiveTdfWidget";
 import WimbledonCallout from "@/components/WimbledonCallout";
+import FeaturedEventHero from "@/components/FeaturedEventHero";
 
 export const metadata: Metadata = {
   title: "Rankings123 — Live Sports Rankings",
   description:
-    "Live ATP & WTA tennis rankings, FIFA World Cup 2026 standings & results, Tour de France 2026. Updated in real time.",
+    "Live ATP & WTA tennis rankings, World Cup results, Tour de France, Cincinnati Open. Updated in real time.",
   alternates: { canonical: "/" },
   openGraph: {
     title: "Rankings123 — Live Sports Rankings",
     description:
-      "Live ATP & WTA tennis rankings, FIFA World Cup 2026 results, Tour de France 2026 coverage.",
+      "Live ATP & WTA tennis rankings, latest tournament results and upcoming events.",
     url: "/",
     type: "website",
   },
@@ -60,6 +61,9 @@ export default function HomePage() {
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
       {/* Countdown timer - shows when major event is upcoming (within 24h but not started) */}
       <UpcomingEventCountdown />
+
+      {/* Featured Event Hero - dynamically shows most relevant current/upcoming event */}
+      <FeaturedEventHero />
 
       {/* Dynamic LIVE NOW hero - shows what's actually live */}
       <LiveNowHero />
