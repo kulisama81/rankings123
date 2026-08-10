@@ -1,6 +1,6 @@
 ---
 id: bug-wc-tournament-status-stale
-status: closed
+status: in_progress
 deps: []
 links: []
 created: 2026-07-27T13:50:52Z
@@ -48,4 +48,5 @@ User's root need = know what's happening NOW. Showing an ended event as 'Live' v
 - Urgency: Critical (every day we bleed visitors)
 
 ## Closed in backlog triage 2026-08-10
+
 obsolete: WC over

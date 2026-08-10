@@ -15,27 +15,6 @@ tags: [seo, technical, quick-win]
 
 Create robots.txt and sitemap.xml — basic SEO hygiene missing from site. Zero organic traffic (0 clicks, 2 impressions, pos 29) is partly due to missing technical foundation.
 
-## ROI Justification (First Principles)
-
-**Why this matters:**
-- **Crawlability:** Google Search Console needs sitemap to index pages efficiently
-- **Discovery:** robots.txt signals proper SEO setup to crawlers
-- **Current gap:** 39 pages exist, but no sitemap = Google may not discover all pages
-- **Fundamentals:** Searchability = Indexable Pages × Crawlability × Content Quality
-
-**Impact:**
-- **MEDIUM** — Won't fix traffic alone, but required for SEO foundation
-- Unblocks proper indexing of all 39 pages
-- Standard practice for all production sites
-- Prerequisite for Search Console optimization
-
-**Effort:**
-- **LOW** — 30-60 min (Next.js has built-in sitemap generation patterns)
-- **Human-executable** (doesn't require planner, can ship manually)
-
-**First-principles reasoning:**
-Google can't send traffic to pages it hasn't indexed. The sitemap is how we tell Google "these 39 pages exist, please crawl them." Without it, we rely on Google discovering pages through links (slow) or guessing (incomplete). The robots.txt shows we know what we're doing and aren't blocking important pages by accident.
-
 ## Acceptance Criteria
 
 ### robots.txt
@@ -73,3 +52,24 @@ Google can't send traffic to pages it hasn't indexed. The sitemap is how we tell
 - ✅ Build green, lint clean
 - ✅ Submitted to Google Search Console (screenshot/note)
 - ✅ No broken links in sitemap (all URLs return 200)
+
+## ROI Justification (First Principles)
+
+**Why this matters:**
+- **Crawlability:** Google Search Console needs sitemap to index pages efficiently
+- **Discovery:** robots.txt signals proper SEO setup to crawlers
+- **Current gap:** 39 pages exist, but no sitemap = Google may not discover all pages
+- **Fundamentals:** Searchability = Indexable Pages × Crawlability × Content Quality
+
+**Impact:**
+- **MEDIUM** — Won't fix traffic alone, but required for SEO foundation
+- Unblocks proper indexing of all 39 pages
+- Standard practice for all production sites
+- Prerequisite for Search Console optimization
+
+**Effort:**
+- **LOW** — 30-60 min (Next.js has built-in sitemap generation patterns)
+- **Human-executable** (doesn't require planner, can ship manually)
+
+**First-principles reasoning:**
+Google can't send traffic to pages it hasn't indexed. The sitemap is how we tell Google "these 39 pages exist, please crawl them." Without it, we rely on Google discovering pages through links (slow) or guessing (incomplete). The robots.txt shows we know what we're doing and aren't blocking important pages by accident.
