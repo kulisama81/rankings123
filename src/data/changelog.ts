@@ -14,6 +14,12 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-08-11",
+    title: "Homepage Now Features Current Events",
+    description: "Homepage automatically highlights what's happening now—Cincinnati Open live coverage, upcoming US Open. World Cup results moved to dedicated page. Always shows the most relevant current events.",
+    area: "site",
+  },
+  {
+    date: "2026-08-11",
     title: "Cincinnati Open 2026 Live Coverage",
     description: "Live Cincinnati Masters (ATP/WTA 1000) coverage now active. Track real-time ranking points, match progress, and live scores for all players competing August 11-23. Automatic updates as matches complete.",
     area: "tennis",

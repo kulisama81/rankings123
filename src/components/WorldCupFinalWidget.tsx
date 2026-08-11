@@ -173,8 +173,19 @@ export default function WorldCupFinalWidget() {
     );
   }
 
-  // After Final: Show recap + cross-sport "What's Next"
+  // After Final: Hide widget after 2 weeks to keep homepage focused on current events
+  // World Cup content remains accessible via navigation and "All Sports" grid
   if (phase === "after") {
+    const now = new Date();
+    const finalEnd = new Date(Date.UTC(2026, 6, 19, 22, 0, 0)); // July 19, 10PM UTC
+    const twoWeeksAfter = new Date(finalEnd.getTime() + 14 * 24 * 60 * 60 * 1000); // Aug 2
+
+    // Hide completely after 2 weeks - let FeaturedEventHero and LiveNowHero handle current events
+    if (now > twoWeeksAfter) {
+      return null;
+    }
+
+    // Within 2 weeks: show compact recap
     return (
       <section className="mb-12">
         <div className="overflow-hidden rounded-2xl border border-edge bg-surface p-6 sm:p-8">
