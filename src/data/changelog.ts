@@ -14,6 +14,12 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-08-11",
+    title: "Dramatic Rank Showcase on Homepage",
+    description: "New signature visual moment: ATP and WTA #1 rankings displayed with oversized animated point totals. Numbers count up on page load, making live data delightful. See who's leading the race at a glance.",
+    area: "site",
+  },
+  {
+    date: "2026-08-11",
     title: "Multi-Race Cycling Coverage",
     description: "Cycling section now automatically switches between Grand Tours. Vuelta a España 2026 coverage goes live August 22. Tour de France results remain accessible at dedicated archive page. Homepage and widgets adapt to show the active race.",
     area: "cycling",

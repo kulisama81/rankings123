@@ -1,6 +1,6 @@
 ---
 id: homepage-visual-anchor-moment
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-09T00:00:00Z
