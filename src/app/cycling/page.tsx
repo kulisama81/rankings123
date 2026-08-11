@@ -9,24 +9,36 @@ import TdfJerseys from "@/components/TdfJerseys";
 export async function generateMetadata(): Promise<Metadata> {
   const tdfData = await getTdfSnapshot();
   const isComplete = tdfData.raceStatus === "complete";
+  const now = new Date();
+  const month = now.toLocaleString("en-US", { month: "long" });
+  const year = now.getFullYear();
+
+  // Get current GC leader
+  const leader = tdfData.gc[0];
+  const leaderName = leader ? `${leader.name} leads` : "Live updates";
+
+  const title = isComplete
+    ? `Tour de France 2026 Final Results — ${leader?.name || "Champion"} Wins`
+    : `Tour de France 2026 ${month} — ${leaderName}`;
+
+  const description = isComplete
+    ? `Tour de France 2026 final results: ${leader?.name || "Winner"} wins the yellow jersey. Complete stage results, final GC standings, and race recap.`
+    : `Live Tour de France 2026 ${month} ${year}: ${leaderName} in yellow. Real-time stage results, GC standings, and jersey leaders updated daily.`;
 
   return {
-    title: isComplete
-      ? "Tour de France 2026 Final Results — GC Standings"
-      : "Tour de France 2026 Live — Stages & GC Standings",
-    description: isComplete
-      ? "Tour de France 2026 final results and General Classification standings: stage winners, final GC rankings, and race results."
-      : "Live Tour de France 2026 stage schedule and General Classification standings updated in real time: stage winners, GC rankings, and race progress.",
+    title,
+    description,
     alternates: { canonical: "/cycling" },
     openGraph: {
-      title: isComplete
-        ? "Tour de France 2026 Final Results — Rankings123"
-        : "Tour de France 2026 Live — Stages & GC Standings — Rankings123",
-      description: isComplete
-        ? "Tour de France 2026 final results and General Classification standings."
-        : "Live Tour de France 2026 stage schedule and General Classification standings updated in real time.",
+      title: `${title} — Rankings123`,
+      description,
       url: "/cycling",
       type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${title} — Rankings123`,
+      description,
     },
   };
 }

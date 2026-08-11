@@ -4,21 +4,44 @@ import LiveRankingView from "@/components/LiveRankingView";
 import YouTubeHighlights from "@/components/YouTubeHighlights";
 import { YOUTUBE_HIGHLIGHTS } from "@/config/youtube";
 
-export const metadata: Metadata = {
-  title: "ATP Race to Turin — Year-to-Date Rankings",
-  description:
-    "ATP Race to Turin: Year-to-date points rankings for ATP Finals qualification. See who's leading the race to the season-ending championship.",
-  alternates: { canonical: "/atp-race" },
-  openGraph: {
-    title: "ATP Race to Turin — Rankings123",
-    description:
-      "ATP Race to Turin: Year-to-date points rankings for ATP Finals qualification. See who's leading the race to the season-ending championship.",
-    url: "/atp-race",
-    type: "website",
-  },
-};
-
 export const revalidate = 60;
+
+export async function generateMetadata(): Promise<Metadata> {
+  const snapshot = await getRaceData("atp");
+  const now = new Date();
+  const month = now.toLocaleString("en-US", { month: "long" });
+  const year = now.getFullYear();
+
+  // Get top 3 in the race
+  const top3 = snapshot.players
+    .slice(0, 3)
+    .map((p, i) => {
+      const lastName = p.name.split(" ").pop() || p.name;
+      return `${i + 1}. ${lastName}`;
+    })
+    .join(", ");
+
+  const leader = snapshot.players[0] ? snapshot.players[0].name.split(" ").pop() : "Leader";
+  const title = `ATP Race to Turin ${month} ${year} — ${leader} Leads`;
+  const description = `ATP Race to Turin ${month} ${year}: ${top3}. Year-to-date points rankings for ATP Finals qualification. See who's leading the race to the season-ending championship.`;
+
+  return {
+    title,
+    description,
+    alternates: { canonical: "/atp-race" },
+    openGraph: {
+      title: `${title} — Rankings123`,
+      description,
+      url: "/atp-race",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${title} — Rankings123`,
+      description,
+    },
+  };
+}
 
 const jsonLd = {
   "@context": "https://schema.org",

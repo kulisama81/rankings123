@@ -13,6 +13,12 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-08-11",
+    title: "Enhanced SEO with Live Data",
+    description: "Search results now show current player names and dates (e.g., 'ATP Live Rankings August 2026 | Sinner #1') instead of generic titles, making pages easier to find and more relevant in search.",
+    area: "site",
+  },
+  {
     date: "2026-08-10",
     title: "Dynamic Featured Events",
     description: "Homepage now automatically features the most relevant current event and removes finished tournaments (no more stale World Cup or Tour de France promotions)",

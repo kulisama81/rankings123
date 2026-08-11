@@ -49,19 +49,37 @@ const WorldCupStats = dynamic(() => import("@/components/WorldCupStats"), {
   ),
 });
 
-export const metadata: Metadata = {
-  title: "World Cup 2026 — Group Standings, Knockout Bracket & Final Results",
-  description:
-    "FIFA World Cup 2026 group standings, knockout bracket, and Final results updated in real time: points, goal difference, tournament winners, and complete match results.",
-  alternates: { canonical: "/world-cup" },
-  openGraph: {
-    title: "World Cup 2026 — Group Standings, Bracket & Final Results — Rankings123",
-    description:
-      "FIFA World Cup 2026 group standings, knockout bracket, and Final results updated in real time.",
-    url: "/world-cup",
-    type: "website",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const snapshot = await getWorldCupData();
+  const now = new Date();
+  const month = now.toLocaleString("en-US", { month: "long" });
+  const year = now.getFullYear();
+
+  // Get top groups for keyword richness
+  const topGroup = snapshot.groups[0];
+  const groupLeader = topGroup?.teams[0];
+  const leaderInfo = groupLeader ? `${groupLeader.name} leads ${topGroup.name}. ` : "";
+
+  const title = `World Cup 2026 ${month} — Live Standings, Bracket & Final`;
+  const description = `FIFA World Cup 2026 group standings, knockout bracket, and Final results ${month} ${year}. ${leaderInfo}Real-time points, goal difference, and tournament progress.`;
+
+  return {
+    title,
+    description,
+    alternates: { canonical: "/world-cup" },
+    openGraph: {
+      title: `World Cup 2026 ${month} — Live Standings & Results — Rankings123`,
+      description,
+      url: "/world-cup",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `World Cup 2026 ${month} — Live Standings & Results — Rankings123`,
+      description,
+    },
+  };
+}
 
 export const revalidate = 60; // ISR: 1 minute cache
 

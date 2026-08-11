@@ -5,24 +5,47 @@ import YouTubeHighlights from "@/components/YouTubeHighlights";
 import WimbledonCallout from "@/components/WimbledonCallout";
 import { YOUTUBE_HIGHLIGHTS } from "@/config/youtube";
 
-export const metadata: Metadata = {
-  title: "ATP Live Ranking",
-  description:
-    "Live ATP ranking updated in real time during tournaments: live points, rank movement, and current tournament progress.",
-  alternates: { canonical: "/atp-live" },
-  openGraph: {
-    title: "ATP Live Ranking — Rankings123",
-    description:
-      "Live ATP ranking updated in real time during tournaments: live points, rank movement, and current tournament progress.",
-    url: "/atp-live",
-    type: "website",
-  },
-};
-
 // ISR with 60s revalidation — searchParams handled client-side in LiveRankingTable
 // to avoid build-time suspension. Component renders with default state (all countries)
 // during SSG, then hydrates with URL params on mount.
 export const revalidate = 60;
+
+export async function generateMetadata(): Promise<Metadata> {
+  const snapshot = await getLiveData("atp");
+  const now = new Date();
+  const month = now.toLocaleString("en-US", { month: "long" });
+  const year = now.getFullYear();
+
+  // Get top 3 players for keyword-rich meta tags
+  const top3 = snapshot.players
+    .slice(0, 3)
+    .map((p) => {
+      const lastName = p.name.split(" ").pop() || p.name;
+      return `${lastName} #${p.liveRank}`;
+    })
+    .join(", ");
+
+  const leader = snapshot.players[0] ? snapshot.players[0].name.split(" ").pop() : "Live Updates";
+  const title = `ATP Live Rankings ${month} ${year} | ${leader}`;
+  const description = `Live ATP tennis rankings ${month} ${year}: ${top3}. Real-time points, rank movement, and tournament progress updated during every match.`;
+
+  return {
+    title,
+    description,
+    alternates: { canonical: "/atp-live" },
+    openGraph: {
+      title: `${title} — Rankings123`,
+      description,
+      url: "/atp-live",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
+  };
+}
 
 const jsonLd = {
   "@context": "https://schema.org",

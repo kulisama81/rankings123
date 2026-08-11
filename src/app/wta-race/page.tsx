@@ -4,21 +4,44 @@ import LiveRankingView from "@/components/LiveRankingView";
 import YouTubeHighlights from "@/components/YouTubeHighlights";
 import { YOUTUBE_HIGHLIGHTS } from "@/config/youtube";
 
-export const metadata: Metadata = {
-  title: "WTA Race to Finals — Year-to-Date Rankings",
-  description:
-    "WTA Race to Finals: Year-to-date points rankings for WTA Finals qualification. See who's leading the race to the season-ending championship.",
-  alternates: { canonical: "/wta-race" },
-  openGraph: {
-    title: "WTA Race to Finals — Rankings123",
-    description:
-      "WTA Race to Finals: Year-to-date points rankings for WTA Finals qualification. See who's leading the race to the season-ending championship.",
-    url: "/wta-race",
-    type: "website",
-  },
-};
-
 export const revalidate = 60;
+
+export async function generateMetadata(): Promise<Metadata> {
+  const snapshot = await getRaceData("wta");
+  const now = new Date();
+  const month = now.toLocaleString("en-US", { month: "long" });
+  const year = now.getFullYear();
+
+  // Get top 3 in the race
+  const top3 = snapshot.players
+    .slice(0, 3)
+    .map((p, i) => {
+      const lastName = p.name.split(" ").pop() || p.name;
+      return `${i + 1}. ${lastName}`;
+    })
+    .join(", ");
+
+  const leader = snapshot.players[0] ? snapshot.players[0].name.split(" ").pop() : "Leader";
+  const title = `WTA Race to Finals ${month} ${year} — ${leader} Leads`;
+  const description = `WTA Race to Finals ${month} ${year}: ${top3}. Year-to-date points rankings for WTA Finals qualification. See who's leading the race to the season-ending championship.`;
+
+  return {
+    title,
+    description,
+    alternates: { canonical: "/wta-race" },
+    openGraph: {
+      title: `${title} — Rankings123`,
+      description,
+      url: "/wta-race",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${title} — Rankings123`,
+      description,
+    },
+  };
+}
 
 const jsonLd = {
   "@context": "https://schema.org",

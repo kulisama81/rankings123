@@ -8,19 +8,32 @@ import LiveTdfWidget from "@/components/LiveTdfWidget";
 import WimbledonCallout from "@/components/WimbledonCallout";
 import FeaturedEventHero from "@/components/FeaturedEventHero";
 
-export const metadata: Metadata = {
-  title: "Rankings123 — Live Sports Rankings",
-  description:
-    "Live ATP & WTA tennis rankings, World Cup results, Tour de France, Cincinnati Open. Updated in real time.",
-  alternates: { canonical: "/" },
-  openGraph: {
-    title: "Rankings123 — Live Sports Rankings",
-    description:
-      "Live ATP & WTA tennis rankings, latest tournament results and upcoming events.",
-    url: "/",
-    type: "website",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const now = new Date();
+  const month = now.toLocaleString("en-US", { month: "long" });
+  const year = now.getFullYear();
+
+  // Highlight current live events
+  const title = `Live Sports Rankings ${month} ${year} — ATP, WTA, World Cup`;
+  const description = `Live ATP & WTA tennis rankings, FIFA World Cup 2026 standings, Tour de France, and Cincinnati Open ${month} ${year}. Real-time updates during every tournament.`;
+
+  return {
+    title,
+    description,
+    alternates: { canonical: "/" },
+    openGraph: {
+      title: `Rankings123 — Live Sports Rankings ${month} ${year}`,
+      description,
+      url: "/",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `Rankings123 — Live Sports Rankings ${month} ${year}`,
+      description,
+    },
+  };
+}
 
 // Show cycling during Tour de France (July 4-26, 2026) + 1 week pre-race promo
 function isTourDeFranceActive(): boolean {
