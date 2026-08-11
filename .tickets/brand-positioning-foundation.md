@@ -1,6 +1,6 @@
 ---
 id: brand-positioning-foundation
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-26T00:00:00Z
