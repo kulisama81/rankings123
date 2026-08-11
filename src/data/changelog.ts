@@ -14,6 +14,12 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-08-11",
+    title: "US Open 2026 Coverage Launched",
+    description: "Comprehensive US Open coverage now live with tournament schedule, live player rankings, and Grand Slam ranking points breakdown by round. Track ATP and WTA players competing at the USTA Billie Jean King National Tennis Center.",
+    area: "tennis",
+  },
+  {
+    date: "2026-08-11",
     title: "Enhanced SEO with Live Data",
     description: "Search results now show current player names and dates (e.g., 'ATP Live Rankings August 2026 | Sinner #1') instead of generic titles, making pages easier to find and more relevant in search.",
     area: "site",
