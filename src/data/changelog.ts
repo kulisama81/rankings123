@@ -14,6 +14,12 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-08-11",
+    title: "Cincinnati Open 2026 Live Coverage",
+    description: "Live Cincinnati Masters (ATP/WTA 1000) coverage now active. Track real-time ranking points, match progress, and live scores for all players competing August 11-23. Automatic updates as matches complete.",
+    area: "tennis",
+  },
+  {
+    date: "2026-08-11",
     title: "US Open 2026 Coverage Launched",
     description: "Comprehensive US Open coverage now live with tournament schedule, live player rankings, and Grand Slam ranking points breakdown by round. Track ATP and WTA players competing at the USTA Billie Jean King National Tennis Center.",
     area: "tennis",
