@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import HeroBanner from "@/components/HeroBanner";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Tour de France 2026 Winner Predictions: Pogačar's Historic 5th Title",
@@ -642,12 +643,12 @@ export default function TdfWinnerPredictionsPage() {
 
           {/* Back to Cycling */}
           <div className="text-center">
-            <a
+            <Link
               href="/cycling"
               className="inline-block rounded-lg bg-accent px-6 py-3 font-bold text-base-inverted transition-colors hover:bg-accent/90"
             >
               ← Back to Tour de France Live Standings
-            </a>
+            </Link>
           </div>
         </article>
       </div>

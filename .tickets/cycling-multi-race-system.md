@@ -1,6 +1,6 @@
 ---
 id: cycling-multi-race-system
-status: open
+status: in_progress
 deps: []
 links: []
 created: 2026-08-11T13:49:11Z

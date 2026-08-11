@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getUciRanking } from "@/lib/uciRankingFeed";
 import HeroBanner from "@/components/HeroBanner";
 import UciRankingTable from "@/components/UciRankingTable";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "UCI Cycling World Ranking — Live Rankings",
@@ -97,7 +98,7 @@ export default async function UciRankingPage() {
               </span>
             </h2>
             <div className="grid gap-4 sm:grid-cols-2">
-              <a
+              <Link
                 href="/cycling"
                 className="rounded-xl border border-edge bg-surface p-6 transition-colors hover:border-accent hover:bg-surface-hover"
               >
@@ -109,7 +110,7 @@ export default async function UciRankingPage() {
                 <p className="text-sm text-primary">
                   Live stage results, GC standings, and jersey leaders
                 </p>
-              </a>
+              </Link>
             </div>
           </section>
         </div>

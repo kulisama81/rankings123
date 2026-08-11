@@ -238,8 +238,8 @@ export interface WorldCupTeamRoster {
 // Fabricated event types removed (OlympicsRankings, CyclingRankings, RugbyRankings, EventSummary).
 // Only real sourced data remains (ATP/WTA/World Cup).
 
-// --- Cycling / Tour de France ---
-export interface TdfStage {
+// --- Cycling / Multi-race system (Grand Tours, stage races) ---
+export interface CyclingStage {
   stage: number;
   date: string; // e.g., "4 July"
   course: string; // e.g., "Barcelona" or "Tarragona to Barcelona"
@@ -248,7 +248,7 @@ export interface TdfStage {
   winner?: string; // empty until stage is completed
 }
 
-export interface TdfGCRider {
+export interface CyclingGCRider {
   rank: number;
   name: string;
   team: string;
@@ -259,8 +259,10 @@ export interface TdfGCRider {
   gap?: string; // gap to leader (e.g., "+1:23")
 }
 
-export interface TdfJerseyLeader {
-  jersey: "yellow" | "green" | "polka-dot" | "white";
+export type CyclingJerseyColor = "yellow" | "green" | "polka-dot" | "white" | "red" | "blue" | "pink" | "purple";
+
+export interface CyclingJerseyLeader {
+  jersey: CyclingJerseyColor;
   jerseyName: string; // e.g., "General Classification", "Points Classification"
   rider?: string; // undefined before race starts
   team?: string;
@@ -268,15 +270,40 @@ export interface TdfJerseyLeader {
   country?: string;
 }
 
-export interface TdfSnapshot {
+export interface CyclingRaceMetadata {
+  id: string; // e.g., "tour-de-france-2026", "vuelta-2026"
+  name: string; // e.g., "Tour de France 2026"
+  year: number;
+  wikipediaPage: string; // e.g., "2026_Tour_de_France"
+  startDate: string; // ISO date
+  endDate: string; // ISO date
+  totalStages: number;
+  country: string; // primary country
+  countryCode: string;
+  flag: string;
+  // Jersey configuration for this race (TdF = 4, Vuelta = 4, Giro = 4)
+  jerseys: {
+    jersey: CyclingJerseyColor;
+    name: string; // e.g., "General Classification (Maillot Jaune)"
+  }[];
+}
+
+export interface CyclingRaceSnapshot {
+  metadata: CyclingRaceMetadata;
   lastUpdated: string; // ISO timestamp
-  raceStatus: "upcoming" | "active" | "complete";
+  raceStatus: "upcoming" | "active" | "complete" | "archived";
   currentStage?: number; // which stage is happening now
-  stages: TdfStage[];
-  gc: TdfGCRider[]; // General Classification standings
-  jerseys: TdfJerseyLeader[]; // Jersey leaders
+  stages: CyclingStage[];
+  gc: CyclingGCRider[]; // General Classification standings
+  jerseys: CyclingJerseyLeader[]; // Jersey leaders
   source: "wikipedia" | "letour" | "mock";
 }
+
+// Backward compat aliases for existing TdF code
+export type TdfStage = CyclingStage;
+export type TdfGCRider = CyclingGCRider;
+export type TdfJerseyLeader = CyclingJerseyLeader;
+export type TdfSnapshot = CyclingRaceSnapshot;
 
 // --- UCI Cycling World Ranking ---
 export interface UciRider {

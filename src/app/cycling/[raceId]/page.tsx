@@ -1,30 +1,41 @@
 import type { Metadata } from "next";
-import { getCyclingRaces, getPrimaryRace } from "@/lib/cyclingFeed";
+import { getCyclingRaceById } from "@/lib/cyclingFeed";
+import { CYCLING_RACES } from "@/data/cyclingRaces";
 import HeroBanner from "@/components/HeroBanner";
 import SectionNav from "@/components/SectionNav";
 import TdfStagesTable from "@/components/TdfStagesTable";
 import TdfGCTable from "@/components/TdfGCTable";
 import TdfJerseys from "@/components/TdfJerseys";
+import { notFound } from "next/navigation";
 import Link from "next/link";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const races = await getCyclingRaces();
-  const primaryRace = getPrimaryRace(races);
+interface Props {
+  params: Promise<{ raceId: string }>;
+}
 
-  if (!primaryRace) {
+export async function generateStaticParams() {
+  return CYCLING_RACES.map((race) => ({
+    raceId: race.id,
+  }));
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { raceId } = await params;
+  const raceData = await getCyclingRaceById(raceId);
+
+  if (!raceData) {
     return {
-      title: "Cycling — Grand Tours & Rankings",
-      description: "Live cycling coverage: Grand Tour results, UCI rankings, and stage race updates.",
+      title: "Race Not Found",
+      description: "The requested cycling race could not be found.",
     };
   }
 
-  const { metadata: race, raceStatus, gc } = primaryRace;
+  const { metadata: race, raceStatus, gc } = raceData;
   const isComplete = raceStatus === "complete" || raceStatus === "archived";
   const now = new Date();
   const month = now.toLocaleString("en-US", { month: "long" });
   const year = now.getFullYear();
 
-  // Get current GC leader
   const leader = gc[0];
   const leaderName = leader ? `${leader.name} leads` : "Live updates";
 
@@ -39,11 +50,11 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title,
     description,
-    alternates: { canonical: "/cycling" },
+    alternates: { canonical: `/cycling/${raceId}` },
     openGraph: {
       title: `${title} — Rankings123`,
       description,
-      url: "/cycling",
+      url: `/cycling/${raceId}`,
       type: "website",
     },
     twitter: {
@@ -54,24 +65,24 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export const revalidate = 300; // ISR: 5 minute cache (race updates less frequently than tennis/soccer)
+export const revalidate = 300; // ISR: 5 minute cache
 
-export default async function CyclingPage() {
-  const races = await getCyclingRaces();
-  const primaryRace = getPrimaryRace(races);
+export default async function RacePage({ params }: Props) {
+  const { raceId } = await params;
+  const raceData = await getCyclingRaceById(raceId);
 
-  if (!primaryRace) {
-    return <div>No cycling races found</div>;
+  if (!raceData) {
+    notFound();
   }
 
-  const { metadata: race, raceStatus, currentStage, jerseys, stages, gc, source } = primaryRace;
+  const { metadata: race, raceStatus, currentStage, jerseys, stages, gc, source } = raceData;
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    name: `${race.name} Live — Stages & GC Standings — Rankings123`,
-    description: `Live ${race.name} stage schedule and General Classification standings updated in real time.`,
-    url: "https://rankings123.com/cycling",
+    name: `${race.name} — Stages & GC Standings — Rankings123`,
+    description: `${race.name} stage schedule and General Classification standings.`,
+    url: `https://rankings123.com/cycling/${raceId}`,
     inLanguage: "en",
   };
 
@@ -88,8 +99,10 @@ export default async function CyclingPage() {
     subtitle = `Starting ${startDate.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}`;
   } else if (raceStatus === "active") {
     subtitle = `Stage ${currentStage} in progress`;
-  } else {
+  } else if (raceStatus === "complete") {
     subtitle = "Race Complete";
+  } else {
+    subtitle = "Archived Results";
   }
 
   return (
@@ -180,41 +193,34 @@ export default async function CyclingPage() {
             </div>
           </section>
 
-          {/* Completed Races */}
+          {/* Other Races */}
           <section className="mb-12">
             <h2 className="mb-6 text-3xl font-bold text-primary">
-              Completed Races
+              Other Grand Tours
               <span className="ml-3 text-sm font-normal text-secondary">
-                2026 season results
+                2026 season
               </span>
             </h2>
             <div className="grid gap-4 sm:grid-cols-2">
-              <Link
-                href="/events/giro-2026"
-                className="rounded-xl border border-edge bg-surface p-6 transition-colors hover:border-accent hover:bg-surface-hover"
-              >
-                <div className="mb-2 flex items-center gap-2">
-                  <span className="text-2xl">🇮🇹</span>
-                  <h3 className="text-xl font-bold text-primary">Giro d&apos;Italia 2026</h3>
-                </div>
-                <p className="mb-3 text-sm text-secondary">May 8-31, 2026</p>
-                <p className="text-sm text-primary">
-                  🏆 Winner: <strong>Jonas Vingegaard</strong> (Visma–Lease a Bike)
-                </p>
-              </Link>
-              <Link
-                href="/events/tour-de-suisse-2026"
-                className="rounded-xl border border-edge bg-surface p-6 transition-colors hover:border-accent hover:bg-surface-hover"
-              >
-                <div className="mb-2 flex items-center gap-2">
-                  <span className="text-2xl">🇨🇭</span>
-                  <h3 className="text-xl font-bold text-primary">Tour de Suisse 2026</h3>
-                </div>
-                <p className="mb-3 text-sm text-secondary">June 17-21, 2026</p>
-                <p className="text-sm text-primary">
-                  🏆 Winner: <strong>Tadej Pogačar</strong> (UAE Team Emirates XRG)
-                </p>
-              </Link>
+              {CYCLING_RACES.filter(r => r.id !== raceId)
+                .sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime())
+                .slice(0, 4)
+                .map((otherRace) => (
+                  <Link
+                    key={otherRace.id}
+                    href={`/cycling/${otherRace.id}`}
+                    className="rounded-xl border border-edge bg-surface p-6 transition-colors hover:border-accent hover:bg-surface-hover"
+                  >
+                    <div className="mb-2 flex items-center gap-2">
+                      <span className="text-2xl">{otherRace.flag}</span>
+                      <h3 className="text-xl font-bold text-primary">{otherRace.name}</h3>
+                    </div>
+                    <p className="mb-3 text-sm text-secondary">
+                      {new Date(otherRace.startDate).toLocaleDateString("en-US", { month: "long", day: "numeric" })} -{" "}
+                      {new Date(otherRace.endDate).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
+                    </p>
+                  </Link>
+                ))}
             </div>
           </section>
 
@@ -228,7 +234,7 @@ export default async function CyclingPage() {
             </p>
             <p className="mt-2">
               <strong className="text-primary">Last updated:</strong>{" "}
-              {new Date(primaryRace.lastUpdated).toLocaleString("en-US", {
+              {new Date(raceData.lastUpdated).toLocaleString("en-US", {
                 month: "short",
                 day: "numeric",
                 hour: "numeric",

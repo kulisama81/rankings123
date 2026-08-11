@@ -1,4 +1,5 @@
 import type { TdfSnapshot, TdfGCRider, TdfJerseyLeader } from "@/types";
+import { CYCLING_RACES } from "@/data/cyclingRaces";
 
 /**
  * Giro d'Italia 2026 feed - COMPLETED RACE (May 8-31, 2026)
@@ -247,8 +248,14 @@ const GIRO_2026_JERSEYS: TdfJerseyLeader[] = [
 ];
 
 export async function getGiroSnapshot(): Promise<TdfSnapshot> {
+  const giroMetadata = CYCLING_RACES.find((r) => r.id === "giro-2026");
+  if (!giroMetadata) {
+    throw new Error("Giro 2026 metadata not found");
+  }
+
   // Giro 2026 is COMPLETED - return final results
   return {
+    metadata: giroMetadata,
     lastUpdated: new Date().toISOString(),
     raceStatus: "complete",
     stages: [], // Stages data not needed for completed race GC view

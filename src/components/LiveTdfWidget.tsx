@@ -3,43 +3,45 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import SportIcon from "./SportIcon";
-import type { TdfSnapshot } from "@/types";
+import type { CyclingRaceSnapshot } from "@/types";
 
 export default function LiveTdfWidget() {
-  const [tdfData, setTdfData] = useState<TdfSnapshot | null>(null);
+  const [raceData, setRaceData] = useState<CyclingRaceSnapshot | null>(null);
 
   useEffect(() => {
-    async function fetchTdfData() {
+    async function fetchRaceData() {
       try {
-        const res = await fetch("/api/tdf/live");
-        const data: TdfSnapshot = await res.json();
-        setTdfData(data);
+        const res = await fetch("/api/cycling/primary");
+        const data: CyclingRaceSnapshot = await res.json();
+        setRaceData(data);
       } catch {
-        setTdfData(null);
+        setRaceData(null);
       }
     }
 
     // Initial fetch
-    fetchTdfData();
+    fetchRaceData();
 
-    // Poll every 5 minutes (TdF updates less frequently than football)
-    const interval = setInterval(fetchTdfData, 300000);
+    // Poll every 5 minutes (cycling updates less frequently than football)
+    const interval = setInterval(fetchRaceData, 300000);
 
     return () => clearInterval(interval);
   }, []);
 
   // Hide widget if race isn't active or no data
-  if (!tdfData || tdfData.raceStatus !== "active") {
+  if (!raceData || raceData.raceStatus !== "active") {
     return null;
   }
 
-  // Show top 5 GC when available, fallback to yellow jersey leader
-  const hasGCData = tdfData.gc.length > 0;
-  const topGC = hasGCData ? tdfData.gc.slice(0, 5) : [];
-  const yellowJersey = tdfData.jerseys.find((j) => j.jersey === "yellow");
+  // Show top 5 GC when available, fallback to primary jersey leader (yellow/red/pink)
+  const hasGCData = raceData.gc.length > 0;
+  const topGC = hasGCData ? raceData.gc.slice(0, 5) : [];
 
-  // Only show if we have GC data OR yellow jersey leader
-  if (!hasGCData && !yellowJersey?.rider) {
+  // Find the GC jersey (first jersey in the list, usually yellow/red/pink)
+  const gcJersey = raceData.jerseys[0];
+
+  // Only show if we have GC data OR GC jersey leader
+  if (!hasGCData && !gcJersey?.rider) {
     return null;
   }
 
@@ -54,7 +56,7 @@ export default function LiveTdfWidget() {
           <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-accent" />
         </span>
         <h2 className="font-display text-sm font-bold uppercase tracking-wide text-accent">
-          Tour de France 2026
+          {raceData.metadata.name}
         </h2>
       </div>
 
@@ -65,7 +67,7 @@ export default function LiveTdfWidget() {
         <div className="mb-4 flex items-center justify-between">
           <div>
             <div className="mb-1 text-sm font-medium text-muted">
-              {tdfData.currentStage ? `Stage ${tdfData.currentStage}` : "In Progress"}
+              {raceData.currentStage ? `Stage ${raceData.currentStage}` : "In Progress"}
             </div>
             <div className="flex items-center gap-2 text-xl font-bold text-fg sm:text-2xl">
               {hasGCData ? (
@@ -76,7 +78,7 @@ export default function LiveTdfWidget() {
               ) : (
                 <>
                   <SportIcon type="jersey-yellow" size={24} className="text-accent" />
-                  <span>Yellow Jersey Leader</span>
+                  <span>{gcJersey.jerseyName}</span>
                 </>
               )}
             </div>
@@ -116,18 +118,18 @@ export default function LiveTdfWidget() {
             ))}
           </div>
         ) : (
-          /* Fallback: Yellow jersey leader only (pre-race or GC data not yet available) */
-          yellowJersey?.rider && (
+          /* Fallback: GC jersey leader only (pre-race or GC data not yet available) */
+          gcJersey?.rider && (
             <div className="flex items-center gap-3">
               <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-accent">
                 <SportIcon type="cycling" size={28} className="text-base" />
               </div>
               <div className="min-w-0">
                 <div className="truncate text-lg font-bold text-fg">
-                  {yellowJersey.rider}
+                  {gcJersey.rider}
                 </div>
-                {yellowJersey.team && (
-                  <div className="truncate text-sm text-muted">{yellowJersey.team}</div>
+                {gcJersey.team && (
+                  <div className="truncate text-sm text-muted">{gcJersey.team}</div>
                 )}
               </div>
             </div>
@@ -135,9 +137,9 @@ export default function LiveTdfWidget() {
         )}
 
         <div className="mt-4 text-xs text-muted">
-          {tdfData.source === "wikipedia"
+          {raceData.source === "wikipedia"
             ? "Live data via Wikipedia"
-            : tdfData.source === "mock"
+            : raceData.source === "mock"
               ? "Preview data"
               : "Live data"}
         </div>

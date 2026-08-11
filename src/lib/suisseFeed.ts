@@ -1,4 +1,4 @@
-import type { TdfSnapshot, TdfGCRider, TdfJerseyLeader } from "@/types";
+import type { TdfSnapshot, TdfGCRider, TdfJerseyLeader, CyclingRaceMetadata } from "@/types";
 
 /**
  * Tour de Suisse 2026 feed - COMPLETED RACE (June 17-21, 2026)
@@ -122,9 +122,29 @@ const SUISSE_2026_JERSEYS: TdfJerseyLeader[] = [
   },
 ];
 
+const SUISSE_METADATA: CyclingRaceMetadata = {
+  id: "tour-de-suisse-2026",
+  name: "Tour de Suisse 2026",
+  year: 2026,
+  wikipediaPage: "2026_Tour_de_Suisse",
+  startDate: "2026-06-17",
+  endDate: "2026-06-21",
+  totalStages: 5,
+  country: "Switzerland",
+  countryCode: "SUI",
+  flag: "🇨🇭",
+  jerseys: [
+    { jersey: "yellow", name: "General Classification" },
+    { jersey: "green", name: "Points Classification" },
+    { jersey: "polka-dot", name: "Mountains Classification" },
+    { jersey: "white", name: "Young Rider Classification" },
+  ],
+};
+
 export async function getSuisseSnapshot(): Promise<TdfSnapshot> {
   // Tour de Suisse 2026 is COMPLETED - return final results
   return {
+    metadata: SUISSE_METADATA,
     lastUpdated: new Date().toISOString(),
     raceStatus: "complete",
     stages: [], // Stages data not needed for completed race GC view

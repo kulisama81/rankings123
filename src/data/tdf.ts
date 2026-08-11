@@ -1,9 +1,16 @@
 import type { TdfSnapshot } from "@/types";
+import { CYCLING_RACES } from "./cyclingRaces";
 
 // Mock fallback data for 2026 Tour de France
 // Used only when Wikipedia API is unavailable
 export function getMockTdfSnapshot(): TdfSnapshot {
+  const tdfMetadata = CYCLING_RACES.find((r) => r.id === "tour-de-france-2026");
+  if (!tdfMetadata) {
+    throw new Error("TdF 2026 metadata not found");
+  }
+
   return {
+    metadata: tdfMetadata,
     lastUpdated: new Date().toISOString(),
     raceStatus: "upcoming",
     jerseys: [

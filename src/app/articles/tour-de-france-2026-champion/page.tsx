@@ -39,9 +39,9 @@ export default async function TourDeFrance2026ChampionPage() {
           </h1>
           <p className="text-muted">
             Final results are currently unavailable. Please check back soon or visit the{" "}
-            <a href="/cycling" className="text-accent hover:underline">
+            <Link href="/cycling" className="text-accent hover:underline">
               live cycling page
-            </a>
+            </Link>
             .
           </p>
           <p className="mt-4 text-sm text-muted">

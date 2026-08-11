@@ -5,28 +5,40 @@ import SportIcon from "./SportIcon";
 
 interface TdfJerseysProps {
   jerseys: TdfJerseyLeader[];
-  raceStatus: "upcoming" | "active" | "complete";
+  raceStatus: "upcoming" | "active" | "complete" | "archived";
 }
 
-const jerseyColors = {
+const jerseyColors: Record<string, string> = {
   yellow: "bg-warning/20 border-warning/40",
   green: "bg-emerald-500/20 border-emerald-500/40",
   "polka-dot": "bg-error/20 border-error/40",
   white: "bg-surface border-edge",
+  red: "bg-error/20 border-error/40",
+  pink: "bg-pink-500/20 border-pink-500/40",
+  purple: "bg-purple-500/20 border-purple-500/40",
+  blue: "bg-blue-500/20 border-blue-500/40",
 };
 
-const jerseyIconTypes = {
-  yellow: "jersey-yellow" as const,
-  green: "jersey-green" as const,
-  "polka-dot": "jersey-polkadot" as const,
-  white: "jersey-white" as const,
+const jerseyIconTypes: Record<string, string> = {
+  yellow: "jersey-yellow",
+  green: "jersey-green",
+  "polka-dot": "jersey-polkadot",
+  white: "jersey-white",
+  red: "jersey-yellow", // Reuse yellow icon for red (Vuelta)
+  pink: "jersey-yellow", // Reuse yellow icon for pink (Giro)
+  purple: "jersey-green", // Reuse green icon for purple
+  blue: "jersey-polkadot", // Reuse polkadot icon for blue
 };
 
-const jerseyIconColors = {
+const jerseyIconColors: Record<string, string> = {
   yellow: "text-warning",
   green: "text-emerald-500",
   "polka-dot": "text-error",
   white: "text-fg",
+  red: "text-error",
+  pink: "text-pink-500",
+  purple: "text-purple-500",
+  blue: "text-blue-500",
 };
 
 export default function TdfJerseys({ jerseys, raceStatus }: TdfJerseysProps) {
@@ -35,9 +47,9 @@ export default function TdfJerseys({ jerseys, raceStatus }: TdfJerseysProps) {
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {jerseys.map((jersey) => {
-        const colorClass = jerseyColors[jersey.jersey];
-        const iconType = jerseyIconTypes[jersey.jersey];
-        const iconColor = jerseyIconColors[jersey.jersey];
+        const colorClass = jerseyColors[jersey.jersey] || "bg-surface border-edge";
+        const iconType = (jerseyIconTypes[jersey.jersey] || "jersey-yellow") as "jersey-yellow" | "jersey-green" | "jersey-polkadot" | "jersey-white";
+        const iconColor = jerseyIconColors[jersey.jersey] || "text-fg";
 
         return (
           <div

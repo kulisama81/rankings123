@@ -35,31 +35,63 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-// Show cycling during Tour de France (July 4-26, 2026) + 1 week pre-race promo
-function isTourDeFranceActive(): boolean {
-  const now = new Date();
-  const year = 2026;
-  const promoStart = new Date(year, 5, 27); // June 27 (month is 0-indexed)
-  const raceEnd = new Date(year, 6, 26); // July 26
-  return now >= promoStart && now <= raceEnd;
+// Show cycling when ANY Grand Tour is active or upcoming (within 7 days)
+// Checks race dates from the cycling races config
+async function isCyclingActive(): Promise<boolean> {
+  try {
+    const { getCyclingRaces, getPrimaryRace } = await import("@/lib/cyclingFeed");
+    const races = await getCyclingRaces();
+    const primary = getPrimaryRace(races);
+
+    if (!primary) return false;
+
+    // Show if race is active OR upcoming within 7 days
+    if (primary.raceStatus === "active") return true;
+
+    if (primary.raceStatus === "upcoming") {
+      const now = new Date();
+      const start = new Date(primary.metadata.startDate);
+      const daysUntilStart = (start.getTime() - now.getTime()) / (1000 * 60 * 60 * 24);
+      return daysUntilStart <= 7; // Show 7 days before race
+    }
+
+    return false;
+  } catch {
+    return false;
+  }
 }
 
-// All sport links for the homepage
-const allSportLinks = [
-  { href: "/atp-live", label: "ATP Live", sub: "Men's live rankings", sport: "atp", isLive: true, showRankPeek: true },
-  { href: "/wta-live", label: "WTA Live", sub: "Women's live rankings", sport: "wta", isLive: true, showRankPeek: true },
-  { href: "/wta-rankings", label: "WTA Rankings", sub: "Full women's rankings", sport: "wta", isLive: false },
-  { href: "/world-cup", label: "FIFA 2026", sub: "Live standings & schedule", sport: "worldcup", isLive: true },
-  { href: "/world-cup/final-2026-predictions", label: "Final Predictions", sub: "Expert analysis & tactical preview", sport: "worldcup", isLive: false },
-  { href: "/cycling", label: "Tour de France 2026", sub: "Stages, GC standings & jersey leaders", sport: "cycling", isLive: true },
-];
+export default async function HomePage() {
+  const showCycling = await isCyclingActive();
 
-export default function HomePage() {
-  const showTourDeFrance = isTourDeFranceActive();
+  // Get primary cycling race for dynamic label
+  let cyclingLabel = "Cycling";
+  let cyclingSub = "Grand Tour coverage";
+  try {
+    const { getCyclingRaces, getPrimaryRace } = await import("@/lib/cyclingFeed");
+    const races = await getCyclingRaces();
+    const primary = getPrimaryRace(races);
+    if (primary) {
+      cyclingLabel = primary.metadata.name;
+      cyclingSub = "Stages, GC standings & jersey leaders";
+    }
+  } catch {
+    // Fall back to generic label
+  }
+
+  // All sport links for the homepage
+  const allSportLinks = [
+    { href: "/atp-live", label: "ATP Live", sub: "Men's live rankings", sport: "atp", isLive: true, showRankPeek: true },
+    { href: "/wta-live", label: "WTA Live", sub: "Women's live rankings", sport: "wta", isLive: true, showRankPeek: true },
+    { href: "/wta-rankings", label: "WTA Rankings", sub: "Full women's rankings", sport: "wta", isLive: false },
+    { href: "/world-cup", label: "FIFA 2026", sub: "Live standings & schedule", sport: "worldcup", isLive: true },
+    { href: "/world-cup/final-2026-predictions", label: "Final Predictions", sub: "Expert analysis & tactical preview", sport: "worldcup", isLive: false },
+    { href: "/cycling", label: cyclingLabel, sub: cyclingSub, sport: "cycling", isLive: true },
+  ];
 
   // Filter sport links based on active events
   const activeLinks = allSportLinks.filter(link => {
-    if (link.sport === "cycling") return showTourDeFrance;
+    if (link.sport === "cycling") return showCycling;
     return true;
   });
 
