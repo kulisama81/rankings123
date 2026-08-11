@@ -14,6 +14,12 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-08-11",
+    title: "Multi-Race Cycling Coverage",
+    description: "Cycling section now automatically switches between Grand Tours. Vuelta a España 2026 coverage goes live August 22. Tour de France results remain accessible at dedicated archive page. Homepage and widgets adapt to show the active race.",
+    area: "cycling",
+  },
+  {
+    date: "2026-08-11",
     title: "Homepage Now Features Current Events",
     description: "Homepage automatically highlights what's happening now—Cincinnati Open live coverage, upcoming US Open. World Cup results moved to dedicated page. Always shows the most relevant current events.",
     area: "site",
