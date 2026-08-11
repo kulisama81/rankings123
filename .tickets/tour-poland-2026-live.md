@@ -1,6 +1,6 @@
 ---
 id: tour-poland-2026-live
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-05T13:48:19Z
@@ -16,3 +16,9 @@ Tour of Poland is happening NOW (Aug 3-9). Cycling page needs live GC standings 
 ## Acceptance Criteria
 
 Wire Tour of Poland Wikipedia API feed. Show live GC standings. Show stage winners. Deploy by Aug 6.
+
+## Notes
+
+**2026-08-11T13:49:39Z**
+
+STALE: Tour de Poland 2026 ended Aug 9. Race is finished, coverage opportunity passed. Closed as outdated.

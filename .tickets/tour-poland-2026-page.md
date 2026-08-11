@@ -1,6 +1,6 @@
 ---
 id: tour-poland-2026-page
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-27T13:49:13Z
@@ -67,3 +67,7 @@ ROI Justification (First Principles):
 Tour of Poland 2026 runs Aug 3-9. Need to ship coverage BEFORE Aug 3 to capture search traffic. This is a time-bound opportunity - unlike evergreen features, cycling race content only matters during the event window.
 
 TIMELY CONTENT STRATEGY: Ship race preview + GC standings page by Aug 2 (target) to rank for 'tour of poland 2026 live standings' searches during the race week.
+
+**2026-08-11T13:49:39Z**
+
+STALE: Tour de Poland 2026 ended Aug 9. Race is finished, coverage opportunity passed. Closed as outdated.
