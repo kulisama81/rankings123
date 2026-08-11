@@ -1,6 +1,6 @@
 ---
 id: cincinnati-2026-live
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-05T13:47:46Z
