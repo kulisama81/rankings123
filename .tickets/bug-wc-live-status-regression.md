@@ -1,6 +1,6 @@
 ---
 id: bug-wc-live-status-regression
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-10T18:06:42Z
@@ -10,6 +10,19 @@ parent: rankings123
 tags: [bug, worldcup, ui]
 ---
 # World Cup page shows 'Live' status when tournament is complete (ended July 19)
+
+## Acceptance Criteria
+
+- [ ] World Cup page detects when tournament is complete (all matches finished)
+- [ ] When complete, page shows "Tournament Complete" or "Final Results" status (NOT "Live")
+- [ ] No "Live now" text displayed for completed tournament
+- [ ] Finals section shows actual results, not TBD placeholders
+- [ ] Champion and runner-up clearly labeled if final match is complete
+- [ ] **Regression test:** Add a test in tests/ that verifies tournament status logic:
+  - When all matches have state=post, status should NOT be live
+  - Test both via mock data (completed tournament) and via the actual detection logic
+  - Run via npm test and must pass
+- [ ] Verified on live https://rankings123.com/world-cup after deploy
 
 ## Bug Report
 
@@ -32,16 +45,3 @@ Page displays "Live" status badge and "Live now" text, misleading users into thi
 - ESPN's own site confirms the 2026 World Cup has concluded
 - The page also shows TBD placeholders in the Finals section despite completed group stages
 - Commit e8fd06f fixed a similar issue for Tour de France but World Cup still broken
-
-## Acceptance Criteria
-
-- [ ] World Cup page detects when tournament is complete (all matches finished)
-- [ ] When complete, page shows "Tournament Complete" or "Final Results" status (NOT "Live")
-- [ ] No "Live now" text displayed for completed tournament
-- [ ] Finals section shows actual results, not TBD placeholders
-- [ ] Champion and runner-up clearly labeled if final match is complete
-- [ ] **Regression test:** Add a test in tests/ that verifies tournament status logic:
-  - When all matches have state=post, status should NOT be live
-  - Test both via mock data (completed tournament) and via the actual detection logic
-  - Run via npm test and must pass
-- [ ] Verified on live https://rankings123.com/world-cup after deploy
