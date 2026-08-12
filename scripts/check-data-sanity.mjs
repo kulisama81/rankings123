@@ -124,6 +124,18 @@ function checkTennis(sport, snap) {
     prevPts = p.livePoints;
   }
   if (nameDupes.size) err(sport, `duplicate player names: ${[...nameDupes].slice(0, 3).join(", ")}`);
+
+  // Country code validity check (regression guard for bug-atp-country-filter-malformed).
+  // UTS occasionally returns "???" for players with unknown/disputed nationality. Our feed layer
+  // should convert these to the "—" fallback so they never reach users.
+  const malformedCountryCodes = players.filter(
+    (p) => p.countryCode === "???" || p.countryCode === null || p.countryCode === undefined || p.countryCode === ""
+  );
+  if (malformedCountryCodes.length > 0) {
+    for (const p of malformedCountryCodes.slice(0, 5)) {
+      err(sport, `${p.name} (rank ${p.liveRank}) has invalid countryCode: "${p.countryCode}"`);
+    }
+  }
 }
 
 // --- World Cup -------------------------------------------------------------

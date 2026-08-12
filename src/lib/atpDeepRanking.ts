@@ -25,8 +25,11 @@ function utsUrl(rowCount: number): string {
 }
 
 // UTS country.id is the IOC code (e.g. "ITA"); country.code is ISO2 (e.g. "it").
+// Filter out invalid/placeholder codes like "???" that UTS returns for unknown nationalities.
 function countryCodeOf(country: any): string {
-  return String(country?.id ?? country?.code ?? "").toUpperCase() || "—";
+  const raw = String(country?.id ?? country?.code ?? "").toUpperCase();
+  // Treat "???" as missing data (UTS uses this for players with unknown/disputed nationality)
+  return raw && raw !== "???" ? raw : "—";
 }
 
 interface DeepBase {
