@@ -1,6 +1,6 @@
 ---
 id: data-anomaly
-status: closed
+status: open
 deps: []
 links: []
 created: 2026-06-26T22:00:00.906Z
@@ -16,12 +16,15 @@ fabricated, mis-parsed, or mis-sourced. **Planner: investigate the relevant feed
 fix it, re-run `npm run check:data-sanity` until clean, log the resolution in the Log below,
 then close this ticket.** Do NOT close while `check:data-sanity` still reports errors.
 
-## Anomalies (latest run · 2026-07-27T22:00:00.517Z)
-
-- [atp] 96/100 (96%) of top-100 players have no tournament data — likely feed/scoreboard merge failure
+## Anomalies (latest run · 2026-08-12T02:13:22.929Z)
+- [atp] Hazem Naw (rank 335) has invalid countryCode: "???"
 
 ## Log
-
+- 2026-08-12T02:13:22.929Z: 1 anomalies — [atp] Hazem Naw (rank 335) has invalid countryCode: "???"
+- 2026-08-12T02:09:57.513Z: 1 anomalies — [atp] Hazem Naw (rank 335) has invalid countryCode: "???"
+- 2026-08-12T02:09:19.663Z: 1 anomalies — [atp] Hazem Naw (rank 335) has invalid countryCode: "???"
+- 2026-08-12T02:07:25.444Z: 1 anomalies — [atp] Hazem Naw (rank 335) has invalid countryCode: "???"
+- 2026-08-12T02:06:49.298Z: 1 anomalies — [atp] Hazem Naw (rank 335) has invalid countryCode: "???"
 - 2026-07-27T22:00:00.517Z: 1 anomalies — [atp] 96/100 (96%) of top-100 players have no tournament data — likely feed/scoreboard merge failure
 - 2026-07-27T19:00:00.749Z: 1 anomalies — [atp] 97/100 (97%) of top-100 players have no tournament data — likely feed/scoreboard merge failure
 - 2026-07-27T18:01:08.731Z: 1 anomalies — [atp] 97/100 (97%) of top-100 players have no tournament data — likely feed/scoreboard merge failure
