@@ -14,6 +14,12 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-08-11",
+    title: "Improved Mobile Experience",
+    description: "Mobile-friendly tap targets and larger fonts across all ranking tables. Buttons, links, and navigation now meet accessibility standards (44×44px minimum) for easier tapping on phones. Table headers increased from 11px to 14px for better readability on small screens.",
+    area: "all",
+  },
+  {
+    date: "2026-08-11",
     title: "Dramatic Rank Showcase on Homepage",
     description: "New signature visual moment: ATP and WTA #1 rankings displayed with oversized animated point totals. Numbers count up on page load, making live data delightful. See who's leading the race at a glance.",
     area: "site",
