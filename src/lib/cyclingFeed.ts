@@ -305,11 +305,12 @@ export async function getCyclingRaceSnapshot(
     };
   } catch (error) {
     console.warn(`${raceMetadata.name} Wikipedia feed failed:`, error);
-    // Return minimal mock fallback
+    // Return minimal mock fallback with correctly detected status
+    const raceStatus = detectRaceStatus(raceMetadata, 0);
     return {
       metadata: raceMetadata,
       lastUpdated: new Date().toISOString(),
-      raceStatus: "upcoming",
+      raceStatus,
       stages: [],
       gc: [],
       jerseys: raceMetadata.jerseys.map(j => ({
