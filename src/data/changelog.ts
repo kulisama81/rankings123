@@ -13,6 +13,12 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-08-12",
+    title: "ATP Live Pagination Restored",
+    description: "Fixed missing pagination on ATP Live rankings. Now showing 100+ players with page navigation controls (50 players per page), ensuring access to the full ranking depth even when primary data feed is unavailable.",
+    area: "tennis",
+  },
+  {
     date: "2026-08-11",
     title: "Country Filter Data Quality Fix",
     description: "Fixed malformed country codes in ATP rankings filter. Players with unknown nationality now display proper fallback indicator instead of '???' placeholder.",
