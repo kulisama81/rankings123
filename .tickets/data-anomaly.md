@@ -16,10 +16,11 @@ fabricated, mis-parsed, or mis-sourced. **Planner: investigate the relevant feed
 fix it, re-run `npm run check:data-sanity` until clean, log the resolution in the Log below,
 then close this ticket.** Do NOT close while `check:data-sanity` still reports errors.
 
-## Anomalies (latest run · 2026-08-12T02:13:22.929Z)
-- [atp] Hazem Naw (rank 335) has invalid countryCode: "???"
+## Anomalies (latest run · 2026-08-12T16:00:00.498Z)
+- [atp] only 40 players (expected ≥50)
 
 ## Log
+- 2026-08-12T16:00:00.498Z: 1 anomalies — [atp] only 40 players (expected ≥50)
 - 2026-08-12T02:13:22.929Z: 1 anomalies — [atp] Hazem Naw (rank 335) has invalid countryCode: "???"
 - 2026-08-12T02:09:57.513Z: 1 anomalies — [atp] Hazem Naw (rank 335) has invalid countryCode: "???"
 - 2026-08-12T02:09:19.663Z: 1 anomalies — [atp] Hazem Naw (rank 335) has invalid countryCode: "???"
