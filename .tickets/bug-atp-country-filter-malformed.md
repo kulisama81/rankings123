@@ -1,6 +1,6 @@
 ---
 id: bug-atp-country-filter-malformed
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-24T18:30:00Z
