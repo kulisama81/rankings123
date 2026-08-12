@@ -1,6 +1,6 @@
 ---
 id: cycling-dynamic-feed-expansion
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-04T13:50:05Z

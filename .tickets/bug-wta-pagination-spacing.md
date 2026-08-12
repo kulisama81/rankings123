@@ -1,6 +1,6 @@
 ---
 id: bug-wta-pagination-spacing
-status: open
+status: in_progress
 deps: []
 links: []
 created: 2026-07-22T00:00:00Z

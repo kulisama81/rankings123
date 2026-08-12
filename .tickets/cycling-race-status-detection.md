@@ -1,6 +1,6 @@
 ---
 id: cycling-race-status-detection
-status: open
+status: closed
 deps: []
 links: [bug-tdf-race-status-stale]
 created: 2026-08-01T14:25:00Z

@@ -15,29 +15,6 @@ tags: [tennis, seo, content, betting, timely]
 
 Write in-depth SEO article analyzing US Open 2026 betting favorites. Research shows Sinner (1.80 odds), Sabalenka (3.00 odds), and Alcaraz as top picks. Cover Grand Slam form, hard-court performance, path to title, betting value analysis.
 
-## ROI Justification (First Principles)
-
-**User's root need:** Who will win the US Open + where is the betting value?
-
-**Why Grand Slams matter (traffic fundamentals):**
-- **Massive search volume:** US Open = biggest tennis event in North America, 10-50x search volume vs Masters 1000
-- **Long search window:** Grand Slam predictions search traffic builds 3-4 weeks before event (we're at 29 days out)
-- **High engagement:** Grand Slam content = longer session duration, lower bounce (users invest time in majors)
-
-**Why this article matters (revenue fundamentals):**
-- **Peak betting volume:** Grand Slams = highest tennis betting activity of the year
-- **RPM multiplier:** Betting content during US Open = $75-150 RPM (research: sports betting peak during majors)
-- **Anchor content:** This article becomes THE reference for "us open 2026 predictions" — captures traffic for 4+ weeks
-
-**Why this article matters (differentiation):**
-- **Deep analysis vs odds aggregation:** Most sites just list odds; we explain WHY (Sinner's hard-court dominance, Sabalenka's 2-year US Open streak, Alcaraz's youth edge)
-- **First-principles approach:** Don't just copy bookmaker favorites — analyze form, draw difficulty, injury status, historical performance
-
-**Impact vs Effort:**
-- **Effort:** Medium (1500-2000 word analysis, research odds + recent form + historical GS performance)
-- **Impact:** Very High (3-4 week traffic window, highest-volume tennis event of year, peak betting RPM)
-- **Urgency:** P0 — Publish by Aug 20-23 to maximize pre-tournament SEO window (3 weeks out)
-
 ## Acceptance Criteria
 
 - Article route: `/articles/us-open-2026-betting-favorites` or `/blog/us-open-2026-predictions`
@@ -71,3 +48,26 @@ Write in-depth SEO article analyzing US Open 2026 betting favorites. Research sh
   - Mobile-responsive, readable typography
   - Internal links to /us-open-2026 hub page
   - Passes build/lint/readability checks
+
+## ROI Justification (First Principles)
+
+**User's root need:** Who will win the US Open + where is the betting value?
+
+**Why Grand Slams matter (traffic fundamentals):**
+- **Massive search volume:** US Open = biggest tennis event in North America, 10-50x search volume vs Masters 1000
+- **Long search window:** Grand Slam predictions search traffic builds 3-4 weeks before event (we're at 29 days out)
+- **High engagement:** Grand Slam content = longer session duration, lower bounce (users invest time in majors)
+
+**Why this article matters (revenue fundamentals):**
+- **Peak betting volume:** Grand Slams = highest tennis betting activity of the year
+- **RPM multiplier:** Betting content during US Open = $75-150 RPM (research: sports betting peak during majors)
+- **Anchor content:** This article becomes THE reference for "us open 2026 predictions" — captures traffic for 4+ weeks
+
+**Why this article matters (differentiation):**
+- **Deep analysis vs odds aggregation:** Most sites just list odds; we explain WHY (Sinner's hard-court dominance, Sabalenka's 2-year US Open streak, Alcaraz's youth edge)
+- **First-principles approach:** Don't just copy bookmaker favorites — analyze form, draw difficulty, injury status, historical performance
+
+**Impact vs Effort:**
+- **Effort:** Medium (1500-2000 word analysis, research odds + recent form + historical GS performance)
+- **Impact:** Very High (3-4 week traffic window, highest-volume tennis event of year, peak betting RPM)
+- **Urgency:** P0 — Publish by Aug 20-23 to maximize pre-tournament SEO window (3 weeks out)
