@@ -5,11 +5,13 @@ import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import type { AtpLivePlayer, AtpLiveSnapshot, Tour } from "@/types";
 import { playerToSlug } from "@/lib/playerSlug";
+import { formatTimeAgo, formatTimeAgoMobile } from "@/lib/timeUtils";
 import AnimatedNumber from "./AnimatedNumber";
 import EmptyState from "./EmptyState";
 import Tooltip from "./Tooltip";
 import { RankTooltip, PointsTooltip, MovementTooltip, PlayerTooltip } from "./TooltipContent";
 import { ShareButton } from "./ShareButton";
+import DataSourceBadge from "./DataSourceBadge";
 
 const REFRESH_INTERVAL_S = 20;
 const PAGE_SIZE = 50;
@@ -118,9 +120,31 @@ export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingT
   const [page, setPage] = useState(0);
   const [secondsLeft, setSecondsLeft] = useState(REFRESH_INTERVAL_S);
   const [rankChanges, setRankChanges] = useState<Set<string>>(new Set());
+  const [autoRefreshEnabled, setAutoRefreshEnabled] = useState(true);
+  const [, setCurrentTime] = useState(Date.now());
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const fetching = useRef(false);
   const mounted = useRef(false);
   const prevRanksRef = useRef<Map<string, number>>(new Map());
+
+  // Load auto-refresh preference from localStorage on mount
+  useEffect(() => {
+    const stored = localStorage.getItem("autoRefresh");
+    if (stored !== null) {
+      setAutoRefreshEnabled(stored === "true");
+    }
+  }, []);
+
+  // Persist auto-refresh preference to localStorage
+  useEffect(() => {
+    localStorage.setItem("autoRefresh", String(autoRefreshEnabled));
+  }, [autoRefreshEnabled]);
+
+  // Update current time every 60s to refresh "X ago" displays
+  useEffect(() => {
+    const interval = setInterval(() => setCurrentTime(Date.now()), 60000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Read country from URL on mount (client-side only, using window.location to avoid SSR issues)
   useEffect(() => {
@@ -149,6 +173,7 @@ export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingT
   const refresh = useCallback(async () => {
     if (fetching.current) return;
     fetching.current = true;
+    setIsRefreshing(true);
     try {
       const res = await fetch(`/api/${tour}/live`, { cache: "no-store" });
       if (res.ok) {
@@ -165,21 +190,35 @@ export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingT
         });
 
         setSnapshot(newSnapshot);
-        if (changedPlayers.size > 0) {
-          setRankChanges(changedPlayers);
-          // Clear animation after it completes (280ms + max stagger)
-          setTimeout(() => setRankChanges(new Set()), 500);
+
+        // Announce to screen readers on every refresh
+        const announcement = document.getElementById("rank-update-announcement");
+        if (announcement) {
+          if (changedPlayers.size > 0) {
+            announcement.textContent = `Rankings updated. ${changedPlayers.size} ${changedPlayers.size === 1 ? "player" : "players"} changed rank.`;
+            setRankChanges(changedPlayers);
+            // Clear animation after it completes (280ms + max stagger)
+            setTimeout(() => setRankChanges(new Set()), 500);
+          } else {
+            announcement.textContent = "Rankings updated.";
+          }
         }
       }
     } catch {
       /* keep last good snapshot */
     } finally {
       fetching.current = false;
+      setIsRefreshing(false);
       setSecondsLeft(REFRESH_INTERVAL_S);
+      setCurrentTime(Date.now()); // Force time ago update
     }
   }, [tour]);
 
   useEffect(() => {
+    if (!autoRefreshEnabled) {
+      setSecondsLeft(REFRESH_INTERVAL_S);
+      return;
+    }
     const tick = setInterval(() => {
       setSecondsLeft((s) => {
         if (s <= 1) {
@@ -190,7 +229,7 @@ export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingT
       });
     }, 1000);
     return () => clearInterval(tick);
-  }, [refresh]);
+  }, [refresh, autoRefreshEnabled]);
 
   const countries = useMemo(() => {
     const codes = new Set(snapshot.players.map((p) => p.countryCode));
@@ -218,7 +257,6 @@ export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingT
   );
 
   const liveCount = snapshot.players.filter((p) => p.tournament?.active).length;
-  const updatedAt = new Date(snapshot.lastUpdated).toLocaleTimeString();
   const tabs: { key: Tour; label: string; href: string }[] = [
     { key: "atp", label: "ATP", href: "/atp-live" },
     { key: "wta", label: "WTA", href: "/wta-live" },
@@ -228,6 +266,8 @@ export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingT
 
   return (
     <div className="animate-entrance-table">
+      {/* Screen reader announcement for rank updates */}
+      <div id="rank-update-announcement" className="sr-only" role="status" aria-live="polite" aria-atomic="true" />
       {/* Controls */}
       <div className="mb-4 flex flex-wrap items-center gap-2.5">
         <div className="inline-flex gap-1 rounded-xl bg-surface2 p-1">
@@ -266,12 +306,48 @@ export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingT
           In play ({liveCount} overall)
         </label>
         <div className="ml-auto flex items-center gap-3 text-xs text-muted">
-          {snapshot.source === "mock" && (
+          {snapshot.source === "mock" ? (
             <span className="rounded-full bg-down/15 px-2 py-0.5 font-medium text-down">Demo data</span>
+          ) : (
+            <DataSourceBadge source={snapshot.source} showLiveDot={liveCount > 0} />
           )}
-          <span className="hidden sm:inline">
-            updated {updatedAt} · {secondsLeft}s
-          </span>
+          {isRefreshing && (
+            <span className="inline-flex items-center gap-1.5 rounded-md bg-accent/10 px-2 py-0.5 text-xs font-medium text-accent">
+              Updating...
+            </span>
+          )}
+          <div className="hidden items-center gap-1.5 sm:flex" role="status" aria-live="polite">
+            <span className="hidden md:inline">Updated </span>
+            <span className="font-medium text-fg">{formatTimeAgo(snapshot.lastUpdated)}</span>
+            {autoRefreshEnabled && (
+              <>
+                <span className="text-muted/50">·</span>
+                <span className="tabular-nums">{secondsLeft}s</span>
+              </>
+            )}
+          </div>
+          <div className="flex items-center gap-1.5 text-xs sm:hidden" role="status" aria-live="polite">
+            <span className="font-medium text-fg">{formatTimeAgoMobile(snapshot.lastUpdated)}</span>
+            {autoRefreshEnabled && (
+              <>
+                <span className="text-muted/50">·</span>
+                <span className="tabular-nums">{secondsLeft}s</span>
+              </>
+            )}
+          </div>
+          <button
+            onClick={() => setAutoRefreshEnabled(!autoRefreshEnabled)}
+            className={`hidden items-center gap-1.5 rounded-lg px-2 py-1.5 text-xs transition sm:flex ${
+              autoRefreshEnabled
+                ? "bg-accent/10 text-accent hover:bg-accent/15"
+                : "bg-surface2 text-muted hover:bg-surface2/80"
+            }`}
+            title={autoRefreshEnabled ? "Auto-refresh enabled" : "Auto-refresh disabled"}
+            aria-label={autoRefreshEnabled ? "Disable auto-refresh" : "Enable auto-refresh"}
+          >
+            <span className="text-base leading-none">{autoRefreshEnabled ? "⏸" : "▶"}</span>
+            <span className="hidden lg:inline">{autoRefreshEnabled ? "Auto" : "Manual"}</span>
+          </button>
           <button
             onClick={() => void refresh()}
             className="btn-base btn-secondary rounded-lg border border-edge text-sm min-h-11 px-3"

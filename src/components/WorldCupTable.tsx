@@ -8,9 +8,11 @@ import type {
   WorldCupSnapshot,
   WorldCupTeam,
 } from "@/types";
+import { formatTimeAgo, formatTimeAgoMobile } from "@/lib/timeUtils";
 import EmptyState from "./EmptyState";
 import Tooltip from "./Tooltip";
 import { TeamTooltip, TeamPointsTooltip } from "./TooltipContent";
+import DataSourceBadge from "./DataSourceBadge";
 
 const REFRESH_INTERVAL_S = 30;
 
@@ -270,12 +272,35 @@ export default function WorldCupTable({
   const [secondsLeft, setSecondsLeft] = useState(REFRESH_INTERVAL_S);
   const [scheduleTab, setScheduleTab] = useState<"upcoming" | "results">("upcoming");
   const [rankChanges, setRankChanges] = useState<Set<string>>(new Set());
+  const [autoRefreshEnabled, setAutoRefreshEnabled] = useState(true);
+  const [, setCurrentTime] = useState(Date.now());
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const fetching = useRef(false);
   const prevRanksRef = useRef<Map<string, number>>(new Map());
+
+  // Load auto-refresh preference from localStorage
+  useEffect(() => {
+    const stored = localStorage.getItem("autoRefresh");
+    if (stored !== null) {
+      setAutoRefreshEnabled(stored === "true");
+    }
+  }, []);
+
+  // Persist auto-refresh preference
+  useEffect(() => {
+    localStorage.setItem("autoRefresh", String(autoRefreshEnabled));
+  }, [autoRefreshEnabled]);
+
+  // Update current time every 60s for "X ago" displays
+  useEffect(() => {
+    const interval = setInterval(() => setCurrentTime(Date.now()), 60000);
+    return () => clearInterval(interval);
+  }, []);
 
   const refresh = useCallback(async () => {
     if (fetching.current) return;
     fetching.current = true;
+    setIsRefreshing(true);
     try {
       const res = await fetch("/api/worldcup/live", { cache: "no-store" });
       if (res.ok) {
@@ -295,20 +320,34 @@ export default function WorldCupTable({
         });
 
         setSnapshot(newSnapshot);
-        if (changedTeams.size > 0) {
-          setRankChanges(changedTeams);
-          setTimeout(() => setRankChanges(new Set()), 500);
+
+        // Announce to screen readers on every refresh
+        const announcement = document.getElementById("rank-update-announcement");
+        if (announcement) {
+          if (changedTeams.size > 0) {
+            announcement.textContent = `Standings updated. ${changedTeams.size} ${changedTeams.size === 1 ? "team" : "teams"} changed position.`;
+            setRankChanges(changedTeams);
+            setTimeout(() => setRankChanges(new Set()), 500);
+          } else {
+            announcement.textContent = "Standings updated.";
+          }
         }
       }
     } catch {
       /* keep last good snapshot */
     } finally {
       fetching.current = false;
+      setIsRefreshing(false);
       setSecondsLeft(REFRESH_INTERVAL_S);
+      setCurrentTime(Date.now());
     }
   }, []);
 
   useEffect(() => {
+    if (!autoRefreshEnabled) {
+      setSecondsLeft(REFRESH_INTERVAL_S);
+      return;
+    }
     const tick = setInterval(() => {
       setSecondsLeft((s) => {
         if (s <= 1) {
@@ -319,9 +358,8 @@ export default function WorldCupTable({
       });
     }, 1000);
     return () => clearInterval(tick);
-  }, [refresh]);
+  }, [refresh, autoRefreshEnabled]);
 
-  const updatedAt = new Date(snapshot.lastUpdated).toLocaleTimeString();
   const liveMatches = snapshot.matches.filter((m) => m.state === "in").length;
   // Only surface predictions when backed by a REAL odds source. We never show
   // fabricated/demo odds or placeholder affiliate UI to users — that hurts CX and
@@ -358,9 +396,13 @@ export default function WorldCupTable({
 
   return (
     <div className="animate-entrance-table">
+      {/* Screen reader announcement for rank updates */}
+      <div id="rank-update-announcement" className="sr-only" role="status" aria-live="polite" aria-atomic="true" />
       <div className="mb-4 flex flex-wrap items-center gap-3 text-xs text-muted">
-        {snapshot.source === "mock" && (
+        {snapshot.source === "mock" ? (
           <span className="rounded-full bg-down/15 px-2 py-0.5 font-medium text-down">Demo data</span>
+        ) : (
+          <DataSourceBadge source="official" showLiveDot={liveMatches > 0} />
         )}
         {liveMatches > 0 && (
           <span className="inline-flex items-center gap-1.5 rounded-full bg-accent/15 px-2.5 py-0.5 font-medium text-accent">
@@ -368,7 +410,43 @@ export default function WorldCupTable({
           </span>
         )}
         <div className="ml-auto flex items-center gap-3">
-          <span className="hidden sm:inline">updated {updatedAt} · {secondsLeft}s</span>
+          {isRefreshing && (
+            <span className="inline-flex items-center gap-1.5 rounded-md bg-accent/10 px-2 py-0.5 text-xs font-medium text-accent">
+              Updating...
+            </span>
+          )}
+          <div className="hidden items-center gap-1.5 sm:flex" role="status" aria-live="polite">
+            <span className="hidden md:inline">Updated </span>
+            <span className="font-medium text-fg">{formatTimeAgo(snapshot.lastUpdated)}</span>
+            {autoRefreshEnabled && (
+              <>
+                <span className="text-muted/50">·</span>
+                <span className="tabular-nums">{secondsLeft}s</span>
+              </>
+            )}
+          </div>
+          <div className="flex items-center gap-1.5 text-xs sm:hidden" role="status" aria-live="polite">
+            <span className="font-medium text-fg">{formatTimeAgoMobile(snapshot.lastUpdated)}</span>
+            {autoRefreshEnabled && (
+              <>
+                <span className="text-muted/50">·</span>
+                <span className="tabular-nums">{secondsLeft}s</span>
+              </>
+            )}
+          </div>
+          <button
+            onClick={() => setAutoRefreshEnabled(!autoRefreshEnabled)}
+            className={`hidden items-center gap-1.5 rounded-lg px-2 py-1.5 text-xs transition sm:flex ${
+              autoRefreshEnabled
+                ? "bg-accent/10 text-accent hover:bg-accent/15"
+                : "bg-surface2 text-muted hover:bg-surface2/80"
+            }`}
+            title={autoRefreshEnabled ? "Auto-refresh enabled" : "Auto-refresh disabled"}
+            aria-label={autoRefreshEnabled ? "Disable auto-refresh" : "Enable auto-refresh"}
+          >
+            <span className="text-base leading-none">{autoRefreshEnabled ? "⏸" : "▶"}</span>
+            <span className="hidden lg:inline">{autoRefreshEnabled ? "Auto" : "Manual"}</span>
+          </button>
           <button
             onClick={() => void refresh()}
             className="btn-base btn-secondary rounded-lg border border-edge text-sm min-h-11 px-3"

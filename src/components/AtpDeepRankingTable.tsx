@@ -4,10 +4,12 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import type { AtpDeepRankingSnapshot, AtpLivePlayer } from "@/types";
 import { playerToSlug } from "@/lib/playerSlug";
+import { formatTimeAgo, formatTimeAgoMobile } from "@/lib/timeUtils";
 import AnimatedNumber from "./AnimatedNumber";
 import EmptyState from "./EmptyState";
 import Tooltip from "./Tooltip";
 import { RankTooltip, PointsTooltip, MovementTooltip, PlayerTooltip } from "./TooltipContent";
+import DataSourceBadge from "./DataSourceBadge";
 
 const REFRESH_INTERVAL_S = 30;
 const PAGE_SIZE = 50;
@@ -64,12 +66,35 @@ export default function AtpDeepRankingTable({ initialSnapshot, band, apiEndpoint
   const [page, setPage] = useState(0);
   const [secondsLeft, setSecondsLeft] = useState(REFRESH_INTERVAL_S);
   const [rankChanges, setRankChanges] = useState<Set<string>>(new Set());
+  const [autoRefreshEnabled, setAutoRefreshEnabled] = useState(true);
+  const [, setCurrentTime] = useState(Date.now());
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const fetching = useRef(false);
   const prevRanksRef = useRef<Map<string, number>>(new Map());
+
+  // Load auto-refresh preference from localStorage
+  useEffect(() => {
+    const stored = localStorage.getItem("autoRefresh");
+    if (stored !== null) {
+      setAutoRefreshEnabled(stored === "true");
+    }
+  }, []);
+
+  // Persist auto-refresh preference
+  useEffect(() => {
+    localStorage.setItem("autoRefresh", String(autoRefreshEnabled));
+  }, [autoRefreshEnabled]);
+
+  // Update current time every 60s for "X ago" displays
+  useEffect(() => {
+    const interval = setInterval(() => setCurrentTime(Date.now()), 60000);
+    return () => clearInterval(interval);
+  }, []);
 
   const refresh = useCallback(async () => {
     if (fetching.current) return;
     fetching.current = true;
+    setIsRefreshing(true);
     try {
       const res = await fetch(apiEndpoint, { cache: "no-store" });
       if (res.ok) {
@@ -86,20 +111,34 @@ export default function AtpDeepRankingTable({ initialSnapshot, band, apiEndpoint
         });
 
         setSnapshot(newSnapshot);
-        if (changedPlayers.size > 0) {
-          setRankChanges(changedPlayers);
-          setTimeout(() => setRankChanges(new Set()), 500);
+
+        // Announce to screen readers on every refresh
+        const announcement = document.getElementById("rank-update-announcement");
+        if (announcement) {
+          if (changedPlayers.size > 0) {
+            announcement.textContent = `Rankings updated. ${changedPlayers.size} ${changedPlayers.size === 1 ? "player" : "players"} changed rank.`;
+            setRankChanges(changedPlayers);
+            setTimeout(() => setRankChanges(new Set()), 500);
+          } else {
+            announcement.textContent = "Rankings updated.";
+          }
         }
       }
     } catch {
       /* keep last good snapshot */
     } finally {
       fetching.current = false;
+      setIsRefreshing(false);
       setSecondsLeft(REFRESH_INTERVAL_S);
+      setCurrentTime(Date.now());
     }
   }, [apiEndpoint]);
 
   useEffect(() => {
+    if (!autoRefreshEnabled) {
+      setSecondsLeft(REFRESH_INTERVAL_S);
+      return;
+    }
     const tick = setInterval(() => {
       setSecondsLeft((s) => {
         if (s <= 1) {
@@ -110,7 +149,7 @@ export default function AtpDeepRankingTable({ initialSnapshot, band, apiEndpoint
       });
     }, 1000);
     return () => clearInterval(tick);
-  }, [refresh]);
+  }, [refresh, autoRefreshEnabled]);
 
   const countries = useMemo(() => {
     const codes = new Set(snapshot.players.map((p) => p.countryCode));
@@ -140,7 +179,6 @@ export default function AtpDeepRankingTable({ initialSnapshot, band, apiEndpoint
   );
 
   const liveCount = snapshot.players.filter((p) => p.tournament?.active).length;
-  const updatedAt = new Date(snapshot.lastUpdated).toLocaleTimeString();
   const rangeStart = filtered.length === 0 ? 0 : safePage * PAGE_SIZE + 1;
   const rangeEnd = Math.min(filtered.length, safePage * PAGE_SIZE + PAGE_SIZE);
   const inputCls =
@@ -148,6 +186,8 @@ export default function AtpDeepRankingTable({ initialSnapshot, band, apiEndpoint
 
   return (
     <div className="animate-entrance-table">
+      {/* Screen reader announcement for rank updates */}
+      <div id="rank-update-announcement" className="sr-only" role="status" aria-live="polite" aria-atomic="true" />
       <div className="mb-4 flex flex-wrap items-center gap-2.5">
         <input
           type="search"
@@ -167,13 +207,48 @@ export default function AtpDeepRankingTable({ initialSnapshot, band, apiEndpoint
           In play ({liveCount} overall)
         </label>
         <div className="ml-auto flex items-center gap-3 text-xs text-muted">
-          {snapshot.source === "mock" && (
+          {snapshot.source === "mock" ? (
             <span className="rounded-full bg-down/15 px-2 py-0.5 font-medium text-down">Demo data</span>
+          ) : (
+            <DataSourceBadge source={snapshot.source} showLiveDot={liveCount > 0} />
           )}
-          {snapshot.source === "uts" && (
-            <span className="rounded-full bg-accent/15 px-2 py-0.5 font-medium text-accent">Ranking only</span>
+          {isRefreshing && (
+            <span className="inline-flex items-center gap-1.5 rounded-md bg-accent/10 px-2 py-0.5 text-xs font-medium text-accent">
+              Updating...
+            </span>
           )}
-          <span className="hidden sm:inline">updated {updatedAt} · {secondsLeft}s</span>
+          <div className="hidden items-center gap-1.5 sm:flex" role="status" aria-live="polite">
+            <span className="hidden md:inline">Updated </span>
+            <span className="font-medium text-fg">{formatTimeAgo(snapshot.lastUpdated)}</span>
+            {autoRefreshEnabled && (
+              <>
+                <span className="text-muted/50">·</span>
+                <span className="tabular-nums">{secondsLeft}s</span>
+              </>
+            )}
+          </div>
+          <div className="flex items-center gap-1.5 text-xs sm:hidden" role="status" aria-live="polite">
+            <span className="font-medium text-fg">{formatTimeAgoMobile(snapshot.lastUpdated)}</span>
+            {autoRefreshEnabled && (
+              <>
+                <span className="text-muted/50">·</span>
+                <span className="tabular-nums">{secondsLeft}s</span>
+              </>
+            )}
+          </div>
+          <button
+            onClick={() => setAutoRefreshEnabled(!autoRefreshEnabled)}
+            className={`hidden items-center gap-1.5 rounded-lg px-2 py-1.5 text-xs transition sm:flex ${
+              autoRefreshEnabled
+                ? "bg-accent/10 text-accent hover:bg-accent/15"
+                : "bg-surface2 text-muted hover:bg-surface2/80"
+            }`}
+            title={autoRefreshEnabled ? "Auto-refresh enabled" : "Auto-refresh disabled"}
+            aria-label={autoRefreshEnabled ? "Disable auto-refresh" : "Enable auto-refresh"}
+          >
+            <span className="text-base leading-none">{autoRefreshEnabled ? "⏸" : "▶"}</span>
+            <span className="hidden lg:inline">{autoRefreshEnabled ? "Auto" : "Manual"}</span>
+          </button>
           <button
             onClick={() => void refresh()}
             className="btn-base btn-secondary rounded-lg border border-edge text-sm min-h-11 px-3"

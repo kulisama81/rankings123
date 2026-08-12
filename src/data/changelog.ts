@@ -14,6 +14,12 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-08-12",
+    title: "Real-Time Data Indicators",
+    description: "Rankings now show exactly how fresh your data is. Every table displays 'Updated 2m ago' timestamps that update every minute, plus an 'Updating...' badge during live refreshes. New data source badges (ESPN Live, UTS Rankings, Official WTA) with pulsing indicators when matches are in play. Toggle auto-refresh on/off to control updates. Screen readers announce changes for full accessibility.",
+    area: "all",
+  },
+  {
+    date: "2026-08-12",
     title: "Cycling Race Status Detection Fixed",
     description: "Fixed cycling race status accuracy. Races now correctly display as 'active', 'upcoming', or 'complete' based on current date, even when live data feeds are temporarily unavailable. No more races showing as 'in progress' after they've ended.",
     area: "cycling",
