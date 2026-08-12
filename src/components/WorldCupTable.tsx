@@ -85,7 +85,7 @@ function GroupCard({
       </div>
       <div className="overflow-x-auto">
         <table className="min-w-full text-sm">
-          <thead className="text-[11px] uppercase tracking-wide text-muted">
+          <thead className="text-sm uppercase tracking-wide text-muted">
             <tr>
               <th className="px-3 py-2 text-right">#</th>
               <th className="px-3 py-2 text-left">Team</th>
@@ -235,7 +235,7 @@ function MatchRow({ match, showOdds }: { match: WorldCupMatch; showOdds: boolean
       </div>
 
       {showOdds && upcoming && match.odds && (
-        <div className="flex items-center gap-2 border-t border-edge/50 pt-2 text-[11px]">
+        <div className="flex items-center gap-2 border-t border-edge/50 pt-2 text-sm">
           <span className="text-muted uppercase tracking-wide">Prediction:</span>
           <div className="flex flex-1 gap-2">
             <div
@@ -371,7 +371,7 @@ export default function WorldCupTable({
           <span className="hidden sm:inline">updated {updatedAt} · {secondsLeft}s</span>
           <button
             onClick={() => void refresh()}
-            className="btn-base btn-secondary btn-compact rounded-lg border border-edge text-sm"
+            className="btn-base btn-secondary rounded-lg border border-edge text-sm min-h-11 px-3"
             aria-label="Refresh World Cup data"
           >
             Refresh
@@ -432,7 +432,7 @@ export default function WorldCupTable({
                   onClick={() => setScheduleTab(key)}
                   aria-pressed={scheduleTab === key}
                   aria-label={`Show ${label.toLowerCase()} matches`}
-                  className={`btn-base btn-compact rounded-md ${
+                  className={`btn-base rounded-md min-h-11 px-3 ${
                     scheduleTab === key ? "btn-secondary" : "btn-ghost"
                   }`}
                 >

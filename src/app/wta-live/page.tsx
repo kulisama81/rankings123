@@ -70,7 +70,7 @@ export default async function WtaLivePage() {
           <div className="mb-4">
             <a
               href="/wta-race"
-              className="inline-flex items-center text-sm font-medium text-fg hover:text-accent transition"
+              className="inline-flex items-center min-h-11 text-sm font-medium text-fg hover:text-accent transition"
             >
               View WTA Race to Finals (YTD Points) →
             </a>

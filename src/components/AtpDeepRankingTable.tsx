@@ -176,7 +176,7 @@ export default function AtpDeepRankingTable({ initialSnapshot, band, apiEndpoint
           <span className="hidden sm:inline">updated {updatedAt} · {secondsLeft}s</span>
           <button
             onClick={() => void refresh()}
-            className="btn-base btn-secondary btn-compact rounded-lg border border-edge text-sm"
+            className="btn-base btn-secondary rounded-lg border border-edge text-sm min-h-11 px-3"
             aria-label="Refresh ranking data"
           >
             Refresh
@@ -187,7 +187,7 @@ export default function AtpDeepRankingTable({ initialSnapshot, band, apiEndpoint
 {filtered.length > 0 ? (
         <div className="overflow-x-auto rounded-2xl border border-edge bg-surface">
           <table className="min-w-full text-sm">
-            <thead className="bg-surface2 text-[11px] uppercase tracking-wide text-muted">
+            <thead className="bg-surface2 text-sm uppercase tracking-wide text-muted">
               <tr>
                 <th className="px-3 py-3 text-right">#</th>
                 <th className="px-2 py-3 text-center">+/-</th>
@@ -344,7 +344,7 @@ export default function AtpDeepRankingTable({ initialSnapshot, band, apiEndpoint
           <button
             onClick={() => setPage((p) => Math.max(0, p - 1))}
             disabled={safePage === 0}
-            className="btn-base btn-secondary btn-compact rounded-lg border border-edge text-sm"
+            className="btn-base btn-secondary rounded-lg border border-edge text-sm min-h-11 px-3"
             aria-label="Previous page"
             title={safePage === 0 ? "Already on first page" : "Go to previous page"}
           >
@@ -354,7 +354,7 @@ export default function AtpDeepRankingTable({ initialSnapshot, band, apiEndpoint
           <button
             onClick={() => setPage((p) => Math.min(pageCount - 1, p + 1))}
             disabled={safePage >= pageCount - 1}
-            className="btn-base btn-secondary btn-compact rounded-lg border border-edge text-sm"
+            className="btn-base btn-secondary rounded-lg border border-edge text-sm min-h-11 px-3"
             aria-label="Next page"
             title={safePage >= pageCount - 1 ? "Already on last page" : "Go to next page"}
           >

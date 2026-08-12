@@ -25,7 +25,7 @@ function GoldenBootTable({ scorers }: { scorers: WorldCupPlayerStat[] }) {
       </div>
       <div className="overflow-x-auto">
         <table className="min-w-full text-sm">
-          <thead className="text-[11px] uppercase tracking-wide text-muted">
+          <thead className="text-sm uppercase tracking-wide text-muted">
             <tr>
               <th className="px-4 py-3 text-right">#</th>
               <th className="px-4 py-3 text-left">Player</th>

@@ -20,7 +20,7 @@ export default function TdfGCTable({ riders }: TdfGCTableProps) {
     <div className="animate-entrance-table overflow-hidden rounded-2xl border border-edge bg-surface">
       <div className="overflow-x-auto">
         <table className="min-w-full text-sm">
-          <thead className="border-b border-edge bg-surface2 text-[11px] uppercase tracking-wide text-muted">
+          <thead className="border-b border-edge bg-surface2 text-sm uppercase tracking-wide text-muted">
             <tr>
               <th className="px-3 py-2.5 text-center">Rank</th>
               <th className="px-3 py-2.5 text-left">Rider</th>

@@ -25,7 +25,7 @@ function StatLeaderCard({
       </div>
       <div className="overflow-x-auto">
         <table className="min-w-full text-sm">
-          <thead className="text-[11px] uppercase tracking-wide text-muted">
+          <thead className="text-sm uppercase tracking-wide text-muted">
             <tr>
               <th className="px-3 py-2 text-right">#</th>
               <th className="px-3 py-2 text-left">Player</th>

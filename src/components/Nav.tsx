@@ -19,7 +19,7 @@ export default function Nav() {
   return (
     <nav className="sticky top-0 z-40 border-b border-edge bg-bg/80 backdrop-blur-md">
       <div className="mx-auto flex h-14 max-w-6xl items-center gap-3 px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="flex shrink-0 items-center">
+        <Link href="/" className="flex shrink-0 items-center min-h-11">
           {/* Full wordmark on desktop, compact on mobile */}
           <Logo variant="full" className="hidden h-8 w-auto sm:block" />
           <Logo variant="compact" className="h-8 w-auto sm:hidden" />
@@ -33,7 +33,7 @@ export default function Nav() {
                 href={t.href}
                 aria-current={active ? "page" : undefined}
                 data-nav-sport={t.sport}
-                className={`btn-base whitespace-nowrap rounded-full flex items-center gap-1.5 ${
+                className={`btn-base whitespace-nowrap rounded-full flex items-center gap-1.5 min-h-11 px-4 ${
                   active ? "btn-nav-active" : "btn-nav-inactive"
                 }`}
               >
