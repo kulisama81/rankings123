@@ -117,8 +117,24 @@ export default async function WorldCupPage() {
   // Detect tournament completion: Final match exists, is finished, AND has valid scores
   const hasValidFinalScores =
     finalMatch?.homeScore !== null && finalMatch?.awayScore !== null;
+
+  // Tournament is complete if:
+  // 1. Final match exists and is finished with valid scores, OR
+  // 2. All matches are complete AND the latest match is > 1 day old (tournament ended)
+  const allMatchesComplete = snapshot.matches.length > 0 &&
+    snapshot.matches.every((m) => m.state === "post");
+  const latestMatch = snapshot.matches.length > 0
+    ? snapshot.matches.reduce((latest, m) =>
+        new Date(m.date) > new Date(latest.date) ? m : latest
+      )
+    : null;
+  const daysSinceLatestMatch = latestMatch
+    ? (Date.now() - new Date(latestMatch.date).getTime()) / (1000 * 60 * 60 * 24)
+    : 0;
+
   const isTournamentComplete =
-    finalMatch?.state === "post" && hasValidFinalScores;
+    (finalMatch?.state === "post" && hasValidFinalScores) ||
+    (allMatchesComplete && daysSinceLatestMatch > 1);
 
   // Detect Finals week (July 18-22, 2026) - show special hero during Final week
   const now = new Date();
@@ -143,65 +159,137 @@ export default async function WorldCupPage() {
       />
       <div data-sport="worldcup" className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
         {/* Tournament Complete: Show final results hero */}
-        {isTournamentComplete && finalMatch && hasValidFinalScores ? (
-          (() => {
-            // Type-safe access: hasValidFinalScores guarantees non-null scores
-            const homeScore = finalMatch.homeScore as number;
-            const awayScore = finalMatch.awayScore as number;
-            const champion = homeScore > awayScore ? finalMatch.homeName : finalMatch.awayName;
-            const runnerUp = homeScore > awayScore ? finalMatch.awayName : finalMatch.homeName;
+        {isTournamentComplete ? (
+          finalMatch && hasValidFinalScores ? (
+            (() => {
+              // Type-safe access: hasValidFinalScores guarantees non-null scores
+              const homeScore = finalMatch.homeScore as number;
+              const awayScore = finalMatch.awayScore as number;
+              const champion = homeScore > awayScore ? finalMatch.homeName : finalMatch.awayName;
+              const runnerUp = homeScore > awayScore ? finalMatch.awayName : finalMatch.homeName;
 
-            return (
-              <>
-                <HeroBanner
-                  sport="worldcup"
-                  title="World Cup 2026"
-                  subtitle="FIFA World Cup 2026 · Tournament Complete"
-                  stats={[
-                    { label: "Champion", value: champion },
-                    { label: "Runner-up", value: runnerUp },
-                    { label: "Final Score", value: `${homeScore}-${awayScore}` },
-                  ]}
-                />
-                <div className="my-6 rounded-2xl border border-trophy/30 bg-gradient-to-br from-trophy/10 to-surface p-6">
-                  <div className="mb-4 flex items-center gap-2">
-                    <span className="text-2xl">🏆</span>
-                    <h2 className="text-xl font-bold text-fg">Final Result</h2>
-                  </div>
-                  <div className="flex items-center justify-center gap-4 sm:gap-8">
-                    <div className="flex items-center gap-2 text-right">
-                      <span className="text-base font-medium text-muted sm:text-lg">
-                        {finalMatch.homeName}
-                      </span>
-                      <span className="text-3xl">{finalMatch.homeFlag}</span>
+              return (
+                <>
+                  <HeroBanner
+                    sport="worldcup"
+                    title="World Cup 2026"
+                    subtitle="FIFA World Cup 2026 · Tournament Complete"
+                    stats={[
+                      { label: "Champion", value: champion },
+                      { label: "Runner-up", value: runnerUp },
+                      { label: "Final Score", value: `${homeScore}-${awayScore}` },
+                    ]}
+                  />
+                  <div className="my-6 rounded-2xl border border-trophy/30 bg-gradient-to-br from-trophy/10 to-surface p-6">
+                    <div className="mb-4 flex items-center gap-2">
+                      <span className="text-2xl">🏆</span>
+                      <h2 className="text-xl font-bold text-fg">Final Result</h2>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-4xl font-bold tabular-nums text-fg sm:text-5xl">
-                        {homeScore}
-                      </span>
-                      <span className="text-2xl text-muted">-</span>
-                      <span className="text-4xl font-bold tabular-nums text-fg sm:text-5xl">
-                        {awayScore}
-                      </span>
+                    <div className="flex items-center justify-center gap-4 sm:gap-8">
+                      <div className="flex items-center gap-2 text-right">
+                        <span className="text-base font-medium text-muted sm:text-lg">
+                          {finalMatch.homeName}
+                        </span>
+                        <span className="text-3xl">{finalMatch.homeFlag}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-4xl font-bold tabular-nums text-fg sm:text-5xl">
+                          {homeScore}
+                        </span>
+                        <span className="text-2xl text-muted">-</span>
+                        <span className="text-4xl font-bold tabular-nums text-fg sm:text-5xl">
+                          {awayScore}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-3xl">{finalMatch.awayFlag}</span>
+                        <span className="text-base font-medium text-muted sm:text-lg">
+                          {finalMatch.awayName}
+                        </span>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-3xl">{finalMatch.awayFlag}</span>
-                      <span className="text-base font-medium text-muted sm:text-lg">
-                        {finalMatch.awayName}
-                      </span>
+                    <div className="mt-4 text-center text-sm text-muted">
+                      {new Date(finalMatch.date).toLocaleDateString("en-US", {
+                        month: "long",
+                        day: "numeric",
+                        year: "numeric"
+                      })}
                     </div>
                   </div>
-                  <div className="mt-4 text-center text-sm text-muted">
-                    {new Date(finalMatch.date).toLocaleDateString("en-US", {
-                      month: "long",
-                      day: "numeric",
-                      year: "numeric"
-                    })}
+                </>
+              );
+            })()
+          ) : latestMatch && latestMatch.homeScore !== null && latestMatch.awayScore !== null ? (
+            /* Tournament complete but no Final match data available - infer champion from latest match */
+            (() => {
+              const homeScore = latestMatch.homeScore as number;
+              const awayScore = latestMatch.awayScore as number;
+              const champion = homeScore > awayScore ? latestMatch.homeName : latestMatch.awayName;
+              const runnerUp = homeScore > awayScore ? latestMatch.awayName : latestMatch.homeName;
+
+              return (
+                <>
+                  <HeroBanner
+                    sport="worldcup"
+                    title="World Cup 2026"
+                    subtitle="FIFA World Cup 2026 · Tournament Complete"
+                    stats={[
+                      { label: "Champion", value: champion },
+                      { label: "Runner-up", value: runnerUp },
+                      { label: "Final Score", value: `${homeScore}-${awayScore}` },
+                    ]}
+                  />
+                  <div className="my-6 rounded-2xl border border-trophy/30 bg-gradient-to-br from-trophy/10 to-surface p-6">
+                    <div className="mb-4 flex items-center gap-2">
+                      <span className="text-2xl">🏆</span>
+                      <h2 className="text-xl font-bold text-fg">Final Result</h2>
+                    </div>
+                    <div className="flex items-center justify-center gap-4 sm:gap-8">
+                      <div className="flex items-center gap-2 text-right">
+                        <span className="text-base font-medium text-muted sm:text-lg">
+                          {latestMatch.homeName}
+                        </span>
+                        <span className="text-3xl">{latestMatch.homeFlag}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-4xl font-bold tabular-nums text-fg sm:text-5xl">
+                          {homeScore}
+                        </span>
+                        <span className="text-2xl text-muted">-</span>
+                        <span className="text-4xl font-bold tabular-nums text-fg sm:text-5xl">
+                          {awayScore}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-3xl">{latestMatch.awayFlag}</span>
+                        <span className="text-base font-medium text-muted sm:text-lg">
+                          {latestMatch.awayName}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="mt-4 text-center text-sm text-muted">
+                      {new Date(latestMatch.date).toLocaleDateString("en-US", {
+                        month: "long",
+                        day: "numeric",
+                        year: "numeric"
+                      })} · {latestMatch.statusDetail}
+                    </div>
                   </div>
-                </div>
-              </>
-            );
-          })()
+                </>
+              );
+            })()
+          ) : (
+            /* Fallback: no match data available */
+            <HeroBanner
+              sport="worldcup"
+              title="World Cup 2026"
+              subtitle="FIFA World Cup 2026 · Tournament Complete"
+              stats={[
+                { label: "Matches Completed", value: String(snapshot.matches.filter((m) => m.state === "post").length) },
+                { label: "Total Matches", value: String(snapshot.matches.length) },
+              ]}
+            />
+          )
         ) : isFinalsWeek && finalMatch ? (
           /* Finals Week: Special celebration hero */
           <>

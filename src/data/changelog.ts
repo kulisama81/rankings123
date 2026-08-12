@@ -14,6 +14,12 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-08-12",
+    title: "World Cup Tournament Status Fixed",
+    description: "World Cup page now correctly shows 'Tournament Complete' status with champion and final results, instead of misleading 'Live' status after the tournament concluded.",
+    area: "worldcup",
+  },
+  {
+    date: "2026-08-12",
     title: "ATP Live Pagination Restored",
     description: "Fixed missing pagination on ATP Live rankings. Now showing 100+ players with page navigation controls (50 players per page), ensuring access to the full ranking depth even when primary data feed is unavailable.",
     area: "tennis",
