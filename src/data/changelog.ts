@@ -14,6 +14,12 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-08-12",
+    title: "Cycling Race Status Detection Fixed",
+    description: "Fixed cycling race status accuracy. Races now correctly display as 'active', 'upcoming', or 'complete' based on current date, even when live data feeds are temporarily unavailable. No more races showing as 'in progress' after they've ended.",
+    area: "cycling",
+  },
+  {
+    date: "2026-08-12",
     title: "World Cup Tournament Status Fixed",
     description: "World Cup page now correctly shows 'Tournament Complete' status with champion and final results, instead of misleading 'Live' status after the tournament concluded.",
     area: "worldcup",
