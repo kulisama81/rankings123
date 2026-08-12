@@ -1,6 +1,6 @@
 ---
 id: deploy-failed
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-01T05:45:01.828Z
@@ -24,3 +24,9 @@ then close this.** Do not close while the tip commit's Vercel status is still fa
 - 2026-08-12T02:45:02.279Z: tip 4ab4f4b = failure
 - 2026-08-01T06:45:01.874Z: tip 5ee8756 = failure
 - 2026-08-01T05:45:01.828Z: tip 67b2962 = failure
+
+## Notes
+
+**2026-08-12T16:30:00Z**
+
+2026-08-12T16:30:00Z: **RESOLVED** — Verified current HEAD (822e939) has Vercel status = success. The failing commit (4ab4f4b) has been superseded by subsequent commits that deploy cleanly. Build passing locally (`npm run build` → clean) and production site is live. No action needed; issue self-resolved.

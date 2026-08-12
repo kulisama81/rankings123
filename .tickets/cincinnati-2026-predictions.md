@@ -1,6 +1,6 @@
 ---
 id: cincinnati-2026-predictions
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-01T14:00:00Z
