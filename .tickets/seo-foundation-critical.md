@@ -15,23 +15,6 @@ tags: [seo, traffic, critical]
 
 **ROOT CAUSE:** Missing SEO foundation — no robots.txt, no sitemap.xml. Google doesn't know what to crawl or what exists.
 
-## FIRST-PRINCIPLES IMPACT
-
-**Traffic = SEO prerequisite:**
-- Current: 0 organic clicks, 43 users in 28 days (essentially zero traffic)
-- ALL growth strategy (content, features, monetization) is WASTED without traffic
-- SEO foundation = unlock Google indexing = unlock organic traffic
-
-**Competitor comparison:**
-- live-tennis.eu: properly indexed, ranks page 1 for "live tennis rankings"
-- rankings123.com: 2 impressions, position 29 (page 3, invisible)
-- **We have good content (ATP Live, WTA Live, World Cup) but Google doesn't see it**
-
-**Every day without SEO foundation = cumulative ranking damage:**
-- Google freshness signal: new content ranks faster than old content
-- We're publishing good pages (Cincinnati coverage, US Open prep) that will NEVER rank if Google doesn't index them
-- Clock is ticking — US Open Aug 30, we MUST be indexed and ranking by then
-
 ## Acceptance Criteria
 
 ### 1. robots.txt (`/public/robots.txt`)
@@ -82,6 +65,23 @@ Check all pages have:
 
 Fix any missing/duplicate meta tags.
 
+## FIRST-PRINCIPLES IMPACT
+
+**Traffic = SEO prerequisite:**
+- Current: 0 organic clicks, 43 users in 28 days (essentially zero traffic)
+- ALL growth strategy (content, features, monetization) is WASTED without traffic
+- SEO foundation = unlock Google indexing = unlock organic traffic
+
+**Competitor comparison:**
+- live-tennis.eu: properly indexed, ranks page 1 for "live tennis rankings"
+- rankings123.com: 2 impressions, position 29 (page 3, invisible)
+- **We have good content (ATP Live, WTA Live, World Cup) but Google doesn't see it**
+
+**Every day without SEO foundation = cumulative ranking damage:**
+- Google freshness signal: new content ranks faster than old content
+- We're publishing good pages (Cincinnati coverage, US Open prep) that will NEVER rank if Google doesn't index them
+- Clock is ticking — US Open Aug 30, we MUST be indexed and ranking by then
+
 ## Impact Estimate
 
 - **Current state:** 0 organic clicks, invisible to Google
@@ -98,3 +98,9 @@ Fix any missing/duplicate meta tags.
 Every day of delay = ranking position damage (Google penalizes late-indexed content vs fresh-indexed).
 
 **ROI:** 10/10 — LOW effort (2-4 hours), INFINITE impact (unlocks all organic traffic, prerequisite for growth)
+
+## Notes
+
+**2026-08-12T00:04:02Z**
+
+2026-08-11: Planner review — robots.txt ✅ (live at /robots.txt), sitemap.xml ✅ (476 URLs at /sitemap.xml), dynamic meta tags ✅ (all major pages have generateMetadata). BLOCKED: Google Search Console submission requires human login. Consider marking as needs-human-handoff or splitting into separate ticket.
