@@ -13,6 +13,12 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-08-13",
+    title: "Simplified Homepage Navigation",
+    description: "Redesigned homepage with unified Sports Hub that makes it faster to find live events. Clear 3-tier layout shows what's live now (prominent at top), upcoming tournaments, and off-season sports. Filter by sport type (Tennis, Football, Cycling) or show only live events. Reduces cognitive load from duplicate sections and gets you to the action in half the clicks.",
+    area: "site",
+  },
+  {
     date: "2026-08-20",
     title: "ATP and WTA Doubles Rankings Added",
     description: "Complete doubles rankings now available for both ATP and WTA tours. Track the top 100 men's and women's doubles teams with live points, rank movement, and team pairings. Fills a critical parity gap with competitors and establishes Rankings123 as a comprehensive tennis rankings destination.",
