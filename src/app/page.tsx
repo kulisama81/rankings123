@@ -37,34 +37,7 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-// Show cycling when ANY Grand Tour is active or upcoming (within 7 days)
-// Checks race dates from the cycling races config
-async function isCyclingActive(): Promise<boolean> {
-  try {
-    const { getCyclingRaces, getPrimaryRace } = await import("@/lib/cyclingFeed");
-    const races = await getCyclingRaces();
-    const primary = getPrimaryRace(races);
-
-    if (!primary) return false;
-
-    // Show if race is active OR upcoming within 7 days
-    if (primary.raceStatus === "active") return true;
-
-    if (primary.raceStatus === "upcoming") {
-      const now = new Date();
-      const start = new Date(primary.metadata.startDate);
-      const daysUntilStart = (start.getTime() - now.getTime()) / (1000 * 60 * 60 * 24);
-      return daysUntilStart <= 7; // Show 7 days before race
-    }
-
-    return false;
-  } catch {
-    return false;
-  }
-}
-
 export default async function HomePage() {
-  const showCycling = await isCyclingActive();
 
   // Get primary cycling race for dynamic label
   let cyclingLabel = "Cycling";
@@ -91,11 +64,8 @@ export default async function HomePage() {
     { href: "/cycling", label: cyclingLabel, sub: cyclingSub, sport: "cycling", isLive: true },
   ];
 
-  // Filter sport links based on active events
-  const activeLinks = allSportLinks.filter(link => {
-    if (link.sport === "cycling") return showCycling;
-    return true;
-  });
+  // All sport links are shown year-round (cycling page handles "no races" case gracefully)
+  const activeLinks = allSportLinks;
 
   // Sort: live cards first, then non-live
   const sortedLinks = [...activeLinks].sort((a, b) => {
