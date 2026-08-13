@@ -14,6 +14,12 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-08-12",
+    title: "Homepage Live Rankings Preview",
+    description: "Homepage now shows live ranking previews before you click through. See top 5 ATP/WTA players with current points and movement, plus top 3 World Cup Golden Boot scorers, all updating automatically every 3 minutes. Each preview shows 'Updated X ago' timestamps and links directly to full rankings.",
+    area: "all",
+  },
+  {
+    date: "2026-08-12",
     title: "Real-Time Data Indicators",
     description: "Rankings now show exactly how fresh your data is. Every table displays 'Updated 2m ago' timestamps that update every minute, plus an 'Updating...' badge during live refreshes. New data source badges (ESPN Live, UTS Rankings, Official WTA) with pulsing indicators when matches are in play. Toggle auto-refresh on/off to control updates. Screen readers announce changes for full accessibility.",
     area: "all",

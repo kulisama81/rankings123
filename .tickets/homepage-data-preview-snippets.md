@@ -1,7 +1,6 @@
 ---
 id: homepage-data-preview-snippets
-title: Homepage live data preview snippets (show value before click)
-status: open
+status: closed
 deps: []
 links: [homepage-engagement-crisis]
 created: 2026-07-12T13:50:00Z
@@ -9,11 +8,25 @@ type: feature
 priority: 1
 parent: rankings123
 tags: [homepage, engagement, ux, bounce-rate]
+title: Homepage live data preview snippets (show value before click)
 ---
+# Untitled ticket
 
 # Homepage live data preview snippets (show value before click)
 
 Fix the 71.4% homepage bounce rate by showing PREVIEW DATA before users click through. Research insight: "No sample data shown: Visitors can't preview what 'live rankings' looks like" — users leave because they can't see the value.
+
+## Acceptance Criteria
+
+- [ ] Top 5 ATP Live rankings shown on homepage (rank, player, country, points, change)
+- [ ] Top 5 WTA Live rankings shown on homepage (same format)
+- [ ] Top 3 World Cup Golden Boot shown on homepage
+- [ ] Live match ticker if any matches in progress (tennis or WC)
+- [ ] "Updated X minutes ago" timestamp under each preview
+- [ ] "View full rankings →" CTA links to detailed pages
+- [ ] Mobile-optimized cards (stack vertically on mobile)
+- [ ] Data refreshes automatically (client-side polling or SSR revalidation)
+- [ ] Independent verifier confirms: Value is VISIBLE without clicking
 
 ## Root Problem
 
@@ -94,18 +107,6 @@ Under each preview:
 - Reduce homepage bounce from 71.4% → <50% (match World Cup page at 41.7%)
 - Increase homepage → content page CTR by 40%+ (more users click "View full rankings")
 - Increase avg session duration from 22.7s → 45s+
-
-## Acceptance Criteria
-
-- [ ] Top 5 ATP Live rankings shown on homepage (rank, player, country, points, change)
-- [ ] Top 5 WTA Live rankings shown on homepage (same format)
-- [ ] Top 3 World Cup Golden Boot shown on homepage
-- [ ] Live match ticker if any matches in progress (tennis or WC)
-- [ ] "Updated X minutes ago" timestamp under each preview
-- [ ] "View full rankings →" CTA links to detailed pages
-- [ ] Mobile-optimized cards (stack vertically on mobile)
-- [ ] Data refreshes automatically (client-side polling or SSR revalidation)
-- [ ] Independent verifier confirms: Value is VISIBLE without clicking
 
 ## ROI Justification
 
