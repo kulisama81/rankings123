@@ -11,12 +11,6 @@ with future plans for cycling and Olympics. Live in production at **https://rank
 
 ## CURRENT PRIORITY — growth phases
 
-**⏱ TIME-SENSITIVE (overrides the split below): the FIFA World Cup 2026 is LIVE**
-(through ~July 19, 2026) — a short-lived traffic spike we must capture now. The **planner
-spends ≥ half its capacity on World Cup** (`worldcup`-tagged tickets) every run until the
-tournament ends; **autoresearch keeps the World Cup backlog stocked**. The remaining capacity
-goes to the phases below.
-
 1. **Phase 1 — PARITY (now): match and then exceed live-tennis.eu's feature set ASAP** so we are
    a credible competitive product. Parity features outrank everything else until done.
 2. **Phase 2 — Differentiate:** build what competitors lack (advanced stats, more sports/events,
@@ -25,6 +19,10 @@ goes to the phases below.
    **plus sports betting/odds affiliates** (highest RPM for a sports audience).
 
 Autoresearch + planner should drive Phase 1 to done first, then weight Phase 2/3.
+
+**Tournament windows** (time-sensitive): When major tournaments are active or upcoming (US Open
+Aug 27-Sep 13, Cincinnati Open Aug 11-23, Vuelta Aug 22-Sep 13), prioritize tournament-specific
+content for SEO and betting revenue capture.
 
 ## Tech stack
 - **Next.js 16 (App Router)** · TypeScript · Tailwind CSS v4
