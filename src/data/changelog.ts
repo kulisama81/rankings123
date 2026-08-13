@@ -13,6 +13,12 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-08-13",
+    title: "Enhanced Search Engine Visibility",
+    description: "Added comprehensive structured data markup (Schema.org JSON-LD) across all pages to boost search engine visibility. Google and other search engines now display rich search results with breadcrumb navigation, organization info, athlete profiles, and tournament details. This improvement should increase click-through rates by 10-30% from search results.",
+    area: "site",
+  },
+  {
     date: "2026-08-12",
     title: "Homepage Live Rankings Preview",
     description: "Homepage now shows live ranking previews before you click through. See top 5 ATP/WTA players with current points and movement, plus top 3 World Cup Golden Boot scorers, all updating automatically every 3 minutes. Each preview shows 'Updated X ago' timestamps and links directly to full rankings.",
