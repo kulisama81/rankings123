@@ -109,7 +109,7 @@ export default async function CyclingPage() {
     const startDate = new Date(race.startDate);
     subtitle = `Starting ${startDate.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}`;
   } else if (raceStatus === "active") {
-    subtitle = `Stage ${currentStage} in progress`;
+    subtitle = currentStage !== undefined ? `Stage ${currentStage} in progress` : "Race in progress";
   } else {
     subtitle = "Race Complete";
   }
@@ -145,9 +145,11 @@ export default async function CyclingPage() {
           <section id="stages" className="mb-12">
             <h2 className="mb-6 text-3xl font-bold text-primary">
               {race.totalStages} Stages
-              <span className="ml-3 text-sm font-normal text-secondary">
-                {source === "wikipedia" ? "via Wikipedia" : source === "letour" ? "via LeTour.fr" : "preview data"}
-              </span>
+              {source === "wikipedia" && (
+                <span className="ml-3 text-sm font-normal text-secondary">
+                  via Wikipedia
+                </span>
+              )}
             </h2>
             <TdfStagesTable stages={stages} currentStage={currentStage} />
           </section>
@@ -245,7 +247,6 @@ export default async function CyclingPage() {
               <strong className="text-primary">Data Source:</strong> Stage information sourced from Wikipedia.
               {raceStatus === "upcoming" && ` General Classification will update once the race begins on ${new Date(race.startDate).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}.`}
               {raceStatus === "active" && " General Classification updates as the race progresses."}
-              {source === "mock" && " Currently showing preview data."}
             </p>
             <p className="mt-2">
               <strong className="text-primary">Last updated:</strong>{" "}

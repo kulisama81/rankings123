@@ -69,7 +69,7 @@ export default function TdfJerseys({ jerseys, raceStatus }: TdfJerseysProps) {
             </div>
             {preRace ? (
               <div className="mt-3 text-xs text-muted">
-                Race starts July 4, 2026
+                Leaders determined after Stage 1
               </div>
             ) : jersey.rider ? (
               <>
@@ -86,9 +86,7 @@ export default function TdfJerseys({ jerseys, raceStatus }: TdfJerseysProps) {
                 )}
               </>
             ) : (
-              <div className="mt-3 text-xs text-muted">
-                Leader will be determined
-              </div>
+              <div className="mt-3 h-6"></div>
             )}
           </div>
         );

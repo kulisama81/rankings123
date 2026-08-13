@@ -336,21 +336,24 @@ export async function getCyclingRaces(
 
 /**
  * Get the single most relevant race for the homepage/main cycling section.
- * Priority: active > upcoming (soonest) > complete (most recent) > archived
+ * Priority: active (with real data) > upcoming > complete (most recent) > archived
+ * CX-FIRST: Never show a race as "active" if we only have mock data.
  */
 export function getPrimaryRace(
   races: CyclingRaceSnapshot[]
 ): CyclingRaceSnapshot | null {
   if (races.length === 0) return null;
 
-  // First, try to find an active race
-  const active = races.filter((r) => r.raceStatus === "active");
-  if (active.length > 0) {
+  // First, try to find an active race WITH REAL DATA (not mock)
+  const activeWithData = races.filter(
+    (r) => r.raceStatus === "active" && r.source !== "mock"
+  );
+  if (activeWithData.length > 0) {
     // Return the one with the highest current stage (most advanced)
-    return active.sort((a, b) => (b.currentStage || 0) - (a.currentStage || 0))[0];
+    return activeWithData.sort((a, b) => (b.currentStage || 0) - (a.currentStage || 0))[0];
   }
 
-  // No active race, find the next upcoming race (soonest start)
+  // No active race with data, find the next upcoming race
   const upcoming = races.filter((r) => r.raceStatus === "upcoming");
   if (upcoming.length > 0) {
     return upcoming.sort(
@@ -360,18 +363,21 @@ export function getPrimaryRace(
     )[0];
   }
 
-  // No active or upcoming, return most recent completed race
+  // No active or upcoming, return most recent completed race (prefer real data)
   const complete = races.filter((r) => r.raceStatus === "complete");
   if (complete.length > 0) {
-    return complete.sort(
+    const completeWithData = complete.filter((r) => r.source !== "mock");
+    const racesToSort = completeWithData.length > 0 ? completeWithData : complete;
+    return racesToSort.sort(
       (a, b) =>
         new Date(b.metadata.endDate).getTime() -
         new Date(a.metadata.endDate).getTime()
     )[0];
   }
 
-  // Fallback to any race
-  return races[0];
+  // Fallback: return first race with real data, or any race
+  const withData = races.filter((r) => r.source !== "mock");
+  return withData.length > 0 ? withData[0] : races[0];
 }
 
 /**
