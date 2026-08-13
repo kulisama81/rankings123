@@ -56,6 +56,19 @@ export interface PersonAthleteSchema {
   url?: string;
 }
 
+export interface FAQPageSchema {
+  "@context": "https://schema.org";
+  "@type": "FAQPage";
+  mainEntity: Array<{
+    "@type": "Question";
+    name: string;
+    acceptedAnswer: {
+      "@type": "Answer";
+      text: string;
+    };
+  }>;
+}
+
 export interface WebSiteSchema {
   "@context": "https://schema.org";
   "@type": "WebSite";
@@ -201,6 +214,26 @@ export function generateAthleteSchema({
     ...(nationality && { nationality }),
     ...(description && { description }),
     ...(url && { url: `https://rankings123.com${url}` }),
+  };
+}
+
+/**
+ * Generate FAQPage schema for ranking pages
+ */
+export function generateFAQSchema(
+  questions: Array<{ question: string; answer: string }>
+): FAQPageSchema {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: questions.map((q) => ({
+      "@type": "Question",
+      name: q.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: q.answer,
+      },
+    })),
   };
 }
 

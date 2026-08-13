@@ -4,7 +4,11 @@ import LiveRankingView from "@/components/LiveRankingView";
 import YouTubeHighlights from "@/components/YouTubeHighlights";
 import WimbledonCallout from "@/components/WimbledonCallout";
 import { YOUTUBE_HIGHLIGHTS } from "@/config/youtube";
-import { generateBreadcrumbSchema, JsonLd } from "@/lib/structuredData";
+import {
+  generateBreadcrumbSchema,
+  generateFAQSchema,
+  JsonLd,
+} from "@/lib/structuredData";
 
 // ISR with 60s revalidation — searchParams handled client-side in LiveRankingTable
 // to avoid build-time suspension. Component renders with default state (all countries)
@@ -57,6 +61,34 @@ export default async function WtaLivePage() {
     { name: "WTA Live Rankings" },
   ]);
 
+  const faqSchema = generateFAQSchema([
+    {
+      question: "How are WTA rankings calculated?",
+      answer:
+        "WTA rankings use a rolling 52-week system based on a player's best 16 tournament results. Points are awarded by tournament category (Grand Slams, WTA 1000, 500, 250) and round reached. Rankings update every Monday after tournament completion.",
+    },
+    {
+      question: "How often do WTA live rankings update?",
+      answer:
+        "WTA live rankings update in real-time during tournament matches. As players advance or are eliminated, their point totals and rankings recalculate instantly. Official rankings are published weekly on Monday mornings.",
+    },
+    {
+      question: "What is the WTA Race ranking?",
+      answer:
+        "The WTA Race to the Finals tracks year-to-date points earned in the current calendar year. It determines qualification for the WTA Finals in November. Unlike the standard WTA ranking (52-week rolling), the Race resets to zero on January 1st each year.",
+    },
+    {
+      question: "What does 'in play' mean in WTA rankings?",
+      answer:
+        "'In play' indicates a player is currently competing in an active tournament. Their ranking and points may change based on their performance. The system shows live point estimates based on their current round progress.",
+    },
+    {
+      question: "How many tournaments count toward WTA rankings?",
+      answer:
+        "A player's WTA ranking is based on their best 16 tournament results over the rolling 52-week period. This includes mandatory Premier events and Grand Slams (for top players) plus the player's next best results.",
+    },
+  ]);
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebPage",
@@ -72,6 +104,7 @@ export default async function WtaLivePage() {
     <>
       <JsonLd data={jsonLd} />
       <JsonLd data={breadcrumbSchema} />
+      <JsonLd data={faqSchema} />
       <div data-sport="wta">
         <div className="mx-auto max-w-6xl px-4 pt-4 sm:px-6 lg:px-8">
           <div className="mb-4">

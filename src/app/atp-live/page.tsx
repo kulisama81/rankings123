@@ -4,7 +4,11 @@ import LiveRankingView from "@/components/LiveRankingView";
 import YouTubeHighlights from "@/components/YouTubeHighlights";
 import WimbledonCallout from "@/components/WimbledonCallout";
 import { YOUTUBE_HIGHLIGHTS } from "@/config/youtube";
-import { generateBreadcrumbSchema, JsonLd } from "@/lib/structuredData";
+import {
+  generateBreadcrumbSchema,
+  generateFAQSchema,
+  JsonLd,
+} from "@/lib/structuredData";
 
 // ISR with 60s revalidation — searchParams handled client-side in LiveRankingTable
 // to avoid build-time suspension. Component renders with default state (all countries)
@@ -57,6 +61,34 @@ export default async function AtpLivePage() {
     { name: "ATP Live Rankings" },
   ]);
 
+  const faqSchema = generateFAQSchema([
+    {
+      question: "How are ATP rankings calculated?",
+      answer:
+        "ATP rankings are calculated using a rolling 52-week system based on a player's best 18 tournament results. Points are awarded based on tournament tier (Grand Slams, Masters 1000, ATP 500/250) and round reached. Rankings update every Monday after tournament completion.",
+    },
+    {
+      question: "How often do ATP live rankings update?",
+      answer:
+        "ATP live rankings update in real-time during tournament matches. As players win or lose matches, their point totals and rankings are recalculated instantly. Official rankings are published weekly on Monday mornings.",
+    },
+    {
+      question: "What is the ATP Race ranking?",
+      answer:
+        "The ATP Race to Turin (formerly Race to London) tracks year-to-date points earned in the current calendar year. It determines qualification for the ATP Finals in November. Unlike the standard ATP ranking (52-week rolling), the Race resets to zero on January 1st each year.",
+    },
+    {
+      question: "What does 'in play' mean in ATP rankings?",
+      answer:
+        "'In play' indicates a player is currently competing in an active tournament. Their ranking and points may change based on their performance. The system shows live point estimates based on their current round progress.",
+    },
+    {
+      question: "How many tournaments count toward ATP rankings?",
+      answer:
+        "A player's ATP ranking is based on their best 18 tournament results over the rolling 52-week period. This includes mandatory events (Grand Slams and Masters 1000 for top players) plus the player's next best results.",
+    },
+  ]);
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebPage",
@@ -72,6 +104,7 @@ export default async function AtpLivePage() {
     <>
       <JsonLd data={jsonLd} />
       <JsonLd data={breadcrumbSchema} />
+      <JsonLd data={faqSchema} />
       <div data-sport="atp">
         <div className="mx-auto max-w-6xl px-4 pt-4 sm:px-6 lg:px-8">
           <div className="mb-4">
