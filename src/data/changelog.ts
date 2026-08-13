@@ -13,6 +13,12 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-08-13",
+    title: "Cycling Pages Quality Improvements",
+    description: "Fixed display issues on cycling pages when race data is temporarily unavailable. Removed all placeholder text and broken 'Stage undefined' messages. Cycling pages now gracefully handle data unavailability without showing confusing placeholder content to visitors.",
+    area: "cycling",
+  },
+  {
     date: "2026-08-20",
     title: "ATP and WTA Doubles Rankings Added",
     description: "Complete doubles rankings now available for both ATP and WTA tours. Track the top 100 men's and women's doubles teams with live points, rank movement, and team pairings. Fills a critical parity gap with competitors and establishes Rankings123 as a comprehensive tennis rankings destination.",
