@@ -25,6 +25,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   const { metadata: race, raceStatus, gc } = primaryRace;
   const isComplete = raceStatus === "complete" || raceStatus === "archived";
+  const isUpcoming = raceStatus === "upcoming";
   const now = new Date();
   const month = now.toLocaleString("en-US", { month: "long" });
   const year = now.getFullYear();
@@ -35,10 +36,14 @@ export async function generateMetadata(): Promise<Metadata> {
 
   const title = isComplete
     ? `${race.name} Final Results — ${leader?.name || "Champion"} Wins`
+    : isUpcoming
+    ? `${race.name} — Starting ${new Date(race.startDate).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}`
     : `${race.name} ${month} — ${leaderName}`;
 
   const description = isComplete
     ? `${race.name} final results: ${leader?.name || "Winner"} wins. Complete stage results, final GC standings, and race recap.`
+    : isUpcoming
+    ? `Upcoming ${race.name}: Starts ${new Date(race.startDate).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}. Preview the ${race.totalStages}-stage route with stage details, climb profiles, and race favorites.`
     : `Live ${race.name} ${month} ${year}: ${leaderName}. Real-time stage results, GC standings, and jersey leaders updated daily.`;
 
   return {
