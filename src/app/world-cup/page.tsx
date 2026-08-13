@@ -11,6 +11,11 @@ import WorldCupCountdown from "@/components/WorldCupCountdown";
 import PostEventDiscovery from "@/components/PostEventDiscovery";
 import WorldCupFinalsHero from "@/components/WorldCupFinalsHero";
 import WorldCupFinalsMobileBadge from "@/components/WorldCupFinalsMobileBadge";
+import {
+  generateBreadcrumbSchema,
+  generateSportsEventSchema,
+  JsonLd,
+} from "@/lib/structuredData";
 
 // Lazy-load below-the-fold components to reduce initial bundle size
 const WorldCupBracket = dynamic(() => import("@/components/WorldCupBracket"), {
@@ -83,22 +88,40 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export const revalidate = 60; // ISR: 1 minute cache
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  name: "World Cup 2026 Live — Group Standings & Results — Rankings123",
-  description:
-    "Live FIFA World Cup 2026 group standings and fixtures updated in real time.",
-  url: "https://rankings123.com/world-cup",
-  inLanguage: "en",
-};
-
 export default async function WorldCupPage() {
   const [snapshot, stats, bracket] = await Promise.all([
     getWorldCupData(),
     getWorldCupStats(),
     getWorldCupBracket(),
   ]);
+
+  // Structured data for SEO
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", url: "/" },
+    { name: "World Cup 2026" },
+  ]);
+
+  const sportsEventSchema = generateSportsEventSchema({
+    name: "FIFA World Cup 2026",
+    description:
+      "Live FIFA World Cup 2026 group standings, knockout bracket, and match results.",
+    startDate: "2026-06-11",
+    endDate: "2026-07-19",
+    location: { name: "United States, Canada, Mexico", country: "US" },
+    sport: "Soccer",
+    organizer: "FIFA",
+  });
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "World Cup 2026 Live — Group Standings & Results — Rankings123",
+    description:
+      "Live FIFA World Cup 2026 group standings and fixtures updated in real time.",
+    url: "https://rankings123.com/world-cup",
+    inLanguage: "en",
+    breadcrumb: breadcrumbSchema,
+  };
 
   // Build section nav dynamically based on what's visible
   const today = new Date().toDateString();
@@ -153,10 +176,9 @@ export default async function WorldCupPage() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <JsonLd data={jsonLd} />
+      <JsonLd data={breadcrumbSchema} />
+      <JsonLd data={sportsEventSchema} />
       <div data-sport="worldcup" className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
         {/* Tournament Complete: Show final results hero */}
         {isTournamentComplete ? (

@@ -3,6 +3,7 @@ import { getRaceData } from "@/lib/raceFeed";
 import LiveRankingView from "@/components/LiveRankingView";
 import YouTubeHighlights from "@/components/YouTubeHighlights";
 import { YOUTUBE_HIGHLIGHTS } from "@/config/youtube";
+import { generateBreadcrumbSchema, JsonLd } from "@/lib/structuredData";
 
 export const revalidate = 60;
 
@@ -43,21 +44,30 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  name: "ATP Race to Turin — Rankings123",
-  description:
-    "ATP Race to Turin: Year-to-date points rankings for ATP Finals qualification.",
-  url: "https://rankings123.com/atp-race",
-  inLanguage: "en",
-};
-
 export default async function AtpRacePage() {
   const snapshot = await getRaceData("atp");
 
+  // Structured data for SEO
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", url: "/" },
+    { name: "ATP Race to Turin" },
+  ]);
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "ATP Race to Turin — Rankings123",
+    description:
+      "ATP Race to Turin: Year-to-date points rankings for ATP Finals qualification.",
+    url: "https://rankings123.com/atp-race",
+    inLanguage: "en",
+    breadcrumb: breadcrumbSchema,
+  };
+
   return (
     <>
+      <JsonLd data={jsonLd} />
+      <JsonLd data={breadcrumbSchema} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

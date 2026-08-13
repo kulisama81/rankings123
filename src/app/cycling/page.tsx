@@ -6,6 +6,11 @@ import TdfStagesTable from "@/components/TdfStagesTable";
 import TdfGCTable from "@/components/TdfGCTable";
 import TdfJerseys from "@/components/TdfJerseys";
 import Link from "next/link";
+import {
+  generateBreadcrumbSchema,
+  generateSportsEventSchema,
+  JsonLd,
+} from "@/lib/structuredData";
 
 export async function generateMetadata(): Promise<Metadata> {
   const races = await getCyclingRaces();
@@ -66,6 +71,22 @@ export default async function CyclingPage() {
 
   const { metadata: race, raceStatus, currentStage, jerseys, stages, gc, source } = primaryRace;
 
+  // Structured data for SEO
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", url: "/" },
+    { name: "Cycling" },
+  ]);
+
+  const sportsEventSchema = generateSportsEventSchema({
+    name: race.name,
+    description: `Live ${race.name} stage results and General Classification standings.`,
+    startDate: race.startDate,
+    endDate: race.endDate,
+    location: { name: race.country || "France" },
+    sport: "Cycling",
+    organizer: "ASO",
+  });
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebPage",
@@ -73,6 +94,7 @@ export default async function CyclingPage() {
     description: `Live ${race.name} stage schedule and General Classification standings updated in real time.`,
     url: "https://rankings123.com/cycling",
     inLanguage: "en",
+    breadcrumb: breadcrumbSchema,
   };
 
   const sections = [
@@ -94,10 +116,9 @@ export default async function CyclingPage() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <JsonLd data={jsonLd} />
+      <JsonLd data={breadcrumbSchema} />
+      <JsonLd data={sportsEventSchema} />
       <div className="min-h-screen bg-base">
         <HeroBanner
           sport="cycling"

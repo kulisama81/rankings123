@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getWtaDeepRankingData } from "@/lib/wtaDeepRanking";
 import AtpDeepRankingTable from "@/components/AtpDeepRankingTable";
 import HeroBanner from "@/components/HeroBanner";
+import { generateBreadcrumbSchema, JsonLd } from "@/lib/structuredData";
 
 export const metadata: Metadata = {
   title: "WTA Rankings — Full Women's Tennis Ranking",
@@ -19,21 +20,28 @@ export const metadata: Metadata = {
 
 export const revalidate = 60; // ISR: 1 minute cache with client-side polling for live updates
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  name: "WTA Rankings — Full Ranking — Rankings123",
-  description:
-    "WTA tennis ranking: official points, rank movement, and career highs.",
-  url: "https://rankings123.com/wta-rankings",
-  inLanguage: "en",
-};
-
 export default async function WtaRankingsPage() {
   const snapshot = await getWtaDeepRankingData();
   const players = snapshot.players;
   const top = players[0];
   const liveCount = players.filter((p) => p.tournament?.active).length;
+
+  // Structured data for SEO
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", url: "/" },
+    { name: "WTA Rankings" },
+  ]);
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "WTA Rankings — Full Ranking — Rankings123",
+    description:
+      "WTA tennis ranking: official points, rank movement, and career highs.",
+    url: "https://rankings123.com/wta-rankings",
+    inLanguage: "en",
+    breadcrumb: breadcrumbSchema,
+  };
 
   const stats = top
     ? [
@@ -46,10 +54,8 @@ export default async function WtaRankingsPage() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <JsonLd data={jsonLd} />
+      <JsonLd data={breadcrumbSchema} />
       <div data-sport="wta" className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
         <HeroBanner
           sport="tennis"

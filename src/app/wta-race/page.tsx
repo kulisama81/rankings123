@@ -3,6 +3,7 @@ import { getRaceData } from "@/lib/raceFeed";
 import LiveRankingView from "@/components/LiveRankingView";
 import YouTubeHighlights from "@/components/YouTubeHighlights";
 import { YOUTUBE_HIGHLIGHTS } from "@/config/youtube";
+import { generateBreadcrumbSchema, JsonLd } from "@/lib/structuredData";
 
 export const revalidate = 60;
 
@@ -43,21 +44,30 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  name: "WTA Race to Finals — Rankings123",
-  description:
-    "WTA Race to Finals: Year-to-date points rankings for WTA Finals qualification.",
-  url: "https://rankings123.com/wta-race",
-  inLanguage: "en",
-};
-
 export default async function WtaRacePage() {
   const snapshot = await getRaceData("wta");
 
+  // Structured data for SEO
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", url: "/" },
+    { name: "WTA Race to Finals" },
+  ]);
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "WTA Race to Finals — Rankings123",
+    description:
+      "WTA Race to Finals: Year-to-date points rankings for WTA Finals qualification.",
+    url: "https://rankings123.com/wta-race",
+    inLanguage: "en",
+    breadcrumb: breadcrumbSchema,
+  };
+
   return (
     <>
+      <JsonLd data={jsonLd} />
+      <JsonLd data={breadcrumbSchema} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

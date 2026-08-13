@@ -4,6 +4,7 @@ import LiveRankingView from "@/components/LiveRankingView";
 import YouTubeHighlights from "@/components/YouTubeHighlights";
 import WimbledonCallout from "@/components/WimbledonCallout";
 import { YOUTUBE_HIGHLIGHTS } from "@/config/youtube";
+import { generateBreadcrumbSchema, JsonLd } from "@/lib/structuredData";
 
 // ISR with 60s revalidation — searchParams handled client-side in LiveRankingTable
 // to avoid build-time suspension. Component renders with default state (all countries)
@@ -47,24 +48,30 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  name: "WTA Live Ranking — Rankings123",
-  description:
-    "Live WTA ranking updated in real time during tournaments: live points, rank movement, and current tournament progress.",
-  url: "https://rankings123.com/wta-live",
-  inLanguage: "en",
-};
-
 export default async function WtaLivePage() {
   const snapshot = await getLiveData("wta");
+
+  // Structured data for SEO
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", url: "/" },
+    { name: "WTA Live Rankings" },
+  ]);
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "WTA Live Ranking — Rankings123",
+    description:
+      "Live WTA ranking updated in real time during tournaments: live points, rank movement, and current tournament progress.",
+    url: "https://rankings123.com/wta-live",
+    inLanguage: "en",
+    breadcrumb: breadcrumbSchema,
+  };
+
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <JsonLd data={jsonLd} />
+      <JsonLd data={breadcrumbSchema} />
       <div data-sport="wta">
         <div className="mx-auto max-w-6xl px-4 pt-4 sm:px-6 lg:px-8">
           <div className="mb-4">

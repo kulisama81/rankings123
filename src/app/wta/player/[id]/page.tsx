@@ -4,6 +4,11 @@ import { fetchWtaDeepRankingSnapshot } from "@/lib/wtaDeepRanking";
 import { findPlayerBySlugOrGuid, getTop200WithSlugs, playerToSlug } from "@/lib/playerSlug";
 import Link from "next/link";
 import type { AtpLivePlayer } from "@/types";
+import {
+  generateAthleteSchema,
+  generateBreadcrumbSchema,
+  JsonLd,
+} from "@/lib/structuredData";
 
 export const revalidate = 60;
 
@@ -134,13 +139,30 @@ export default async function WtaPlayerPage({ params }: Props) {
 
   if (!result) notFound();
 
-  const { player } = result;
+  const { player, slug } = result;
 
   const hasTournament = Boolean(player.tournament);
   const isActiveTournament = player.tournament?.active ?? false;
 
+  // Structured data for SEO
+  const athleteSchema = generateAthleteSchema({
+    name: player.name,
+    sport: "Tennis",
+    description: `WTA tennis player ranked #${player.liveRank} with ${player.livePoints.toLocaleString()} points.`,
+    url: `/wta/player/${slug}`,
+  });
+
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", url: "/" },
+    { name: "WTA Live", url: "/wta-live" },
+    { name: player.name },
+  ]);
+
   return (
-    <div data-sport="wta" className="min-h-screen">
+    <>
+      <JsonLd data={athleteSchema} />
+      <JsonLd data={breadcrumbSchema} />
+      <div data-sport="wta" className="min-h-screen">
       <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
         <Link
           href="/wta-live"
@@ -236,6 +258,7 @@ export default async function WtaPlayerPage({ params }: Props) {
           </div>
         )}
       </div>
-    </div>
+      </div>
+    </>
   );
 }

@@ -9,6 +9,11 @@ import WimbledonCallout from "@/components/WimbledonCallout";
 import FeaturedEventHero from "@/components/FeaturedEventHero";
 import RankShowcase from "@/components/RankShowcase";
 import HomepageRankingsPreview from "@/components/HomepageRankingsPreview";
+import {
+  generateOrganizationSchema,
+  generateWebSiteSchema,
+  JsonLd,
+} from "@/lib/structuredData";
 
 export async function generateMetadata(): Promise<Metadata> {
   const now = new Date();
@@ -74,10 +79,19 @@ export default async function HomePage() {
     return 0;
   });
 
+  // Generate structured data for SEO
+  const organizationSchema = generateOrganizationSchema();
+  const websiteSchema = generateWebSiteSchema();
+
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-      {/* Countdown timer - shows when major event is upcoming (within 24h but not started) */}
-      <UpcomingEventCountdown />
+    <>
+      {/* Structured Data (JSON-LD) for Rich Search Results */}
+      <JsonLd data={organizationSchema} />
+      <JsonLd data={websiteSchema} />
+
+      <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+        {/* Countdown timer - shows when major event is upcoming (within 24h but not started) */}
+        <UpcomingEventCountdown />
 
       {/* SIGNATURE VISUAL ANCHOR - ATP/WTA #1 Rank Showcase with dramatic points display */}
       <RankShowcase />
@@ -122,6 +136,7 @@ export default async function HomePage() {
           ))}
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 }
