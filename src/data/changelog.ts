@@ -13,6 +13,12 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-08-20",
+    title: "US Open 2026 Betting Favorites Guide",
+    description: "Comprehensive betting analysis for the US Open featuring expert predictions on Jannik Sinner, Aryna Sabalenka, Carlos Alcaraz, and Coco Gauff. In-depth form analysis, historical trends, value picks, and strategic betting recommendations for both men's and women's draws. Updated with Cincinnati Open results and ready for the final Grand Slam.",
+    area: "tennis",
+  },
+  {
     date: "2026-08-13",
     title: "FAQ Rich Snippets in Search Results",
     description: "ATP and WTA ranking pages now answer common questions directly in Google search results. FAQ rich snippets display 5 key questions (how rankings are calculated, update frequency, Race rankings, tournament counting) with instant answers, increasing search visibility and click-through rates.",
