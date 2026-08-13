@@ -8,6 +8,7 @@ import LiveTdfWidget from "@/components/LiveTdfWidget";
 import WimbledonCallout from "@/components/WimbledonCallout";
 import FeaturedEventHero from "@/components/FeaturedEventHero";
 import RankShowcase from "@/components/RankShowcase";
+import HomepageRankingsPreview from "@/components/HomepageRankingsPreview";
 
 export async function generateMetadata(): Promise<Metadata> {
   const now = new Date();
@@ -128,6 +129,9 @@ export default async function HomePage() {
 
       {/* Live Tour de France Widget - shows during race (July 4-26, 2026) */}
       <LiveTdfWidget />
+
+      {/* Homepage Rankings Preview - shows top 5 ATP/WTA and top 3 Golden Boot */}
+      <HomepageRankingsPreview />
 
       {/* All Sports Grid - live cards enlarged and float to top */}
       <section className="mb-12">
