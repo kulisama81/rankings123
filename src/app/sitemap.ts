@@ -16,6 +16,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/wta-live`, lastModified: now, changeFrequency: "always", priority: 0.9 },
     { url: `${BASE}/atp-race`, lastModified: now, changeFrequency: "always", priority: 0.9 },
     { url: `${BASE}/wta-race`, lastModified: now, changeFrequency: "always", priority: 0.9 },
+    { url: `${BASE}/atp-doubles`, lastModified: now, changeFrequency: "daily", priority: 0.8 },
+    { url: `${BASE}/wta-doubles`, lastModified: now, changeFrequency: "daily", priority: 0.8 },
     { url: `${BASE}/tournaments/wimbledon-2026`, lastModified: now, changeFrequency: "always", priority: 0.9 },
     { url: `${BASE}/us-open-2026`, lastModified: now, changeFrequency: "always", priority: 0.95 },
     { url: `${BASE}/articles/us-open-2026-betting-favorites`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },

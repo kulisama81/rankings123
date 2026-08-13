@@ -9,7 +9,9 @@ import SportIcon from "./SportIcon";
 
 const tabs = [
   { href: "/atp-live", label: "ATP", sport: "atp", icon: "tennis" as const },
+  { href: "/atp-doubles", label: "ATP Doubles", sport: "atp", icon: "tennis" as const },
   { href: "/wta-live", label: "WTA", sport: "wta", icon: "tennis" as const },
+  { href: "/wta-doubles", label: "WTA Doubles", sport: "wta", icon: "tennis" as const },
   { href: "/world-cup", label: "World Cup", sport: "worldcup", icon: "football" as const },
   { href: "/cycling", label: "Cycling", sport: "cycling", icon: "cycling" as const },
 ];

@@ -14,6 +14,12 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-08-20",
+    title: "ATP and WTA Doubles Rankings Added",
+    description: "Complete doubles rankings now available for both ATP and WTA tours. Track the top 100 men's and women's doubles teams with live points, rank movement, and team pairings. Fills a critical parity gap with competitors and establishes Rankings123 as a comprehensive tennis rankings destination.",
+    area: "tennis",
+  },
+  {
+    date: "2026-08-20",
     title: "US Open 2026 Betting Favorites Guide",
     description: "Comprehensive betting analysis for the US Open featuring expert predictions on Jannik Sinner, Aryna Sabalenka, Carlos Alcaraz, and Coco Gauff. In-depth form analysis, historical trends, value picks, and strategic betting recommendations for both men's and women's draws. Updated with Cincinnati Open results and ready for the final Grand Slam.",
     area: "tennis",
