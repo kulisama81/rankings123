@@ -14,6 +14,12 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-08-13",
+    title: "FAQ Rich Snippets in Search Results",
+    description: "ATP and WTA ranking pages now answer common questions directly in Google search results. FAQ rich snippets display 5 key questions (how rankings are calculated, update frequency, Race rankings, tournament counting) with instant answers, increasing search visibility and click-through rates.",
+    area: "tennis",
+  },
+  {
+    date: "2026-08-13",
     title: "Enhanced Search Engine Visibility",
     description: "Added comprehensive structured data markup (Schema.org JSON-LD) across all pages to boost search engine visibility. Google and other search engines now display rich search results with breadcrumb navigation, organization info, athlete profiles, and tournament details. This improvement should increase click-through rates by 10-30% from search results.",
     area: "site",

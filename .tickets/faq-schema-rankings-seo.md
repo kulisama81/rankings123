@@ -1,6 +1,6 @@
 ---
 id: faq-schema-rankings-seo
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-13T13:51:47Z
