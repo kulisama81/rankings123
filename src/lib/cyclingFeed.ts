@@ -14,8 +14,14 @@ async function fetchWikipediaHtml(
 ): Promise<string> {
   const url = `https://en.wikipedia.org/w/api.php?action=parse&page=${encodeURIComponent(wikipediaPage)}&prop=text&format=json`;
   const res = await fetch(url, {
-    headers: { Accept: "application/json" },
+    headers: {
+      Accept: "application/json",
+      // Wikipedia requires a User-Agent header (https://meta.wikimedia.org/wiki/User-Agent_policy)
+      "User-Agent": "Rankings123/1.0 (https://rankings123.com; loic.deniel@gmail.com)",
+    },
     next: { revalidate: revalidateSeconds },
+    // Add timeout to prevent hanging (10s max)
+    signal: AbortSignal.timeout(10000),
   });
   if (!res.ok) throw new Error(`Wikipedia API → HTTP ${res.status}`);
   const data = await res.json();
