@@ -1,6 +1,6 @@
 ---
 id: doubles-parity-critical
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-09T13:48:34Z
