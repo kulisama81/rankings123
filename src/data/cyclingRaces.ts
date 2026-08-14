@@ -59,24 +59,6 @@ export const CYCLING_RACES: CyclingRaceMetadata[] = [
       { jersey: "white", name: "Young Rider Classification (Maglia Bianca)" },
     ],
   },
-  {
-    id: "tour-de-pologne-2026",
-    name: "Tour de Pologne 2026",
-    year: 2026,
-    wikipediaPage: "2026_Tour_de_Pologne",
-    startDate: "2026-08-09",
-    endDate: "2026-08-15",
-    totalStages: 7,
-    country: "Poland",
-    countryCode: "POL",
-    flag: "🇵🇱",
-    jerseys: [
-      { jersey: "yellow", name: "General Classification" },
-      { jersey: "green", name: "Points Classification" },
-      { jersey: "blue", name: "Mountains Classification" },
-      { jersey: "white", name: "Young Rider Classification" },
-    ],
-  },
 ];
 
 /**
