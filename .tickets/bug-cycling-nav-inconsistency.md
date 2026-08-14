@@ -1,6 +1,6 @@
 ---
 id: bug-cycling-nav-inconsistency
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-06T00:00:00Z
@@ -82,3 +82,9 @@ Cycling shows in header nav but not in homepage 'All Sports' section (when TdF i
    - Check header nav and 'All Sports' section are consistent (cycling in both or neither)
    - Test with different dates if seasonal logic is implemented
    - Confirm Vercel build succeeded
+
+## Notes
+
+**2026-08-14T20:13:45Z**
+
+Already fixed in commit 937e0cd (Aug 12). Cycling now shows year-round in both header nav and homepage Sports Hub. Regression test exists in tests/navigation-consistency.test.mjs.

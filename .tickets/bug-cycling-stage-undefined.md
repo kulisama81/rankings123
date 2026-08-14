@@ -1,6 +1,6 @@
 ---
 id: bug-cycling-stage-undefined
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-12T18:00:00Z
@@ -10,45 +10,6 @@ parent: rankings123
 tags: [bug, cycling, placeholder, cx-first-violation]
 ---
 # Cycling page shows "Stage undefined in progress" placeholder text
-
-## Bug Report
-
-**URL:** https://rankings123.com/cycling
-
-**Severity:** P2 (Medium) - CX-FIRST violation, shows broken placeholder text to users
-
-**Inspection Date:** 2026-08-12
-
-## Description
-
-The cycling page displays **"Stage undefined in progress"** and shows "preview data" placeholder content, violating the CX-FIRST principle: "never ship placeholder, 'coming soon', empty, or fabricated UI to users."
-
-## Specific Issues Found
-
-1. **"Stage undefined in progress"** — broken template string showing "undefined"
-2. **"Leader will be determined"** — placeholder text across all jersey classifications
-3. **"Currently showing preview data"** — explicit admission of placeholder content
-4. Race marked as "Live" but stage details table is empty
-
-## Reproduction Steps
-
-1. Visit https://rankings123.com/cycling (Tour de Pologne 2026 page)
-2. Observe header: "Stage undefined in progress"
-3. See jersey classifications: "Leader will be determined" (4× placeholder)
-4. Read footer: "Currently showing preview data"
-5. **Expected:** Real data OR section hidden until data available
-6. **Actual:** Broken/placeholder content visible to users
-
-## Impact
-
-- Looks broken/unprofessional ("undefined" visible to users)
-- Violates CX-FIRST: showing placeholder instead of hiding incomplete features
-- Confusing: race marked "Live" but shows preview/placeholder data
-
-## Related Tickets
-
-- `cycling-placeholder-violation` (closed) — homepage cycling placeholder issue
-- This is a **new issue** on the cycling detail page itself
 
 ## Acceptance Criteria
 
@@ -93,3 +54,48 @@ The cycling page displays **"Stage undefined in progress"** and shows "preview d
    - Visit https://rankings123.com/cycling
    - No placeholder/broken text visible to users
    - CX-FIRST compliant: real data or feature hidden
+
+## Bug Report
+
+**URL:** https://rankings123.com/cycling
+
+**Severity:** P2 (Medium) - CX-FIRST violation, shows broken placeholder text to users
+
+**Inspection Date:** 2026-08-12
+
+## Description
+
+The cycling page displays **"Stage undefined in progress"** and shows "preview data" placeholder content, violating the CX-FIRST principle: "never ship placeholder, 'coming soon', empty, or fabricated UI to users."
+
+## Specific Issues Found
+
+1. **"Stage undefined in progress"** — broken template string showing "undefined"
+2. **"Leader will be determined"** — placeholder text across all jersey classifications
+3. **"Currently showing preview data"** — explicit admission of placeholder content
+4. Race marked as "Live" but stage details table is empty
+
+## Reproduction Steps
+
+1. Visit https://rankings123.com/cycling (Tour de Pologne 2026 page)
+2. Observe header: "Stage undefined in progress"
+3. See jersey classifications: "Leader will be determined" (4× placeholder)
+4. Read footer: "Currently showing preview data"
+5. **Expected:** Real data OR section hidden until data available
+6. **Actual:** Broken/placeholder content visible to users
+
+## Impact
+
+- Looks broken/unprofessional ("undefined" visible to users)
+- Violates CX-FIRST: showing placeholder instead of hiding incomplete features
+- Confusing: race marked "Live" but shows preview/placeholder data
+
+## Related Tickets
+
+- `cycling-placeholder-violation` (closed) — homepage cycling placeholder issue
+- This is a **new issue** on the cycling detail page itself
+
+## Notes
+
+**2026-08-14T20:12:56Z**
+
+Already fixed in commit 1eb6282 (Aug 13). Regression test exists in tests/cycling-placeholder.test.mjs.

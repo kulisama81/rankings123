@@ -1,6 +1,6 @@
 ---
 id: bug-cycling-wikipedia-cors
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-13T22:00:00Z
@@ -10,61 +10,6 @@ parent: rankings123
 tags: [bug, cycling, cors, api, console-error]
 ---
 # Cycling page makes client-side Wikipedia API calls causing CORS errors
-
-## Bug Report
-
-**URL:** https://rankings123.com/ (homepage) and https://rankings123.com/cycling
-
-**Severity:** P2 (Medium) - Console errors, failed requests, Wikipedia data not loading
-
-**Inspection Date:** 2026-08-13
-
-## Description
-
-The cycling feed in `src/lib/cyclingFeed.ts` makes **client-side fetch calls directly to the Wikipedia API**, which fail with CORS errors because Wikipedia doesn't allow cross-origin requests from browsers. This causes:
-
-1. **Console errors** on every page load that includes cycling data (homepage, cycling page)
-2. **Failed network requests** (3+ per page load for Vuelta, Tour de France, Giro d'Italia)
-3. **Wikipedia data never loads** - cycling race data cannot be fetched from Wikipedia
-
-## Reproduction Steps
-
-1. Open browser developer console (Console + Network tabs)
-2. Visit https://rankings123.com/ (homepage with cycling section)
-3. Observe console errors:
-   ```
-   Access to fetch at 'https://en.wikipedia.org/w/api.php?action=parse&page=2026_Vuelta_a_Espa%C3%B1a&prop=text&format=json' 
-   from origin 'https://rankings123.com' has been blocked by CORS policy: 
-   No 'Access-Control-Allow-Origin' header is present on the requested resource.
-   ```
-4. Check Network tab: 3+ failed requests to `en.wikipedia.org/w/api.php` with CORS errors
-5. **Expected:** Wikipedia API calls succeed and return race data
-6. **Actual:** All Wikipedia API calls fail with CORS errors; data never loads
-
-## Root Cause
-
-**File:** `src/lib/cyclingFeed.ts:15`
-
-```typescript
-async function fetchWikipediaHtml(wikipediaPage: string, revalidateSeconds: number): Promise<string> {
-  const url = `https://en.wikipedia.org/w/api.php?action=parse&page=${encodeURIComponent(wikipediaPage)}&prop=text&format=json`;
-  const res = await fetch(url, {  // ❌ Client-side fetch to Wikipedia API
-    headers: { Accept: "application/json" },
-    next: { revalidate: revalidateSeconds },
-  });
-  // ...
-}
-```
-
-The function is called **client-side** (in a Next.js component or client component), but Wikipedia's API doesn't set `Access-Control-Allow-Origin` headers, so browsers block the requests.
-
-## Impact
-
-- Console pollution with CORS errors on every page load
-- Cycling race data from Wikipedia never loads (always falls back to mock)
-- Unnecessary network traffic (failed requests)
-- Users never see real Wikipedia-sourced race data (Vuelta, Tour de France, Giro stages/GC)
-- Looks unprofessional to developers who check console
 
 ## Acceptance Criteria
 
@@ -124,3 +69,64 @@ The function is called **client-side** (in a Next.js component or client compone
    - Confirm NO CORS errors for Wikipedia API
    - Cycling data loads from Wikipedia (when races are active)
    - `source` flag shows `wikipedia` not `mock`
+
+## Bug Report
+
+**URL:** https://rankings123.com/ (homepage) and https://rankings123.com/cycling
+
+**Severity:** P2 (Medium) - Console errors, failed requests, Wikipedia data not loading
+
+**Inspection Date:** 2026-08-13
+
+## Description
+
+The cycling feed in `src/lib/cyclingFeed.ts` makes **client-side fetch calls directly to the Wikipedia API**, which fail with CORS errors because Wikipedia doesn't allow cross-origin requests from browsers. This causes:
+
+1. **Console errors** on every page load that includes cycling data (homepage, cycling page)
+2. **Failed network requests** (3+ per page load for Vuelta, Tour de France, Giro d'Italia)
+3. **Wikipedia data never loads** - cycling race data cannot be fetched from Wikipedia
+
+## Reproduction Steps
+
+1. Open browser developer console (Console + Network tabs)
+2. Visit https://rankings123.com/ (homepage with cycling section)
+3. Observe console errors:
+   ```
+   Access to fetch at 'https://en.wikipedia.org/w/api.php?action=parse&page=2026_Vuelta_a_Espa%C3%B1a&prop=text&format=json' 
+   from origin 'https://rankings123.com' has been blocked by CORS policy: 
+   No 'Access-Control-Allow-Origin' header is present on the requested resource.
+   ```
+4. Check Network tab: 3+ failed requests to `en.wikipedia.org/w/api.php` with CORS errors
+5. **Expected:** Wikipedia API calls succeed and return race data
+6. **Actual:** All Wikipedia API calls fail with CORS errors; data never loads
+
+## Root Cause
+
+**File:** `src/lib/cyclingFeed.ts:15`
+
+```typescript
+async function fetchWikipediaHtml(wikipediaPage: string, revalidateSeconds: number): Promise<string> {
+  const url = `https://en.wikipedia.org/w/api.php?action=parse&page=${encodeURIComponent(wikipediaPage)}&prop=text&format=json`;
+  const res = await fetch(url, {  // ❌ Client-side fetch to Wikipedia API
+    headers: { Accept: "application/json" },
+    next: { revalidate: revalidateSeconds },
+  });
+  // ...
+}
+```
+
+The function is called **client-side** (in a Next.js component or client component), but Wikipedia's API doesn't set `Access-Control-Allow-Origin` headers, so browsers block the requests.
+
+## Impact
+
+- Console pollution with CORS errors on every page load
+- Cycling race data from Wikipedia never loads (always falls back to mock)
+- Unnecessary network traffic (failed requests)
+- Users never see real Wikipedia-sourced race data (Vuelta, Tour de France, Giro stages/GC)
+- Looks unprofessional to developers who check console
+
+## Notes
+
+**2026-08-14T20:10:58Z**
+
+Ticket diagnosis clarification: Analysis shows Wikipedia API calls were already server-side (API routes + server components), so browser CORS errors were not possible. The actual issue was Wikipedia API timeouts (ETIMEDOUT) during builds. Fixed by adding proper User-Agent header (Wikipedia policy compliance) and 10s timeout to prevent hanging. These improvements enhance API reliability. Regression test confirms architecture remains server-side only.
