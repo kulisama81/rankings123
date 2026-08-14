@@ -27,7 +27,6 @@ interface ShareButtonProps {
 
 export function ShareButton({ type, sport, data, size = "og", variant = "icon" }: ShareButtonProps) {
   const [copied, setCopied] = useState(false);
-  const [showPreview, setShowPreview] = useState(false);
 
   const generateShareUrl = () => {
     const baseUrl = typeof window !== "undefined" ? window.location.origin : "";
@@ -90,8 +89,6 @@ export function ShareButton({ type, sport, data, size = "og", variant = "icon" }
       <div className="relative">
         <button
           onClick={handleShare}
-          onMouseEnter={() => setShowPreview(true)}
-          onMouseLeave={() => setShowPreview(false)}
           className="p-2 rounded-lg bg-surface-2 hover:bg-surface-3 transition-all hover:scale-110 hover:shadow-[0_0_20px_rgba(var(--accent),0.3)] active:scale-95"
           aria-label="Share ranking"
           title="Share"
@@ -111,21 +108,6 @@ export function ShareButton({ type, sport, data, size = "og", variant = "icon" }
             </svg>
           )}
         </button>
-
-        {/* Preview card on hover (desktop only) */}
-        {showPreview && (
-          <div className="absolute right-0 top-full mt-2 z-50 hidden md:block pointer-events-none">
-            <div className="bg-surface-3 rounded-lg shadow-2xl p-2 border border-surface-4">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={generateShareUrl()}
-                alt="Share card preview"
-                className="w-[300px] h-auto rounded shadow-lg"
-              />
-              <p className="text-xs text-text-secondary text-center mt-2">Click to share</p>
-            </div>
-          </div>
-        )}
 
         {/* Copy confirmation toast */}
         {copied && (
