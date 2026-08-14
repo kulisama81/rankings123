@@ -8,7 +8,7 @@ const IOC_TO_ISO2: Record<string, string> = {
   HKG: "HK", HUN: "HU", IND: "IN", IRL: "IE", ISR: "IL", ITA: "IT", JPN: "JP",
   KAZ: "KZ", KOR: "KR", LAT: "LV", LIB: "LB", LTU: "LT", LUX: "LU", MAR: "MA",
   MDA: "MD", MEX: "MX", MON: "MC", NED: "NL", NOR: "NO", NZL: "NZ", PAR: "PY",
-  PER: "PE", PHI: "PH", POL: "PL", POR: "PT", ROU: "RO", RSA: "ZA", RUS: "RU",
+  PER: "PE", PHI: "PH", POL: "PL", POR: "PT", ROM: "RO", ROU: "RO", RSA: "ZA", RUS: "RU",
   SER: "RS", SRB: "RS", SLO: "SI", SUI: "CH", SVK: "SK", SWE: "SE", THA: "TH",
   TPE: "TW", TUN: "TN", TUR: "TR", UKR: "UA", URU: "UY", USA: "US", UZB: "UZ",
   VEN: "VE", ZIM: "ZW",

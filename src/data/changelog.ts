@@ -14,6 +14,18 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-08-14",
+    title: "Romanian Flag Display Fixed",
+    description: "Fixed visual bug where Romanian tennis players displayed a white flag instead of the Romanian flag 🇷🇴. All Romanian players now show the correct flag consistently across ATP and WTA rankings.",
+    area: "tennis",
+  },
+  {
+    date: "2026-08-14",
+    title: "Homepage Performance Improvements",
+    description: "Resolved console errors on homepage by implementing missing tennis API endpoints. The homepage now loads cleanly without failed network requests, improving performance and eliminating unnecessary retry overhead.",
+    area: "site",
+  },
+  {
+    date: "2026-08-14",
     title: "ATP and WTA Doubles Rankings Added",
     description: "Complete doubles rankings now available for both ATP and WTA tours. Track the top 100 men's and women's doubles teams with live points, rank movement, and team pairings. Fills a critical parity gap with competitors and establishes Rankings123 as a comprehensive tennis rankings destination.",
     area: "tennis",
