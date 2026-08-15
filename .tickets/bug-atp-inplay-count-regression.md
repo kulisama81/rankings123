@@ -1,6 +1,6 @@
 ---
 id: bug-atp-inplay-count-regression
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-26T05:06:01Z
@@ -10,6 +10,19 @@ parent: rankings123
 tags: [bug, atp, consistency, regression]
 ---
 # ATP Live: 'In play' count shows 3 but only 1 player actively competing (regression)
+
+## Resolution (2026-08-15)
+**Fixed by commit ced6786 (2026-07-19)** - "Fix ATP/WTA live rankings: hide tournament status for scheduled-only matches"
+
+**Root cause:** Players with STATUS_SCHEDULED matches were incorrectly counted as "in play" (active).
+
+**Fix:** Both liveFeed.ts and atpDeepFeed.ts now filter STATUS_SCHEDULED matches before processing. Only show tournament status after matches start (STATUS_IN_PROGRESS) or finish (STATUS_FINAL).
+
+**Verification:**
+- ✓ Live site (2026-08-15): shows "27 In play overall" with 27 actually active players - count is correct
+- ✓ Regression test: tests/atp-scheduled-matches.test.mjs guards this fix
+- ✓ Data-sanity check (lines 95-108): warns if in-play count inconsistent with point deltas
+- ✓ Build passes, no data anomalies
 
 ## Acceptance Criteria
 
