@@ -1,6 +1,6 @@
 ---
 id: vuelta-2026-gc-standings
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-15T13:49:32Z
