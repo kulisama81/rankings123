@@ -76,8 +76,37 @@ export default function HomepageRankingsPreview() {
       try {
         const now = Date.now();
 
-        // Fetch all data in parallel
-        const atpRes = await fetch("/api/atp-live").then(r => r.json()).catch(() => null);
+        // Fetch all data in parallel with explicit error handling per endpoint
+        const [atpRes, wtaRes, wcRes] = await Promise.all([
+          fetch("/api/atp-live")
+            .then(r => {
+              if (!r.ok) throw new Error(`ATP API returned ${r.status}`);
+              return r.json();
+            })
+            .catch((err) => {
+              console.warn("ATP fetch failed:", err);
+              return null;
+            }),
+          fetch("/api/wta-live")
+            .then(r => {
+              if (!r.ok) throw new Error(`WTA API returned ${r.status}`);
+              return r.json();
+            })
+            .catch((err) => {
+              console.warn("WTA fetch failed:", err);
+              return null;
+            }),
+          fetch("/api/worldcup/stats")
+            .then(r => {
+              if (!r.ok) throw new Error(`WC API returned ${r.status}`);
+              return r.json();
+            })
+            .catch((err) => {
+              console.warn("World Cup fetch failed:", err);
+              return null;
+            }),
+        ]);
+
         const atpTop5 = atpRes?.players?.slice(0, 5).map((p: ApiPlayer) => ({
           rank: p.liveRank || p.officialRank || 0,
           name: p.name,
@@ -86,8 +115,6 @@ export default function HomepageRankingsPreview() {
           movement: p.movement || 0,
         })) || [];
 
-        // Fetch WTA top 5
-        const wtaRes = await fetch("/api/wta-live").then(r => r.json()).catch(() => null);
         const wtaTop5 = wtaRes?.players?.slice(0, 5).map((p: ApiPlayer) => ({
           rank: p.liveRank || p.officialRank || 0,
           name: p.name,
@@ -96,8 +123,6 @@ export default function HomepageRankingsPreview() {
           movement: p.movement || 0,
         })) || [];
 
-        // Fetch Golden Boot top 3
-        const wcRes = await fetch("/api/worldcup/stats").then(r => r.json()).catch(() => null);
         const goldenBootTop3 = wcRes?.topScorers?.slice(0, 3).map((p: ApiGoldenBootPlayer) => ({
           name: p.playerName,
           team: p.teamCode,
@@ -109,13 +134,14 @@ export default function HomepageRankingsPreview() {
           wta: wtaTop5,
           goldenBoot: goldenBootTop3,
           timestamps: {
-            atp: now,
-            wta: now,
-            goldenBoot: now,
+            atp: atpRes ? now : undefined,
+            wta: wtaRes ? now : undefined,
+            goldenBoot: wcRes ? now : undefined,
           },
         });
-        setIsLoading(false);
-      } catch {
+      } catch (err) {
+        console.error("Homepage rankings preview fetch error:", err);
+      } finally {
         setIsLoading(false);
       }
     }

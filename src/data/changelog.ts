@@ -14,6 +14,12 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-08-14",
+    title: "Homepage Live Rankings Preview Now Shows Data",
+    description: "Fixed bug where the homepage Live Rankings Preview section remained stuck in loading state. The preview now correctly displays top 5 ATP and WTA players with ranks, points, and movement data, giving visitors instant value before clicking through.",
+    area: "site",
+  },
+  {
+    date: "2026-08-14",
     title: "Romanian Flag Display Fixed",
     description: "Fixed visual bug where Romanian tennis players displayed a white flag instead of the Romanian flag 🇷🇴. All Romanian players now show the correct flag consistently across ATP and WTA rankings.",
     area: "tennis",
