@@ -1,79 +1,99 @@
 /**
- * Regression test for bug-homepage-live-preview-empty
+ * Regression test for bug-homepage-live-preview-empty and bug-homepage-preview-still-broken
  *
- * Guards against the homepage Live Rankings Preview section showing only
- * headers/skeleton loaders without actual player data.
+ * Guards against the homepage Live Rankings Preview section being stuck in loading state
+ * (skeleton loaders never replaced with actual player data after client-side hydration).
  *
- * Bug: commit b101e52 added the preview feature but it remained stuck in
- * loading state, showing no player names/ranks/points.
+ * Bug history:
+ * - commit b101e52 added the preview feature but it remained stuck in loading state
+ * - commit 96597d2 attempted a fix
+ * - This test ensures client-side React component properly fetches and displays data
  *
- * This test ensures the component:
- * 1. Renders the Live Rankings Preview section
- * 2. Populates it with actual player data (names, not just headers)
- * 3. Shows at least 3 players each for ATP and WTA
+ * IMPORTANT: This test checks CLIENT-SIDE RENDERING, not just SSR HTML.
+ * SSR HTML correctly includes skeleton loaders as initial state - they should disappear
+ * after client-side hydration fetches data.
  */
 
 import { test } from "node:test";
 import assert from "node:assert";
+import { chromium } from "playwright";
 
 const BASE_URL = process.env.TEST_URL || "http://localhost:3000";
 
-test("Homepage Live Rankings Preview displays player data (not empty)", async () => {
-  const res = await fetch(BASE_URL);
-  assert.strictEqual(res.status, 200, "Homepage should return 200");
+test("Homepage Live Rankings Preview displays player data after client-side hydration", async () => {
+  // Launch headless browser to test client-side rendering
+  const browser = await chromium.launch({ headless: true });
+  const context = await browser.newContext();
+  const page = await context.newPage();
 
-  const html = await res.text();
+  try {
+    // Navigate and wait for network to be idle (JS loaded and executed)
+    await page.goto(BASE_URL, { waitUntil: "networkidle" });
 
-  // 1. Verify the section exists
-  assert.match(
-    html,
-    /Live Rankings Preview/i,
-    "Homepage should include 'Live Rankings Preview' section header"
-  );
+    // Wait up to 5 seconds for client-side data fetch to complete
+    await page.waitForTimeout(5000);
 
-  // 2. Verify it's NOT stuck in loading state
-  // The loading skeleton has multiple "animate-pulse" divs with "h-4 bg-surface2 rounded"
-  // If we see more than 5 of these, it's likely still showing skeleton loaders
-  const skeletonCount = (html.match(/animate-pulse.*?rounded-2xl/g) || []).length;
-  assert.ok(
-    skeletonCount <= 3,
-    `Homepage should not show skeleton loaders for Live Rankings Preview (found ${skeletonCount} skeletons, expected ≤3)`
-  );
-
-  // 3. ATP preview: verify player names are present
-  // Look for known top ATP players (any of these should appear)
-  const hasAtpPlayers =
-    /Jannik Sinner|Carlos Alcaraz|Alexander Zverev|Novak Djokovic|Daniil Medvedev/i.test(
-      html
+    // 1. Verify the section exists
+    const previewSectionCount = await page.locator('text=Live Rankings Preview').count();
+    assert.ok(
+      previewSectionCount > 0,
+      "Homepage should include 'Live Rankings Preview' section"
     );
-  assert.ok(
-    hasAtpPlayers,
-    "Homepage Live Rankings Preview should show ATP player names (Sinner, Alcaraz, etc.)"
-  );
 
-  // 4. WTA preview: verify player names are present
-  const hasWtaPlayers =
-    /Aryna Sabalenka|Elena Rybakina|Jessica Pegula|Iga Swiatek|Coco Gauff/i.test(
-      html
+    // 2. Verify skeleton loaders are GONE (client-side component replaced them)
+    const skeletonCount = await page.locator('.animate-pulse').count();
+    assert.ok(
+      skeletonCount === 0,
+      `Homepage should not show skeleton loaders after client-side hydration (found ${skeletonCount}, expected 0)`
     );
-  assert.ok(
-    hasWtaPlayers,
-    "Homepage Live Rankings Preview should show WTA player names (Sabalenka, Rybakina, etc.)"
-  );
 
-  // 5. Verify ranking data structure (should have rank numbers like "1.", "2.", etc.)
-  const hasRankNumbers = /<span[^>]*>1\.<\/span>/.test(html) && /<span[^>]*>2\.<\/span>/.test(html);
-  assert.ok(
-    hasRankNumbers,
-    "Homepage Live Rankings Preview should display rank numbers (1., 2., etc.)"
-  );
+    // 3. Verify ATP/WTA sections are visible
+    const atpCount = await page.locator('text=ATP Live').count();
+    const wtaCount = await page.locator('text=WTA Live').count();
 
-  // 6. Verify points data (should have numbers with commas like "11,830")
-  const hasPointsData = /\d{1,3}(,\d{3})+/.test(html);
-  assert.ok(
-    hasPointsData,
-    "Homepage Live Rankings Preview should display ranking points (formatted with commas)"
-  );
+    assert.ok(
+      atpCount > 0,
+      "Homepage should show ATP Live section after hydration"
+    );
+    assert.ok(
+      wtaCount > 0,
+      "Homepage should show WTA Live section after hydration"
+    );
+
+    // 4. Verify player names are present (check for known top players)
+    const playerNames = [
+      "Jannik Sinner", "Carlos Alcaraz", "Alexander Zverev", "Novak Djokovic",
+      "Aryna Sabalenka", "Elena Rybakina", "Iga Swiatek", "Coco Gauff"
+    ];
+
+    let foundPlayers = 0;
+    for (const name of playerNames) {
+      const count = await page.locator(`text=${name}`).count();
+      if (count > 0) foundPlayers++;
+    }
+
+    assert.ok(
+      foundPlayers >= 2,
+      `Homepage should show at least 2 top player names (found ${foundPlayers})`
+    );
+
+    // 5. Verify rank numbers are displayed
+    const rankNumberCount = await page.locator('text=/^\\d+\\./').count();
+    assert.ok(
+      rankNumberCount >= 10,
+      `Homepage should show rank numbers for top players (found ${rankNumberCount}, expected ≥10)`
+    );
+
+    // 6. Verify points data is displayed (formatted numbers like "11,830")
+    const pointsDataCount = await page.locator('text=/\\d{1,3}(,\\d{3})+/').count();
+    assert.ok(
+      pointsDataCount >= 5,
+      `Homepage should show ranking points (found ${pointsDataCount}, expected ≥5)`
+    );
+
+  } finally {
+    await browser.close();
+  }
 });
 
 test("Homepage Live Rankings Preview APIs return valid data", async () => {
