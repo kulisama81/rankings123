@@ -14,6 +14,12 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-08-15",
+    title: "Cycling Pages Added to Sitemap for Better SEO",
+    description: "All Grand Tour race pages now included in sitemap.xml for improved search engine indexing: Tour de France 2026, Vuelta a España 2026 (starts Aug 22), Giro d'Italia 2026, and UCI ranking pages. Helps fans find race-specific standings pages via search.",
+    area: "cycling",
+  },
+  {
+    date: "2026-08-15",
     title: "Vuelta a España 2026 SEO Enhancement",
     description: "Enhanced SEO metadata for the Vuelta 2026 page with keyword-rich titles featuring rider matchups like 'Pogacar vs Almeida GC Battle'. Makes the page more discoverable for fans searching for Vuelta standings and favorite riders as the race starts Aug 22.",
     area: "cycling",
