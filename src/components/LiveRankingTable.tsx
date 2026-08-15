@@ -287,11 +287,16 @@ export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingT
           type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search player or country…"
-          className={`w-48 ${inputCls}`}
+          placeholder="Search…"
+          className={`flex-1 min-w-[140px] sm:w-48 sm:flex-none ${inputCls}`}
         />
-        <select value={country} onChange={(e) => setCountry(e.target.value)} className={inputCls}>
-          <option value="all">All countries</option>
+        <select
+          value={country}
+          onChange={(e) => setCountry(e.target.value)}
+          className={`flex-1 min-w-[100px] sm:w-auto sm:flex-none ${inputCls}`}
+          aria-label="Filter by country"
+        >
+          <option value="all">Country</option>
           {countries.map((c) => (
             <option key={c} value={c}>{c}</option>
           ))}
