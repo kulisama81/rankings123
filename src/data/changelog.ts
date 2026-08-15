@@ -14,6 +14,12 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-08-15",
+    title: "Vuelta a España 2026 Live Coverage Launches",
+    description: "Full live coverage for the Vuelta a España 2026 (Aug 22 - Sep 13) now available. Track General Classification standings, stage results, and all four jersey classifications (Red, Green, Polka-dot, White) updated daily throughout the 21-stage race. Data sourced from Wikipedia with real-time status detection.",
+    area: "cycling",
+  },
+  {
+    date: "2026-08-15",
     title: "Cycling Pages Added to Sitemap for Better SEO",
     description: "All Grand Tour race pages now included in sitemap.xml for improved search engine indexing: Tour de France 2026, Vuelta a España 2026 (starts Aug 22), Giro d'Italia 2026, and UCI ranking pages. Helps fans find race-specific standings pages via search.",
     area: "cycling",

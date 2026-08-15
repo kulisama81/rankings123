@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getCyclingRaces, getPrimaryRace } from "@/lib/cyclingFeed";
+import { formatISODate } from "@/lib/dates";
 import HeroBanner from "@/components/HeroBanner";
 import SectionNav from "@/components/SectionNav";
 import TdfStagesTable from "@/components/TdfStagesTable";
@@ -37,13 +38,13 @@ export async function generateMetadata(): Promise<Metadata> {
   const title = isComplete
     ? `${race.name} Final Results — ${leader?.name || "Champion"} Wins`
     : isUpcoming
-    ? `${race.name} — Starting ${new Date(race.startDate).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}`
+    ? `${race.name} — Starting ${formatISODate(race.startDate)}`
     : `${race.name} ${month} — ${leaderName}`;
 
   const description = isComplete
     ? `${race.name} final results: ${leader?.name || "Winner"} wins. Complete stage results, final GC standings, and race recap.`
     : isUpcoming
-    ? `Upcoming ${race.name}: Starts ${new Date(race.startDate).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}. Preview the ${race.totalStages}-stage route with stage details, climb profiles, and race favorites.`
+    ? `Upcoming ${race.name}: Starts ${formatISODate(race.startDate)}. Preview the ${race.totalStages}-stage route with stage details, climb profiles, and race favorites.`
     : `Live ${race.name} ${month} ${year}: ${leaderName}. Real-time stage results, GC standings, and jersey leaders updated daily.`;
 
   return {
@@ -111,8 +112,7 @@ export default async function CyclingPage() {
   // Determine subtitle
   let subtitle = "";
   if (raceStatus === "upcoming") {
-    const startDate = new Date(race.startDate);
-    subtitle = `Starting ${startDate.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}`;
+    subtitle = `Starting ${formatISODate(race.startDate)}`;
   } else if (raceStatus === "active") {
     subtitle = currentStage !== undefined ? `Stage ${currentStage} in progress` : "Race in progress";
   } else {
@@ -250,7 +250,7 @@ export default async function CyclingPage() {
           <div className="mb-12 rounded-xl border border-edge bg-surface p-4 text-sm text-secondary">
             <p>
               <strong className="text-primary">Data Source:</strong> Stage information sourced from Wikipedia.
-              {raceStatus === "upcoming" && ` General Classification will update once the race begins on ${new Date(race.startDate).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}.`}
+              {raceStatus === "upcoming" && ` General Classification will update once the race begins on ${formatISODate(race.startDate)}.`}
               {raceStatus === "active" && " General Classification updates as the race progresses."}
             </p>
             <p className="mt-2">

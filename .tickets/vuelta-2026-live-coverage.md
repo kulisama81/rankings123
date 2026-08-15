@@ -1,6 +1,6 @@
 ---
 id: vuelta-2026-live-coverage
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-10T14:15:00Z
@@ -12,6 +12,16 @@ tags: [cycling, timely, seo]
 # Vuelta a España 2026 live coverage (Aug 22 - Sep 13) — Cycling SEO opportunity
 
 Vuelta a España 2026 starts Aug 22 (12 days away). Grand Tour = major cycling event (3 weeks, 21 stages). Overlaps with US Open (Aug 30 - Sep 13), doubling our live-event coverage and traffic potential.
+
+## Acceptance Criteria
+
+1. **Vuelta landing page:** `/cycling/vuelta-2026` with GC standings, stage results, jersey leaders
+2. **General Classification (GC):** Top 20 riders, time gaps, team, country
+3. **Jersey leaders:** Red (GC), Green (points), Polka-dot (KOM), White (young rider)
+4. **Stage-by-stage results:** Stage winner, stage type (flat/hilly/mountain/ITT), distance
+5. **Live updates:** Parse Wikipedia or ESPN cycling during race (Aug 22 - Sep 13)
+6. **Race status detection:** Show "Upcoming" before Aug 22, "Active" during race, "Complete" after Sep 13
+7. **Mock fallback:** If live feed fails, degrade to mock with clear "source: mock" flag (never fabricate)
 
 ## FIRST-PRINCIPLES ROI
 
@@ -28,16 +38,6 @@ Vuelta a España 2026 starts Aug 22 (12 days away). Grand Tour = major cycling e
 **Cycling data crisis:**
 - Current cycling page: static mock (Tour de France from Wikipedia, showing race as in-progress when complete)
 - Vuelta = first dynamic cycling feed, establishes pattern for future races
-
-## Acceptance Criteria
-
-1. **Vuelta landing page:** `/cycling/vuelta-2026` with GC standings, stage results, jersey leaders
-2. **General Classification (GC):** Top 20 riders, time gaps, team, country
-3. **Jersey leaders:** Red (GC), Green (points), Polka-dot (KOM), White (young rider)
-4. **Stage-by-stage results:** Stage winner, stage type (flat/hilly/mountain/ITT), distance
-5. **Live updates:** Parse Wikipedia or ESPN cycling during race (Aug 22 - Sep 13)
-6. **Race status detection:** Show "Upcoming" before Aug 22, "Active" during race, "Complete" after Sep 13
-7. **Mock fallback:** If live feed fails, degrade to mock with clear "source: mock" flag (never fabricate)
 
 ## Data Sources (Priority Order)
 

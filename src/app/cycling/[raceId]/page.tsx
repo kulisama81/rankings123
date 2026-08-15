@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getCyclingRaceById } from "@/lib/cyclingFeed";
 import { CYCLING_RACES } from "@/data/cyclingRaces";
+import { formatISODate } from "@/lib/dates";
 import HeroBanner from "@/components/HeroBanner";
 import SectionNav from "@/components/SectionNav";
 import TdfStagesTable from "@/components/TdfStagesTable";
@@ -55,7 +56,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : isUpcoming && context
     ? `${race.name} Standings | ${context.favorites} ${context.battlePhrase}`
     : isUpcoming
-    ? `${race.name} — Starting ${new Date(race.startDate).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}`
+    ? `${race.name} — Starting ${formatISODate(race.startDate)}`
     : isActive && context
     ? `${race.name} GC Standings | ${leaderName} | ${context.battlePhrase}`
     : `${race.name} ${month} — ${leaderName}`;
@@ -63,9 +64,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const description = isComplete
     ? `${race.name} final results: ${leader?.name || "Winner"} wins. Complete stage results, final GC standings, and race recap.`
     : isUpcoming && context
-    ? `${race.name} GC standings preview: ${context.favorites} ${context.battlePhrase}. Live stage results, overall standings, and jersey leaders starting ${new Date(race.startDate).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}.`
+    ? `${race.name} GC standings preview: ${context.favorites} ${context.battlePhrase}. Live stage results, overall standings, and jersey leaders starting ${formatISODate(race.startDate)}.`
     : isUpcoming
-    ? `Upcoming ${race.name}: Starts ${new Date(race.startDate).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}. Preview the ${race.totalStages}-stage route with stage details, climb profiles, and race favorites.`
+    ? `Upcoming ${race.name}: Starts ${formatISODate(race.startDate)}. Preview the ${race.totalStages}-stage route with stage details, climb profiles, and race favorites.`
     : isActive
     ? `Live ${race.name} GC standings ${month} ${year}: ${leaderName}. Real-time stage results, overall standings, and jersey leaders updated daily.`
     : `Live ${race.name} ${month} ${year}: ${leaderName}. Real-time stage results, GC standings, and jersey leaders updated daily.`;
@@ -118,8 +119,7 @@ export default async function RacePage({ params }: Props) {
   // Determine subtitle
   let subtitle = "";
   if (raceStatus === "upcoming") {
-    const startDate = new Date(race.startDate);
-    subtitle = `Starting ${startDate.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}`;
+    subtitle = `Starting ${formatISODate(race.startDate)}`;
   } else if (raceStatus === "active") {
     subtitle = currentStage !== undefined ? `Stage ${currentStage} in progress` : "Race in progress";
   } else if (raceStatus === "complete") {
@@ -241,8 +241,8 @@ export default async function RacePage({ params }: Props) {
                       <h3 className="text-xl font-bold text-primary">{otherRace.name}</h3>
                     </div>
                     <p className="mb-3 text-sm text-secondary">
-                      {new Date(otherRace.startDate).toLocaleDateString("en-US", { month: "long", day: "numeric" })} -{" "}
-                      {new Date(otherRace.endDate).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
+                      {formatISODate(otherRace.startDate, { month: "long", day: "numeric" })} -{" "}
+                      {formatISODate(otherRace.endDate)}
                     </p>
                   </Link>
                 ))}
@@ -253,7 +253,7 @@ export default async function RacePage({ params }: Props) {
           <div className="mb-12 rounded-xl border border-edge bg-surface p-4 text-sm text-secondary">
             <p>
               <strong className="text-primary">Data Source:</strong> Stage information sourced from Wikipedia.
-              {raceStatus === "upcoming" && ` General Classification will update once the race begins on ${new Date(race.startDate).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}.`}
+              {raceStatus === "upcoming" && ` General Classification will update once the race begins on ${formatISODate(race.startDate)}.`}
               {raceStatus === "active" && " General Classification updates as the race progresses."}
             </p>
             <p className="mt-2">
