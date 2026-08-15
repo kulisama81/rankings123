@@ -1,6 +1,6 @@
 ---
 id: bug-atp-source-attribution-missing
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-12T18:00:00Z
@@ -10,6 +10,36 @@ parent: rankings123
 tags: [bug, atp, consistency, attribution]
 ---
 # ATP Live page missing data source attribution (consistency bug)
+
+## Acceptance Criteria
+
+1. **Add source attribution to ATP Live page:**
+   - Display "Data via ESPN" or "Data via UTS + ESPN" in the footer (below table or in page footer)
+   - Attribution should reflect the actual source flag (check `src/lib/atpDeepFeed.ts` for source logic)
+   - Match the placement/styling used on WTA Live page for consistency
+
+2. **REGRESSION TEST REQUIRED:**
+   - Add test in `tests/atp-source-attribution.test.mjs` (run via `npm test`):
+     - Fetch ATP Live page HTML
+     - Assert page contains "Data via" or "Source:" text
+     - Verify attribution mentions ESPN or UTS (the actual data sources)
+     - Test should FAIL on current page (no attribution), PASS when added
+   - OR extend existing test to verify all sport pages have source attribution
+
+3. **Verify locally:**
+   - Visit http://localhost:3000/atp-live
+   - See source attribution in footer (e.g., "Data via ESPN & UTS")
+   - Compare to /wta-live for consistency (same placement/style)
+   - `npm test` — all tests green
+
+4. **Standard checks:**
+   - `npm run build` — succeeds
+   - `npx eslint src --max-warnings=0` — clean
+
+5. **Live verification:**
+   - Visit https://rankings123.com/atp-live
+   - Confirm source attribution visible in footer
+   - Check consistency: ATP, WTA, World Cup all show attributions in similar style
 
 ## Bug Report
 
@@ -48,33 +78,3 @@ This is a **consistency bug** where one page breaks the established pattern of c
 ## Expected Behavior
 
 ATP page should show attribution matching its data source (e.g., "Data via ESPN & UTS" or "Data via ESPN" depending on the source flag).
-
-## Acceptance Criteria
-
-1. **Add source attribution to ATP Live page:**
-   - Display "Data via ESPN" or "Data via UTS + ESPN" in the footer (below table or in page footer)
-   - Attribution should reflect the actual source flag (check `src/lib/atpDeepFeed.ts` for source logic)
-   - Match the placement/styling used on WTA Live page for consistency
-
-2. **REGRESSION TEST REQUIRED:**
-   - Add test in `tests/atp-source-attribution.test.mjs` (run via `npm test`):
-     - Fetch ATP Live page HTML
-     - Assert page contains "Data via" or "Source:" text
-     - Verify attribution mentions ESPN or UTS (the actual data sources)
-     - Test should FAIL on current page (no attribution), PASS when added
-   - OR extend existing test to verify all sport pages have source attribution
-
-3. **Verify locally:**
-   - Visit http://localhost:3000/atp-live
-   - See source attribution in footer (e.g., "Data via ESPN & UTS")
-   - Compare to /wta-live for consistency (same placement/style)
-   - `npm test` — all tests green
-
-4. **Standard checks:**
-   - `npm run build` — succeeds
-   - `npx eslint src --max-warnings=0` — clean
-
-5. **Live verification:**
-   - Visit https://rankings123.com/atp-live
-   - Confirm source attribution visible in footer
-   - Check consistency: ATP, WTA, World Cup all show attributions in similar style

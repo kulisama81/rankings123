@@ -670,6 +670,8 @@ export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingT
         from completed results and the {snapshot.tourLabel ?? tour.toUpperCase()} points table.
         Official = last published ranking. Δ = points earned/lost this week (rankings can change even when Δ=0 as other players gain/lose points). Tap a row to pin it.
         {snapshot.source === "espn" && " Data via ESPN."}
+        {snapshot.source === "uts" && " Data via UTS."}
+        {snapshot.source === "uts+espn" && " Data via UTS & ESPN."}
       </p>
     </div>
   );
