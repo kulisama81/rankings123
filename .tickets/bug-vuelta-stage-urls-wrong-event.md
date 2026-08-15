@@ -1,13 +1,54 @@
 ---
 id: bug-vuelta-stage-urls-wrong-event
-status: open
+status: closed
+created: 2026-08-15T18:00:00Z
 type: bug
 priority: 2
 parent: rankings123
 tags: [bug, cycling, vuelta, routing, p2]
-created: 2026-08-15T18:00:00Z
 ---
 # Vuelta 2026 page stage links point to TDF URLs (404)
+
+## Acceptance Criteria
+
+1. **Fix stage URL routing on Vuelta 2026 page:**
+   - All stage links on `/cycling/vuelta-2026` must point to `/events/vuelta-2026/stage/X` (not `/events/tdf-2026/stage/X`)
+   - Verify all 21 stage links use correct event slug (`vuelta-2026`)
+   - Stage routes either exist and work, or gracefully 404 with proper error page (not showing TDF content)
+
+2. **Check other cycling races for same issue:**
+   - Verify Giro d'Italia stage links (if present) point to Giro routes, not TDF
+   - Verify TDF stage links still work correctly (not broken by the fix)
+   - Check any other cycling events in CYCLING_RACES for URL consistency
+
+3. **REGRESSION TEST REQUIRED** (per CLAUDE.md):
+   - Add test in `tests/cycling-stage-urls.test.mjs` (run via `npm test`):
+     - Fetch `/cycling/vuelta-2026` HTML
+     - Extract all stage link hrefs
+     - Assert every stage link matches pattern `/events/vuelta-2026/stage/\d+`
+     - Assert NO stage links contain `tdf-2026` or other wrong event slugs
+     - Test should FAIL on current broken state, PASS when fixed
+   - OR extend existing cycling test to validate stage URL consistency
+
+4. **Verify locally:**
+   - Visit http://localhost:3000/cycling/vuelta-2026
+   - Inspect stage links in DevTools (should show `/events/vuelta-2026/stage/X`)
+   - Click a stage link
+   - Either see Vuelta stage details OR proper 404 page (not TDF content)
+   - `npm test` — all tests green including new regression test
+
+5. **Standard checks:**
+   - `npm run build` — succeeds
+   - `npx eslint src --max-warnings=0` — clean
+   - `npm run check:data-sanity` — passes
+   - `npm run check:core-features` — passes
+
+6. **Live verification after deploy:**
+   - Visit https://rankings123.com/cycling/vuelta-2026
+   - Inspect stage link hrefs (all show `/events/vuelta-2026/stage/X`)
+   - Click stage 1 link — goes to Vuelta stage 1 (or 404, not TDF)
+   - Verify TDF page still works: https://rankings123.com/cycling/tdf-2026 (stage links → TDF routes)
+   - Regression test passes when run against production
 
 ## Bug Report
 
@@ -68,44 +109,3 @@ $ curl -s -o /dev/null -w "%{http_code}" https://rankings123.com/events/vuelta-2
 ## Root Cause
 
 Likely a hardcoded or copy-paste error in the Vuelta page component where stage links use `tdf-2026` instead of `vuelta-2026` in the URL template.
-
-## Acceptance Criteria
-
-1. **Fix stage URL routing on Vuelta 2026 page:**
-   - All stage links on `/cycling/vuelta-2026` must point to `/events/vuelta-2026/stage/X` (not `/events/tdf-2026/stage/X`)
-   - Verify all 21 stage links use correct event slug (`vuelta-2026`)
-   - Stage routes either exist and work, or gracefully 404 with proper error page (not showing TDF content)
-
-2. **Check other cycling races for same issue:**
-   - Verify Giro d'Italia stage links (if present) point to Giro routes, not TDF
-   - Verify TDF stage links still work correctly (not broken by the fix)
-   - Check any other cycling events in CYCLING_RACES for URL consistency
-
-3. **REGRESSION TEST REQUIRED** (per CLAUDE.md):
-   - Add test in `tests/cycling-stage-urls.test.mjs` (run via `npm test`):
-     - Fetch `/cycling/vuelta-2026` HTML
-     - Extract all stage link hrefs
-     - Assert every stage link matches pattern `/events/vuelta-2026/stage/\d+`
-     - Assert NO stage links contain `tdf-2026` or other wrong event slugs
-     - Test should FAIL on current broken state, PASS when fixed
-   - OR extend existing cycling test to validate stage URL consistency
-
-4. **Verify locally:**
-   - Visit http://localhost:3000/cycling/vuelta-2026
-   - Inspect stage links in DevTools (should show `/events/vuelta-2026/stage/X`)
-   - Click a stage link
-   - Either see Vuelta stage details OR proper 404 page (not TDF content)
-   - `npm test` — all tests green including new regression test
-
-5. **Standard checks:**
-   - `npm run build` — succeeds
-   - `npx eslint src --max-warnings=0` — clean
-   - `npm run check:data-sanity` — passes
-   - `npm run check:core-features` — passes
-
-6. **Live verification after deploy:**
-   - Visit https://rankings123.com/cycling/vuelta-2026
-   - Inspect stage link hrefs (all show `/events/vuelta-2026/stage/X`)
-   - Click stage 1 link — goes to Vuelta stage 1 (or 404, not TDF)
-   - Verify TDF page still works: https://rankings123.com/cycling/tdf-2026 (stage links → TDF routes)
-   - Regression test passes when run against production

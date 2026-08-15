@@ -166,7 +166,7 @@ export default async function RacePage({ params }: Props) {
                 </span>
               )}
             </h2>
-            <TdfStagesTable stages={stages} currentStage={currentStage} />
+            <TdfStagesTable stages={stages} currentStage={currentStage} raceId={raceId} />
           </section>
 
           {/* General Classification */}

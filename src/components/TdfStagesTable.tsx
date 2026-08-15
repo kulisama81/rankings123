@@ -7,6 +7,7 @@ import type { TdfStage } from "@/types";
 interface TdfStagesTableProps {
   stages: TdfStage[];
   currentStage?: number;
+  raceId: string; // e.g., "vuelta-2026", "tour-de-france-2026"
 }
 
 // Icon type for stage type
@@ -41,7 +42,7 @@ function stageTypeColor(type: TdfStage["type"]): string {
   }
 }
 
-export default function TdfStagesTable({ stages, currentStage }: TdfStagesTableProps) {
+export default function TdfStagesTable({ stages, currentStage, raceId }: TdfStagesTableProps) {
   return (
     <div className="animate-entrance-table overflow-hidden rounded-2xl border border-edge bg-surface">
       <div className="overflow-x-auto">
@@ -70,7 +71,7 @@ export default function TdfStagesTable({ stages, currentStage }: TdfStagesTableP
                 >
                   <td className="px-3 py-3 text-center font-semibold">
                     <Link
-                      href={`/events/tdf-2026/stage/${stage.stage}`}
+                      href={`/events/${raceId}/stage/${stage.stage}`}
                       className="text-accent transition hover:text-accentfg"
                     >
                       {stage.stage}

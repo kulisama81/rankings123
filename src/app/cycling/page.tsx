@@ -156,7 +156,7 @@ export default async function CyclingPage() {
                 </span>
               )}
             </h2>
-            <TdfStagesTable stages={stages} currentStage={currentStage} />
+            <TdfStagesTable stages={stages} currentStage={currentStage} raceId={race.id} />
           </section>
 
           {/* General Classification */}
