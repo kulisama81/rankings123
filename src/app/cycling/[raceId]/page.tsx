@@ -33,6 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { metadata: race, raceStatus, gc } = raceData;
   const isComplete = raceStatus === "complete" || raceStatus === "archived";
   const isUpcoming = raceStatus === "upcoming";
+  const isActive = raceStatus === "active";
   const now = new Date();
   const month = now.toLocaleString("en-US", { month: "long" });
   const year = now.getFullYear();
@@ -40,16 +41,33 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const leader = gc[0];
   const leaderName = leader ? `${leader.name} leads` : "Live updates";
 
+  // Race-specific SEO context for favorites/contenders
+  const raceContext: Record<string, { favorites: string; battlePhrase: string }> = {
+    "vuelta-2026": { favorites: "Pogacar vs Almeida", battlePhrase: "GC Battle" },
+    "tour-de-france-2026": { favorites: "Pogacar vs Vingegaard", battlePhrase: "Yellow Jersey Battle" },
+    "giro-2026": { favorites: "Thomas vs Evenepoel", battlePhrase: "Pink Jersey Battle" },
+  };
+
+  const context = raceContext[raceId];
+
   const title = isComplete
     ? `${race.name} Final Results — ${leader?.name || "Champion"} Wins`
+    : isUpcoming && context
+    ? `${race.name} Standings | ${context.favorites} ${context.battlePhrase}`
     : isUpcoming
     ? `${race.name} — Starting ${new Date(race.startDate).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}`
+    : isActive && context
+    ? `${race.name} GC Standings | ${leaderName} | ${context.battlePhrase}`
     : `${race.name} ${month} — ${leaderName}`;
 
   const description = isComplete
     ? `${race.name} final results: ${leader?.name || "Winner"} wins. Complete stage results, final GC standings, and race recap.`
+    : isUpcoming && context
+    ? `${race.name} GC standings preview: ${context.favorites} ${context.battlePhrase}. Live stage results, overall standings, and jersey leaders starting ${new Date(race.startDate).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}.`
     : isUpcoming
     ? `Upcoming ${race.name}: Starts ${new Date(race.startDate).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}. Preview the ${race.totalStages}-stage route with stage details, climb profiles, and race favorites.`
+    : isActive
+    ? `Live ${race.name} GC standings ${month} ${year}: ${leaderName}. Real-time stage results, overall standings, and jersey leaders updated daily.`
     : `Live ${race.name} ${month} ${year}: ${leaderName}. Real-time stage results, GC standings, and jersey leaders updated daily.`;
 
   return {
