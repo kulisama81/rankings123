@@ -15,15 +15,6 @@ tags: [design, live-data, ux, trust]
 
 **Trust signal:** Visible freshness indicators build confidence that data is current, not cached.
 
-## Changes
-
-- Add "Last updated" timestamp to each ranking table header (relative: "2m ago", "just now")
-- Pulse animation on rows when rank changes in real-time (brief accent glow, 600ms fade)
-- Data source badge: "ESPN Live" / "Official WTA" / "UTS Rankings" with small live dot
-- Loading skeleton for table sections during refresh (partial updates, not full-page reload)
-- "Updating..." subtle badge during active fetch (top-right of table, non-blocking)
-- Auto-refresh interval indicator: "Auto-updates every 5 minutes" (settings toggle)
-
 ## Acceptance Criteria
 
 - Every ranking table shows "Updated X ago" timestamp in header (updates every 60s)
@@ -33,6 +24,15 @@ tags: [design, live-data, ux, trust]
 - Settings panel allows disabling auto-refresh (localStorage persisted)
 - Mobile: timestamp condensed to "2m" format, fits in header without wrapping
 - Accessibility: screen reader announces "Rankings updated" on refresh
+
+## Changes
+
+- Add "Last updated" timestamp to each ranking table header (relative: "2m ago", "just now")
+- Pulse animation on rows when rank changes in real-time (brief accent glow, 600ms fade)
+- Data source badge: "ESPN Live" / "Official WTA" / "UTS Rankings" with small live dot
+- Loading skeleton for table sections during refresh (partial updates, not full-page reload)
+- "Updating..." subtle badge during active fetch (top-right of table, non-blocking)
+- Auto-refresh interval indicator: "Auto-updates every 5 minutes" (settings toggle)
 
 ## References
 
