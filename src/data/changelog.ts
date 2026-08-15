@@ -13,6 +13,12 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-08-15",
+    title: "Vuelta a España 2026 SEO Enhancement",
+    description: "Enhanced SEO metadata for the Vuelta 2026 page with keyword-rich titles featuring rider matchups like 'Pogacar vs Almeida GC Battle'. Makes the page more discoverable for fans searching for Vuelta standings and favorite riders as the race starts Aug 22.",
+    area: "cycling",
+  },
+  {
     date: "2026-08-14",
     title: "Homepage Live Rankings Preview Now Shows Data",
     description: "Fixed bug where the homepage Live Rankings Preview section remained stuck in loading state. The preview now correctly displays top 5 ATP and WTA players with ranks, points, and movement data, giving visitors instant value before clicking through.",
