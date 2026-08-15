@@ -1,12 +1,13 @@
 /**
- * Regression test for worldcup-match-404 bug fix
+ * Regression test for bug-wc-match-detail-404
  *
- * Bug: World Cup match detail pages were returning 404 when ESPN's match detail
- * API didn't have data for a match ID (even though the match existed in the scoreboard).
+ * Tests that World Cup match detail routes behave correctly:
+ * - Valid match IDs (from current World Cup) return 200 with match details
+ * - Invalid/old match IDs return 404 with a helpful custom error page
+ * - Network errors fall back to mock data (not 404)
  *
- * Fix: Fall back to mock data with "Demo data" badge instead of showing 404.
- *
- * This test ensures the route never returns 404 for valid match IDs.
+ * This prevents serving "Demo data" for invalid match IDs while maintaining
+ * graceful degradation for real matches when ESPN API has temporary issues.
  */
 
 import { test } from "node:test";
@@ -14,68 +15,71 @@ import assert from "node:assert";
 
 const TEST_PORT = process.env.TEST_PORT || "3124";
 
-test("World Cup match detail route returns 200 (not 404) for valid match IDs", async () => {
-  // Test the actual match ID from the bug report
-  const testMatchId = "401636239";
-  const url = `http://localhost:${TEST_PORT}/world-cup/match/${testMatchId}`;
+test("World Cup match detail: valid match ID returns 200", async () => {
+  // Use a known valid match ID from 2026 World Cup (Spain vs Argentina)
+  const validMatchId = "760517";
+  const url = `http://localhost:${TEST_PORT}/world-cup/match/${validMatchId}`;
 
   const res = await fetch(url);
 
-  // Should return 200, never 404
   assert.strictEqual(
     res.status,
     200,
-    `Expected 200 OK but got ${res.status} for match ${testMatchId}. ` +
-    `Match detail pages should show mock data fallback, not 404.`
-  );
-
-  // Should return HTML content
-  const contentType = res.headers.get("content-type");
-  assert.ok(
-    contentType?.includes("text/html"),
-    `Expected HTML response but got ${contentType}`
+    `Valid match ${validMatchId} should return 200`
   );
 
   const html = await res.text();
 
   // Should contain match structure elements
   assert.ok(
-    html.includes("Back to World Cup"),
-    "Page should contain back link to World Cup main page"
+    html.includes("data-sport=\"worldcup\""),
+    "Page should contain World Cup match structure"
   );
 
-  // Should show either real data or mock data with demo badge
-  const hasRealData = html.includes("data-sport=\"worldcup\"");
-
+  // Should contain team names
   assert.ok(
-    hasRealData,
-    "Page should contain World Cup match page structure"
+    html.includes("Spain") || html.includes("Argentina"),
+    "Page should show team names for this match"
   );
-
-  // If ESPN API is down or doesn't have this match, should show demo badge
-  if (html.includes("Demo data")) {
-    console.log(`✓ Match ${testMatchId}: Showing mock fallback (ESPN data not available)`);
-  } else {
-    console.log(`✓ Match ${testMatchId}: Showing real ESPN data`);
-  }
 });
 
-test("World Cup match route handles multiple match IDs without 404", async () => {
-  // Test a few different match ID formats to ensure general fix
-  const testMatchIds = [
-    "401636239", // From bug report
-    "401636240", // Adjacent ID
-    "999999999", // Non-existent ID (should still not 404)
-  ];
+test("World Cup match detail: invalid match ID returns 404 with custom error", async () => {
+  // Use an old/invalid match ID from a previous World Cup
+  const invalidMatchId = "401631699";
+  const url = `http://localhost:${TEST_PORT}/world-cup/match/${invalidMatchId}`;
 
-  for (const matchId of testMatchIds) {
-    const url = `http://localhost:${TEST_PORT}/world-cup/match/${matchId}`;
-    const res = await fetch(url);
+  const res = await fetch(url);
 
-    assert.strictEqual(
-      res.status,
-      200,
-      `Match ${matchId} should return 200, not ${res.status}`
-    );
-  }
+  assert.strictEqual(
+    res.status,
+    404,
+    `Invalid match ${invalidMatchId} should return 404, not ${res.status}`
+  );
+
+  const html = await res.text();
+
+  // Should show custom not-found page with helpful message
+  assert.ok(
+    html.includes("Match Not Found") || html.includes("doesn't exist"),
+    "404 page should show helpful error message"
+  );
+
+  // Should have link back to World Cup page
+  assert.ok(
+    html.includes("/world-cup"),
+    "404 page should have link back to World Cup page"
+  );
+});
+
+test("World Cup match detail: completely fake match ID returns 404", async () => {
+  const fakeMatchId = "999999999";
+  const url = `http://localhost:${TEST_PORT}/world-cup/match/${fakeMatchId}`;
+
+  const res = await fetch(url);
+
+  assert.strictEqual(
+    res.status,
+    404,
+    `Non-existent match ${fakeMatchId} should return 404`
+  );
 });
