@@ -294,7 +294,7 @@ export default function AtpDeepRankingTable({ initialSnapshot, band, apiEndpoint
                     p.tournament?.active ? "bg-accent/[0.035]" : ""
                   } ${hasRankChange ? `rank-changed ${staggerClass}` : ""} ${entranceStagger}`}
                 >
-                  <td className="px-3 py-2.5 text-right font-bold tabular-nums text-fg">
+                  <td className="px-3 py-2.5 text-right">
                     <Tooltip
                       content={
                         <RankTooltip
@@ -305,7 +305,17 @@ export default function AtpDeepRankingTable({ initialSnapshot, band, apiEndpoint
                       }
                       placement="top"
                     >
-                      <span className="rank-hover-scale">{p.liveRank}</span>
+                      <span className={`rank-hover-scale inline-flex items-center justify-center ${
+                        p.liveRank === 1
+                          ? "rank-scale-1 min-w-[48px]"
+                          : p.liveRank <= 3
+                            ? "rank-scale-2-3 min-w-[42px]"
+                            : p.liveRank <= 10
+                              ? "rank-scale-4-10 min-w-[38px]"
+                              : p.liveRank <= 50
+                                ? "rank-scale-11-50 min-w-[34px]"
+                                : "rank-scale-default min-w-[30px]"
+                      }`}>{p.liveRank}</span>
                     </Tooltip>
                   </td>
                   <td className="px-2 py-2.5 text-center">

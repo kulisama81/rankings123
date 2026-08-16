@@ -55,22 +55,43 @@ function Movement({ value }: { value: number }) {
 }
 
 function RankBadge({ rank }: { rank: number }) {
-  const isPodium = rank <= 3;
+  // Dramatic typographic scale system (Fontfabric 2026: performative typography)
+  const scaleClass =
+    rank === 1
+      ? "rank-scale-1" // Hero spotlight: 36px, 900 weight, gradient text
+      : rank <= 3
+        ? "rank-scale-2-3" // Podium: 30px, 800 weight
+        : rank <= 10
+          ? "rank-scale-4-10" // Top-tier: 26px, 700 weight
+          : rank <= 50
+            ? "rank-scale-11-50" // Mid-tier: 18px, 600 weight
+            : "rank-scale-default"; // Base: 16px, 600 weight
+
+  // Podium tints (gold/silver/bronze)
   const tint =
     rank === 1
-      ? "bg-[#f2c14e]/20 text-[#f2c14e]"
+      ? "bg-[#f2c14e]/20" // Gold tint (gradient text already has accent color)
       : rank === 2
         ? "bg-[#c7cdd6]/20 text-[#c7cdd6]"
         : rank === 3
           ? "bg-[#d08b5b]/25 text-[#d99b6c]"
           : "text-muted";
+
+  // Dynamic size/padding based on scale (larger ranks need more space)
+  const sizeClass =
+    rank === 1
+      ? "min-w-[48px] h-12 px-2" // Hero: largest container
+      : rank <= 3
+        ? "min-w-[42px] h-11 px-2" // Podium: large
+        : rank <= 10
+          ? "min-w-[38px] h-10 px-1.5" // Top-tier: medium-large
+          : rank <= 50
+            ? "min-w-[34px] h-9 px-1.5" // Mid-tier: medium
+            : "min-w-[30px] h-8 px-1.5"; // Base: compact
+
   return (
     <span
-      className={`rank-hover-scale inline-flex items-center justify-center rounded-lg px-1.5 tabular-nums ${
-        isPodium
-          ? "type-podium min-w-[36px] h-9" // Podium: larger, Archivo extrabold
-          : "text-sm font-bold min-w-[28px] h-7" // Rest: standard size, Geist Sans
-      } ${tint}`}
+      className={`rank-hover-scale inline-flex items-center justify-center rounded-lg tabular-nums ${scaleClass} ${sizeClass} ${tint}`}
     >
       {rank}
     </span>

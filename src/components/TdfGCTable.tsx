@@ -45,12 +45,16 @@ export default function TdfGCTable({ riders }: TdfGCTableProps) {
                 >
                   <td className="px-3 py-3 text-center">
                     <span
-                      className={`rank-hover-scale inline-flex h-7 w-7 items-center justify-center rounded-md font-bold ${
-                        isLeader
-                          ? "bg-warning text-base"
-                          : idx < 3
-                            ? "bg-surface2 text-primary"
-                            : "text-secondary"
+                      className={`rank-hover-scale inline-flex items-center justify-center rounded-md ${
+                        rider.rank === 1
+                          ? "rank-scale-1 bg-warning/20 min-w-[48px] h-12"
+                          : rider.rank <= 3
+                            ? "rank-scale-2-3 bg-surface2 text-primary min-w-[42px] h-11"
+                            : rider.rank <= 10
+                              ? "rank-scale-4-10 text-secondary min-w-[38px] h-10"
+                              : rider.rank <= 50
+                                ? "rank-scale-11-50 text-secondary min-w-[34px] h-9"
+                                : "rank-scale-default text-secondary min-w-[30px] h-8"
                       }`}
                     >
                       {rider.rank}

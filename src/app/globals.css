@@ -118,11 +118,104 @@ body {
   }
 }
 
-/* Podium rank — emphasized top-3 (mobile: lg / desktop: xl) */
+/* ===================== Typographic Maximalism — Dramatic Rank Scale (Aug 2026) ===================== */
+/* Fontfabric 2026: "Typography is louder, more performative and more central to brand expression."
+   Rankings = inherently hierarchical → typography mirrors that. Rank #1 = spotlight, rank #50 = whisper.
+   Dramatic scale contrast guides eye 3× faster (Digital Silk research). */
+
+/* Rank #1 — HERO spotlight (32-40px, 900 weight, gradient text, tightest spacing) */
+.rank-scale-1 {
+  font-family: var(--font-display);
+  font-weight: 900; /* Black — maximum impact */
+  letter-spacing: -0.03em; /* Tighter, denser presence */
+  font-size: 1.6875rem; /* 27px mobile (75% of 36px desktop) */
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  transition: font-size 200ms ease-out, font-weight 200ms ease-out, color 200ms ease-out;
+
+  /* Gradient text effect — "rank as performance art" */
+  background: linear-gradient(135deg, var(--accent) 0%, rgba(var(--accent-rgb), 0.6) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  /* Fallback for browsers without background-clip support */
+  color: var(--accent);
+}
+@media (min-width: 640px) {
+  .rank-scale-1 {
+    font-size: 2.25rem; /* 36px desktop */
+  }
+}
+
+/* Rank #2-3 — Podium prominence (28-32px, 800 weight, tight spacing) */
+.rank-scale-2-3 {
+  font-family: var(--font-display);
+  font-weight: 800; /* Extra bold */
+  letter-spacing: -0.02em; /* Tight impact */
+  font-size: 1.40625rem; /* 22.5px mobile (75% of 30px desktop) */
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  transition: font-size 200ms ease-out, font-weight 200ms ease-out, color 200ms ease-out;
+}
+@media (min-width: 640px) {
+  .rank-scale-2-3 {
+    font-size: 1.875rem; /* 30px desktop */
+  }
+}
+
+/* Rank #4-10 — Top-tier visibility (24-28px, 700 weight) */
+.rank-scale-4-10 {
+  font-family: var(--font-display);
+  font-weight: 700; /* Bold */
+  letter-spacing: -0.01em;
+  font-size: 1.21875rem; /* 19.5px mobile (75% of 26px desktop) */
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  transition: font-size 200ms ease-out, font-weight 200ms ease-out, color 200ms ease-out;
+}
+@media (min-width: 640px) {
+  .rank-scale-4-10 {
+    font-size: 1.625rem; /* 26px desktop */
+  }
+}
+
+/* Rank #11-50 — Mid-tier readable (18-20px, 600 weight) */
+.rank-scale-11-50 {
+  font-family: var(--font-display);
+  font-weight: 600; /* Semibold */
+  letter-spacing: normal;
+  font-size: 0.84375rem; /* 13.5px mobile (75% of 18px desktop) */
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  transition: font-size 200ms ease-out, font-weight 200ms ease-out, color 200ms ease-out;
+}
+@media (min-width: 640px) {
+  .rank-scale-11-50 {
+    font-size: 1.125rem; /* 18px desktop */
+  }
+}
+
+/* Rank #51+ — Base whisper (16px, 600 weight) */
+.rank-scale-default {
+  font-family: var(--font-display);
+  font-weight: 600; /* Semibold */
+  letter-spacing: normal;
+  font-size: 0.75rem; /* 12px mobile (75% of 16px desktop) */
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  transition: font-size 200ms ease-out, font-weight 200ms ease-out, color 200ms ease-out;
+}
+@media (min-width: 640px) {
+  .rank-scale-default {
+    font-size: 1rem; /* 16px desktop */
+  }
+}
+
+/* Podium rank — DEPRECATED (kept for backward compatibility, use rank-scale-* classes) */
 .type-podium {
   font-family: var(--font-display);
   font-weight: 900;
-  letter-spacing: -0.01em; /* Slightly looser for legibility at smaller sizes */
+  letter-spacing: -0.01em;
   font-size: 1.125rem; /* 18px — lg mobile */
   line-height: 1;
 }
