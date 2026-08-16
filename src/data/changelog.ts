@@ -20,6 +20,12 @@ export const changelog: ChangelogEntry[] = [
   },
   {
     date: "2026-08-16",
+    title: "Dramatic Typographic Scale for Rankings",
+    description: "Rank numbers now mirror their importance through size — #1 is HUGE (36px), gradually shrinking to #50+ (16px). Variable weight and gradient text on #1 create a visual spotlight. Rankings feel performative, not uniform.",
+    area: "site",
+  },
+  {
+    date: "2026-08-16",
     title: "Premium Table Hover Interactions",
     description: "Enhanced ranking tables with atmospheric hover effects — rows glow with sport accent, rank numbers scale on hover, and tables cascade into view. Transforms the data-dense experience from generic spreadsheet to premium editorial.",
     area: "site",
