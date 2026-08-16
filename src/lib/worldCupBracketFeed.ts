@@ -392,34 +392,46 @@ export async function fetchWorldCupBracket(): Promise<WorldCupBracket> {
     }
   }
 
-  // Parse group standings for projection
-  const groups = parseStandings(standingsData);
+  // Detect if tournament is complete: Final match exists, is finished, and has valid scores
+  // Check this BEFORE any projection logic to prevent "TBD" or "Proj" labels on completed tournaments
+  const finalMatches = stageMatches.get("Final") ?? [];
+  const finalMatch = finalMatches[0];
+  const hasValidFinalScores = finalMatch?.homeScore !== null && finalMatch?.awayScore !== null;
+  const isTournamentComplete = finalMatch?.state === "post" && hasValidFinalScores;
 
-  // If Round of 32 has no real matches yet, generate projected matchups from standings
-  if (!stageMatches.has("Round of 32") || stageMatches.get("Round of 32")!.length === 0) {
-    const projectedMatches = projectRoundOf32(groups);
-    if (projectedMatches.length > 0) {
-      stageMatches.set("Round of 32", projectedMatches);
-    }
-  }
+  // Only project rounds if tournament is NOT complete
+  // When complete, ESPN doesn't provide historical knockout data, so we skip all projections
+  // to avoid showing "Proj" or "TBD" placeholders on a finished tournament
+  if (!isTournamentComplete) {
+    // Parse group standings for projection
+    const groups = parseStandings(standingsData);
 
-  // Project future rounds (R16/QF/SF/Final) as placeholders when they don't exist yet
-  const r32Matches = stageMatches.get("Round of 32") ?? [];
-  if (r32Matches.length > 0) {
-    const futureRounds = projectFutureRounds(r32Matches);
+    // If Round of 32 has no real matches yet, generate projected matchups from standings
+    if (!stageMatches.has("Round of 32") || stageMatches.get("Round of 32")!.length === 0) {
+      const projectedMatches = projectRoundOf32(groups);
+      if (projectedMatches.length > 0) {
+        stageMatches.set("Round of 32", projectedMatches);
+      }
+    }
 
-    // Only add projected rounds if the real matches don't exist yet
-    if (!stageMatches.has("Rd of 16") || (stageMatches.get("Rd of 16")?.length ?? 0) === 0) {
-      stageMatches.set("Rd of 16", futureRounds.r16);
-    }
-    if (!stageMatches.has("Quarterfinals") || (stageMatches.get("Quarterfinals")?.length ?? 0) === 0) {
-      stageMatches.set("Quarterfinals", futureRounds.qf);
-    }
-    if (!stageMatches.has("Semifinals") || (stageMatches.get("Semifinals")?.length ?? 0) === 0) {
-      stageMatches.set("Semifinals", futureRounds.sf);
-    }
-    if (futureRounds.final && (!stageMatches.has("Final") || (stageMatches.get("Final")?.length ?? 0) === 0)) {
-      stageMatches.set("Final", [futureRounds.final]);
+    // Project future rounds (R16/QF/SF/Final) as placeholders when they don't exist yet
+    const r32Matches = stageMatches.get("Round of 32") ?? [];
+    if (r32Matches.length > 0) {
+      const futureRounds = projectFutureRounds(r32Matches);
+
+      // Only add projected rounds if the real matches don't exist yet
+      if (!stageMatches.has("Rd of 16") || (stageMatches.get("Rd of 16")?.length ?? 0) === 0) {
+        stageMatches.set("Rd of 16", futureRounds.r16);
+      }
+      if (!stageMatches.has("Quarterfinals") || (stageMatches.get("Quarterfinals")?.length ?? 0) === 0) {
+        stageMatches.set("Quarterfinals", futureRounds.qf);
+      }
+      if (!stageMatches.has("Semifinals") || (stageMatches.get("Semifinals")?.length ?? 0) === 0) {
+        stageMatches.set("Semifinals", futureRounds.sf);
+      }
+      if (futureRounds.final && (!stageMatches.has("Final") || (stageMatches.get("Final")?.length ?? 0) === 0)) {
+        stageMatches.set("Final", [futureRounds.final]);
+      }
     }
   }
 
