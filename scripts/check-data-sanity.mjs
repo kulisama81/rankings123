@@ -271,6 +271,33 @@ function checkBracket(bracket, groups) {
       seen.add(n);
     }
   }
+
+  // Check for TBD placeholders on a completed tournament (regression guard for bug-wc-knockout-tbd-still-broken).
+  // The World Cup 2026 Final stage ended August 1, 2026. If we're past that date and still showing
+  // "TBD" or "Projected" labels in any knockout stage, it means the completion detection failed.
+  const finalStageEndDate = new Date("2026-08-01T06:59Z"); // ESPN calendar: Final ends Aug 1, 2026
+  const isTournamentComplete = new Date() > finalStageEndDate;
+
+  if (isTournamentComplete) {
+    for (const stage of bracket?.stages ?? []) {
+      for (const match of stage.matches ?? []) {
+        if (match.homeName === "TBD" || match.awayName === "TBD") {
+          err(
+            "worldcup-bracket",
+            `${stage.name} has TBD placeholders despite tournament being complete (ended Aug 1). ` +
+            `Match: ${match.id}`
+          );
+        }
+        if (match.statusDetail === "Projected") {
+          err(
+            "worldcup-bracket",
+            `${stage.name} has Projected label despite tournament being complete (ended Aug 1). ` +
+            `Match: ${match.id}`
+          );
+        }
+      }
+    }
+  }
 }
 
 // --- Cycling (Tour de France) ----------------------------------------------
@@ -385,7 +412,7 @@ async function checkMatchPagesNoDemoLabels() {
       }
       // If status is 404, that's correct behavior — non-existent match returns 404.
       // Any other status is unexpected but not necessarily this bug.
-    } catch (e) {
+    } catch {
       // Network error fetching the page — not this bug's concern.
     }
   }
@@ -452,8 +479,8 @@ async function main() {
     checkCycling(cycling);
     checkHomepagePlaceholders(homepage);
     await checkMatchPagesNoDemoLabels();
-  } catch (e) {
-    err("fetch", `could not load data: ${e.message}`);
+  } catch (error) {
+    err("fetch", `could not load data: ${error.message}`);
   }
 
   for (const w of warnings) console.warn(`  ⚠ ${w}`);

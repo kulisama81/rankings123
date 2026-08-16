@@ -393,11 +393,20 @@ export async function fetchWorldCupBracket(): Promise<WorldCupBracket> {
   }
 
   // Detect if tournament is complete: Final match exists, is finished, and has valid scores
+  // OR we're past the Final stage's end date (ESPN stops providing knockout data after completion)
   // Check this BEFORE any projection logic to prevent "TBD" or "Proj" labels on completed tournaments
   const finalMatches = stageMatches.get("Final") ?? [];
   const finalMatch = finalMatches[0];
   const hasValidFinalScores = finalMatch?.homeScore !== null && finalMatch?.awayScore !== null;
-  const isTournamentComplete = finalMatch?.state === "post" && hasValidFinalScores;
+  const hasFinishedFinalMatch = finalMatch?.state === "post" && hasValidFinalScores;
+
+  // Also check calendar dates: if we're past the Final stage end date, tournament is complete
+  // ESPN stops providing calendar metadata after the tournament window, so we hardcode the known
+  // World Cup 2026 Final end date as a fallback (verified from ESPN on Jun-Jul 2026).
+  const finalStageEndDate = stageInfo["Final"]?.endDate || "2026-08-01T06:59Z";
+  const isPastFinalStage = new Date() > new Date(finalStageEndDate);
+
+  const isTournamentComplete = hasFinishedFinalMatch || isPastFinalStage;
 
   // Only project rounds if tournament is NOT complete
   // When complete, ESPN doesn't provide historical knockout data, so we skip all projections

@@ -1,6 +1,6 @@
 ---
 id: bug-wc-knockout-tbd-still-broken
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-16T05:04:04Z

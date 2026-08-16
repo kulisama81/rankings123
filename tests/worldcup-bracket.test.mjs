@@ -11,7 +11,9 @@ import { chromium } from "playwright";
  * Bug history:
  * - Tournament ended July 19, 2026, but bracket continued showing TBD/Projected for QF/SF/Final
  * - Root cause: bracket projection logic ran even when tournament was complete
- * - Fix: Skip projection when Final match is finished with valid scores
+ * - Fix v1 (commit ba4fdb9): Skip projection when Final match is finished with valid scores
+ * - Bug recurred: ESPN doesn't provide historical knockout data after tournament ends
+ * - Fix v2 (this commit): Also check calendar dates — if we're past Final stage end date, tournament is complete
  */
 
 const BASE_URL = process.env.TEST_URL || "http://localhost:3000";
