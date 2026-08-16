@@ -1,6 +1,6 @@
 ---
 id: bug-wta-live-10-rows
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-16T18:04:54Z
@@ -16,6 +16,18 @@ tags: [bug, wta, data, p0, regression]
 **Severity:** P0 — Core feature failure (fails `npm run check:core-features`)
 
 **Type:** Data regression
+
+## Acceptance Criteria
+
+1. **Fix the WTA feed:** Investigate why `fetchLiveSnapshot("wta")` is throwing an error and fix it so WTA uses live ESPN data like ATP does
+2. **Pagination restored:** WTA live page shows 50+ players with working pagination
+3. **Source badge:** Page shows "espn" source badge, not "mock"
+4. **Core features check passes:** `npm run check:core-features` succeeds
+5. **Regression test added:** Add a test in `tests/` (run via `npm test`) that verifies:
+   - WTA snapshot has >10 players
+   - Source is not "mock" (or if mock, it's a fallback with >50 players)
+   - Example test location: `tests/wta-ranking-coverage.test.js`
+6. **Verified on production:** After deploy, confirm https://rankings123.com/wta-live shows 50+ rows with pagination
 
 ## Description
 
@@ -61,18 +73,6 @@ npm run check:data-sanity
 curl -s "https://site.api.espn.com/apis/site/v2/sports/tennis/wta/rankings" | head -100
 # Returns valid JSON with full rankings data
 ```
-
-## Acceptance Criteria
-
-1. **Fix the WTA feed:** Investigate why `fetchLiveSnapshot("wta")` is throwing an error and fix it so WTA uses live ESPN data like ATP does
-2. **Pagination restored:** WTA live page shows 50+ players with working pagination
-3. **Source badge:** Page shows "espn" source badge, not "mock"
-4. **Core features check passes:** `npm run check:core-features` succeeds
-5. **Regression test added:** Add a test in `tests/` (run via `npm test`) that verifies:
-   - WTA snapshot has >10 players
-   - Source is not "mock" (or if mock, it's a fallback with >50 players)
-   - Example test location: `tests/wta-ranking-coverage.test.js`
-6. **Verified on production:** After deploy, confirm https://rankings123.com/wta-live shows 50+ rows with pagination
 
 ## Related Tickets
 

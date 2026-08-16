@@ -1,6 +1,6 @@
 ---
 id: race-to-finals-atp-wta
-status: open
+status: in_progress
 deps: []
 links: []
 created: 2026-08-15T13:49:06Z
