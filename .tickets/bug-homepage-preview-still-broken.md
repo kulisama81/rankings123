@@ -1,13 +1,61 @@
 ---
 id: bug-homepage-preview-still-broken
-status: open
+status: closed
+created: 2026-08-14T22:00:00Z
 type: bug
 priority: 1
 parent: rankings123
 tags: [bug, homepage, ui, regression, p1]
-created: 2026-08-14T22:00:00Z
 ---
 # Homepage Live Rankings Preview still stuck in loading state (fix 96597d2 failed)
+
+## Acceptance Criteria
+
+1. **Fix the client-side data loading:**
+   - Homepage Live Rankings Preview section must show actual player data (ATP/WTA top 5) within 2 seconds of page load
+   - Skeleton loaders should disappear once data loads
+   - If APIs fail, section should hide gracefully (return `null`) per component logic line 190-192
+   
+2. **Diagnose the root cause:**
+   - Determine why the client-side fetch in `HomepageRankingsPreview.tsx` isn't working despite proper error handling
+   - Check browser console for JavaScript errors (use Playwright to capture console logs)
+   - Verify `useEffect` hook is executing (add temporary console.log if needed during debugging)
+   - Confirm client-side fetches to `/api/atp-live` and `/api/wta-live` succeed from the browser
+
+3. **REGRESSION TEST REQUIRED** (per CLAUDE.md):
+   - The test at `tests/homepage-live-preview.test.mjs` already exists (added in commit 96597d2)
+   - **Verify the test actually catches this bug:**
+     - Run test against a running dev server: `npm run dev` then `node --test tests/homepage-live-preview.test.mjs`
+     - Test should FAIL on current broken state
+     - Test should PASS after fix
+   - **If the test doesn't catch this bug, update it to:**
+     - Use a headless browser (Playwright) to render the homepage client-side (not just fetch SSR HTML)
+     - Wait for skeletons to disappear (`animate-pulse` class removed or cards replaced)
+     - Assert player names are visible in the preview cards (e.g., "Jannik Sinner", "Aryna Sabalenka")
+     - Capture and assert no JavaScript console errors during load
+   - Add test to CI/pre-commit to prevent future regressions
+
+4. **Verify locally:**
+   - Visit http://localhost:3000/
+   - See actual ATP/WTA player data in Live Rankings Preview (names, ranks, points)
+   - No skeleton loaders visible after 2 seconds
+   - Data matches /atp-live and /wta-live pages (top 5 players)
+   - `npm test` — all tests green including regression test
+
+5. **Standard checks:**
+   - `npm run build` — succeeds
+   - `npx eslint src --max-warnings=0` — clean
+   - `npm run check:data-sanity` — passes
+   - `npm run check:core-features` — passes
+
+6. **Live verification after deploy:**
+   - Visit https://rankings123.com/ (test with hard refresh Cmd+Shift+R / incognito)
+   - Confirm Live Rankings Preview shows real player data within 2 seconds
+   - No skeleton loaders stuck in loading state
+   - Data matches /atp-live and /wta-live pages
+   - Test in multiple browsers (Chrome, Safari, Firefox)
+   - Test on mobile viewport (skeleton issue might be device-specific)
+   - Regression test passes when run against production
 
 ## Bug Report
 
@@ -78,51 +126,3 @@ Despite commit 96597d2 "Fix homepage Live Rankings Preview stuck in loading stat
 2. **Client-side fetch failure:** CORS, network policy, or Next.js routing issue blocking `/api/*` calls from client
 3. **JavaScript error:** Silent error in `useEffect` preventing fetch execution (check browser console)
 4. **Race condition:** Component unmounting before `setIsLoading(false)` executes (though `finally` should prevent this)
-
-## Acceptance Criteria
-
-1. **Fix the client-side data loading:**
-   - Homepage Live Rankings Preview section must show actual player data (ATP/WTA top 5) within 2 seconds of page load
-   - Skeleton loaders should disappear once data loads
-   - If APIs fail, section should hide gracefully (return `null`) per component logic line 190-192
-   
-2. **Diagnose the root cause:**
-   - Determine why the client-side fetch in `HomepageRankingsPreview.tsx` isn't working despite proper error handling
-   - Check browser console for JavaScript errors (use Playwright to capture console logs)
-   - Verify `useEffect` hook is executing (add temporary console.log if needed during debugging)
-   - Confirm client-side fetches to `/api/atp-live` and `/api/wta-live` succeed from the browser
-
-3. **REGRESSION TEST REQUIRED** (per CLAUDE.md):
-   - The test at `tests/homepage-live-preview.test.mjs` already exists (added in commit 96597d2)
-   - **Verify the test actually catches this bug:**
-     - Run test against a running dev server: `npm run dev` then `node --test tests/homepage-live-preview.test.mjs`
-     - Test should FAIL on current broken state
-     - Test should PASS after fix
-   - **If the test doesn't catch this bug, update it to:**
-     - Use a headless browser (Playwright) to render the homepage client-side (not just fetch SSR HTML)
-     - Wait for skeletons to disappear (`animate-pulse` class removed or cards replaced)
-     - Assert player names are visible in the preview cards (e.g., "Jannik Sinner", "Aryna Sabalenka")
-     - Capture and assert no JavaScript console errors during load
-   - Add test to CI/pre-commit to prevent future regressions
-
-4. **Verify locally:**
-   - Visit http://localhost:3000/
-   - See actual ATP/WTA player data in Live Rankings Preview (names, ranks, points)
-   - No skeleton loaders visible after 2 seconds
-   - Data matches /atp-live and /wta-live pages (top 5 players)
-   - `npm test` — all tests green including regression test
-
-5. **Standard checks:**
-   - `npm run build` — succeeds
-   - `npx eslint src --max-warnings=0` — clean
-   - `npm run check:data-sanity` — passes
-   - `npm run check:core-features` — passes
-
-6. **Live verification after deploy:**
-   - Visit https://rankings123.com/ (test with hard refresh Cmd+Shift+R / incognito)
-   - Confirm Live Rankings Preview shows real player data within 2 seconds
-   - No skeleton loaders stuck in loading state
-   - Data matches /atp-live and /wta-live pages
-   - Test in multiple browsers (Chrome, Safari, Firefox)
-   - Test on mobile viewport (skeleton issue might be device-specific)
-   - Regression test passes when run against production

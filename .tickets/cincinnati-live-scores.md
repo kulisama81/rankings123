@@ -1,6 +1,6 @@
 ---
 id: cincinnati-live-scores
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-15T13:49:21Z
@@ -31,3 +31,9 @@ ROI: 9/10 — Time-sensitive (8 days), HIGH engagement multiplier, REUSES existi
 ✅ Auto-hides when no Cincinnati matches active
 ✅ Mobile-optimized card
 ✅ Build green
+
+## Notes
+
+**2026-08-16T00:22:15Z**
+
+COMPLETE: Live scores widget shipped to homepage, shows both ATP and WTA Cincinnati Open matches (Aug 11-23). Auto-refreshes every 2 minutes, auto-hides outside tournament dates. Verified through adversarial review.

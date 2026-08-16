@@ -1,6 +1,6 @@
 ---
 id: bug-homepage-live-preview-empty
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-12T18:00:00Z
@@ -10,38 +10,6 @@ parent: rankings123
 tags: [bug, homepage, ui, regression]
 ---
 # Homepage live rankings preview shows no data (empty section)
-
-## Bug Report
-
-**URL:** https://rankings123.com/
-
-**Severity:** P2 (Medium) - Feature shipped but not rendering data, affects bounce rate goal
-
-**Inspection Date:** 2026-08-12
-
-## Description
-
-The homepage "Live Rankings Preview" section (added in commit b101e52 "Add homepage live rankings preview to reduce bounce rate") displays only section headers and navigation links, but **no actual ranking data**. Users see categories like "Men's live rankings" and "Women's live rankings" with arrows, but no player names, ranks, points, or scores.
-
-The section functions as a directory/navigation element rather than a data preview, defeating its stated purpose of reducing bounce rate by showing preview data upfront.
-
-## Reproduction Steps
-
-1. Visit https://rankings123.com/
-2. Scroll to "Live Rankings Preview" section
-3. Observe: only headers ("Men's live rankings", "Women's live rankings") and CTAs ("Watch Live →", "Full women's rankings →")
-4. **Expected:** Preview data showing top 3-5 players with ranks and live points
-5. **Actual:** No data displayed, just navigational elements
-
-## Impact
-
-- Feature incomplete: shipped without the core value (data preview)
-- Bounce rate goal unmet: users must still click through to see any data
-- False advertising: section title promises "preview" but shows nothing to preview
-
-## Root Cause
-
-The component likely renders the section structure but doesn't fetch/display the actual ranking data (top N players from ATP/WTA live feeds).
 
 ## Acceptance Criteria
 
@@ -83,3 +51,35 @@ The component likely renders the section structure but doesn't fetch/display the
    - Confirm Live Rankings Preview shows real player data (not empty)
    - Data matches /atp-live and /wta-live pages (top players consistent)
    - Regression test passes in production
+
+## Bug Report
+
+**URL:** https://rankings123.com/
+
+**Severity:** P2 (Medium) - Feature shipped but not rendering data, affects bounce rate goal
+
+**Inspection Date:** 2026-08-12
+
+## Description
+
+The homepage "Live Rankings Preview" section (added in commit b101e52 "Add homepage live rankings preview to reduce bounce rate") displays only section headers and navigation links, but **no actual ranking data**. Users see categories like "Men's live rankings" and "Women's live rankings" with arrows, but no player names, ranks, points, or scores.
+
+The section functions as a directory/navigation element rather than a data preview, defeating its stated purpose of reducing bounce rate by showing preview data upfront.
+
+## Reproduction Steps
+
+1. Visit https://rankings123.com/
+2. Scroll to "Live Rankings Preview" section
+3. Observe: only headers ("Men's live rankings", "Women's live rankings") and CTAs ("Watch Live →", "Full women's rankings →")
+4. **Expected:** Preview data showing top 3-5 players with ranks and live points
+5. **Actual:** No data displayed, just navigational elements
+
+## Impact
+
+- Feature incomplete: shipped without the core value (data preview)
+- Bounce rate goal unmet: users must still click through to see any data
+- False advertising: section title promises "preview" but shows nothing to preview
+
+## Root Cause
+
+The component likely renders the section structure but doesn't fetch/display the actual ranking data (top N players from ATP/WTA live feeds).
