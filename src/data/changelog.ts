@@ -20,8 +20,8 @@ export const changelog: ChangelogEntry[] = [
   },
   {
     date: "2026-08-16",
-    title: "ATP Live Rankings UX Improvement",
-    description: "Removed demo/placeholder labels from ATP Live rankings page. Source indicators now show real data sources (ESPN, UTS) when available, or gracefully hide when using fallback data. Improves professional appearance and user trust.",
+    title: "Tennis Rankings Quality Improvements",
+    description: "Removed demo/placeholder labels from ATP Live rankings page and added comprehensive regression tests for both ATP and WTA ranking tables. Source indicators now show real data sources (ESPN, UTS) when available. Both tours verified to show full ranking data (50+ players) with pagination.",
     area: "tennis",
   },
   {
