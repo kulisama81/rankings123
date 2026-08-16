@@ -38,8 +38,8 @@ function Movement({ value }: { value: number }) {
 }
 
 function PointsDelta({ value }: { value: number }) {
-  if (value > 0) return <span className="text-xs font-medium tabular-nums text-up">+{value}</span>;
-  if (value < 0) return <span className="text-xs font-medium tabular-nums text-down">{value}</span>;
+  if (value > 0) return <span className="points-delta-glow text-xs font-medium tabular-nums text-up">+{value}</span>;
+  if (value < 0) return <span className="points-delta-glow text-xs font-medium tabular-nums text-down">{value}</span>;
   return <span className="text-xs text-muted/40">—</span>;
 }
 
@@ -277,19 +277,22 @@ export default function AtpDeepRankingTable({ initialSnapshot, band, apiEndpoint
               </tr>
             </thead>
             <tbody>
-              {pageRows.map((p) => {
+              {pageRows.map((p, idx) => {
                 const hasRankChange = rankChanges.has(p.name);
                 const changedArray = Array.from(rankChanges);
                 const changeIndex = changedArray.indexOf(p.name);
                 const staggerClass = hasRankChange && rankChanges.size > 5 && changeIndex >= 0 && changeIndex < 5
                   ? `rank-changed-stagger-${changeIndex + 1}` : "";
 
+                // Entrance stagger: first 20 rows
+                const entranceStagger = idx < 20 ? `table-row-stagger table-row-stagger-${idx + 1}` : "table-row-stagger";
+
                 return (
                 <tr
                   key={`${p.officialRank}-${p.name}`}
-                  className={`border-t border-edge transition ${
-                    p.tournament?.active ? "bg-accent/[0.035] hover:bg-surface2" : "hover:bg-surface2"
-                  } ${hasRankChange ? `rank-changed ${staggerClass}` : ""}`}
+                  className={`table-row-premium ${
+                    p.tournament?.active ? "bg-accent/[0.035]" : ""
+                  } ${hasRankChange ? `rank-changed ${staggerClass}` : ""} ${entranceStagger}`}
                 >
                   <td className="px-3 py-2.5 text-right font-bold tabular-nums text-fg">
                     <Tooltip
@@ -302,7 +305,7 @@ export default function AtpDeepRankingTable({ initialSnapshot, band, apiEndpoint
                       }
                       placement="top"
                     >
-                      <span>{p.liveRank}</span>
+                      <span className="rank-hover-scale">{p.liveRank}</span>
                     </Tooltip>
                   </td>
                   <td className="px-2 py-2.5 text-center">

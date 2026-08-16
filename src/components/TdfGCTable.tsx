@@ -33,17 +33,19 @@ export default function TdfGCTable({ riders }: TdfGCTableProps) {
           <tbody>
             {riders.map((rider, idx) => {
               const isLeader = rider.rank === 1;
+              // Entrance stagger: first 20 rows
+              const entranceStagger = idx < 20 ? `table-row-stagger table-row-stagger-${idx + 1}` : "table-row-stagger";
 
               return (
                 <tr
                   key={`${rider.rank}-${rider.name}`}
-                  className={`border-b border-edge last:border-0 hover:bg-surface2 ${
+                  className={`table-row-premium last:border-b-0 ${
                     isLeader ? "bg-warning/5" : ""
-                  }`}
+                  } ${entranceStagger}`}
                 >
                   <td className="px-3 py-3 text-center">
                     <span
-                      className={`inline-flex h-7 w-7 items-center justify-center rounded-md font-bold ${
+                      className={`rank-hover-scale inline-flex h-7 w-7 items-center justify-center rounded-md font-bold ${
                         isLeader
                           ? "bg-warning text-base"
                           : idx < 3
