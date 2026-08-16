@@ -9,6 +9,7 @@ import CincinnatiLiveScoresWidget from "@/components/CincinnatiLiveScoresWidget"
 import FeaturedEventHero from "@/components/FeaturedEventHero";
 import RankShowcase from "@/components/RankShowcase";
 import HomepageRankingsPreview from "@/components/HomepageRankingsPreview";
+import LiveNowWidget from "@/components/LiveNowWidget";
 import {
   generateOrganizationSchema,
   generateWebSiteSchema,
@@ -59,6 +60,9 @@ export default async function HomePage() {
 
       {/* SIGNATURE VISUAL ANCHOR - ATP/WTA #1 Rank Showcase with dramatic points display */}
       <RankShowcase />
+
+      {/* Live Now Widget - consolidated hero showing ALL live events with match counts */}
+      <LiveNowWidget />
 
       {/* Featured Event Hero - dynamically shows most relevant current/upcoming event */}
       <FeaturedEventHero />

@@ -1,6 +1,6 @@
 ---
 id: homepage-live-now-widget
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-15T13:51:43Z

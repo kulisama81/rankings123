@@ -14,6 +14,12 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-08-15",
+    title: "Live Now Widget — See What's Happening Instantly",
+    description: "New homepage hero widget shows all live events across sports at a glance. See Cincinnati Open match counts, Tour de France stages, or World Cup games in progress — with direct links to detailed coverage. Auto-updates every minute and hides when nothing is live.",
+    area: "all",
+  },
+  {
+    date: "2026-08-15",
     title: "Cincinnati Open Live Scores Widget",
     description: "Homepage now shows live match scores from Cincinnati Open (Aug 11-23). Real-time updates for both ATP and WTA matches with scores, rounds, and live indicators.",
     area: "tennis",
