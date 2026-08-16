@@ -5,6 +5,7 @@ import LiveWorldCupWidget from "@/components/LiveWorldCupWidget";
 import WorldCupFinalWidget from "@/components/WorldCupFinalWidget";
 import LiveTdfWidget from "@/components/LiveTdfWidget";
 import WimbledonCallout from "@/components/WimbledonCallout";
+import CincinnatiLiveScoresWidget from "@/components/CincinnatiLiveScoresWidget";
 import FeaturedEventHero from "@/components/FeaturedEventHero";
 import RankShowcase from "@/components/RankShowcase";
 import HomepageRankingsPreview from "@/components/HomepageRankingsPreview";
@@ -67,6 +68,9 @@ export default async function HomePage() {
 
       {/* Wimbledon 2026 LIVE Callout - shows during tournament (June 29 - July 12) */}
       <WimbledonCallout />
+
+      {/* Cincinnati Open 2026 Live Scores - shows during tournament (Aug 11-23) */}
+      <CincinnatiLiveScoresWidget />
 
       {/* World Cup Final Widget - shows before/during/after Final with cross-sport pivot */}
       <WorldCupFinalWidget />
