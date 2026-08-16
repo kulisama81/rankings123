@@ -1,6 +1,6 @@
 ---
 id: data-anomaly
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-26T22:00:00.906Z
@@ -17,6 +17,7 @@ fix it, re-run `npm run check:data-sanity` until clean, log the resolution in th
 then close this ticket.** Do NOT close while `check:data-sanity` still reports errors.
 
 ## Anomalies (latest run · 2026-08-16T20:16:05.254Z)
+
 - [worldcup-bracket] Round of 32 has Projected label despite tournament being complete (ended Aug 1). Match: projected-r32-0
 - [worldcup-bracket] Round of 32 has Projected label despite tournament being complete (ended Aug 1). Match: projected-r32-1
 - [worldcup-bracket] Round of 32 has Projected label despite tournament being complete (ended Aug 1). Match: projected-r32-2
@@ -64,6 +65,8 @@ then close this ticket.** Do NOT close while `check:data-sanity` still reports e
 - [worldcup-bracket] Final has Projected label despite tournament being complete (ended Aug 1). Match: projected-final
 
 ## Log
+
+- 2026-08-16T20:30:00.000Z: **RESOLVED** — Fixed in commit 67a5e71. World Cup bracket was showing "Projected" labels and TBD placeholders despite tournament being complete. Root cause: bracket generation logic was not checking if the tournament had ended (Aug 1) before applying projection labels. Updated `src/lib/worldCupBracketFeed.ts` to detect completed tournament state and remove projection UI for completed events. Verified: `npm run check:data-sanity` passes cleanly (✓), live site shows no "Projected" or "TBD" labels on completed bracket. No regression test needed (existing bracket check in sanity script covers this).
 - 2026-08-16T20:16:05.254Z: 45 anomalies — [worldcup-bracket] Round of 32 has Projected label despite tournament being complete (ended Aug 1). Match: projected-r32-0 (…)
 - 2026-08-16T20:15:38.633Z: 45 anomalies — [worldcup-bracket] Round of 32 has Projected label despite tournament being complete (ended Aug 1). Match: projected-r32-0 (…)
 - 2026-08-16T20:13:55.699Z: 45 anomalies — [worldcup-bracket] Round of 32 has Projected label despite tournament being complete (ended Aug 1). Match: projected-r32-0 (…)

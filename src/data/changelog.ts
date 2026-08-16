@@ -20,6 +20,12 @@ export const changelog: ChangelogEntry[] = [
   },
   {
     date: "2026-08-16",
+    title: "Premium Table Hover Interactions",
+    description: "Enhanced ranking tables with atmospheric hover effects — rows glow with sport accent, rank numbers scale on hover, and tables cascade into view. Transforms the data-dense experience from generic spreadsheet to premium editorial.",
+    area: "site",
+  },
+  {
+    date: "2026-08-16",
     title: "Tennis Rankings Quality Improvements",
     description: "Removed demo/placeholder labels from ATP Live rankings page and added comprehensive regression tests for both ATP and WTA ranking tables. Source indicators now show real data sources (ESPN, UTS) when available. Both tours verified to show full ranking data (50+ players) with pagination.",
     area: "tennis",
