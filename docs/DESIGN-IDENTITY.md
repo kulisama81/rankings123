@@ -314,9 +314,15 @@ Articles read and applied to rankings123 design strategy:
 
 ### 2026-08-09 (Weekly Run)
 
-18. **["Skeuomorphism Design Best Practices for 2026"](https://clay.global/blog/skeuomorphism-design)** (August 3, 2026)
+18. **["Skeuomorphism Design Best Practices for 2026"](https://clay.global/blog/skeuomorphism-ui)** (August 3, 2026)
    - **Key takeaway:** Article URL returned 404 — unable to access content. Will retry next run.
    - **Application:** Deferred — skeuomorphism trend noted but specific guidance unavailable.
+
+### 2026-08-16 (Weekly Run)
+
+19. **["Skeuomorphism Design Best Practices for 2026"](https://clay.global/blog/skeuomorphism-ui)** (August 3, 2026) — NOW ACCESSIBLE
+   - **Key takeaway:** "Depth goes on icons, hero moments, and primary actions, while dense screens stay flat." Selective application is key — reserve dimensional effects for moments deserving focus. Modern realism uses soft shadows with large blur radii, consistent top-left light source, and gentle specular highlights. "Every dimensional detail should transfer knowledge" — ornamental texture without function should be eliminated. Performance-first: CSS gradients and SVG noise instead of bitmap files.
+   - **Application:** Filed ticket `skeuomorphic-depth-selective` (p2) — apply soft shadows (12-20px blur) to podium rank badges #1-3, sport icons, primary CTAs, and live status badges. Keep data tables/toolbars FLAT with subtle borders only. Rankings = inherently hierarchical; depth signals importance (top 3 get depth, rank 50 stays flat). Clay's guidance perfectly fits a data-dense sports site.
 
 **Awwwards August 2026:**
 
@@ -345,6 +351,24 @@ Articles read and applied to rankings123 design strategy:
      - **Post-event critical window:** First 48 hours after major event determine lifetime value (MLS World Cup retention playbook)
      - **Discovery modules:** "What's next" content must go live WITHIN HOURS of tournament end to prevent bounce
    - **Application:** Filed tickets for post-event discovery modules (`post-event-discovery-module` p1, TIME-SENSITIVE for WC Finals today), gamification milestones (`gamification-retention-milestones` p3), and homepage urgency overhaul (`homepage-live-urgency-overhaul` p0 to fix 70% bounce crisis).
+
+**2026 Typography & Visual Design Trends — Typographic Maximalism, Hyperreal 3D, Atmospheric Gradients:**
+
+24. **Typographic Maximalism** ([Fontfabric: Top 10 Design & Typography Trends for 2026](https://www.fontfabric.com/blog/10-design-trends-shaping-the-visual-typographic-landscape-in-2026/))
+   - **Key takeaway:** "Typography is louder, more performative and more central to brand expression." Bold, kinetic type that behaves like motion graphics: big, stacked, stretched, rotated. Letterforms function as visual elements themselves. Grid-native systems critical (Pentagram's Guggenheim uses simple geometric grid driving everything). For data viz: GT Pressura Mono style — bold geometric mono for rankings.
+   - **Application:** Filed ticket `typographic-maximalism-data` (p2) — dramatic scale contrast in ranking tables. Rank #1-3 = 32-40px bold tabular mono, #4-10 = 24-28px, #11-50 = 18-20px, #51+ = 16px. Variable font-weight: #1 = 900 (black), gradual fade to #11+ = 600. Player names stay Geist Sans 16-18px (readable, subordinate). "Rank as performance art" — #1 gets atmospheric gradient text effect.
+
+25. **Hyperreal 3D Material Depth** ([Fontfabric 2026](https://www.fontfabric.com/blog/10-design-trends-shaping-the-visual-typographic-landscape-in-2026/))
+   - **Key takeaway:** "Hyperreal 3D...glass, liquid, metal and lighting" creates premium tier indicators. Not flat digital, but tactile material feel. Combined with minimalism trend: "bold accents" (one dramatic pop) create luxury.
+   - **Application:** Filed ticket `hyperreal-3d-podium-badges` (p3) — gold/silver/bronze 3D badges ONLY for podium ranks #1-3. Metallic gradients + glass morphism (backdrop-blur 8px) + 3-layer lighting (outer glow, depth shadow, inner highlight) + SVG noise texture. Rank #4+ stay flat circles (hierarchy — podium = special). Trophy-like premium feel, screenshot-worthy.
+
+26. **Atmospheric Gradients ("Shifted Weather")** ([Fontfabric 2026](https://www.fontfabric.com/blog/10-design-trends-shaping-the-visual-typographic-landscape-in-2026/))
+   - **Key takeaway:** "Gradients are no longer just backgrounds...shifted weather" and "soft, cinematic gradients signal focus." Animated atmospheric transitions vs jarring color changes.
+   - **Application:** Filed ticket `atmospheric-gradient-transitions` (p3) — 3 gradient states for live data: Idle (subtle 20% opacity), Updating (animates outward, opacity pulses 20% → 35%), Updated (settles back). "Shifted weather" per sport: ATP lime → yellow-green, WTA magenta → pink. Reinforces "live data, living design" signature.
+
+27. **Premium Minimalism with Oversized Typography** ([Digital Silk: Top 10 Minimalist Web Design Trends For 2026](https://www.digitalsilk.com/digital-trends/minimalist-web-design-trends/))
+   - **Key takeaway:** "Oversized typography as focal point" paired with 2-3 carefully chosen tones. "Space shapes attention and emotion" — generous whitespace helps users process info faster. Typography should "guide the eye" through hierarchy.
+   - **Application:** Aligns with typographic maximalism ticket. Rankings123 already uses 2-3 color system (dark base + sport accent + white/muted). Need more dramatic scale on key data (rank #1 HUGE). Generous whitespace between table sections preserves scannability.
 
 **2026 Design Trends — Archival Index, Anti-Grid, Premium Minimalism:**
 
@@ -433,12 +457,19 @@ Filed TIME-SENSITIVE tickets:
 - [ ] **High-contrast minimal mode** (ticket `high-contrast-minimal-mode`) — NEW 2026-08-02, p3 (Noomo 2-color system, Focus Mode theme)
 - [ ] **Smooth section transitions** (ticket `smooth-section-transitions`) — NEW 2026-08-02, p3 (Noomo GSAP pattern, Framer Motion page cross-fades)
 
-### Phase 6: Dramatic Focal Points & Experimental Immersive (NEW — August 9)
-- [ ] **Homepage visual anchor moment** (ticket `homepage-visual-anchor-moment`) — NEW 2026-08-09, p1 (address "generic/wireframe" audit — ONE dramatic anchor: oversized live score, kinetic #1 spotlight, or animated bracket)
+### Phase 6: Dramatic Focal Points & Experimental Immersive (August 9)
+- [x] **Homepage visual anchor moment** (ticket `homepage-visual-anchor-moment`) — SHIPPED 2026-08-14 ✅ (RankShowcase: ATP/WTA #1 with 84px points, count-up animation, live pulse glow)
 - [ ] **Archival index data pattern** (ticket `archival-index-data-pattern`) — NEW 2026-08-09, p2 (2026 trend: structured data storytelling with grids, labels, annotations — sports almanac feel)
 - [ ] **Anti-grid organic hero** (ticket `anti-grid-organic-hero`) — NEW 2026-08-09, p3 (biomorphic shapes, asymmetric layouts, curved clip-paths — break free from template rigidity)
 - [ ] **Gamification interactive challenges** (ticket `gamification-interactive-challenges`) — NEW 2026-08-09, p3 (Lacoste Ace Breaker pattern: prediction challenges, badges, leaderboards — 30% retention lift)
 - [ ] **Immersive match viz 3D** (ticket `immersive-match-viz-3d`) — NEW 2026-08-09, p3 (WC Data Portraits: 3D terrain WebGL/Three.js experimental view — signature differentiator)
+
+### Phase 7: Selective Skeuomorphism, Typographic Maximalism & Premium Table UX (NEW — August 16)
+- [ ] **Selective skeuomorphic depth** (ticket `skeuomorphic-depth-selective`) — NEW 2026-08-16, p2 (Clay Aug 3 guidance: soft shadows 12-20px on podium badges #1-3, sport icons, CTAs; tables stay flat)
+- [ ] **Typographic maximalism for data** (ticket `typographic-maximalism-data`) — NEW 2026-08-16, p2 (Fontfabric 2026: rank #1-3 = 32-40px bold mono, variable weight 900→600, gradient text on #1 — "rank as performance art")
+- [ ] **Premium table hover micro-interactions** (ticket `premium-table-hover-microinteractions`) — NEW 2026-08-16, p2 (address "generic/corporate" audit: row hover = accent/5 bg + 3px accent border-left + gentle lift + stagger entrance)
+- [ ] **Atmospheric gradient transitions** (ticket `atmospheric-gradient-transitions`) — NEW 2026-08-16, p3 (Fontfabric "shifted weather": 3 gradient states for live updates — idle/updating/settled, cinematic feel)
+- [ ] **Hyperreal 3D podium badges** (ticket `hyperreal-3d-podium-badges`) — NEW 2026-08-16, p3 (Fontfabric 2026: gold/silver/bronze metallic gradients + glass morphism + 3-layer lighting for ranks #1-3 only)
 
 ---
 
