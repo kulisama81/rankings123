@@ -14,6 +14,12 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-08-15",
+    title: "Cincinnati Open Live Scores Widget",
+    description: "Homepage now shows live match scores from Cincinnati Open (Aug 11-23). Real-time updates for both ATP and WTA matches with scores, rounds, and live indicators.",
+    area: "tennis",
+  },
+  {
+    date: "2026-08-15",
     title: "Vuelta a España 2026 Live Coverage Launches",
     description: "Full live coverage for the Vuelta a España 2026 (Aug 22 - Sep 13) now available. Track General Classification standings, stage results, and all four jersey classifications (Red, Green, Polka-dot, White) updated daily throughout the 21-stage race. Data sourced from Wikipedia with real-time status detection.",
     area: "cycling",
