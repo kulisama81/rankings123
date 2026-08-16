@@ -1,6 +1,6 @@
 ---
 id: us-open-2026-favorites-article
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-01T14:05:00Z

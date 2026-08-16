@@ -13,6 +13,12 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-08-20",
+    title: "US Open 2026 Betting Favorites Analysis",
+    description: "In-depth preview article analyzing US Open 2026 betting favorites: Jannik Sinner and Aryna Sabalenka lead the field. Expert analysis of title paths, form, historical trends, and value picks for both men's and women's draws. Updated with Cincinnati Open results.",
+    area: "tennis",
+  },
+  {
     date: "2026-08-15",
     title: "Live Now Widget — See What's Happening Instantly",
     description: "New homepage hero widget shows all live events across sports at a glance. See Cincinnati Open match counts, Tour de France stages, or World Cup games in progress — with direct links to detailed coverage. Auto-updates every minute and hides when nothing is live.",
