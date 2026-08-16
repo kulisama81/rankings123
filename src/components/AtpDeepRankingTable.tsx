@@ -212,11 +212,7 @@ export default function AtpDeepRankingTable({ initialSnapshot, band, apiEndpoint
           In play ({liveCount} overall)
         </label>
         <div className="ml-auto flex items-center gap-3 text-xs text-muted">
-          {snapshot.source === "mock" ? (
-            <span className="rounded-full bg-down/15 px-2 py-0.5 font-medium text-down">Demo data</span>
-          ) : (
-            <DataSourceBadge source={snapshot.source} showLiveDot={liveCount > 0} />
-          )}
+          <DataSourceBadge source={snapshot.source} showLiveDot={liveCount > 0} />
           {isRefreshing && (
             <span className="inline-flex items-center gap-1.5 rounded-md bg-accent/10 px-2 py-0.5 text-xs font-medium text-accent">
               Updating...

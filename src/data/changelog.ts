@@ -13,16 +13,22 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
-    date: "2026-08-16",
-    title: "Comprehensive Sitemap for Search Engine Discovery",
-    description: "Dynamic sitemap now includes all 544 pages: top 200 ATP/WTA player profiles, World Cup teams, matches, and venues, plus all tournament and cycling race pages. Auto-updates on every request to ensure search engines discover new content immediately.",
-    area: "site",
-  },
-  {
     date: "2026-08-20",
     title: "US Open 2026 Betting Favorites Analysis",
     description: "In-depth preview article analyzing US Open 2026 betting favorites: Jannik Sinner and Aryna Sabalenka lead the field. Expert analysis of title paths, form, historical trends, and value picks for both men's and women's draws. Updated with Cincinnati Open results.",
     area: "tennis",
+  },
+  {
+    date: "2026-08-16",
+    title: "ATP Live Rankings UX Improvement",
+    description: "Removed demo/placeholder labels from ATP Live rankings page. Source indicators now show real data sources (ESPN, UTS) when available, or gracefully hide when using fallback data. Improves professional appearance and user trust.",
+    area: "tennis",
+  },
+  {
+    date: "2026-08-16",
+    title: "Comprehensive Sitemap for Search Engine Discovery",
+    description: "Dynamic sitemap now includes all 544 pages: top 200 ATP/WTA player profiles, World Cup teams, matches, and venues, plus all tournament and cycling race pages. Auto-updates on every request to ensure search engines discover new content immediately.",
+    area: "site",
   },
   {
     date: "2026-08-15",

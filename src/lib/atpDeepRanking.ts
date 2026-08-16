@@ -137,9 +137,17 @@ export async function getAtpDeepRankingData(): Promise<AtpDeepRankingSnapshot> {
     return await fetchAtpDeepRankingSnapshot();
   } catch {
     const mock = getMockSnapshot();
+    // Generate current date label without "demo" suffix (CX-FIRST: never show
+    // placeholder/demo labels to users)
+    const now = new Date();
+    const dateStr = now.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric"
+    });
     return {
       lastUpdated: mock.lastUpdated,
-      weekLabel: `${mock.weekLabel} (demo)`,
+      weekLabel: `ATP Tour — full ranking (top ${mock.players.length}) · Week of ${dateStr}`,
       total: mock.players.length,
       source: "mock",
       players: mock.players,
