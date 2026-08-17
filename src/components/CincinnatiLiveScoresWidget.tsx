@@ -2,11 +2,6 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { ATP_SCOREBOARD_URL } from "@/lib/atpDeepFeed";
-
-// WTA scoreboard URL (same format as ATP)
-const WTA_SCOREBOARD_URL =
-  "https://site.api.espn.com/apis/site/v2/sports/tennis/wta/scoreboard";
 
 interface Match {
   id: string;
@@ -20,7 +15,7 @@ interface Match {
 /**
  * Cincinnati Open Live Scores Widget
  * Shows in-progress matches during Cincinnati Open (Aug 11-23, 2026)
- * Reuses ESPN scoreboard API, filters to Cincinnati matches only
+ * Fetches from server-side API route that queries ESPN scoreboard
  * Auto-hides when tournament is not active or no matches in progress
  */
 export default function CincinnatiLiveScoresWidget() {
@@ -29,31 +24,17 @@ export default function CincinnatiLiveScoresWidget() {
 
   const fetchCincinnatiMatches = useCallback(async () => {
     try {
-      // Fetch both ATP and WTA scoreboards (Cincinnati is a joint tournament)
-      const [atpResponse, wtaResponse] = await Promise.all([
-        fetch(ATP_SCOREBOARD_URL),
-        fetch(WTA_SCOREBOARD_URL),
-      ]);
-
-      const cincinnatiMatches: Match[] = [];
-
-      // Process ATP scoreboard
-      if (atpResponse.ok) {
-        const atpData = await atpResponse.json();
-        extractMatches(atpData, "mens-singles", cincinnatiMatches);
+      const response = await fetch("/api/tennis/cincinnati");
+      if (response.ok) {
+        const data = await response.json();
+        setMatches(data.matches || []);
+      } else {
+        setMatches([]);
       }
-
-      // Process WTA scoreboard
-      if (wtaResponse.ok) {
-        const wtaData = await wtaResponse.json();
-        extractMatches(wtaData, "womens-singles", cincinnatiMatches);
-      }
-
-      setMatches(cincinnatiMatches);
-      setLoading(false);
-    } catch (error) {
-      console.error("Failed to fetch Cincinnati scores:", error);
+    } catch {
+      // Fail silently - graceful degradation (CX-first: no console errors)
       setMatches([]);
+    } finally {
       setLoading(false);
     }
   }, []);
@@ -64,71 +45,6 @@ export default function CincinnatiLiveScoresWidget() {
     const interval = setInterval(fetchCincinnatiMatches, 120000);
     return () => clearInterval(interval);
   }, [fetchCincinnatiMatches]);
-
-  /* eslint-disable @typescript-eslint/no-explicit-any */
-  function extractMatches(
-    data: any,
-    singlesSlug: "mens-singles" | "womens-singles",
-    matches: Match[]
-  ) {
-  /* eslint-enable @typescript-eslint/no-explicit-any */
-    for (const event of data?.events ?? []) {
-      const tournamentName: string = event.shortName || event.name || "";
-
-      // Filter for Cincinnati Open
-      if (!tournamentName.toLowerCase().includes("cincinnati")) {
-        continue;
-      }
-
-      // Get singles matches (ATP or WTA)
-      const singles = (event.groupings ?? []).find(
-        (g: { grouping?: { slug?: string } }) => g?.grouping?.slug === singlesSlug
-      );
-
-      if (!singles) continue;
-
-        for (const match of singles.competitions ?? []) {
-          const status = match?.status?.type?.name ?? "";
-
-          // Only show in-progress or recently completed matches
-          if (status !== "STATUS_IN_PROGRESS" && status !== "STATUS_FINAL") {
-            continue;
-          }
-
-          const competitors = match?.competitors ?? [];
-          if (competitors.length < 2) continue;
-
-          const player1Name = competitors[0]?.athlete?.displayName;
-          const player2Name = competitors[1]?.athlete?.displayName;
-
-          // Skip matches with missing player data (CX-first: never show placeholders)
-          if (!player1Name || !player2Name) {
-            continue;
-          }
-
-          // Build score string
-          let scoreStr = "";
-          if (match?.status?.displayClock) {
-            scoreStr = match.status.displayClock;
-          } else {
-            const p1Score = competitors[0]?.score || "0";
-            const p2Score = competitors[1]?.score || "0";
-            scoreStr = `${p1Score} - ${p2Score}`;
-          }
-
-          const roundName = match?.round?.displayName || "";
-
-          matches.push({
-            id: match.id || `${player1Name}-${player2Name}`,
-            player1: player1Name,
-            player2: player2Name,
-            score: scoreStr,
-            status: status === "STATUS_IN_PROGRESS" ? "Live" : "Final",
-            round: roundName,
-          });
-        }
-      }
-  }
 
   // Auto-hide outside tournament dates (Aug 11-23, 2026 UTC)
   const now = new Date();

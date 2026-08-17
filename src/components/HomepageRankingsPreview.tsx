@@ -139,8 +139,8 @@ export default function HomepageRankingsPreview() {
             goldenBoot: wcRes ? now : undefined,
           },
         });
-      } catch (err) {
-        console.error("Homepage rankings preview fetch error:", err);
+      } catch {
+        // Fail silently - individual fetches already logged with console.warn
       } finally {
         setIsLoading(false);
       }

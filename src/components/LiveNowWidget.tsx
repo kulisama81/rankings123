@@ -109,24 +109,26 @@ export default function LiveNowWidget() {
 
         // 3. Cycling: Check if race is active
         try {
-          const { getCyclingRaces, getPrimaryRace } = await import("@/lib/cyclingFeed");
-          const races = await getCyclingRaces();
-          const primary = getPrimaryRace(races);
+          const response = await fetch("/api/cycling/races");
+          if (response.ok) {
+            const data = await response.json();
+            const primary = data.primary;
 
-          if (primary && primary.raceStatus === "active") {
-            const stageName = primary.currentStage
-              ? `Stage ${primary.currentStage}`
-              : "Race in progress";
-            events.push({
-              id: primary.metadata.id,
-              name: primary.metadata.name,
-              detail: stageName,
-              href: "/cycling",
-              emoji: "🚴",
-            });
+            if (primary && primary.raceStatus === "active") {
+              const stageName = primary.currentStage
+                ? `Stage ${primary.currentStage}`
+                : "Race in progress";
+              events.push({
+                id: primary.metadata.id,
+                name: primary.metadata.name,
+                detail: stageName,
+                href: "/cycling",
+                emoji: "🚴",
+              });
+            }
           }
         } catch {
-          // Cycling fetch failed, skip
+          // Fail silently - graceful degradation (CX-first: no console errors)
         }
 
         setLiveEvents(events);

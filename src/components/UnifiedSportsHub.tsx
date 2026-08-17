@@ -83,12 +83,13 @@ export default function UnifiedSportsHub() {
         // Check cycling (any active race)
         let cyclingActive = false;
         try {
-          const { getCyclingRaces, getPrimaryRace } = await import("@/lib/cyclingFeed");
-          const races = await getCyclingRaces();
-          const primary = getPrimaryRace(races);
-          cyclingActive = !!primary;
+          const response = await fetch("/api/cycling/races");
+          if (response.ok) {
+            const data = await response.json();
+            cyclingActive = data.hasActivePrimary;
+          }
         } catch {
-          // Fall back to off-season
+          // Fail silently - graceful degradation (CX-first: no console errors)
         }
 
         // Check upcoming events (within 7 days)
