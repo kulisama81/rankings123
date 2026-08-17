@@ -1,6 +1,6 @@
 ---
 id: bug-wc-bracket-missing-core-feature
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-16T00:00:00Z
@@ -10,52 +10,6 @@ parent: rankings123
 tags: [bug, worldcup, ui, core-feature, p0]
 ---
 # World Cup knockout bracket completely missing (CORE FEATURE violation)
-
-## Bug Report
-
-**URL:** https://rankings123.com/world-cup
-
-**Severity:** P0 - CRITICAL - Core feature violation (breaks `npm run check:core-features`)
-
-**Inspection Date:** 2026-08-16
-
-## Description
-
-The World Cup knockout bracket is completely missing from the live site, showing only placeholder text despite the tournament having finished on July 12, 2026. This violates the core feature requirement in `docs/CORE-FEATURES.md` which mandates:
-
-> **Knockout Bracket Tree** showing the **Round of 32 matchups** (real/projected teams, not all TBD) → R16 → QF → SF → Final, with confirmed-vs-projected labelling. *(This is the one a planner deleted "to save space" — it is the heart of the knockout view; never drop the R32 column.)*
-
-## Automated Check Failure
-
-```
-npm run check:core-features
-✗ check-core-features: 1 CORE FEATURE(S) MISSING (see docs/CORE-FEATURES.md):
-  ✗ WC knockout bracket (R32 matchups): no Round of 32 column in the bracket tree
-```
-
-## Reproduction Steps
-
-1. Visit https://rankings123.com/world-cup
-2. Scroll to the "Knockout Bracket" section
-3. **Expected:** Full bracket visualization showing R32 → R16 → QF → SF → Final with Argentina's path to victory
-4. **Actual:** Placeholder message: "The knockout bracket will appear once the group stage concludes and teams advance."
-
-## Impact
-
-- **CORE FEATURE VIOLATION**: The bracket is listed in protected features that must never be removed
-- Tournament ended 35+ days ago but bracket still shows "will appear once group stage concludes"
-- Users visiting for World Cup results see incomplete/broken data
-- Makes the site appear unmaintained and unreliable
-- This is a known regression - multiple closed tickets attempted fixes (ba4fdb9, 67a5e71) but the issue persists
-
-## Current State
-
-The page shows:
-- Final result header: "Argentina 🇦🇷 3-1 🇨🇭 Switzerland · July 12, 2026 · AET" ✓ (correct)
-- Group standings: All 12 groups with complete data ✓
-- Knockout bracket: Placeholder text only ✗ (BROKEN)
-- No bracket visualization at all ✗ (MISSING)
-- No R32, R16, QF, SF, or Final matchups shown ✗ (MISSING)
 
 ## Acceptance Criteria
 
@@ -107,3 +61,49 @@ The page shows:
    - Verify Argentina's championship path is clear
    - Verify `npm run check:core-features` passes on deployed build
    - No placeholder/TBD text for completed tournament
+
+## Bug Report
+
+**URL:** https://rankings123.com/world-cup
+
+**Severity:** P0 - CRITICAL - Core feature violation (breaks `npm run check:core-features`)
+
+**Inspection Date:** 2026-08-16
+
+## Description
+
+The World Cup knockout bracket is completely missing from the live site, showing only placeholder text despite the tournament having finished on July 12, 2026. This violates the core feature requirement in `docs/CORE-FEATURES.md` which mandates:
+
+> **Knockout Bracket Tree** showing the **Round of 32 matchups** (real/projected teams, not all TBD) → R16 → QF → SF → Final, with confirmed-vs-projected labelling. *(This is the one a planner deleted "to save space" — it is the heart of the knockout view; never drop the R32 column.)*
+
+## Automated Check Failure
+
+```
+npm run check:core-features
+✗ check-core-features: 1 CORE FEATURE(S) MISSING (see docs/CORE-FEATURES.md):
+  ✗ WC knockout bracket (R32 matchups): no Round of 32 column in the bracket tree
+```
+
+## Reproduction Steps
+
+1. Visit https://rankings123.com/world-cup
+2. Scroll to the "Knockout Bracket" section
+3. **Expected:** Full bracket visualization showing R32 → R16 → QF → SF → Final with Argentina's path to victory
+4. **Actual:** Placeholder message: "The knockout bracket will appear once the group stage concludes and teams advance."
+
+## Impact
+
+- **CORE FEATURE VIOLATION**: The bracket is listed in protected features that must never be removed
+- Tournament ended 35+ days ago but bracket still shows "will appear once group stage concludes"
+- Users visiting for World Cup results see incomplete/broken data
+- Makes the site appear unmaintained and unreliable
+- This is a known regression - multiple closed tickets attempted fixes (ba4fdb9, 67a5e71) but the issue persists
+
+## Current State
+
+The page shows:
+- Final result header: "Argentina 🇦🇷 3-1 🇨🇭 Switzerland · July 12, 2026 · AET" ✓ (correct)
+- Group standings: All 12 groups with complete data ✓
+- Knockout bracket: Placeholder text only ✗ (BROKEN)
+- No bracket visualization at all ✗ (MISSING)
+- No R32, R16, QF, SF, or Final matchups shown ✗ (MISSING)
