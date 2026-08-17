@@ -1,6 +1,6 @@
 ---
 id: social-sharing-og-dynamic
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-06T13:48:34Z
