@@ -14,6 +14,12 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-08-17",
+    title: "Age-Stratified Tennis Rankings",
+    description: "New age-filtered ranking views for both ATP and WTA: Under-21, Under-24, Under-25, Over-30, and Over-35. Track the best young talents and veteran comebacks with dedicated rankings that update live during tournaments. 10 new pages capturing youth development and longevity stories.",
+    area: "tennis",
+  },
+  {
+    date: "2026-08-17",
     title: "Branded Favicon and PWA Support",
     description: "Rankings123 now has a proper branded favicon (the signature live dot + '123' numerals) that appears on browser tabs, iOS/Android home screens, and as a progressive web app. Added theme-color support so the browser chrome matches dark/light modes.",
     area: "site",
