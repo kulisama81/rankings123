@@ -19,6 +19,7 @@ const PAGE_SIZE = 50;
 interface LiveRankingTableProps {
   tour: Tour;
   initialSnapshot: AtpLiveSnapshot;
+  showAgeGroupRank?: boolean;
 }
 
 function Movement({ value }: { value: number }) {
@@ -129,7 +130,7 @@ function Delta({ value }: { value: number }) {
   return <span className="text-xs tabular-nums text-muted/50" title="No points earned or lost this week">0</span>;
 }
 
-export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingTableProps) {
+export default function LiveRankingTable({ tour, initialSnapshot, showAgeGroupRank }: LiveRankingTableProps) {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -388,6 +389,7 @@ export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingT
               <thead className="bg-surface2 text-sm uppercase tracking-wide text-muted">
                 <tr>
                   <th className="px-3 py-2.5 text-right">#</th>
+                  {showAgeGroupRank && <th className="px-2 py-2.5 text-right">Overall</th>}
                   <th className="px-2 py-2.5 text-center">+/-</th>
                   <th className="px-3 py-2.5 text-left">Player</th>
                   <th className="px-2 py-2.5 text-center">Age</th>
@@ -425,16 +427,21 @@ export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingT
                       <Tooltip
                         content={
                           <RankTooltip
-                            currentRank={p.liveRank}
+                            currentRank={showAgeGroupRank && "ageGroupRank" in p ? p.ageGroupRank as number : p.liveRank}
                             movement={p.movement}
                             officialRank={p.officialRank}
                           />
                         }
                         placement="top"
                       >
-                        <span><RankBadge rank={p.liveRank} /></span>
+                        <span><RankBadge rank={showAgeGroupRank && "ageGroupRank" in p ? p.ageGroupRank as number : p.liveRank} /></span>
                       </Tooltip>
                     </td>
+                    {showAgeGroupRank && (
+                      <td className="px-2 py-2 text-right text-sm text-muted">
+                        #{p.liveRank}
+                      </td>
+                    )}
                     <td className="px-2 py-2 text-center">
                       {p.movement !== 0 ? (
                         <Tooltip
@@ -542,15 +549,20 @@ export default function LiveRankingTable({ tour, initialSnapshot }: LiveRankingT
                   <Tooltip
                     content={
                       <RankTooltip
-                        currentRank={p.liveRank}
+                        currentRank={showAgeGroupRank && "ageGroupRank" in p ? p.ageGroupRank as number : p.liveRank}
                         movement={p.movement}
                         officialRank={p.officialRank}
                       />
                     }
                     placement="top"
                   >
-                    <span><RankBadge rank={p.liveRank} /></span>
+                    <span><RankBadge rank={showAgeGroupRank && "ageGroupRank" in p ? p.ageGroupRank as number : p.liveRank} /></span>
                   </Tooltip>
+                  {showAgeGroupRank && (
+                    <span className="text-xs text-muted">
+                      (#{p.liveRank} overall)
+                    </span>
+                  )}
                   {p.movement !== 0 ? (
                     <Tooltip
                       content={

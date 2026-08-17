@@ -3,12 +3,14 @@ import LiveRankingTable from "./LiveRankingTable";
 import HeroBanner from "./HeroBanner";
 
 interface LiveRankingViewProps {
-  tour: Tour;
+  tour?: Tour;
   snapshot: AtpLiveSnapshot;
+  showAgeGroupRank?: boolean;
 }
 
-export default function LiveRankingView({ tour, snapshot }: LiveRankingViewProps) {
-  const tourLabel = snapshot.tourLabel ?? tour.toUpperCase();
+export default function LiveRankingView({ tour, snapshot, showAgeGroupRank }: LiveRankingViewProps) {
+  const tourValue = tour ?? snapshot.tour ?? "atp";
+  const tourLabel = snapshot.tourLabel ?? tourValue.toUpperCase();
   const players = snapshot.players;
   const top = players[0];
   const liveCount = players.filter((p) => p.tournament?.active).length;
@@ -23,14 +25,14 @@ export default function LiveRankingView({ tour, snapshot }: LiveRankingViewProps
     : undefined;
 
   return (
-    <div data-sport={tour} className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+    <div data-sport={tourValue} className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
       <HeroBanner
         sport="tennis"
         title={`${tourLabel} Live Ranking`}
         subtitle={snapshot.weekLabel}
         stats={stats}
       />
-      <LiveRankingTable tour={tour} initialSnapshot={snapshot} />
+      <LiveRankingTable tour={tourValue} initialSnapshot={snapshot} showAgeGroupRank={showAgeGroupRank} />
     </div>
   );
 }
