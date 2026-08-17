@@ -1,6 +1,6 @@
 ---
 id: f1-driver-constructor-standings
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-23T13:51:57Z
