@@ -13,6 +13,12 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-08-17",
+    title: "Branded Favicon and PWA Support",
+    description: "Rankings123 now has a proper branded favicon (the signature live dot + '123' numerals) that appears on browser tabs, iOS/Android home screens, and as a progressive web app. Added theme-color support so the browser chrome matches dark/light modes.",
+    area: "site",
+  },
+  {
     date: "2026-08-20",
     title: "US Open 2026 Betting Favorites Analysis",
     description: "In-depth preview article analyzing US Open 2026 betting favorites: Jannik Sinner and Aryna Sabalenka lead the field. Expert analysis of title paths, form, historical trends, and value picks for both men's and women's draws. Updated with Cincinnati Open results.",
