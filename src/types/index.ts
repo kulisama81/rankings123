@@ -336,3 +336,26 @@ export interface UciTeamRankingSnapshot {
   source: "cyclingranking" | "firstcycling" | "mock";
   teams: UciTeam[];
 }
+
+// --- Formula 1 Championship Standings ---
+export interface F1DriverStanding {
+  rank: number;
+  driver: string;
+  team: string;
+  points: number;
+  nationality?: string;
+}
+
+export interface F1ConstructorStanding {
+  rank: number;
+  constructor: string;
+  points: number;
+}
+
+export interface F1Snapshot {
+  drivers: F1DriverStanding[];
+  constructors: F1ConstructorStanding[];
+  source: "wikipedia" | "mock";
+  lastUpdated: string;
+  season: number;
+}

@@ -5,7 +5,7 @@
  * Performance: <5KB per texture, no LCP impact
  */
 
-type Sport = 'tennis' | 'worldcup' | 'cycling' | 'general';
+type Sport = 'tennis' | 'worldcup' | 'cycling' | 'f1' | 'general';
 
 interface HeroSportTextureProps {
   sport: Sport;
@@ -74,6 +74,28 @@ export default function HeroSportTexture({ sport, className = '' }: HeroSportTex
           </pattern>
         </defs>
         <rect width="100%" height="100%" fill="url(#road-texture)" className="text-accent" />
+      </svg>
+    ),
+    f1: (
+      // Race track with checkered flag pattern
+      <svg className="absolute inset-0 h-full w-full opacity-[0.12] dark:opacity-[0.18]" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="f1-texture" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+            {/* Race track lines */}
+            <line x1="0" y1="30" x2="100" y2="30" stroke="currentColor" strokeWidth="1" opacity="0.3" />
+            <line x1="0" y1="70" x2="100" y2="70" stroke="currentColor" strokeWidth="1" opacity="0.3" />
+            {/* Checkered flag pattern */}
+            <rect x="10" y="10" width="8" height="8" fill="currentColor" opacity="0.15" />
+            <rect x="26" y="10" width="8" height="8" fill="currentColor" opacity="0.15" />
+            <rect x="18" y="18" width="8" height="8" fill="currentColor" opacity="0.15" />
+            <rect x="34" y="18" width="8" height="8" fill="currentColor" opacity="0.15" />
+            {/* Speed lines */}
+            <line x1="50" y1="45" x2="80" y2="48" stroke="currentColor" strokeWidth="0.8" opacity="0.2" />
+            <line x1="50" y1="52" x2="75" y2="54" stroke="currentColor" strokeWidth="0.8" opacity="0.2" />
+            <line x1="50" y1="59" x2="82" y2="62" stroke="currentColor" strokeWidth="0.8" opacity="0.2" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#f1-texture)" className="text-accent" />
       </svg>
     ),
     general: null, // Trophy icon uses existing gradient only

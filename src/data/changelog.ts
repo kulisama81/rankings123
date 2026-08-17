@@ -13,17 +13,23 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-08-20",
+    title: "US Open 2026 Betting Favorites Analysis",
+    description: "In-depth preview article analyzing US Open 2026 betting favorites: Jannik Sinner and Aryna Sabalenka lead the field. Expert analysis of title paths, form, historical trends, and value picks for both men's and women's draws. Updated with Cincinnati Open results.",
+    area: "tennis",
+  },
+  {
+    date: "2026-08-17",
+    title: "Formula 1 Championship Standings Added",
+    description: "Live 2026 F1 driver and constructor championship standings now available. Track the season battle with real-time points, team standings, and race-by-race updates. Data sourced from Wikipedia with 5-minute refresh during race weekends.",
+    area: "site",
+  },
+  {
     date: "2026-08-17",
     title: "World Cup Knockout Bracket Restored",
     description:
       "Fixed the complete knockout bracket (R32→R16→QF→SF→Final) showing the actual World Cup 2026 results. The bracket was missing for 35+ days after the tournament ended, showing only a placeholder message. Now displays Argentina's championship path and all tournament rounds including the protected R32 column.",
     area: "worldcup",
-  },
-  {
-    date: "2026-08-20",
-    title: "US Open 2026 Betting Favorites Analysis",
-    description: "In-depth preview article analyzing US Open 2026 betting favorites: Jannik Sinner and Aryna Sabalenka lead the field. Expert analysis of title paths, form, historical trends, and value picks for both men's and women's draws. Updated with Cincinnati Open results.",
-    area: "tennis",
   },
   {
     date: "2026-08-16",

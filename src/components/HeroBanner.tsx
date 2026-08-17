@@ -6,7 +6,7 @@ interface Stat {
   value: string;
 }
 
-type SportType = 'tennis' | 'worldcup' | 'cycling' | 'general';
+type SportType = 'tennis' | 'worldcup' | 'cycling' | 'f1' | 'general';
 
 interface HeroBannerProps {
   icon?: string; // Deprecated: use sport instead
@@ -22,6 +22,7 @@ export default function HeroBanner({ icon, sport = 'general', title, subtitle, l
   const sportFromIcon = icon === '🎾' ? 'tennis'
     : icon === '⚽' ? 'worldcup'
     : icon === '🚴' ? 'cycling'
+    : icon === '🏎️' ? 'f1'
     : 'general';
 
   const activeSport = sport !== 'general' ? sport : sportFromIcon;
@@ -30,6 +31,7 @@ export default function HeroBanner({ icon, sport = 'general', title, subtitle, l
   const iconType = activeSport === 'tennis' ? 'tennis'
     : activeSport === 'worldcup' ? 'football'
     : activeSport === 'cycling' ? 'cycling'
+    : activeSport === 'f1' ? 'trophy'
     : 'trophy';
 
   return (
