@@ -1,6 +1,6 @@
 ---
 id: player-pages-top20
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-15T13:50:11Z
