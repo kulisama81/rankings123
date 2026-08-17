@@ -1,6 +1,6 @@
 ---
 id: player-pages-top-100-seo
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-10T14:05:00Z
@@ -12,23 +12,6 @@ tags: [tennis, seo, traffic]
 # Player pages (ATP/WTA top 100) — SEO long-tail engine
 
 Player pages are THE asymmetric SEO leverage for tennis sites. FlashScore, SofaScore, ESPN all have comprehensive player pages. Live-tennis.eu does NOT (major differentiation gap).
-
-## FIRST-PRINCIPLES ROI
-
-**SEO multiplier:** 
-- "ATP rankings" = 5K searches/month (1 page serves this)
-- "Jannik Sinner ranking" = 2K/month, "Carlos Alcaraz ranking" = 1.5K/month, "Novak Djokovic stats" = 3K/month
-- Top 100 ATP + top 100 WTA = 200 player pages × avg 500 searches/month = **100K searches/month vs 5K for main ranking**
-- ONE player page system = 20× the SEO reach of the main rankings page
-
-**Engagement driver:**
-- User lands on ATP Live → sees Sinner #1 → clicks name → player page (rank history, stats, current form, H2H vs top rivals) → 3-5 additional pageviews
-- Without player pages: user sees ranking, leaves. With player pages: user explores 3-5 players = 3-5× engagement
-
-**Content moat:**
-- 200 player pages = 200 indexable URLs with unique content
-- Competitors have this (FlashScore, SofaScore, ESPN) — lacking it = credibility gap
-- Live-tennis.eu does NOT have comprehensive player pages = differentiation opportunity
 
 ## Acceptance Criteria
 
@@ -48,6 +31,23 @@ Player pages are THE asymmetric SEO leverage for tennis sites. FlashScore, SofaS
    - Canonical URL, Open Graph tags
 5. **Dynamic updates:** Player pages update whenever rankings update (~20s polling from client)
 6. **Navigation:** Clickable player names on ATP Live / WTA Live tables → player page
+
+## FIRST-PRINCIPLES ROI
+
+**SEO multiplier:** 
+- "ATP rankings" = 5K searches/month (1 page serves this)
+- "Jannik Sinner ranking" = 2K/month, "Carlos Alcaraz ranking" = 1.5K/month, "Novak Djokovic stats" = 3K/month
+- Top 100 ATP + top 100 WTA = 200 player pages × avg 500 searches/month = **100K searches/month vs 5K for main ranking**
+- ONE player page system = 20× the SEO reach of the main rankings page
+
+**Engagement driver:**
+- User lands on ATP Live → sees Sinner #1 → clicks name → player page (rank history, stats, current form, H2H vs top rivals) → 3-5 additional pageviews
+- Without player pages: user sees ranking, leaves. With player pages: user explores 3-5 players = 3-5× engagement
+
+**Content moat:**
+- 200 player pages = 200 indexable URLs with unique content
+- Competitors have this (FlashScore, SofaScore, ESPN) — lacking it = credibility gap
+- Live-tennis.eu does NOT have comprehensive player pages = differentiation opportunity
 
 ## Data Sources
 
