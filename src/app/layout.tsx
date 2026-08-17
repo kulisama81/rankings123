@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Archivo, Oswald, Source_Serif_4 } from "next/font/google";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
@@ -41,6 +41,13 @@ const sourceSerif = Source_Serif_4({
   display: "swap",
 });
 
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#0a0b0f" },
+    { media: "(prefers-color-scheme: light)", color: "#f6f7f9" },
+  ],
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://rankings123.com"),
   verification: { google: "upX8e_rXWcOay31tZhlUBZ-iJSEfC42ifjtpnyYSOO4" },
@@ -50,10 +57,14 @@ export const metadata: Metadata = {
   },
   description:
     "Live sports rankings: real-time ATP & WTA tennis rankings during tournaments, FIFA World Cup 2026 group standings.", // TODO: Re-add cycling when cycling-dynamic-feed ships
+  manifest: "/manifest.webmanifest",
   icons: {
-    icon: "/favicon.svg",
-    shortcut: "/favicon.svg",
-    apple: "/favicon.svg",
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/apple-icon",
   },
   openGraph: {
     type: "website",

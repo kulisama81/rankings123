@@ -1,0 +1,24 @@
+{
+  "name": "Rankings123 — Live Sports Rankings",
+  "short_name": "Rankings123",
+  "description": "Live ATP & WTA tennis rankings, FIFA World Cup 2026 standings, and more sports rankings updated in real-time.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0b0f",
+  "theme_color": "#84cc16",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/apple-icon",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
