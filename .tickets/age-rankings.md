@@ -1,6 +1,6 @@
 ---
 id: age-rankings
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-06-25T13:50:01Z
