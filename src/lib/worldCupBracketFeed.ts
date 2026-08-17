@@ -467,6 +467,14 @@ export async function fetchWorldCupBracket(): Promise<WorldCupBracket> {
     }
   }
 
+  // Fallback: if tournament is complete but ESPN provides no knockout matches (common for
+  // historical/completed tournaments — ESPN often returns calendar metadata but no match events),
+  // use the mock which contains the actual results.
+  const hasAnyMatches = stages.some((s) => s.matches.length > 0);
+  if (isTournamentComplete && !hasAnyMatches) {
+    return getMockWorldCupBracket();
+  }
+
   return {
     lastUpdated: new Date().toISOString(),
     source: "espn",

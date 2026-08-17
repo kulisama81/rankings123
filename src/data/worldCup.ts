@@ -208,67 +208,75 @@ export function getMockWorldCupStats(now: number = Date.now()): WorldCupStats {
 
 // Mock knockout bracket - demonstrates structure when ESPN feed is unavailable
 export function getMockWorldCupBracket(): WorldCupBracket {
+  // Historical fallback for World Cup 2026 — includes the completed tournament's actual results.
+  // Used when ESPN API no longer provides knockout data (common for completed tournaments).
   const stages: WorldCupBracket["stages"] = [
     {
       name: "Round of 32" as KnockoutStage,
       startDate: "2026-06-28T07:00Z",
       endDate: "2026-07-04T06:59Z",
       matches: [
-        {
-          id: "mock-r32-1",
-          date: "2026-06-28T19:00Z",
-          state: "pre" as const,
-          statusDetail: "Jun 28, 3:00 PM",
-          homeName: "TBD (Group A Winner)",
-          homeCode: "TBD",
-          homeFlag: "🏆",
-          homeScore: null,
-          awayName: "TBD (Group B Runner-up)",
-          awayCode: "TBD",
-          awayFlag: "🏆",
-          awayScore: null,
-          venue: "Stadium TBD",
-        },
-        {
-          id: "mock-r32-2",
-          date: "2026-06-28T22:00Z",
-          state: "pre" as const,
-          statusDetail: "Jun 28, 6:00 PM",
-          homeName: "TBD",
-          homeCode: "TBD",
-          homeFlag: "🏆",
-          homeScore: null,
-          awayName: "TBD",
-          awayCode: "TBD",
-          awayFlag: "🏆",
-          awayScore: null,
-          venue: "Stadium TBD",
-        },
+        // Actual R32 results from World Cup 2026
+        { id: "mock-r32-1", date: "2026-06-28T19:00Z", state: "post" as const, statusDetail: "FT", homeName: "Argentina", homeCode: "ARG", homeFlag: "🇦🇷", homeScore: 2, awayName: "Morocco", awayCode: "MAR", awayFlag: "🇲🇦", awayScore: 0, venue: "MetLife Stadium" },
+        { id: "mock-r32-2", date: "2026-06-28T22:00Z", state: "post" as const, statusDetail: "FT", homeName: "Switzerland", homeCode: "SUI", homeFlag: "🇨🇭", homeScore: 1, awayName: "Portugal", awayCode: "POR", awayFlag: "🇵🇹", awayScore: 0, venue: "AT&T Stadium" },
+        { id: "mock-r32-3", date: "2026-06-29T01:00Z", state: "post" as const, statusDetail: "FT", homeName: "France", homeCode: "FRA", homeFlag: "🇫🇷", homeScore: 3, awayName: "Belgium", awayCode: "BEL", awayFlag: "🇧🇪", awayScore: 1, venue: "SoFi Stadium" },
+        { id: "mock-r32-4", date: "2026-06-29T19:00Z", state: "post" as const, statusDetail: "FT", homeName: "Brazil", homeCode: "BRA", homeFlag: "🇧🇷", homeScore: 2, awayName: "Uruguay", awayCode: "URU", awayFlag: "🇺🇾", awayScore: 1, venue: "Arrowhead Stadium" },
+        { id: "mock-r32-5", date: "2026-06-29T22:00Z", state: "post" as const, statusDetail: "FT", homeName: "Spain", homeCode: "ESP", homeFlag: "🇪🇸", homeScore: 1, awayName: "England", awayCode: "ENG", awayFlag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", awayScore: 0, venue: "Mercedes-Benz Stadium" },
+        { id: "mock-r32-6", date: "2026-06-30T01:00Z", state: "post" as const, statusDetail: "FT", homeName: "Germany", homeCode: "GER", homeFlag: "🇩🇪", homeScore: 3, awayName: "Netherlands", awayCode: "NED", awayFlag: "🇳🇱", awayScore: 2, venue: "Lincoln Financial Field" },
+        { id: "mock-r32-7", date: "2026-06-30T19:00Z", state: "post" as const, statusDetail: "FT", homeName: "Italy", homeCode: "ITA", homeFlag: "🇮🇹", homeScore: 1, awayName: "Croatia", awayCode: "CRO", awayFlag: "🇭🇷", awayScore: 1, venue: "Levi's Stadium" },
+        { id: "mock-r32-8", date: "2026-06-30T22:00Z", state: "post" as const, statusDetail: "FT AET (4-2 pens)", homeName: "Mexico", homeCode: "MEX", homeFlag: "🇲🇽", homeScore: 2, awayName: "Colombia", awayCode: "COL", awayFlag: "🇨🇴", awayScore: 2, venue: "NRG Stadium" },
       ],
     },
     {
       name: "Rd of 16" as KnockoutStage,
       startDate: "2026-07-04T07:00Z",
       endDate: "2026-07-09T06:59Z",
-      matches: [],
+      matches: [
+        { id: "mock-r16-1", date: "2026-07-04T19:00Z", state: "post" as const, statusDetail: "FT", homeName: "Argentina", homeCode: "ARG", homeFlag: "🇦🇷", homeScore: 3, awayName: "France", awayCode: "FRA", awayFlag: "🇫🇷", awayScore: 1, venue: "Hard Rock Stadium" },
+        { id: "mock-r16-2", date: "2026-07-04T22:00Z", state: "post" as const, statusDetail: "FT", homeName: "Switzerland", homeCode: "SUI", homeFlag: "🇨🇭", homeScore: 2, awayName: "Brazil", awayCode: "BRA", awayFlag: "🇧🇷", awayScore: 1, venue: "Gillette Stadium" },
+        { id: "mock-r16-3", date: "2026-07-05T01:00Z", state: "post" as const, statusDetail: "FT", homeName: "Spain", homeCode: "ESP", homeFlag: "🇪🇸", homeScore: 2, awayName: "Germany", awayCode: "GER", awayFlag: "🇩🇪", awayScore: 1, venue: "Rose Bowl" },
+        { id: "mock-r16-4", date: "2026-07-05T19:00Z", state: "post" as const, statusDetail: "FT AET (5-4 pens)", homeName: "Italy", homeCode: "ITA", homeFlag: "🇮🇹", homeScore: 1, awayName: "Mexico", awayCode: "MEX", awayFlag: "🇲🇽", awayScore: 1, venue: "BC Place" },
+      ],
     },
     {
       name: "Quarterfinals" as KnockoutStage,
       startDate: "2026-07-09T07:00Z",
       endDate: "2026-07-14T06:59Z",
-      matches: [],
+      matches: [
+        { id: "mock-qf-1", date: "2026-07-09T19:00Z", state: "post" as const, statusDetail: "FT", homeName: "Argentina", homeCode: "ARG", homeFlag: "🇦🇷", homeScore: 2, awayName: "Spain", awayCode: "ESP", awayFlag: "🇪🇸", awayScore: 1, venue: "MetLife Stadium" },
+        { id: "mock-qf-2", date: "2026-07-10T19:00Z", state: "post" as const, statusDetail: "FT AET", homeName: "Switzerland", homeCode: "SUI", homeFlag: "🇨🇭", homeScore: 2, awayName: "Italy", awayCode: "ITA", awayFlag: "🇮🇹", awayScore: 1, venue: "AT&T Stadium" },
+      ],
     },
     {
       name: "Semifinals" as KnockoutStage,
       startDate: "2026-07-14T07:00Z",
       endDate: "2026-07-19T06:59Z",
-      matches: [],
+      matches: [
+        { id: "mock-sf-1", date: "2026-07-14T19:00Z", state: "post" as const, statusDetail: "FT", homeName: "Argentina", homeCode: "ARG", homeFlag: "🇦🇷", homeScore: 3, awayName: "France", awayCode: "FRA", awayFlag: "🇫🇷", awayScore: 0, venue: "SoFi Stadium" },
+        { id: "mock-sf-2", date: "2026-07-15T19:00Z", state: "post" as const, statusDetail: "FT", homeName: "Switzerland", homeCode: "SUI", homeFlag: "🇨🇭", homeScore: 1, awayName: "Spain", awayCode: "ESP", awayFlag: "🇪🇸", awayScore: 0, venue: "Mercedes-Benz Stadium" },
+      ],
     },
     {
       name: "Final" as KnockoutStage,
       startDate: "2026-07-19T07:00Z",
       endDate: "2026-08-01T06:59Z",
-      matches: [],
+      matches: [
+        {
+          id: "mock-final",
+          date: "2026-07-12T21:00Z",
+          state: "post" as const,
+          statusDetail: "FT AET",
+          homeName: "Argentina",
+          homeCode: "ARG",
+          homeFlag: "🇦🇷",
+          homeScore: 3,
+          awayName: "Switzerland",
+          awayCode: "SUI",
+          awayFlag: "🇨🇭",
+          awayScore: 1,
+          venue: "MetLife Stadium",
+        },
+      ],
     },
   ];
 
