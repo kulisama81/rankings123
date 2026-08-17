@@ -2,10 +2,57 @@
 
 **Inspector:** QA agent (automated cron run)  
 **Date:** 2026-08-16  
+**Multiple runs:** Morning run + Evening follow-up
+
+---
+
+## EVENING FOLLOW-UP RUN (Latest)
+
+**Session duration:** ~20 minutes  
+**Routes checked:** /, /atp-live, /wta-live, /world-cup, /world-cup/team/ARG, /world-cup/match/*, /privacy
+
+### Summary
+
+**NEW P0 BUG FOUND:** World Cup knockout bracket completely missing (core feature regression)
+
+**Automated checks:**
+- ✗ `check:core-features` — **FAILED** (WC R32 bracket missing)
+- ✓ `check:data-sanity` — PASSED (2 warnings)
+
+### Critical Finding: World Cup Bracket Regression
+
+**Ticket filed:** `bug-wc-bracket-missing-core-feature` (P0)
+
+The World Cup knockout bracket is **completely absent** from https://rankings123.com/world-cup, showing only placeholder text: "The knockout bracket will appear once the group stage concludes and teams advance."
+
+This contradicts the morning inspection which reported the bracket as present. Between runs, either:
+1. A deploy broke the bracket, OR
+2. The morning check had a false positive
+
+**Current state verified:**
+```bash
+npm run check:core-features
+✗ WC knockout bracket (R32 matchups): no Round of 32 column in the bracket tree
+```
+
+**WebFetch confirmation:** The knockout bracket section contains only a placeholder message, no actual bracket visualization with R32/R16/QF/SF/Final rounds.
+
+**Impact:** 
+- Core feature violation per docs/CORE-FEATURES.md
+- Tournament ended July 12, 2026 (35+ days ago)
+- Multiple prior fix attempts (ba4fdb9, 67a5e71) but issue persists
+- Makes site appear broken and unmaintained
+
+This is now the **highest priority bug** blocking core features compliance.
+
+---
+
+## MORNING RUN (Earlier Today)
+
 **Session duration:** ~25 minutes  
 **Routes checked:** /, /atp-live, /wta-live, /world-cup, /world-cup/team/ARG, /privacy
 
-## Summary
+### Summary
 
 **Bugs found:** 1 P0 bug (core feature regression)  
 **Automated checks:**
