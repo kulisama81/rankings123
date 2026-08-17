@@ -1,4 +1,5 @@
 import type { TdfGCRider } from "@/types";
+import FlagIcon from "./FlagIcon";
 
 interface Props {
   leader: TdfGCRider | undefined;
@@ -32,7 +33,7 @@ export default function TdfLiveLeader({ leader, isLive }: Props) {
 
       <div className="flex items-center gap-4">
         <div className="flex h-16 w-16 items-center justify-center rounded-full border-2 border-accent bg-accent/10">
-          <span className="text-3xl">{leader.flag}</span>
+          <span className="text-3xl"><FlagIcon code={leader.flag} size="md" /></span>
         </div>
 
         <div className="flex-1">

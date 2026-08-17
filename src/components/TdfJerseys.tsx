@@ -2,6 +2,7 @@
 
 import type { TdfJerseyLeader } from "@/types";
 import SportIcon from "./SportIcon";
+import FlagIcon from "./FlagIcon";
 
 interface TdfJerseysProps {
   jerseys: TdfJerseyLeader[];
@@ -76,7 +77,7 @@ export default function TdfJerseys({ jerseys, raceStatus }: TdfJerseysProps) {
                 <div className="mt-3 text-base font-bold text-primary">
                   {jersey.flag && (
                     <span className="mr-1.5" role="img" aria-label={jersey.country}>
-                      {jersey.flag}
+                      <FlagIcon code={jersey.flag} size="md" />
                     </span>
                   )}
                   {jersey.rider}

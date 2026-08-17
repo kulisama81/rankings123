@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import FlagIcon from "./FlagIcon";
 import Link from "next/link";
 
 interface RankingPlayer {
@@ -222,7 +223,7 @@ export default function HomepageRankingsPreview() {
                     </span>
                     <span className="truncate text-fg font-medium">{player.name}</span>
                     {player.flag && (
-                      <span className="flex-shrink-0 text-xs">{player.flag}</span>
+                      <span className="flex-shrink-0 text-xs"><FlagIcon code={player.flag} size="sm" /></span>
                     )}
                   </div>
                   <div className="flex items-center gap-2 flex-shrink-0 ml-2">
@@ -280,7 +281,7 @@ export default function HomepageRankingsPreview() {
                     </span>
                     <span className="truncate text-fg font-medium">{player.name}</span>
                     {player.flag && (
-                      <span className="flex-shrink-0 text-xs">{player.flag}</span>
+                      <span className="flex-shrink-0 text-xs"><FlagIcon code={player.flag} size="sm" /></span>
                     )}
                   </div>
                   <div className="flex items-center gap-2 flex-shrink-0 ml-2">

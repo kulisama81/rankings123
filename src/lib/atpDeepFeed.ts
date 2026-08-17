@@ -1,5 +1,5 @@
 import type { AtpLivePlayer, AtpLiveSnapshot, AtpTournamentStatus } from "@/types";
-import { flagEmoji } from "./flags";
+// Flag rendering now handled by FlagIcon component in the UI layer
 import { getAtpLiveSnapshot as getMockSnapshot } from "@/data/atpLive";
 
 // Real ATP data from ESPN's public site API:
@@ -208,7 +208,7 @@ export async function fetchAtpLiveSnapshot(): Promise<AtpLiveSnapshot> {
       officialRank: entry.current as number,
       name: (athlete.displayName as string) ?? "Unknown",
       countryCode: (athlete.citizenshipCountry as string) ?? "—",
-      flag: flagEmoji(athlete.citizenshipCountry ?? ""),
+      flag: (athlete.citizenshipCountry as string) ?? "—", // Now returns country code for FlagIcon component
       age: (athlete.age as number) ?? 0,
       officialPoints,
       livePoints: officialPoints + earned,

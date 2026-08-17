@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { AtpDeepRankingSnapshot, AtpLivePlayer } from "@/types";
-import { flagEmoji } from "./flags";
+// Flag rendering now handled by FlagIcon component in the UI layer
 import { fetchJson } from "./atpDeepFeed";
 
 // WTA full ranking from ESPN (top ~200 players). Mirrors the ATP live feed pattern.
@@ -14,16 +14,16 @@ const WTA_RANKINGS_URL =
 // Minimal WTA mock data for graceful degradation (top 10 WTA players as of mid-2026)
 function getWtaMockSnapshot(): AtpDeepRankingSnapshot {
   const mockPlayers: AtpLivePlayer[] = [
-    { liveRank: 1, officialRank: 1, name: "Aryna Sabalenka", countryCode: "BLR", flag: flagEmoji("BLR"), age: 26, officialPoints: 9716, livePoints: 9716, pointsDelta: 0, movement: 0 },
-    { liveRank: 2, officialRank: 2, name: "Iga Swiatek", countryCode: "POL", flag: flagEmoji("POL"), age: 25, officialPoints: 9115, livePoints: 9115, pointsDelta: 0, movement: 0 },
-    { liveRank: 3, officialRank: 3, name: "Coco Gauff", countryCode: "USA", flag: flagEmoji("USA"), age: 22, officialPoints: 7963, livePoints: 7963, pointsDelta: 0, movement: 0 },
-    { liveRank: 4, officialRank: 4, name: "Elena Rybakina", countryCode: "KAZ", flag: flagEmoji("KAZ"), age: 25, officialPoints: 5871, livePoints: 5871, pointsDelta: 0, movement: 0 },
-    { liveRank: 5, officialRank: 5, name: "Jessica Pegula", countryCode: "USA", flag: flagEmoji("USA"), age: 30, officialPoints: 5785, livePoints: 5785, pointsDelta: 0, movement: 0 },
-    { liveRank: 6, officialRank: 6, name: "Jasmine Paolini", countryCode: "ITA", flag: flagEmoji("ITA"), age: 28, officialPoints: 5344, livePoints: 5344, pointsDelta: 0, movement: 0 },
-    { liveRank: 7, officialRank: 7, name: "Qinwen Zheng", countryCode: "CHN", flag: flagEmoji("CHN"), age: 21, officialPoints: 4480, livePoints: 4480, pointsDelta: 0, movement: 0 },
-    { liveRank: 8, officialRank: 8, name: "Emma Navarro", countryCode: "USA", flag: flagEmoji("USA"), age: 23, officialPoints: 3698, livePoints: 3698, pointsDelta: 0, movement: 0 },
-    { liveRank: 9, officialRank: 9, name: "Daria Kasatkina", countryCode: "RUS", flag: flagEmoji("RUS"), age: 27, officialPoints: 3368, livePoints: 3368, pointsDelta: 0, movement: 0 },
-    { liveRank: 10, officialRank: 10, name: "Danielle Collins", countryCode: "USA", flag: flagEmoji("USA"), age: 30, officialPoints: 3178, livePoints: 3178, pointsDelta: 0, movement: 0 },
+    { liveRank: 1, officialRank: 1, name: "Aryna Sabalenka", countryCode: "BLR", flag: "BLR", age: 26, officialPoints: 9716, livePoints: 9716, pointsDelta: 0, movement: 0 },
+    { liveRank: 2, officialRank: 2, name: "Iga Swiatek", countryCode: "POL", flag: "POL", age: 25, officialPoints: 9115, livePoints: 9115, pointsDelta: 0, movement: 0 },
+    { liveRank: 3, officialRank: 3, name: "Coco Gauff", countryCode: "USA", flag: "USA", age: 22, officialPoints: 7963, livePoints: 7963, pointsDelta: 0, movement: 0 },
+    { liveRank: 4, officialRank: 4, name: "Elena Rybakina", countryCode: "KAZ", flag: "KAZ", age: 25, officialPoints: 5871, livePoints: 5871, pointsDelta: 0, movement: 0 },
+    { liveRank: 5, officialRank: 5, name: "Jessica Pegula", countryCode: "USA", flag: "USA", age: 30, officialPoints: 5785, livePoints: 5785, pointsDelta: 0, movement: 0 },
+    { liveRank: 6, officialRank: 6, name: "Jasmine Paolini", countryCode: "ITA", flag: "ITA", age: 28, officialPoints: 5344, livePoints: 5344, pointsDelta: 0, movement: 0 },
+    { liveRank: 7, officialRank: 7, name: "Qinwen Zheng", countryCode: "CHN", flag: "CHN", age: 21, officialPoints: 4480, livePoints: 4480, pointsDelta: 0, movement: 0 },
+    { liveRank: 8, officialRank: 8, name: "Emma Navarro", countryCode: "USA", flag: "USA", age: 23, officialPoints: 3698, livePoints: 3698, pointsDelta: 0, movement: 0 },
+    { liveRank: 9, officialRank: 9, name: "Daria Kasatkina", countryCode: "RUS", flag: "RUS", age: 27, officialPoints: 3368, livePoints: 3368, pointsDelta: 0, movement: 0 },
+    { liveRank: 10, officialRank: 10, name: "Danielle Collins", countryCode: "USA", flag: "USA", age: 30, officialPoints: 3178, livePoints: 3178, pointsDelta: 0, movement: 0 },
   ];
   return {
     lastUpdated: new Date().toISOString(),
@@ -56,7 +56,7 @@ export async function fetchWtaDeepRankingSnapshot(): Promise<AtpDeepRankingSnaps
       officialRank: entry.current as number,
       name: (athlete.displayName as string) ?? "Unknown",
       countryCode: (athlete.citizenshipCountry as string) ?? "—",
-      flag: flagEmoji(athlete.citizenshipCountry ?? ""),
+      flag: (athlete.citizenshipCountry as string) ?? "—", // Now returns country code for FlagIcon component
       age: (athlete.age as number) ?? 0,
       officialPoints,
       livePoints: officialPoints,

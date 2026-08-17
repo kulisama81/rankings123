@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import FlagIcon from "./FlagIcon";
 import type { WorldCupSnapshot, WorldCupMatch, WorldCupTeam, WorldCupGroup } from "@/types";
 import Link from "next/link";
 
@@ -394,7 +395,7 @@ function GroupCard({ group }: { group: WorldCupGroup }) {
                 <td className="px-3 py-2 text-right tabular-nums text-muted">{t.rank}</td>
                 <td className="px-3 py-2">
                   <div className="flex items-center gap-2">
-                    <span className="text-base">{t.flag}</span>
+                    <span className="text-base"><FlagIcon code={t.flag} size="md" /></span>
                     <div className="flex flex-col">
                       <Link
                         href={`/world-cup/team/${t.code.toLowerCase()}`}

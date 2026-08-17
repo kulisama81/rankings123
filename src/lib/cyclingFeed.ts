@@ -6,7 +6,7 @@ import type {
   CyclingJerseyLeader,
 } from "@/types";
 import { CYCLING_RACES, detectRaceStatus } from "@/data/cyclingRaces";
-import { flagEmoji } from "@/lib/flags";
+// Flag rendering now handled by FlagIcon component in the UI layer
 
 async function fetchWikipediaHtml(
   wikipediaPage: string,
@@ -198,7 +198,7 @@ function parseGC(html: string): CyclingGCRider[] {
     const countryAbbrMatch = cells[0].match(/<abbr title="([^"]+)">([^<]+)<\/abbr>/);
     const country = countryAbbrMatch ? countryAbbrMatch[1] : "";
     const countryCode = countryAbbrMatch ? countryAbbrMatch[2] : "";
-    const flag = flagEmoji(countryCode);
+    const flag = countryCode; // Now returns country code for FlagIcon component
 
     const riderMatch = cells[0].match(/<a[^>]*>([^<]+)<\/a>/);
     if (!riderMatch) continue;

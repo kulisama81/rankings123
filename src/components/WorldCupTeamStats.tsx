@@ -1,4 +1,5 @@
 import type { WorldCupSnapshot } from "@/types";
+import FlagIcon from "./FlagIcon";
 
 interface TeamStatLeader {
   name: string;
@@ -109,7 +110,7 @@ export default function WorldCupTeamStats({
                       {idx + 1}
                     </span>
                     <span className="text-xl" title={leader.name}>
-                      {leader.flag}
+                      <FlagIcon code={leader.flag} size="md" />
                     </span>
                     <span className="text-sm font-medium text-fg">
                       {leader.code}

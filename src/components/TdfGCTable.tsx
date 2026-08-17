@@ -1,6 +1,7 @@
 "use client";
 
 import type { TdfGCRider } from "@/types";
+import FlagIcon from "./FlagIcon";
 
 interface TdfGCTableProps {
   riders: TdfGCRider[];
@@ -63,8 +64,8 @@ export default function TdfGCTable({ riders }: TdfGCTableProps) {
                   <td className="px-3 py-3 font-semibold text-primary">{rider.name}</td>
                   <td className="px-3 py-3 text-fg">{rider.team}</td>
                   <td className="px-3 py-3 text-center">
-                    <span className="mr-1.5 text-lg" role="img" aria-label={rider.country}>
-                      {rider.flag}
+                    <span className="mr-1.5" role="img" aria-label={rider.country}>
+                      <FlagIcon code={rider.flag} size="md" />
                     </span>
                     <span className="text-muted">{rider.countryCode}</span>
                   </td>

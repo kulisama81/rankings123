@@ -10,6 +10,7 @@ import EmptyState from "./EmptyState";
 import Tooltip from "./Tooltip";
 import { RankTooltip, PointsTooltip, MovementTooltip, PlayerTooltip } from "./TooltipContent";
 import DataSourceBadge from "./DataSourceBadge";
+import FlagIcon from "./FlagIcon";
 
 const REFRESH_INTERVAL_S = 30;
 const PAGE_SIZE = 50;
@@ -338,7 +339,7 @@ export default function AtpDeepRankingTable({ initialSnapshot, band, apiEndpoint
                   </td>
                   <td className="px-4 py-2.5">
                     <span className="flex items-center gap-2">
-                      <span className="text-base leading-none">{p.flag}</span>
+                      <FlagIcon code={p.flag} size="md" ariaLabel={`${p.countryCode} flag`} />
                       <Tooltip
                         content={
                           <PlayerTooltip

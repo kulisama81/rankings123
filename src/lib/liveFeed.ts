@@ -1,5 +1,4 @@
 import type { AtpLivePlayer, AtpLiveSnapshot, AtpTournamentStatus, Tour } from "@/types";
-import { flagEmoji } from "./flags";
 import { getAtpDeepRankingData } from "./atpDeepRanking";
 
 // Real tennis data from ESPN's public site API, for either tour:
@@ -266,7 +265,7 @@ export async function fetchLiveSnapshot(tour: Tour): Promise<AtpLiveSnapshot> {
       officialRank: entry.current as number,
       name: (athlete.displayName as string) ?? "Unknown",
       countryCode: (athlete.citizenshipCountry as string) ?? "—",
-      flag: flagEmoji(athlete.citizenshipCountry ?? ""),
+      flag: (athlete.citizenshipCountry as string) ?? "—", // Now returns country code for FlagIcon component
       age: (athlete.age as number) ?? 0,
       officialPoints,
       livePoints: officialPoints + earned,
@@ -327,7 +326,7 @@ function wtaMockSnapshot(): AtpLiveSnapshot {
       movement: 0,
       name,
       countryCode: cc,
-      flag: flagEmoji(cc),
+      flag: cc, // Now returns country code for FlagIcon component
       age,
       officialPoints: pts,
       livePoints: pts,

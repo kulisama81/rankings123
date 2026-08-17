@@ -12,6 +12,7 @@ import Tooltip from "./Tooltip";
 import { RankTooltip, PointsTooltip, MovementTooltip, PlayerTooltip } from "./TooltipContent";
 import { ShareButton } from "./ShareButton";
 import DataSourceBadge from "./DataSourceBadge";
+import FlagIcon from "./FlagIcon";
 
 const REFRESH_INTERVAL_S = 20;
 const PAGE_SIZE = 50;
@@ -462,7 +463,7 @@ export default function LiveRankingTable({ tour, initialSnapshot, showAgeGroupRa
                     </td>
                     <td className="px-3 py-2">
                       <span className="flex items-center gap-2">
-                        <span className="text-base leading-none">{p.flag}</span>
+                        <FlagIcon code={p.flag} size="md" ariaLabel={`${p.countryCode} flag`} />
                         <Tooltip
                           content={
                             <PlayerTooltip
@@ -579,7 +580,7 @@ export default function LiveRankingTable({ tour, initialSnapshot, showAgeGroupRa
                   ) : (
                     <Movement value={p.movement} />
                   )}
-                  <span className="text-base leading-none">{p.flag}</span>
+                  <FlagIcon code={p.flag} size="md" ariaLabel={`${p.countryCode} flag`} />
                   <Tooltip
                     content={
                       <PlayerTooltip

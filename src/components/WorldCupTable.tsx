@@ -13,6 +13,7 @@ import EmptyState from "./EmptyState";
 import Tooltip from "./Tooltip";
 import { TeamTooltip, TeamPointsTooltip } from "./TooltipContent";
 import DataSourceBadge from "./DataSourceBadge";
+import FlagIcon from "./FlagIcon";
 
 const REFRESH_INTERVAL_S = 30;
 
@@ -139,8 +140,8 @@ function GroupCard({
                         href={`/world-cup/team/${t.code.toLowerCase()}`}
                         className="inline-flex items-center text-fg hover:text-accent transition-colors gap-2"
                       >
-                        <span className="mr-2 text-base leading-none" aria-hidden="true">
-                          {t.flag}
+                        <span className="mr-2" aria-hidden="true">
+                          <FlagIcon code={t.flag} size="md" ariaLabel={`${t.code} flag`} />
                         </span>
                         {t.name}
                         {isChampion && (
