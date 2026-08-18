@@ -16,56 +16,14 @@ fabricated, mis-parsed, or mis-sourced. **Planner: investigate the relevant feed
 fix it, re-run `npm run check:data-sanity` until clean, log the resolution in the Log below,
 then close this ticket.** Do NOT close while `check:data-sanity` still reports errors.
 
-## Anomalies (latest run · 2026-08-16T20:16:05.254Z)
+## Anomalies (latest run · 2026-08-18T02:13:34.715Z)
 
-- [worldcup-bracket] Round of 32 has Projected label despite tournament being complete (ended Aug 1). Match: projected-r32-0
-- [worldcup-bracket] Round of 32 has Projected label despite tournament being complete (ended Aug 1). Match: projected-r32-1
-- [worldcup-bracket] Round of 32 has Projected label despite tournament being complete (ended Aug 1). Match: projected-r32-2
-- [worldcup-bracket] Round of 32 has Projected label despite tournament being complete (ended Aug 1). Match: projected-r32-3
-- [worldcup-bracket] Round of 32 has Projected label despite tournament being complete (ended Aug 1). Match: projected-r32-4
-- [worldcup-bracket] Round of 32 has Projected label despite tournament being complete (ended Aug 1). Match: projected-r32-5
-- [worldcup-bracket] Round of 32 has Projected label despite tournament being complete (ended Aug 1). Match: projected-r32-6
-- [worldcup-bracket] Round of 32 has Projected label despite tournament being complete (ended Aug 1). Match: projected-r32-7
-- [worldcup-bracket] Round of 32 has Projected label despite tournament being complete (ended Aug 1). Match: projected-r32-9
-- [worldcup-bracket] Round of 32 has Projected label despite tournament being complete (ended Aug 1). Match: projected-r32-10
-- [worldcup-bracket] Round of 32 has Projected label despite tournament being complete (ended Aug 1). Match: projected-r32-11
-- [worldcup-bracket] Round of 32 has Projected label despite tournament being complete (ended Aug 1). Match: projected-r32-12
-- [worldcup-bracket] Round of 32 has Projected label despite tournament being complete (ended Aug 1). Match: projected-r32-13
-- [worldcup-bracket] Round of 32 has Projected label despite tournament being complete (ended Aug 1). Match: projected-r32-14
-- [worldcup-bracket] Round of 32 has Projected label despite tournament being complete (ended Aug 1). Match: projected-r32-15
-- [worldcup-bracket] Rd of 16 has TBD placeholders despite tournament being complete (ended Aug 1). Match: projected-r16-0
-- [worldcup-bracket] Rd of 16 has Projected label despite tournament being complete (ended Aug 1). Match: projected-r16-0
-- [worldcup-bracket] Rd of 16 has TBD placeholders despite tournament being complete (ended Aug 1). Match: projected-r16-1
-- [worldcup-bracket] Rd of 16 has Projected label despite tournament being complete (ended Aug 1). Match: projected-r16-1
-- [worldcup-bracket] Rd of 16 has TBD placeholders despite tournament being complete (ended Aug 1). Match: projected-r16-2
-- [worldcup-bracket] Rd of 16 has Projected label despite tournament being complete (ended Aug 1). Match: projected-r16-2
-- [worldcup-bracket] Rd of 16 has TBD placeholders despite tournament being complete (ended Aug 1). Match: projected-r16-3
-- [worldcup-bracket] Rd of 16 has Projected label despite tournament being complete (ended Aug 1). Match: projected-r16-3
-- [worldcup-bracket] Rd of 16 has TBD placeholders despite tournament being complete (ended Aug 1). Match: projected-r16-4
-- [worldcup-bracket] Rd of 16 has Projected label despite tournament being complete (ended Aug 1). Match: projected-r16-4
-- [worldcup-bracket] Rd of 16 has TBD placeholders despite tournament being complete (ended Aug 1). Match: projected-r16-5
-- [worldcup-bracket] Rd of 16 has Projected label despite tournament being complete (ended Aug 1). Match: projected-r16-5
-- [worldcup-bracket] Rd of 16 has TBD placeholders despite tournament being complete (ended Aug 1). Match: projected-r16-6
-- [worldcup-bracket] Rd of 16 has Projected label despite tournament being complete (ended Aug 1). Match: projected-r16-6
-- [worldcup-bracket] Rd of 16 has TBD placeholders despite tournament being complete (ended Aug 1). Match: projected-r16-7
-- [worldcup-bracket] Rd of 16 has Projected label despite tournament being complete (ended Aug 1). Match: projected-r16-7
-- [worldcup-bracket] Quarterfinals has TBD placeholders despite tournament being complete (ended Aug 1). Match: projected-qf-0
-- [worldcup-bracket] Quarterfinals has Projected label despite tournament being complete (ended Aug 1). Match: projected-qf-0
-- [worldcup-bracket] Quarterfinals has TBD placeholders despite tournament being complete (ended Aug 1). Match: projected-qf-1
-- [worldcup-bracket] Quarterfinals has Projected label despite tournament being complete (ended Aug 1). Match: projected-qf-1
-- [worldcup-bracket] Quarterfinals has TBD placeholders despite tournament being complete (ended Aug 1). Match: projected-qf-2
-- [worldcup-bracket] Quarterfinals has Projected label despite tournament being complete (ended Aug 1). Match: projected-qf-2
-- [worldcup-bracket] Quarterfinals has TBD placeholders despite tournament being complete (ended Aug 1). Match: projected-qf-3
-- [worldcup-bracket] Quarterfinals has Projected label despite tournament being complete (ended Aug 1). Match: projected-qf-3
-- [worldcup-bracket] Semifinals has TBD placeholders despite tournament being complete (ended Aug 1). Match: projected-sf-0
-- [worldcup-bracket] Semifinals has Projected label despite tournament being complete (ended Aug 1). Match: projected-sf-0
-- [worldcup-bracket] Semifinals has TBD placeholders despite tournament being complete (ended Aug 1). Match: projected-sf-1
-- [worldcup-bracket] Semifinals has Projected label despite tournament being complete (ended Aug 1). Match: projected-sf-1
-- [worldcup-bracket] Final has TBD placeholders despite tournament being complete (ended Aug 1). Match: projected-final
-- [worldcup-bracket] Final has Projected label despite tournament being complete (ended Aug 1). Match: projected-final
+- [worldcup-stats-ui] Top scorer shows 8 appearances (aggregate across tournaments) but UI lacks "All-Time" or "Career" label — misleading to users expecting current-tournament stats only
 
 ## Log
 
+- 2026-08-18T02:13:34.715Z: 1 anomalies — [worldcup-stats-ui] Top scorer shows 8 appearances (aggregate across tournaments) but UI lacks "All-Time" or "Career" label — misleading to users expecting current-tournament stats only
+- 2026-08-18T02:12:31.283Z: 1 anomalies — [worldcup-stats-ui] Top scorer shows 8 appearances (aggregate across tournaments) but UI lacks "All-Time" or "Career" label — misleading to users expecting current-tournament stats only
 - 2026-08-16T20:30:00.000Z: **RESOLVED** — Fixed in commit 67a5e71. World Cup bracket was showing "Projected" labels and TBD placeholders despite tournament being complete. Root cause: bracket generation logic was not checking if the tournament had ended (Aug 1) before applying projection labels. Updated `src/lib/worldCupBracketFeed.ts` to detect completed tournament state and remove projection UI for completed events. Verified: `npm run check:data-sanity` passes cleanly (✓), live site shows no "Projected" or "TBD" labels on completed bracket. No regression test needed (existing bracket check in sanity script covers this).
 - 2026-08-16T20:16:05.254Z: 45 anomalies — [worldcup-bracket] Round of 32 has Projected label despite tournament being complete (ended Aug 1). Match: projected-r32-0 (…)
 - 2026-08-16T20:15:38.633Z: 45 anomalies — [worldcup-bracket] Round of 32 has Projected label despite tournament being complete (ended Aug 1). Match: projected-r32-0 (…)
