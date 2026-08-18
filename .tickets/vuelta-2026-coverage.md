@@ -1,6 +1,6 @@
 ---
 id: vuelta-2026-coverage
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-23T13:52:12Z

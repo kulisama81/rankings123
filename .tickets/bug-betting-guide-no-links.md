@@ -1,6 +1,6 @@
 ---
 id: bug-betting-guide-no-links
-status: open
+status: closed
 deps: []
 links: [cincinnati-betting-guide, betting-affiliate-integration]
 created: 2026-08-17T21:00:00Z
