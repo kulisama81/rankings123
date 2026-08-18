@@ -1,6 +1,6 @@
 ---
 id: cincinnati-betting-guide
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-03T13:49:17Z

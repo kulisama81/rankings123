@@ -1,6 +1,6 @@
 ---
 id: betting-content-hub
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-12T13:49:44Z
