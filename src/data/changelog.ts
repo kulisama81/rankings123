@@ -14,6 +14,12 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-08-17",
+    title: "Tennis Betting Predictions Hub",
+    description: "New central hub page at /betting-predictions aggregating all betting content. Find latest predictions, upcoming tournament opportunities, and betting research tools in one place. Optimized for 'tennis betting predictions' search.",
+    area: "site",
+  },
+  {
+    date: "2026-08-17",
     title: "Cincinnati Open 2026 Betting Guide",
     description: "Mid-tournament betting analysis for the Cincinnati Masters 1000. Covers Zverev, Djokovic, Shelton favorites on ATP side and Sabalenka-led WTA field, with value picks and betting strategy for the tournament's final stages.",
     area: "tennis",
