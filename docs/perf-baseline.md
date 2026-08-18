@@ -2,9 +2,9 @@
 
 This baseline establishes performance budgets and target metrics for all routes. Use this to detect regressions during development.
 
-**Last Updated:** 2026-08-17 (🚀 Major load improvements sustained, 🎉 ATP Day 22, 🔴 WTA WORSENING, 🚀 WC major improvement)  
+**Last Updated:** 2026-08-18 (🔴 ATP CRITICAL NEW REGRESSION, 🔴 WTA WORSENING, 🟡 WC increasing)  
 **Last Fix:** 2026-08-16 (World Cup TBD removal — WC -45KB real improvement)  
-**Last Regression:** 2026-07-26 (commit 7469e43 — shareable ranking cards feature, WTA worsening +21KB over 3 days)  
+**Last Regression:** 2026-08-18 (ATP 273KB → 557KB, +284KB, +104% — NEW data-driven regression, see perf-atp-size-regression-557kb)  
 **Measurement Method:** `npm run check:performance` (TTFB/total/size via live fetch) + Core Web Vitals (Playwright when available)
 
 > ✅ **REGRESSION RESOLVED (2026-06-30):** ATP/WTA Live ISR + searchParams architectural conflict permanently fixed. SearchParams handling moved entirely to client-side (already was via useEffect, just removed blocking `force-dynamic`). ISR caching (`revalidate = 60`) now works without breaking table functionality. ATP TTFB -38% (0.60s → 0.37s), WTA TTFB -6% (0.33s → 0.31s). Regression test rewritten to check OUTCOMES (performance budget) instead of IMPLEMENTATION (force-dynamic), preventing future toggle pattern.
@@ -61,10 +61,10 @@ Per [web.dev/vitals](https://web.dev/vitals), these are the **GOOD** thresholds 
 
 | Route        | TTFB Budget | Total Budget | Size Budget | Current TTFB | Current Total | Current Size | Status |
 |--------------|-------------|--------------|-------------|--------------|---------------|--------------|--------|
-| /            | ≤ 0.8s      | ≤ 2.0s       | ≤ 150KB     | 0.18s        | 0.18s         | 28KB         | ✅ FAST |
-| /atp-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.16s        | 0.32s         | 273KB        | ✅ FAST 🎉 BUDGET |
-| /wta-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 200KB     | 0.13s        | 0.24s         | 287KB        | 🔴 SIZE FAIL |
-| /world-cup   | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.12s        | 0.22s         | 344KB        | 🟡 SIZE (IMPROVING) |
+| /            | ≤ 0.8s      | ≤ 2.0s       | ≤ 150KB     | 0.29s        | 0.31s         | 29KB         | ✅ FAST |
+| /atp-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.23s        | 0.43s         | 557KB        | 🔴 SIZE CRITICAL |
+| /wta-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 200KB     | 0.14s        | 0.31s         | 313KB        | 🔴 SIZE FAIL |
+| /world-cup   | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.13s        | 0.29s         | 393KB        | 🟡 SIZE |
 
 **Legend:**
 - **TTFB** = Time to First Byte (server response start)
@@ -80,37 +80,104 @@ Per [web.dev/vitals](https://web.dev/vitals), these are the **GOOD** thresholds 
 - 🔴 **SLOW** = Over TTFB or total budget (user-perceived slowness)
 
 **Note on ATP size:**
-- 🎉 **BUDGET MAINTAINED (Day 22):** ATP Live WITHIN 300KB budget for 22nd consecutive day since optimization
-- **Current state:** Size 273KB (9% under 300KB budget), TTFB 0.16s, total 0.32s — ALL FAST
-- 🚀 **Major load improvements sustained:** TTFB -36% (0.25s → 0.16s), total stable (0.32s), excellent performance
-- Size history: 439KB → 504KB (+65KB Day 1) → ... → 521KB (Peak Day 11) → 258KB (Day 17, MOCK) → 271KB (Day 18) → 272KB (Day 19-21) → 273KB (Day 22, **BUDGET** ✅)
-- 🚀 **ShareButton optimization SUCCESS:** commit a45a884 (2026-08-13) removed preview card, -231KB from peak
-- **Tracked in:** `perf-share-button-bloat` (P1) — ATP acceptance criteria MET, WTA needs urgent work
+- 🔴 **CRITICAL NEW REGRESSION (Day 23):** ATP Live size 557KB vs 300KB budget (**86% over**, +284KB from yesterday, +104%)
+- **Current state:** Size 557KB (86% over 300KB budget), TTFB 0.23s, total 0.43s — FAST but SIZE CRITICAL
+- Size history: 439KB → 504KB (+65KB Day 1) → ... → 521KB (Peak Day 11) → 258KB (Day 17, MOCK) → 271KB (Day 18) → 272-273KB (Day 19-22, **BUDGET** ✅) → **557KB (Day 23, NEW REGRESSION 🔴)**
+- 🚀 **ShareButton optimization WAS successful:** commit a45a884 (2026-08-13) removed preview card, brought ATP from 504KB to 273KB
+- 🔴 **NEW regression (2026-08-18):** Data-driven bloat, likely UTS feed returning more players (closer to DEEP_N = 1000)
+- **Tracked in:** `perf-atp-size-regression-557kb` (P0) — CRITICAL, US Open in 9 days, flagship page degraded
 
 **Note on WTA size:**
-- 🔴 **CRITICAL REGRESSION WORSENING (Day 22):** WTA Live size 287KB vs 200KB budget (**44% over**, +6KB from yesterday, +21KB over 3 days)
-- Size history: 189KB → 250KB (+61KB Day 1) → ... → 276KB (Peak Day 11) → 273KB (Day 18) → 266KB (Day 19) → 272KB (Day 20) → 281KB (Day 21) → 287KB (Day 22, **WORSENING**)
-- 📊 **Progress:** -6KB from peak (293KB) but needs -87KB more to reach 200KB budget (-30% reduction)
-- 🚀 **Major load improvements sustained:** TTFB -19% (0.16s → 0.13s), total -33% (0.36s → 0.24s), excellent performance
+- 🔴 **CRITICAL REGRESSION WORSENING (Day 23):** WTA Live size 313KB vs 200KB budget (**57% over**, +26KB from yesterday, +47KB over 4 days)
+- Size history: 189KB → 250KB (+61KB Day 1) → ... → 276KB (Peak Day 11) → 273KB (Day 18) → 266KB (Day 19) → 272KB (Day 20) → 281KB (Day 21) → 287KB (Day 22) → **313KB (Day 23, +26KB, WORSENING)**
+- 📊 **Progress:** -6KB from peak (293KB) but needs -113KB more to reach 200KB budget (-36% reduction)
+- 🚀 **Load times good:** TTFB 0.14s, total 0.31s (within budgets), excellent performance despite size bloat
 - 🔴 **Root cause:** commit 7469e43 (shareable ranking cards) — ShareButton on every row + recent CSS additions
 - 🚀 **ShareButton optimization helped:** commit a45a884 (2026-08-13) removed preview card, but worsening trend resumed
-- 🔴 **Recent CSS additions:** commits 5a6cc3e + 22294b6 (2026-08-16) added +222 lines to globals.css (typographic maximalism + table hover)
-- **Tracked in:** `perf-share-button-bloat` (P1) — URGENT, needs -87KB, US Open 2026 in 10 days
+- 🔴 **Recent worsening:** +26KB increase (Day 23) likely combination of data variance and ShareButton bloat
+- **Tracked in:** `perf-share-button-bloat` (P1) — URGENT, needs -113KB, US Open 2026 in 9 days
 
 **Note on World Cup size:**
-- 🚀 **MAJOR IMPROVEMENT (Day 22):** World Cup size 344KB vs 300KB budget (15% over, -45KB from yesterday)
-- **FIFA World Cup 2026 ENDED ~July 19** (29 days ago) — elevated traffic period over
-- 🚀 **Real fix delivered:** commit 67a5e71 (2026-08-16) removed TBD placeholders from knockout bracket
-- **Size improved:** 389KB (Day 21, 30% over) → 344KB (Day 22, 15% over, **-11.6%**)
-- 🚀 **Load time improving:** TTFB -25% (0.16s → 0.12s), total -41% (0.37s → 0.22s), excellent performance
+- 🟡 **SIZE INCREASE (Day 23):** World Cup size 393KB vs 300KB budget (31% over, +49KB from yesterday)
+- **FIFA World Cup 2026 ENDED ~July 19** (30 days ago) — elevated traffic period over
+- 🚀 **Previous fix:** commit 67a5e71 (2026-08-16) removed TBD placeholders, improved 389KB → 344KB (Day 22)
+- **Size regressed:** 344KB (Day 22, 15% over) → 393KB (Day 23, 31% over, **+14%**)
+- 🚀 **Load times good:** TTFB 0.13s, total 0.29s (within budgets), excellent performance
 - ✅ **Core Web Vitals excellent (from 2026-08-13):** FCP 0.50s (GOOD), CLS 0.000
-- **Next step:** Optimize to < 300KB budget (needs -44KB more, lazy-loading or content reduction)
+- **Likely cause:** Data variance (tournament historical data), needs investigation
+- **Next step:** Optimize to < 300KB budget (needs -93KB more, lazy-loading or content reduction)
 
 ---
 
 ## Recent Changes
 
-### 🚀 MAJOR LOAD IMPROVEMENTS SUSTAINED — ATP Day 22, WTA WORSENING, WC Major Fix (Day 22, 2026-08-17)
+### 🔴 ATP CRITICAL NEW REGRESSION + WTA/WC WORSENING — Day 23 (2026-08-18)
+
+**Observation:** 🔴 **ATP CRITICAL** — New regression 273KB → 557KB (+284KB, +104%, data-driven, worse than original ShareButton regression). 🔴 **WTA WORSENING** — 287KB → 313KB (+26KB, now 57% over budget). 🟡 **WC increasing** — 344KB → 393KB (+49KB, now 31% over budget). ⚠️ **Load time variances** across all routes (+8-72%) but all within budgets (TTFB < 0.8s, total < 2.0s).
+
+**Measurements (2026-08-18 vs 2026-08-17):**
+
+**HTTP Fetch (npm run check:performance):**
+- **Homepage:** TTFB 0.18s → 0.29s (+61%), total 0.18s → 0.31s (+72%), size 28KB → 29KB (+3.6%, **+1KB**)
+- **ATP Live:** TTFB 0.16s → 0.23s (+44%), total 0.32s → 0.43s (+34%), size 273KB → **557KB (+104%, +284KB, CRITICAL)**
+- **WTA Live:** TTFB 0.13s → 0.14s (+7.7%), total 0.24s → 0.31s (+29%), size 287KB → 313KB (+9%, **+26KB**)
+- **World Cup:** TTFB 0.12s → 0.13s (+8.3%), total 0.22s → 0.29s (+32%), size 344KB → 393KB (+14%, **+49KB**)
+
+**Core Web Vitals (Playwright):**
+- ⚠️ **Not measured** — Requires user approval for automated browser testing
+- **Last measured 2026-08-13:** All routes GOOD (FCP < 1.8s, CLS 0.000, excellent user-perceived performance)
+
+**Analysis:**
+- 🔴 **ATP NEW REGRESSION (Day 23):** 557KB vs 300KB budget (86% over, +284KB, +104%) — DATA-DRIVEN, worse than ShareButton peak (521KB)
+- 🔴 **WTA WORSENING (Day 23):** 313KB vs 200KB budget (57% over, +26KB from yesterday, +47KB over 4 days)
+- 🟡 **WC increasing (Day 23):** 393KB vs 300KB budget (31% over, +49KB from yesterday, regressed from fix)
+- ⚠️ **Load time variances:** Homepage +72%, ATP +34%, WTA +29%, WC +32% but ALL within budgets (TTFB < 0.8s, total < 2.0s, likely transient)
+- ✅ **All routes FAST:** Within TTFB and total budgets despite size regressions
+
+**Code changes since 2026-08-17:**
+1. `e8a2bca` — Update changelog: player ranking articles — **changelog only**
+2. `522475e` — Add player ranking articles MVP (3 of 10): Sinner, Alcaraz, Sabalenka — **new article pages + playerData.ts**
+3. `ebb8e44` / `975f547` / `d18ce21` — Autoresearch / Inspector / ticket closes — **tickets only**
+
+**No code changes** to ATP/WTA/World Cup pages, LiveRankingTable, ShareButton, or data feeds.
+
+**Why ATP size regression is DATA-DRIVEN:**
+1. **Zero code changes** to ATP Live page, ShareButton, or data feeds since 2026-08-17
+2. **New article pages** (`/articles/*`) are separate routes, shouldn't affect ATP bundle
+3. **playerData.ts** is NOT imported by ATP Live
+4. **Likely causes:**
+   - UTS deep ranking feed now returning more players (closer to DEEP_N = 1000 vs ~500-700 previously)
+   - ESPN scoreboard returning more tournament data
+   - Natural data accumulation (player names, tournament strings, match statuses)
+
+**Why WTA +26KB is combination:**
+1. **ShareButton bloat persists** — commit 7469e43 (2026-07-26) still unfixed
+2. **Data variance** — Player counts, name lengths, tournament strings
+3. **Recent CSS** — commits 5a6cc3e + 22294b6 added +222 lines to globals.css (~2-3KB)
+
+**Why WC +49KB likely data variance:**
+1. **No code changes** to World Cup page since TBD removal fix (commit 67a5e71, 2026-08-16)
+2. **Tournament ended 30 days ago** — historical data should be stable but possibly more detailed now
+
+**Impact:**
+- 🔴 **ATP CRITICAL** — Flagship page degraded, 557KB = ~5.2s on slow 3G (was ~2.5s at 273KB)
+- 🔴 **WTA WORSENING** — 313KB = ~2.9s on slow 3G, +47KB over 4 days
+- 🟡 **WC increasing** — 393KB = ~3.7s on slow 3G, +49KB from fix baseline
+- 💰 **Revenue:** All three size regressions block Phase 3 monetization (betting affiliates)
+- 🎯 **US Open 2026:** Starts Aug 27 (9 days away) — critical timing for peak tennis traffic
+- ✅ **UX still good:** Load times within budgets (TTFB < 0.8s, total < 2.0s) despite size bloat
+
+**Status:** 🔴 ATP CRITICAL NEW REGRESSION (Day 23, P0) + 🔴 WTA WORSENING (Day 23, P1) + 🟡 WC increasing (Day 23) + ✅ All routes FAST + ⚠️ CWV not measured
+
+**Tickets:** 
+- `perf-atp-size-regression-557kb` (Priority 0) — NEW, ATP data-driven bloat 273KB → 557KB (+284KB, +104%)
+- `perf-share-button-bloat` (Priority 1) — WTA 313KB vs 200KB budget (-113KB required, +26KB from yesterday)
+
+**Report:** docs/reports/2026-08-18-performance.md
+
+---
+
+### 🚀 MAJOR LOAD IMPROVEMENTS SUSTAINED — ATP Day 22, WTA WORSENING, WC Major Fix (Day 22, 2026-08-17) [ARCHIVED]
 
 **Observation:** Major load improvements sustained and even better. ✅ **ATP budget maintained (Day 22)**. 🔴 **WTA size WORSENING** (287KB, +6KB, 44% over budget, +21KB over 3 days). 🚀 **World Cup MAJOR IMPROVEMENT** (344KB, -45KB real fix from TBD removal).
 
