@@ -42,7 +42,18 @@ function stageTypeColor(type: TdfStage["type"]): string {
   }
 }
 
+// Map race IDs to event slugs (only for races with stage pages)
+function getEventSlug(raceId: string): string | null {
+  const mapping: Record<string, string> = {
+    "tour-de-france-2026": "tdf-2026",
+    // Add other races here when they have stage pages
+  };
+  return mapping[raceId] || null;
+}
+
 export default function TdfStagesTable({ stages, currentStage, raceId }: TdfStagesTableProps) {
+  const eventSlug = getEventSlug(raceId);
+
   return (
     <div className="animate-entrance-table overflow-hidden rounded-2xl border border-edge bg-surface">
       <div className="overflow-x-auto">
@@ -70,15 +81,24 @@ export default function TdfStagesTable({ stages, currentStage, raceId }: TdfStag
                   }`}
                 >
                   <td className="px-3 py-3 text-center font-semibold">
-                    <Link
-                      href={`/events/${raceId}/stage/${stage.stage}`}
-                      className="text-accent transition hover:text-accentfg"
-                    >
-                      {stage.stage}
-                      {isCurrentStage && (
-                        <span className="ml-1.5 inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
-                      )}
-                    </Link>
+                    {eventSlug ? (
+                      <Link
+                        href={`/events/${eventSlug}/stage/${stage.stage}`}
+                        className="text-accent transition hover:text-accentfg"
+                      >
+                        {stage.stage}
+                        {isCurrentStage && (
+                          <span className="ml-1.5 inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
+                        )}
+                      </Link>
+                    ) : (
+                      <span className="text-primary">
+                        {stage.stage}
+                        {isCurrentStage && (
+                          <span className="ml-1.5 inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
+                        )}
+                      </span>
+                    )}
                   </td>
                   <td className="px-3 py-3 text-fg">{stage.date}</td>
                   <td className="px-3 py-3 text-fg">{stage.course}</td>
