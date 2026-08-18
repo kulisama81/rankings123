@@ -13,6 +13,12 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-08-18",
+    title: "ATP Live Page Performance Boost",
+    description: "Significantly improved ATP Live page load speed — page size reduced from 557KB to 296KB (47% faster). Mobile users on slower connections will experience much faster initial loads. Data quality and live updates unchanged.",
+    area: "tennis",
+  },
+  {
     date: "2026-08-20",
     title: "US Open 2026 Betting Favorites Analysis",
     description: "In-depth preview article analyzing US Open 2026 betting favorites: Jannik Sinner and Aryna Sabalenka lead the field. Expert analysis of title paths, form, historical trends, and value picks for both men's and women's draws. Updated with Cincinnati Open results.",
