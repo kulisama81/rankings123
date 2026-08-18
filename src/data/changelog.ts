@@ -14,6 +14,12 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-08-17",
+    title: "Cincinnati Open 2026 Betting Guide",
+    description: "Mid-tournament betting analysis for the Cincinnati Masters 1000. Covers Zverev, Djokovic, Shelton favorites on ATP side and Sabalenka-led WTA field, with value picks and betting strategy for the tournament's final stages.",
+    area: "tennis",
+  },
+  {
+    date: "2026-08-17",
     title: "Premium SVG Flag Icons",
     description: "Replaced emoji flags with crisp SVG flag icons across all ranking tables and player profiles. Flags now feature subtle depth treatment with rounded corners and theme-aware borders for a more polished, professional appearance.",
     area: "Design",
