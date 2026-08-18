@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Tennis Betting Predictions 2026 | Expert Picks & Odds | Rankings123",
   description:
@@ -50,7 +52,9 @@ interface BettingArticle {
   status: "live" | "upcoming" | "past";
 }
 
-const bettingArticles: BettingArticle[] = [
+// CX-first gate: only show betting articles when affiliate links are live
+// This prevents broken links when individual betting pages return 404
+const allBettingArticles: BettingArticle[] = [
   {
     title: "US Open 2026 Betting Favorites",
     href: "/articles/us-open-2026-betting-favorites",
@@ -70,6 +74,9 @@ const bettingArticles: BettingArticle[] = [
     status: "live",
   },
 ];
+
+const bettingArticles =
+  process.env.BETTING_AFFILIATES_LIVE === "true" ? allBettingArticles : [];
 
 interface UpcomingTournament {
   name: string;

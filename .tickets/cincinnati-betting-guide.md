@@ -22,3 +22,9 @@ HIGH-RPM CONTENT for betting affiliates. Cincinnati Open Aug 11-23 = Masters 100
 **2026-08-03T13:54:44Z**
 
 TIMELY REVENUE CATALYST: Cincinnati Open Aug 11-23 = Masters 1000 betting peak. Research shows Sinner vs Alcaraz projected final rematch. DEADLINE: publish by Aug 9 (2 days before tournament) to capture pre-tournament search traffic. Betting content RPM = higher than display ads. Miss this window = miss conversions (tournament happens ONCE). Content integrates FanDuel + Bet365 affiliate links + The Odds API live odds.
+
+**2026-08-18 (Premature Closure Documentation)**
+
+This ticket was closed prematurely. The betting guide was published at /articles/cincinnati-open-2026-betting-guide WITHOUT real affiliate links integrated, violating the CX-first principle ("never ship placeholder, 'coming soon', empty, or fabricated UI to users"). Acceptance criterion #3 stated "Affiliate links integrated (FanDuel + Bet365 when approved)" but `betting-affiliate-integration` and `betting-affiliate-top3-apply` were still open (affiliates not approved).
+
+Fixed via ticket `bug-betting-guide-no-links`: The betting guide page is now gated behind `process.env.BETTING_AFFILIATES_LIVE === 'true'` and returns 404 until affiliate links are integrated. When affiliate approval completes, set the env var to 'true' to make the content public with working affiliate links.

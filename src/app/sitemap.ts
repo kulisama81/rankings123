@@ -20,7 +20,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/wta-doubles`, lastModified: now, changeFrequency: "daily", priority: 0.8 },
     { url: `${BASE}/tournaments/wimbledon-2026`, lastModified: now, changeFrequency: "always", priority: 0.9 },
     { url: `${BASE}/us-open-2026`, lastModified: now, changeFrequency: "always", priority: 0.95 },
-    { url: `${BASE}/articles/us-open-2026-betting-favorites`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE}/articles/jannik-sinner-ranking-2026`, lastModified: now, changeFrequency: "daily", priority: 0.85 },
     { url: `${BASE}/articles/carlos-alcaraz-ranking-2026`, lastModified: now, changeFrequency: "daily", priority: 0.85 },
     { url: `${BASE}/articles/aryna-sabalenka-ranking-2026`, lastModified: now, changeFrequency: "daily", priority: 0.85 },
@@ -37,6 +36,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/cookies`, lastModified: now, changeFrequency: "yearly", priority: 0.2 },
     { url: `${BASE}/terms`, lastModified: now, changeFrequency: "yearly", priority: 0.2 },
   ];
+
+  // CX-first gate: only include betting article URLs when affiliates are live
+  if (process.env.BETTING_AFFILIATES_LIVE === "true") {
+    staticRoutes.push(
+      { url: `${BASE}/articles/us-open-2026-betting-favorites`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+      { url: `${BASE}/articles/cincinnati-open-2026-betting-guide`, lastModified: now, changeFrequency: "weekly", priority: 0.85 }
+    );
+  }
 
   // Add Tour de France stage pages (21 stages — SEO for "tour de france stage N results")
   const tdfStageRoutes: MetadataRoute.Sitemap = Array.from({ length: 21 }, (_, i) => ({

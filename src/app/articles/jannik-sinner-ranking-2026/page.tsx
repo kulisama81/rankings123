@@ -341,16 +341,18 @@ export default async function JannikSinnerRankingPage() {
             </ul>
           </div>
 
-          <p>
-            For more detailed US Open betting analysis including all contenders and value picks, read our comprehensive{" "}
-            <Link
-              href="/articles/us-open-2026-betting-favorites"
-              className="font-semibold text-accent hover:underline"
-            >
-              US Open 2026 Betting Guide
-            </Link>
-            .
-          </p>
+          {process.env.BETTING_AFFILIATES_LIVE === "true" && (
+            <p>
+              For more detailed US Open betting analysis including all contenders and value picks, read our comprehensive{" "}
+              <Link
+                href="/articles/us-open-2026-betting-favorites"
+                className="font-semibold text-accent hover:underline"
+              >
+                US Open 2026 Betting Guide
+              </Link>
+              .
+            </p>
+          )}
 
           <h2>Follow Jannik Sinner Live</h2>
 
@@ -375,12 +377,14 @@ export default async function JannikSinnerRankingPage() {
               >
                 ATP Live Rankings →
               </Link>
-              <Link
-                href="/articles/us-open-2026-betting-favorites"
-                className="btn-base btn-secondary inline-block rounded-lg px-6 py-2 font-semibold"
-              >
-                US Open Betting Guide →
-              </Link>
+              {process.env.BETTING_AFFILIATES_LIVE === "true" && (
+                <Link
+                  href="/articles/us-open-2026-betting-favorites"
+                  className="btn-base btn-secondary inline-block rounded-lg px-6 py-2 font-semibold"
+                >
+                  US Open Betting Guide →
+                </Link>
+              )}
             </div>
           </div>
 

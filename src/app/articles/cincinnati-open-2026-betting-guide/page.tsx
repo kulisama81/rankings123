@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title:
@@ -50,6 +53,11 @@ const jsonLd = {
 };
 
 export default function CincinnatiOpen2026BettingGuidePage() {
+  // CX-first gate: hide betting content until affiliate links are integrated
+  if (process.env.BETTING_AFFILIATES_LIVE !== "true") {
+    notFound();
+  }
+
   return (
     <>
       <script
