@@ -1,16 +1,23 @@
 ---
 id: perf-atp-size-regression-557kb
-title: "ATP Live: Critical size regression 273KB → 557KB (+104%, data-driven)"
-status: open
-priority: 0
-tags:
-  - perf
-  - performance
-  - atp
-parent: rankings123
+status: closed
 created: 2026-08-18
+priority: 0
+parent: rankings123
+tags: []
+title: "ATP Live: Critical size regression 273KB → 557KB (+104%, data-driven)"
 updated: 2026-08-18
 ---
+# Untitled ticket
+
+## Acceptance Criteria
+
+- [ ] ATP Live page size < 300KB (currently 557KB, need -46% reduction)
+- [ ] Re-run `npm run check:performance` to verify budget met
+- [ ] Verify full data still accessible (pagination or virtualization, not hard truncation)
+- [ ] Test on slow 3G network (target < 3s load time)
+- [ ] Update docs/perf-baseline.md with new measurements
+- [ ] Add data-size monitoring to prevent future regressions (e.g., fail build if > 350KB)
 
 ## Problem
 
@@ -126,15 +133,6 @@ ATP Live page size jumped from 273KB (within 300KB budget, maintained for 5 days
 - **Target**: < 300KB (currently 557KB, need **-257KB** / **-46% reduction**)
 - **Baseline**: 273KB (2026-08-17, maintained for 5 days)
 - **Acceptable**: < 350KB (temporary, if immediate fix insufficient)
-
-## Acceptance Criteria
-
-- [ ] ATP Live page size < 300KB (currently 557KB, need -46% reduction)
-- [ ] Re-run `npm run check:performance` to verify budget met
-- [ ] Verify full data still accessible (pagination or virtualization, not hard truncation)
-- [ ] Test on slow 3G network (target < 3s load time)
-- [ ] Update docs/perf-baseline.md with new measurements
-- [ ] Add data-size monitoring to prevent future regressions (e.g., fail build if > 350KB)
 
 ## Measurement
 

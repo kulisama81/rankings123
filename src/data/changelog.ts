@@ -13,15 +13,15 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
-    date: "2026-08-18",
-    title: "Player Ranking Articles: Sinner, Alcaraz, Sabalenka",
-    description: "New in-depth player ranking articles for Jannik Sinner, Carlos Alcaraz, and Aryna Sabalenka. Each features live ranking data, US Open 2026 predictions, playing style analysis, and Grand Slam history. Rankings update daily during tournaments.",
-    area: "tennis",
-  },
-  {
     date: "2026-08-20",
     title: "US Open 2026 Betting Favorites Analysis",
     description: "In-depth preview article analyzing US Open 2026 betting favorites: Jannik Sinner and Aryna Sabalenka lead the field. Expert analysis of title paths, form, historical trends, and value picks for both men's and women's draws. Updated with Cincinnati Open results.",
+    area: "tennis",
+  },
+  {
+    date: "2026-08-18",
+    title: "Player Ranking Articles: Sinner, Alcaraz, Sabalenka",
+    description: "New in-depth player ranking articles for Jannik Sinner, Carlos Alcaraz, and Aryna Sabalenka. Each features live ranking data, US Open 2026 predictions, playing style analysis, and Grand Slam history. Rankings update daily during tournaments.",
     area: "tennis",
   },
   {

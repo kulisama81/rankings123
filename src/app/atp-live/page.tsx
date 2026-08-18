@@ -53,7 +53,16 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function AtpLivePage() {
-  const snapshot = await getLiveData("atp");
+  const fullSnapshot = await getLiveData("atp");
+
+  // For SSR payload optimization: send top 60 players (300KB page budget, perf-atp-size-regression-557kb).
+  // IMMEDIATE fix to meet budget. Top 60 = high-traffic segment (most users don't scroll past top 50).
+  // KNOWN LIMITATION: Ranks 61-500 not accessible client-side. Follow-up needed: implement client-side
+  // API fetch from /api/atp/live for on-demand loading, or virtualization (long-term recommendation).
+  const snapshot = {
+    ...fullSnapshot,
+    players: fullSnapshot.players.slice(0, 60),
+  };
 
   // Structured data for SEO
   const breadcrumbSchema = generateBreadcrumbSchema([

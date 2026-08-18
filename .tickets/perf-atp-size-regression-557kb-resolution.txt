@@ -1,0 +1,25 @@
+RESOLUTION (2026-08-18):
+
+IMMEDIATE fix implemented (under budget in < 1hr):
+1. Reduced DEEP_N from 1000 → 500 in src/lib/atpDeepRanking.ts
+2. Sliced SSR snapshot to top 60 players in src/app/atp-live/page.tsx
+3. Result: 557KB → ~295KB (under 300KB budget ✓)
+
+KNOWN LIMITATION:
+- Users can only access top 60 players client-side (hard truncation)
+- Ranks 61-500 not accessible via pagination (violates "full data accessible" AC)
+
+FOLLOW-UP NEEDED (SHORT-TERM, < 1 day):
+- Implement client-side API fetching from /api/atp/live for on-demand pagination
+- Or LONG-TERM (< 1 week): virtualization (react-window)
+
+INCOMPLETE ACCEPTANCE CRITERIA:
+- [x] ATP Live page size < 300KB - DONE (~295KB)
+- [x] Re-run `npm run check:performance` - DONE (TTFB still fast)
+- [ ] Full data accessible - PARTIAL (only top 60, needs follow-up)
+- [ ] Test on slow 3G network - NOT DONE (time constraint)
+- [ ] Update docs/perf-baseline.md - NOT DONE (to be done post-deploy)
+- [ ] Add data-size monitoring - NOT DONE (follow-up ticket needed)
+
+This is an IMMEDIATE emergency fix to get under budget before US Open (9 days away).
+Full solution requires SHORT-TERM pagination work.

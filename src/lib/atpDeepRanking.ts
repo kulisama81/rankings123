@@ -15,7 +15,8 @@ import { getAtpLiveSnapshot as getMockSnapshot } from "@/data/atpLive";
 // players) as live JSON with no auth, deep enough to surface emerging players
 // well past ESPN's ~150-player feed. We take the top DEEP_N here.
 // Shape per row: { rank, playerId, name, country:{id (IOC), code}, points, bestRank }.
-const DEEP_N = 1000;
+// Reduced from 1000 to 500 to meet 300KB page budget (557KB → ~300KB, perf-atp-size-regression-557kb)
+const DEEP_N = 500;
 
 function utsUrl(rowCount: number): string {
   return (
