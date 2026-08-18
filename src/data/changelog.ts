@@ -8,10 +8,16 @@ export interface ChangelogEntry {
   date: string; // YYYY-MM-DD
   title: string;
   description: string;
-  area: "tennis" | "worldcup" | "cycling" | "site" | "all" | "Design";
+  area: "tennis" | "worldcup" | "cycling" | "site" | "all";
 }
 
 export const changelog: ChangelogEntry[] = [
+  {
+    date: "2026-08-20",
+    title: "US Open 2026 Betting Favorites Analysis",
+    description: "In-depth preview article analyzing US Open 2026 betting favorites: Jannik Sinner and Aryna Sabalenka lead the field. Expert analysis of title paths, form, historical trends, and value picks for both men's and women's draws. Updated with Cincinnati Open results.",
+    area: "tennis",
+  },
   {
     date: "2026-08-17",
     title: "Tennis Betting Predictions Hub",
@@ -28,13 +34,7 @@ export const changelog: ChangelogEntry[] = [
     date: "2026-08-17",
     title: "Premium SVG Flag Icons",
     description: "Replaced emoji flags with crisp SVG flag icons across all ranking tables and player profiles. Flags now feature subtle depth treatment with rounded corners and theme-aware borders for a more polished, professional appearance.",
-    area: "Design",
-  },
-  {
-    date: "2026-08-20",
-    title: "US Open 2026 Betting Favorites Analysis",
-    description: "In-depth preview article analyzing US Open 2026 betting favorites: Jannik Sinner and Aryna Sabalenka lead the field. Expert analysis of title paths, form, historical trends, and value picks for both men's and women's draws. Updated with Cincinnati Open results.",
-    area: "tennis",
+    area: "site",
   },
   {
     date: "2026-08-17",

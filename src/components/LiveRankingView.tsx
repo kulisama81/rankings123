@@ -13,7 +13,7 @@ export default function LiveRankingView({ tour, snapshot, showAgeGroupRank }: Li
   const tourLabel = snapshot.tourLabel ?? tourValue.toUpperCase();
   const players = snapshot.players;
   const top = players[0];
-  const liveCount = players.filter((p) => p.tournament?.active).length;
+  const liveCount = players.filter((p) => p.tournament?.active && p.pointsDelta !== 0).length;
 
   const stats = top
     ? [
