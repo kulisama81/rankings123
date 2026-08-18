@@ -8,10 +8,16 @@ export interface ChangelogEntry {
   date: string; // YYYY-MM-DD
   title: string;
   description: string;
-  area: "tennis" | "worldcup" | "cycling" | "site" | "all";
+  area: "tennis" | "worldcup" | "cycling" | "site" | "all" | "Design";
 }
 
 export const changelog: ChangelogEntry[] = [
+  {
+    date: "2026-08-17",
+    title: "Premium SVG Flag Icons",
+    description: "Replaced emoji flags with crisp SVG flag icons across all ranking tables and player profiles. Flags now feature subtle depth treatment with rounded corners and theme-aware borders for a more polished, professional appearance.",
+    area: "Design",
+  },
   {
     date: "2026-08-20",
     title: "US Open 2026 Betting Favorites Analysis",
