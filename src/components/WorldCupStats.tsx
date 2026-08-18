@@ -78,12 +78,30 @@ export default function WorldCupStats({ stats }: WorldCupStatsProps) {
   const hasData = stats.topScorers.length > 0 || stats.topAssisters.length > 0;
   if (!hasData) return null;
 
+  // Check if we're showing aggregate/all-time stats (ESPN combines 2022 + 2026 tournaments).
+  // During group stage, max appearances is 3; knockout adds ~4 more for a tournament max of 7.
+  // If any leader has >7 appearances, we're showing aggregate World Cup stats.
+  const maxAppearances = Math.max(
+    ...stats.topScorers.map((p) => p.appearances),
+    ...stats.topAssisters.map((p) => p.appearances),
+    0
+  );
+  const isAggregateStats = maxAppearances > 7;
+  const title = isAggregateStats ? "All-Time World Cup Leaders" : "Tournament Leaders";
+
   return (
     <section id="tournament-leaders" className="mt-12">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
-        <h2 className="text-2xl font-bold tracking-tight text-fg">
-          Tournament Leaders
-        </h2>
+        <div>
+          <h2 className="text-2xl font-bold tracking-tight text-fg">
+            {title}
+          </h2>
+          {isAggregateStats && (
+            <p className="mt-1 text-sm text-muted">
+              Career stats across all World Cup tournaments
+            </p>
+          )}
+        </div>
         <Link
           href="/world-cup/golden-boot"
           className="text-sm font-medium text-accent transition-colors hover:text-accent/80"

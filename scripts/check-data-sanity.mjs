@@ -238,6 +238,19 @@ function checkWorldCupGoldenBoot(stats) {
       err("worldcup-stats", `${player.playerShortName} has negative stats`);
     }
   }
+
+  // Aggregate stats appearance guard (regression for bug-wc-scorers-aggregate-stats).
+  // ESPN returns aggregate World Cup stats (combining 2022 + 2026), showing 8+ appearances.
+  // A single World Cup tournament has max 7 matches (3 group + 4 knockout).
+  // If we're showing aggregate stats (max appearances > 7), the data itself is fine, but we
+  // need to ensure users aren't misled — check that appearances > 7 is handled properly.
+  const maxAppearances = Math.max(
+    ...scorers.map((p) => p.appearances),
+    ...assisters.map((p) => p.appearances),
+    0
+  );
+  // Store this for the HTML check below
+  stats._maxAppearances = maxAppearances;
 }
 
 // --- World Cup projected bracket -------------------------------------------
@@ -389,6 +402,33 @@ function checkHomepagePlaceholders(html) {
   }
 }
 
+// --- World Cup aggregate stats UI label guard (regression for bug-wc-scorers-aggregate-stats) ---
+async function checkWorldCupAggregateStatsLabel(wcStats) {
+  // Regression guard for bug-wc-scorers-aggregate-stats: When ESPN returns aggregate World Cup
+  // stats (combining 2022 + 2026 tournaments), showing 8+ match appearances, the UI MUST clearly
+  // label them as "All-Time" or "Career" stats to avoid misleading users who expect current-
+  // tournament stats only. A single World Cup tournament has max 7 matches (3 group + 4 knockout).
+  const maxAppearances = wcStats._maxAppearances ?? 0;
+
+  if (maxAppearances > 7) {
+    // We're showing aggregate stats — verify the UI has the proper label
+    try {
+      const html = await getHtml("/world-cup");
+      const hasAllTimeLabel = /all-time world cup/i.test(html);
+      const hasCareerLabel = /career stats.*world cup/i.test(html);
+
+      if (!hasAllTimeLabel && !hasCareerLabel) {
+        err(
+          "worldcup-stats-ui",
+          `Top scorer shows ${maxAppearances} appearances (aggregate across tournaments) but UI lacks "All-Time" or "Career" label — misleading to users expecting current-tournament stats only`
+        );
+      }
+    } catch (fetchError) {
+      warn("worldcup-stats-ui", `could not fetch /world-cup page to verify aggregate stats label: ${fetchError.message}`);
+    }
+  }
+}
+
 // --- Match pages demo data guard (regression for wc-match-demo-labels) -----
 async function checkMatchPagesNoDemoLabels() {
   // Regression guard for bug wc-match-demo-labels: World Cup match pages previously showed
@@ -476,6 +516,7 @@ async function main() {
     const groups = checkWorldCup(wc);
     checkBracket(bracket, groups);
     checkWorldCupGoldenBoot(wcStats);
+    await checkWorldCupAggregateStatsLabel(wcStats);
     checkCycling(cycling);
     checkHomepagePlaceholders(homepage);
     await checkMatchPagesNoDemoLabels();
