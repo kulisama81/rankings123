@@ -196,3 +196,113 @@ Next scheduled run: 2026-08-17 evening (or 2026-08-18 morning per cron schedule)
 - Continue spot-checking World Cup team/match pages
 - Monitor WTA feed stability
 - Check any new features from autoresearch tickets
+
+---
+
+# Inspector Report — 2026-08-17 (Evening Run)
+
+**Inspector:** QA agent (automated cron run)  
+**Time:** Evening  
+**Session duration:** ~30 minutes  
+**Routes checked:** 12 routes across all sports  
+**Bugs found:** 1 new bug (CX-first violation)
+
+---
+
+## Summary
+
+**Good news:** WC R32 bracket is now present! `check:core-features` PASSED (was failing this morning).
+
+**New bug found:** Cincinnati Open betting guide is live without affiliate links, violating CX-first rule.
+
+**Automated checks:**
+- ✓ `check:core-features` — **PASSED** (WC R32 bracket now rendering)
+- ✓ `check:data-sanity` — **PASSED**
+
+---
+
+## WC Bracket Status UPDATE ✓
+
+The World Cup R32 knockout bracket that was missing this morning is **now displaying correctly**:
+- Round of 32 matchups visible (ARG vs MAR, SUI vs POR, BRA vs URU, MEX vs COL, etc.)
+- Full bracket tree through R16 → QF → SF → Final
+- Interactive with match links
+- Horizontal scroll for full view
+
+**Status:** bug-wc-bracket-missing-core-feature appears **RESOLVED** (bracket now rendering). The planner may have fixed this between morning and evening inspections.
+
+---
+
+## New Bug Filed — CX-First Violation
+
+### 🐛 bug-betting-guide-no-links (P1)
+
+**Issue:** Cincinnati Open betting guide at `/articles/cincinnati-open-2026-betting-guide` is **live to users** but contains **ZERO betting affiliate links**.
+
+**CX-First Violation:** Per CLAUDE.md: "Monetization or data UI ships only when backed by a real, working source/link; until then it stays hidden."
+
+**Current State:**
+- Page publicly accessible and indexed
+- Content includes betting analysis and tournament odds
+- NO betting partner CTAs or affiliate links anywhere
+- Only "affiliate" mention is disclaimer (NOT affiliated with ATP/WTA)
+
+**Root Cause:**
+- Ticket `cincinnati-betting-guide` marked CLOSED with acceptance criteria "Affiliate links integrated (FanDuel + Bet365 when approved)"
+- But tickets `betting-affiliate-integration` and `betting-affiliate-top3-apply` are still OPEN (affiliate programs not yet approved)
+- Ticket closed prematurely before affiliates were live
+
+**Impact:**
+- Users see betting content but no path to act on it (incomplete UX)
+- Monetization UI shipped as placeholder
+- SEO live but generating zero revenue
+
+**Fix Required:**
+- EITHER: Hide page until affiliate links ready (gate on `BETTING_AFFILIATES_LIVE` env var)
+- OR: Integrate real affiliate links with tracking
+
+**Regression Test Required:**
+- `tests/betting-content-gate.test.js` to fail if betting pages are public without affiliate links
+
+**Ticket Filed:** `.tickets/bug-betting-guide-no-links.md`
+
+**Systemic Issue:** Other betting guides (`/articles/us-open-2026-betting-favorites`) appear to have same issue.
+
+---
+
+## Routes Inspected (Evening)
+
+✅ **Homepage (/)** — Clean in both themes, mobile responsive, no placeholder content  
+✅ **ATP Live (/atp-live)** — Rankings correct, pagination works, "In play" count accurate  
+✅ **WTA Live (/wta-live)** — Rankings correct, pagination works  
+✅ **World Cup (/world-cup)** — **Bracket NOW PRESENT**, groups complete, top scorers real  
+✅ **World Cup Team (/world-cup/team/ARG)** — Roster, fixtures, standings all present  
+✅ **World Cup Match (/world-cup/match/mock-r32-1)** — Match detail with lineups/stats  
+✅ **Privacy (/privacy)** — Real content, not placeholder  
+✅ **Betting Hub (/betting-predictions)** — Loads correctly  
+❌ **Cincinnati Guide (/articles/cincinnati-open-2026-betting-guide)** — NO AFFILIATE LINKS  
+
+---
+
+## Visual & Consistency Checks
+
+- Theme switching works (dark/light)
+- Mobile viewport (375px) no horizontal overflow
+- No broken images or missing flag icons
+- Navigation links all resolve
+- Count badges consistent
+
+**WTA "In play" count:** Code review shows correct logic (`tournament?.active && pointsDelta !== 0`). Working as designed.
+
+---
+
+## Recommendations
+
+1. **Immediate:** Fix `bug-betting-guide-no-links` (gate or integrate links)
+2. **Audit:** Check all `/articles/*betting*` routes for same issue
+3. **Process:** Add regression test to prevent shipping monetization without actual links
+4. **Celebrate:** WC bracket bug appears fixed!
+
+---
+
+**Next Inspection:** 2026-08-18 morning
