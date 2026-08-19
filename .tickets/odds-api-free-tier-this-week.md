@@ -1,6 +1,6 @@
 ---
 id: odds-api-free-tier-this-week
-status: in_progress
+status: closed
 deps: []
 links: [odds-api-integration, us-open-revenue-infrastructure-sprint, us-open-2026-betting-guide]
 created: 2026-08-18T13:50:00Z
