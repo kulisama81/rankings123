@@ -11,6 +11,7 @@ import WorldCupCountdown from "@/components/WorldCupCountdown";
 import PostEventDiscovery from "@/components/PostEventDiscovery";
 import WorldCupFinalsHero from "@/components/WorldCupFinalsHero";
 import WorldCupFinalsMobileBadge from "@/components/WorldCupFinalsMobileBadge";
+import Breadcrumb from "@/components/Breadcrumb";
 import {
   generateBreadcrumbSchema,
   generateSportsEventSchema,
@@ -180,6 +181,12 @@ export default async function WorldCupPage() {
       <JsonLd data={breadcrumbSchema} />
       <JsonLd data={sportsEventSchema} />
       <div data-sport="worldcup" className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+        <Breadcrumb
+          items={[
+            { name: "Home", url: "/" },
+            { name: "World Cup 2026" },
+          ]}
+        />
         {/* Tournament Complete: Show final results hero */}
         {isTournamentComplete ? (
           finalMatch && hasValidFinalScores ? (

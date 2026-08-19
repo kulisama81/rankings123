@@ -6,6 +6,7 @@ import SectionNav from "@/components/SectionNav";
 import TdfStagesTable from "@/components/TdfStagesTable";
 import TdfGCTable from "@/components/TdfGCTable";
 import TdfJerseys from "@/components/TdfJerseys";
+import Breadcrumb from "@/components/Breadcrumb";
 import Link from "next/link";
 import {
   generateBreadcrumbSchema,
@@ -133,6 +134,14 @@ export default async function CyclingPage() {
         />
 
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="pt-4">
+            <Breadcrumb
+              items={[
+                { name: "Home", url: "/" },
+                { name: "Cycling" },
+              ]}
+            />
+          </div>
           <SectionNav sections={sections} />
 
           {/* Jersey Leaders */}

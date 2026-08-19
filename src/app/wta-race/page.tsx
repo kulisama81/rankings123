@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getRaceData } from "@/lib/raceFeed";
 import LiveRankingView from "@/components/LiveRankingView";
 import YouTubeHighlights from "@/components/YouTubeHighlights";
+import Breadcrumb from "@/components/Breadcrumb";
 import { YOUTUBE_HIGHLIGHTS } from "@/config/youtube";
 import { generateBreadcrumbSchema, JsonLd } from "@/lib/structuredData";
 
@@ -68,12 +69,14 @@ export default async function WtaRacePage() {
     <>
       <JsonLd data={jsonLd} />
       <JsonLd data={breadcrumbSchema} />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
       <div data-sport="wta">
         <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+          <Breadcrumb
+            items={[
+              { name: "Home", url: "/" },
+              { name: "WTA Race to Finals" },
+            ]}
+          />
           <div className="mb-6">
             <h1 className="text-3xl font-bold text-fg mb-2">
               WTA Race to Finals

@@ -3,6 +3,7 @@ import { getLiveData } from "@/lib/liveFeed";
 import LiveRankingView from "@/components/LiveRankingView";
 import YouTubeHighlights from "@/components/YouTubeHighlights";
 import WimbledonCallout from "@/components/WimbledonCallout";
+import Breadcrumb from "@/components/Breadcrumb";
 import { YOUTUBE_HIGHLIGHTS } from "@/config/youtube";
 import {
   generateBreadcrumbSchema,
@@ -116,6 +117,12 @@ export default async function AtpLivePage() {
       <JsonLd data={faqSchema} />
       <div data-sport="atp">
         <div className="mx-auto max-w-6xl px-4 pt-4 sm:px-6 lg:px-8">
+          <Breadcrumb
+            items={[
+              { name: "Home", url: "/" },
+              { name: "ATP Live Rankings" },
+            ]}
+          />
           <div className="mb-4">
             <a
               href="/atp-race"
