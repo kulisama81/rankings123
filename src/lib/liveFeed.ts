@@ -126,6 +126,7 @@ function parseRound(displayName: string, numberedRounds: Map<number, Round>): Ro
 
 interface LiveStatus {
   earned: number;
+  maxPossible: number; // max points if player wins the tournament
   tournament: AtpTournamentStatus;
 }
 
@@ -218,8 +219,12 @@ function buildLiveStatuses(scoreboard: any, cfg: TourConfig): Map<string, LiveSt
         }
       }
 
+      const earnedPoints = cfg.points[tier][reached] ?? 0;
+      const maxTournamentPoints = cfg.points[tier]["W"] ?? 0;
+
       result.set(guid, {
-        earned: cfg.points[tier][reached] ?? 0,
+        earned: earnedPoints,
+        maxPossible: maxTournamentPoints,
         tournament: {
           name: tournamentName,
           round: inPlay ? `${reached} · in play` : reached,
@@ -260,6 +265,7 @@ export async function fetchLiveSnapshot(tour: Tour): Promise<AtpLiveSnapshot> {
     const live = liveStatuses.get(athlete.guid);
     const officialPoints = Math.round(entry.points ?? 0);
     const earned = live?.earned ?? 0;
+    const maxPossible = live?.maxPossible ?? 0;
     return {
       guid: athlete.guid as string | undefined,
       officialRank: entry.current as number,
@@ -270,16 +276,23 @@ export async function fetchLiveSnapshot(tour: Tour): Promise<AtpLiveSnapshot> {
       officialPoints,
       livePoints: officialPoints + earned,
       pointsDelta: earned,
+      nextPoints: officialPoints + earned, // same as livePoints
+      maxPoints: officialPoints + maxPossible,
       tournament: live?.tournament,
     };
   });
 
   merged.sort((a, b) => b.livePoints - a.livePoints || a.officialRank - b.officialRank);
 
+  // Calculate projected ranks based on max points
+  const projectedRanking = [...merged].sort((a, b) => b.maxPoints - a.maxPoints || a.officialRank - b.officialRank);
+  const projectedRankMap = new Map(projectedRanking.map((p, i) => [p.name, i + 1]));
+
   const players: AtpLivePlayer[] = merged.map((p, i) => ({
     ...p,
     liveRank: i + 1,
     movement: p.officialRank - (i + 1),
+    projectedRank: projectedRankMap.get(p.name),
   }));
 
   const updated = ranking?.update
@@ -331,6 +344,8 @@ function wtaMockSnapshot(): AtpLiveSnapshot {
       officialPoints: pts,
       livePoints: pts,
       pointsDelta: 0,
+      nextPoints: pts,
+      maxPoints: pts,
     })),
   };
 }

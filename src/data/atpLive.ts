@@ -218,6 +218,23 @@ export function getAtpLiveSnapshot(now: number = Date.now()): AtpLiveSnapshot {
     (a, b) => b.livePoints - a.livePoints || a.officialRank - b.officialRank
   );
 
+  // ATP 250 winner points
+  const ATP_250_WINNER_POINTS = 250;
+
+  const withMaxPoints = sorted.map((p) => {
+    const maxPossible = p.tournament?.active ? ATP_250_WINNER_POINTS : 0;
+    return {
+      ...p,
+      maxPoints: p.officialPoints + maxPossible,
+    };
+  });
+
+  // Calculate projected ranks based on max points
+  const projectedRanking = [...withMaxPoints].sort(
+    (a, b) => b.maxPoints - a.maxPoints || a.officialRank - b.officialRank
+  );
+  const projectedRankMap = new Map(projectedRanking.map((p, i) => [p.name, i + 1]));
+
   const live: AtpLivePlayer[] = sorted.map((p, i) => ({
     liveRank: i + 1,
     officialRank: p.officialRank,
@@ -229,6 +246,9 @@ export function getAtpLiveSnapshot(now: number = Date.now()): AtpLiveSnapshot {
     officialPoints: p.officialPoints,
     livePoints: p.livePoints,
     pointsDelta: p.livePoints - p.officialPoints,
+    nextPoints: p.livePoints, // same as livePoints
+    maxPoints: p.officialPoints + (p.tournament?.active ? ATP_250_WINNER_POINTS : 0),
+    projectedRank: projectedRankMap.get(p.name),
     careerHigh: p.careerHigh,
     dropping: p.dropping,
     tournament: p.tournament,

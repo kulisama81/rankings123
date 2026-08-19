@@ -396,6 +396,16 @@ export default function LiveRankingTable({ tour, initialSnapshot, showAgeGroupRa
                   <th className="px-2 py-2.5 text-center">Age</th>
                   <th className="px-3 py-2.5 text-right">Live Pts</th>
                   <th className="px-2 py-2.5 text-right">Δ</th>
+                  <th className="px-3 py-2.5 text-right">
+                    <Tooltip content="Next Monday's points (includes current tournament)" placement="top">
+                      <span className="cursor-help">Next</span>
+                    </Tooltip>
+                  </th>
+                  <th className="px-3 py-2.5 text-right">
+                    <Tooltip content="Maximum points if player wins current tournament" placement="top">
+                      <span className="cursor-help">Max</span>
+                    </Tooltip>
+                  </th>
                   <th className="px-3 py-2.5 text-right">Official</th>
                   <th className="px-3 py-2.5 text-left">Tournament</th>
                   <th className="px-2 py-2.5 text-center">Share</th>
@@ -504,6 +514,21 @@ export default function LiveRankingTable({ tour, initialSnapshot, showAgeGroupRa
                       </Tooltip>
                     </td>
                     <td className="px-2 py-2 text-right"><Delta value={p.pointsDelta} /></td>
+                    <td className="px-3 py-2 text-right tabular-nums text-muted">
+                      {p.nextPoints.toLocaleString()}
+                    </td>
+                    <td className="px-3 py-2 text-right text-sm">
+                      {p.tournament?.active ? (
+                        <Tooltip
+                          content={`Max points if ${p.name} wins ${p.tournament.name}${p.projectedRank ? ` → Projected rank #${p.projectedRank}` : ""}`}
+                          placement="top"
+                        >
+                          <span className="font-semibold tabular-nums text-accent">{p.maxPoints.toLocaleString()}</span>
+                        </Tooltip>
+                      ) : (
+                        <span className="tabular-nums text-muted/50">—</span>
+                      )}
+                    </td>
                     <td className="px-3 py-2 text-right tabular-nums text-muted">
                       {p.officialPoints.toLocaleString()}
                     </td>
@@ -634,6 +659,17 @@ export default function LiveRankingTable({ tour, initialSnapshot, showAgeGroupRa
                     />
                   </span>
                 </div>
+                {p.tournament?.active && (
+                  <div className="mt-1.5 flex items-center gap-3 pl-[38px] text-xs">
+                    <span className="text-muted">
+                      Next: <span className="font-semibold tabular-nums text-fg">{p.nextPoints.toLocaleString()}</span>
+                    </span>
+                    <span className="text-muted">
+                      Max: <span className="font-semibold tabular-nums text-accent">{p.maxPoints.toLocaleString()}</span>
+                      {p.projectedRank && <span className="ml-1 text-muted/70">→ #{p.projectedRank}</span>}
+                    </span>
+                  </div>
+                )}
               </div>
               );
             })}

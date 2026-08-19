@@ -86,6 +86,7 @@ export async function fetchAtpDeepRankingSnapshot(): Promise<AtpDeepRankingSnaps
     const officialPoints = espn ? espn.points : b.officialPoints;
     const live = liveByName.get(key);
     const earned = live?.earned ?? 0;
+    const maxPossible = live?.maxPossible ?? 0;
     return {
       guid: espn?.guid,
       officialRank,
@@ -96,6 +97,8 @@ export async function fetchAtpDeepRankingSnapshot(): Promise<AtpDeepRankingSnaps
       officialPoints,
       livePoints: officialPoints + earned,
       pointsDelta: earned,
+      nextPoints: officialPoints + earned, // same as livePoints
+      maxPoints: officialPoints + maxPossible,
       careerHigh: b.careerHigh,
       tournament: live?.tournament,
     };
@@ -106,10 +109,15 @@ export async function fetchAtpDeepRankingSnapshot(): Promise<AtpDeepRankingSnaps
     (a, b) => b.livePoints - a.livePoints || a.officialRank - b.officialRank
   );
 
+  // Calculate projected ranks based on max points
+  const projectedRanking = [...merged].sort((a, b) => b.maxPoints - a.maxPoints || a.officialRank - b.officialRank);
+  const projectedRankMap = new Map(projectedRanking.map((p, i) => [p.name, i + 1]));
+
   const players: AtpLivePlayer[] = merged.map((p, i) => ({
     ...p,
     liveRank: i + 1,
     movement: p.officialRank - (i + 1),
+    projectedRank: projectedRankMap.get(p.name),
   }));
 
   const update = rankingsData?.rankings?.[0]?.update;

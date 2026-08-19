@@ -95,6 +95,7 @@ function parseRound(
 
 interface LiveStatus {
   earned: number;
+  maxPossible: number; // max points if player wins the tournament
   tournament: AtpTournamentStatus;
 }
 
@@ -163,8 +164,12 @@ function buildLiveStatuses(scoreboard: any): Map<string, LiveStatus> {
         inPlay = true;
       }
 
+      const earnedPoints = POINTS_BY_TIER[tier][reached] ?? 0;
+      const maxTournamentPoints = POINTS_BY_TIER[tier]["W"] ?? 0;
+
       result.set(guid, {
-        earned: POINTS_BY_TIER[tier][reached] ?? 0,
+        earned: earnedPoints,
+        maxPossible: maxTournamentPoints,
         tournament: {
           name: tournamentName,
           round: inPlay ? `${reached} · in play` : reached,
@@ -203,6 +208,7 @@ export async function fetchAtpLiveSnapshot(): Promise<AtpLiveSnapshot> {
     const live = liveStatuses.get(athlete.guid);
     const officialPoints = Math.round(entry.points ?? 0);
     const earned = live?.earned ?? 0;
+    const maxPossible = live?.maxPossible ?? 0;
     return {
       guid: athlete.guid as string | undefined,
       officialRank: entry.current as number,
@@ -213,6 +219,8 @@ export async function fetchAtpLiveSnapshot(): Promise<AtpLiveSnapshot> {
       officialPoints,
       livePoints: officialPoints + earned,
       pointsDelta: earned,
+      nextPoints: officialPoints + earned, // same as livePoints
+      maxPoints: officialPoints + maxPossible,
       tournament: live?.tournament,
     };
   });
@@ -221,10 +229,15 @@ export async function fetchAtpLiveSnapshot(): Promise<AtpLiveSnapshot> {
     (a, b) => b.livePoints - a.livePoints || a.officialRank - b.officialRank
   );
 
+  // Calculate projected ranks based on max points
+  const projectedRanking = [...merged].sort((a, b) => b.maxPoints - a.maxPoints || a.officialRank - b.officialRank);
+  const projectedRankMap = new Map(projectedRanking.map((p, i) => [p.name, i + 1]));
+
   const players: AtpLivePlayer[] = merged.map((p, i) => ({
     ...p,
     liveRank: i + 1,
     movement: p.officialRank - (i + 1),
+    projectedRank: projectedRankMap.get(p.name),
   }));
 
   const updated = ranking?.update ? ` · official update ${String(ranking.update).slice(0, 10)}` : "";
@@ -273,6 +286,7 @@ export function normalizeName(name: string): string {
 
 export interface LiveOverlayEntry {
   earned: number;
+  maxPossible: number;
   tournament: AtpTournamentStatus;
 }
 

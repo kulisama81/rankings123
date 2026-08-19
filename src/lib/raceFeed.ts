@@ -93,6 +93,8 @@ function mockRaceData(tour: Tour): AtpLiveSnapshot {
     officialPoints: pts,
     livePoints: pts,
     pointsDelta: 0,
+    nextPoints: pts,
+    maxPoints: pts,
   }));
 
   return {
@@ -165,6 +167,8 @@ export async function getRaceData(tour: Tour): Promise<AtpLiveSnapshot> {
         officialPoints: Math.round(r.points),
         livePoints: Math.round(r.points), // Race has no "live" overlay; it's already current-season
         pointsDelta: 0, // Race rankings are already current
+        nextPoints: Math.round(r.points),
+        maxPoints: Math.round(r.points),
       };
     });
 

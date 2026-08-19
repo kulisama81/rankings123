@@ -32,6 +32,9 @@ export interface AtpLivePlayer {
   officialPoints: number;
   livePoints: number;
   pointsDelta: number; // livePoints - officialPoints
+  nextPoints: number; // Official + current tournament points (projected points next Monday)
+  maxPoints: number; // Official + max possible if win current tournament
+  projectedRank?: number; // Where player would rank with max points
   careerHigh?: number; // only available in demo data
   dropping?: number; // points to defend this week (only in demo data)
   tournament?: AtpTournamentStatus;
