@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { getTournamentOdds, getOddsSource } from "@/lib/tennisOdds";
+import OddsWidget from "@/components/OddsWidget";
 
 export const dynamic = "force-dynamic";
 
@@ -52,11 +54,22 @@ const jsonLd = {
   },
 };
 
-export default function CincinnatiOpen2026BettingGuidePage() {
+export default async function CincinnatiOpen2026BettingGuidePage() {
   // CX-first gate: hide betting content until affiliate links are integrated
   if (process.env.BETTING_AFFILIATES_LIVE !== "true") {
     notFound();
   }
+
+  // Fetch Cincinnati Open odds (try multiple sport key variants)
+  const oddsSource = getOddsSource();
+  let cincinnatiOdds = await getTournamentOdds("cincinnati");
+
+  // Try alternate names if "cincinnati" doesn't work
+  if (cincinnatiOdds.length === 0) {
+    cincinnatiOdds = await getTournamentOdds("western_southern");
+  }
+
+  const affiliateLinksEnabled = process.env.BETTING_AFFILIATES_LIVE === "true";
 
   return (
     <>
@@ -123,6 +136,16 @@ export default function CincinnatiOpen2026BettingGuidePage() {
           </p>
 
           <h3 className="text-fg">Top ATP Betting Favorites</h3>
+
+          {/* Live odds widget (only shows if odds API is configured and has data) */}
+          {oddsSource === "api" && cincinnatiOdds.length > 0 && (
+            <OddsWidget
+              matches={cincinnatiOdds.slice(0, 3)}
+              title="Live Cincinnati Open Odds"
+              showBookmakers={true}
+              affiliateLinksEnabled={affiliateLinksEnabled}
+            />
+          )}
 
           <div className="not-prose my-6 overflow-hidden rounded-lg border border-edge">
             <table className="w-full">

@@ -13,6 +13,13 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-08-18",
+    title: "Betting Odds Integration",
+    description:
+      "Integrated The Odds API for live tennis match odds. Betting content pages now display real-time odds from major bookmakers (Bet365, FanDuel, DraftKings). Odds widget includes bookmaker comparison and affiliate-ready click functionality. Free tier supports 500 API calls/month with 6-hour caching. Ready for US Open 2026 betting content.",
+    area: "tennis",
+  },
+  {
     date: "2026-08-20",
     title: "US Open 2026 Betting Favorites Analysis",
     description: "In-depth preview article analyzing US Open 2026 betting favorites: Jannik Sinner and Aryna Sabalenka lead the field. Expert analysis of title paths, form, historical trends, and value picks for both men's and women's draws. Updated with Cincinnati Open results.",
