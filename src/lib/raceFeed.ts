@@ -1,5 +1,4 @@
 import type { AtpLivePlayer, AtpLiveSnapshot, Tour } from "@/types";
-import { flagEmoji } from "./flags";
 
 // Race rankings = year-to-date points only (resets Jan 1)
 // Used for ATP Finals / WTA Finals qualification tracking
@@ -88,7 +87,7 @@ function mockRaceData(tour: Tour): AtpLiveSnapshot {
     movement: 0,
     name,
     countryCode: cc,
-    flag: flagEmoji(cc),
+    flag: cc,
     age,
     officialPoints: pts,
     livePoints: pts,
@@ -162,7 +161,7 @@ export async function getRaceData(tour: Tour): Promise<AtpLiveSnapshot> {
         movement,
         name: r.athlete.displayName,
         countryCode: country,
-        flag: flagEmoji(country),
+        flag: country,
         age: 0, // ESPN race endpoint doesn't include age
         officialPoints: Math.round(r.points),
         livePoints: Math.round(r.points), // Race has no "live" overlay; it's already current-season

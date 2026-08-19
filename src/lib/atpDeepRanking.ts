@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { AtpDeepRankingSnapshot, AtpLivePlayer } from "@/types";
-import { flagEmoji } from "./flags";
 import {
   ATP_SCOREBOARD_URL,
   ATP_RANKINGS_URL,
@@ -53,7 +52,7 @@ async function fetchDeepRanking(): Promise<{ rows: DeepBase[]; total: number }> 
       officialRank: r.rank as number,
       name: (r.name as string) ?? "Unknown",
       countryCode,
-      flag: flagEmoji(countryCode),
+      flag: countryCode,
       officialPoints: Math.round(r.points ?? 0),
       careerHigh: typeof r.bestRank === "number" ? r.bestRank : undefined,
     };
