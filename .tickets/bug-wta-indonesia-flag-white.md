@@ -1,6 +1,6 @@
 ---
 id: bug-wta-indonesia-flag-white
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-18T00:00:00Z

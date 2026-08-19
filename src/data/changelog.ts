@@ -14,6 +14,12 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-08-20",
+    title: "Fixed Indonesia Flag Rendering",
+    description: "Fixed visual bug where Indonesian players (e.g., Janice Tjen) were displaying a white flag instead of the Indonesian flag 🇮🇩 on WTA rankings. All country flags now render correctly.",
+    area: "tennis",
+  },
+  {
+    date: "2026-08-20",
     title: "Next Points & Max Points Projection Columns",
     description: "ATP and WTA live rankings now show ranking projection scenarios: Next Points (projected Monday ranking) and Max Points (if player wins current tournament). Desktop view includes tooltips; mobile shows projections for active tournament players. See what rank a player could reach if they win their current tournament.",
     area: "tennis",
