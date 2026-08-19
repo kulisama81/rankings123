@@ -10,6 +10,7 @@ import FeaturedEventHero from "@/components/FeaturedEventHero";
 import RankShowcase from "@/components/RankShowcase";
 import HomepageRankingsPreview from "@/components/HomepageRankingsPreview";
 import LiveNowWidget from "@/components/LiveNowWidget";
+import MobileHomepageHero from "@/components/MobileHomepageHero";
 import {
   generateOrganizationSchema,
   generateWebSiteSchema,
@@ -54,39 +55,62 @@ export default async function HomePage() {
       <JsonLd data={organizationSchema} />
       <JsonLd data={websiteSchema} />
 
-      <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-        {/* Countdown timer - shows when major event is upcoming (within 24h but not started) */}
-        <UpcomingEventCountdown />
+      <div className="mx-auto max-w-6xl px-4 py-6 md:py-10 sm:px-6 lg:px-8">
+        {/* Mobile-first Hero - shows most urgent event (Cincinnati/US Open) */}
+        <div className="md:hidden">
+          <MobileHomepageHero />
+        </div>
 
-      {/* SIGNATURE VISUAL ANCHOR - ATP/WTA #1 Rank Showcase with dramatic points display */}
-      <RankShowcase />
+        {/* Desktop: Countdown timer - shows when major event is upcoming (within 24h but not started) */}
+        <div className="hidden md:block">
+          <UpcomingEventCountdown />
+        </div>
 
-      {/* Live Now Widget - consolidated hero showing ALL live events with match counts */}
-      <LiveNowWidget />
+        {/* Desktop: SIGNATURE VISUAL ANCHOR - ATP/WTA #1 Rank Showcase with dramatic points display */}
+        <div className="hidden md:block">
+          <RankShowcase />
+        </div>
 
-      {/* Featured Event Hero - dynamically shows most relevant current/upcoming event */}
-      <FeaturedEventHero />
+        {/* Desktop: Live Now Widget - consolidated hero showing ALL live events with match counts */}
+        <div className="hidden md:block">
+          <LiveNowWidget />
+        </div>
 
-      {/* Unified Sports Hub - consolidates Live Now + All Sports to reduce cognitive load */}
-      <UnifiedSportsHub />
+        {/* Desktop: Featured Event Hero - dynamically shows most relevant current/upcoming event */}
+        <div className="hidden md:block">
+          <FeaturedEventHero />
+        </div>
 
-      {/* Wimbledon 2026 LIVE Callout - shows during tournament (June 29 - July 12) */}
-      <WimbledonCallout />
+        {/* Homepage Rankings Preview - shows top 3 on mobile, more on desktop */}
+        <HomepageRankingsPreview />
 
-      {/* Cincinnati Open 2026 Live Scores - shows during tournament (Aug 11-23) */}
-      <CincinnatiLiveScoresWidget />
+        {/* Unified Sports Hub - consolidates Live Now + All Sports to reduce cognitive load */}
+        <div className="hidden sm:block">
+          <UnifiedSportsHub />
+        </div>
 
-      {/* World Cup Final Widget - shows before/during/after Final with cross-sport pivot */}
-      <WorldCupFinalWidget />
+        {/* Wimbledon 2026 LIVE Callout - shows during tournament (June 29 - July 12) */}
+        <WimbledonCallout />
 
-      {/* Live World Cup Matches Widget - shows only when matches are in progress */}
-      <LiveWorldCupWidget />
+        {/* Cincinnati Open 2026 Live Scores - shows during tournament (Aug 11-23) */}
+        <div className="hidden md:block">
+          <CincinnatiLiveScoresWidget />
+        </div>
 
-      {/* Live Tour de France Widget - shows during race (July 4-26, 2026) */}
-      <LiveTdfWidget />
+        {/* World Cup Final Widget - shows before/during/after Final with cross-sport pivot */}
+        <div className="hidden md:block">
+          <WorldCupFinalWidget />
+        </div>
 
-      {/* Homepage Rankings Preview - shows top 5 ATP/WTA and top 3 Golden Boot */}
-      <HomepageRankingsPreview />
+        {/* Live World Cup Matches Widget - shows only when matches are in progress */}
+        <div className="hidden md:block">
+          <LiveWorldCupWidget />
+        </div>
+
+        {/* Live Tour de France Widget - shows during race (July 4-26, 2026) */}
+        <div className="hidden md:block">
+          <LiveTdfWidget />
+        </div>
       </div>
     </>
   );

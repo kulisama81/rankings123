@@ -49,9 +49,9 @@ interface ApiGoldenBootPlayer {
 /**
  * Homepage Rankings Preview
  *
- * Shows top 5 ATP/WTA rankings and top 3 Golden Boot scorers
- * directly on the homepage. Reduces bounce rate by showing value
- * before users click through.
+ * Shows top 3 ATP/WTA rankings and top 3 Golden Boot scorers
+ * directly on the homepage. Mobile-optimized with large rank numbers.
+ * Reduces bounce rate by showing value before users click through.
  */
 export default function HomepageRankingsPreview() {
   const [data, setData] = useState<PreviewData>({
@@ -108,7 +108,7 @@ export default function HomepageRankingsPreview() {
             }),
         ]);
 
-        const atpTop5 = atpRes?.players?.slice(0, 5).map((p: ApiPlayer) => ({
+        const atpTop3 = atpRes?.players?.slice(0, 3).map((p: ApiPlayer) => ({
           rank: p.liveRank || p.officialRank || 0,
           name: p.name,
           flag: p.flag,
@@ -116,7 +116,7 @@ export default function HomepageRankingsPreview() {
           movement: p.movement || 0,
         })) || [];
 
-        const wtaTop5 = wtaRes?.players?.slice(0, 5).map((p: ApiPlayer) => ({
+        const wtaTop3 = wtaRes?.players?.slice(0, 3).map((p: ApiPlayer) => ({
           rank: p.liveRank || p.officialRank || 0,
           name: p.name,
           flag: p.flag,
@@ -131,8 +131,8 @@ export default function HomepageRankingsPreview() {
         })) || [];
 
         setData({
-          atp: atpTop5,
-          wta: wtaTop5,
+          atp: atpTop3,
+          wta: wtaTop3,
           goldenBoot: goldenBootTop3,
           timestamps: {
             atp: atpRes ? now : undefined,
@@ -177,7 +177,7 @@ export default function HomepageRankingsPreview() {
             <div key={i} className="animate-pulse rounded-2xl border border-edge bg-surface p-5">
               <div className="h-6 w-24 bg-surface2 rounded mb-3" />
               <div className="space-y-2">
-                {[1, 2, 3, 4, 5].map(j => (
+                {[1, 2, 3].map(j => (
                   <div key={j} className="h-4 bg-surface2 rounded" />
                 ))}
               </div>
@@ -198,11 +198,11 @@ export default function HomepageRankingsPreview() {
         Live Rankings Preview
       </h2>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {/* ATP Top 5 */}
+        {/* ATP Top 3 */}
         {data.atp.length > 0 && (
           <Link
             href="/atp-live"
-            aria-label="View full ATP Live rankings - top 5 preview shown"
+            aria-label="View full ATP Live rankings - top 3 preview shown"
             className="group relative overflow-hidden rounded-2xl border border-edge bg-surface p-5 transition-all duration-300 hover:border-accent/60 hover:bg-surface2 hover:scale-[1.02]"
           >
             <div className="flex items-center justify-between mb-3">
@@ -215,32 +215,32 @@ export default function HomepageRankingsPreview() {
             </div>
 
             <div className="space-y-2.5">
-              {data.atp.map((player) => (
-                <div key={player.rank} className="flex items-center justify-between text-sm">
-                  <div className="flex items-center gap-2 flex-1 min-w-0">
-                    <span className="font-mono text-muted text-xs w-6 flex-shrink-0">
-                      {player.rank}.
+              {data.atp.slice(0, 3).map((player) => (
+                <div key={player.rank} className="flex items-center justify-between">
+                  <div className="flex items-center gap-3 flex-1 min-w-0">
+                    <span className="font-mono text-fg font-bold text-2xl md:text-xl w-12 md:w-8 flex-shrink-0">
+                      #{player.rank}
                     </span>
-                    <span className="truncate text-fg font-medium">{player.name}</span>
-                    {player.flag && (
-                      <span className="flex-shrink-0 text-xs"><FlagIcon code={player.flag} size="sm" /></span>
-                    )}
-                  </div>
-                  <div className="flex items-center gap-2 flex-shrink-0 ml-2">
-                    <span className="font-mono text-muted text-xs">
-                      {player.points.toLocaleString()}
-                    </span>
-                    {(player.movement ?? 0) !== 0 && (
-                      <span
-                        className={`font-mono text-xs font-bold w-8 text-right ${
-                          (player.movement ?? 0) > 0 ? "text-up" : (player.movement ?? 0) < 0 ? "text-down" : "text-muted"
-                        }`}
-                      >
-                        {(player.movement ?? 0) > 0 ? "+" : ""}
-                        {player.movement}
+                    <div className="flex flex-col min-w-0 flex-1">
+                      <span className="truncate text-fg font-semibold text-base md:text-sm">{player.name}</span>
+                      <span className="font-mono text-muted text-sm md:text-xs">
+                        {player.points.toLocaleString()} pts
                       </span>
+                    </div>
+                    {player.flag && (
+                      <span className="flex-shrink-0"><FlagIcon code={player.flag} size="sm" /></span>
                     )}
                   </div>
+                  {(player.movement ?? 0) !== 0 && (
+                    <span
+                      className={`font-mono text-sm font-bold ml-2 ${
+                        (player.movement ?? 0) > 0 ? "text-up" : (player.movement ?? 0) < 0 ? "text-down" : "text-muted"
+                      }`}
+                    >
+                      {(player.movement ?? 0) > 0 ? "+" : ""}
+                      {player.movement}
+                    </span>
+                  )}
                 </div>
               ))}
             </div>
@@ -256,11 +256,11 @@ export default function HomepageRankingsPreview() {
           </Link>
         )}
 
-        {/* WTA Top 5 */}
+        {/* WTA Top 3 */}
         {data.wta.length > 0 && (
           <Link
             href="/wta-live"
-            aria-label="View full WTA Live rankings - top 5 preview shown"
+            aria-label="View full WTA Live rankings - top 3 preview shown"
             className="group relative overflow-hidden rounded-2xl border border-edge bg-surface p-5 transition-all duration-300 hover:border-accent/60 hover:bg-surface2 hover:scale-[1.02]"
           >
             <div className="flex items-center justify-between mb-3">
@@ -273,32 +273,32 @@ export default function HomepageRankingsPreview() {
             </div>
 
             <div className="space-y-2.5">
-              {data.wta.map((player) => (
-                <div key={player.rank} className="flex items-center justify-between text-sm">
-                  <div className="flex items-center gap-2 flex-1 min-w-0">
-                    <span className="font-mono text-muted text-xs w-6 flex-shrink-0">
-                      {player.rank}.
+              {data.wta.slice(0, 3).map((player) => (
+                <div key={player.rank} className="flex items-center justify-between">
+                  <div className="flex items-center gap-3 flex-1 min-w-0">
+                    <span className="font-mono text-fg font-bold text-2xl md:text-xl w-12 md:w-8 flex-shrink-0">
+                      #{player.rank}
                     </span>
-                    <span className="truncate text-fg font-medium">{player.name}</span>
-                    {player.flag && (
-                      <span className="flex-shrink-0 text-xs"><FlagIcon code={player.flag} size="sm" /></span>
-                    )}
-                  </div>
-                  <div className="flex items-center gap-2 flex-shrink-0 ml-2">
-                    <span className="font-mono text-muted text-xs">
-                      {player.points.toLocaleString()}
-                    </span>
-                    {(player.movement ?? 0) !== 0 && (
-                      <span
-                        className={`font-mono text-xs font-bold w-8 text-right ${
-                          (player.movement ?? 0) > 0 ? "text-up" : (player.movement ?? 0) < 0 ? "text-down" : "text-muted"
-                        }`}
-                      >
-                        {(player.movement ?? 0) > 0 ? "+" : ""}
-                        {player.movement}
+                    <div className="flex flex-col min-w-0 flex-1">
+                      <span className="truncate text-fg font-semibold text-base md:text-sm">{player.name}</span>
+                      <span className="font-mono text-muted text-sm md:text-xs">
+                        {player.points.toLocaleString()} pts
                       </span>
+                    </div>
+                    {player.flag && (
+                      <span className="flex-shrink-0"><FlagIcon code={player.flag} size="sm" /></span>
                     )}
                   </div>
+                  {(player.movement ?? 0) !== 0 && (
+                    <span
+                      className={`font-mono text-sm font-bold ml-2 ${
+                        (player.movement ?? 0) > 0 ? "text-up" : (player.movement ?? 0) < 0 ? "text-down" : "text-muted"
+                      }`}
+                    >
+                      {(player.movement ?? 0) > 0 ? "+" : ""}
+                      {player.movement}
+                    </span>
+                  )}
                 </div>
               ))}
             </div>
