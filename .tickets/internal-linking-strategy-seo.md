@@ -1,6 +1,6 @@
 ---
 id: internal-linking-strategy-seo
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-13T13:51:36Z
