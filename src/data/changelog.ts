@@ -13,16 +13,22 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-08-20",
+    title: "US Open 2026 Betting Favorites Analysis",
+    description: "In-depth preview article analyzing US Open 2026 betting favorites: Jannik Sinner and Aryna Sabalenka lead the field. Expert analysis of title paths, form, historical trends, and value picks for both men's and women's draws. Updated with Cincinnati Open results.",
+    area: "tennis",
+  },
+  {
     date: "2026-08-19",
     title: "Breadcrumb Navigation",
     description: "Added breadcrumb navigation to all ranking pages (ATP, WTA, World Cup, Cycling). Breadcrumbs help you understand where you are on the site and quickly navigate back to parent pages. Enhanced with Schema.org structured data for better search engine visibility.",
     area: "site",
   },
   {
-    date: "2026-08-20",
-    title: "US Open 2026 Betting Favorites Analysis",
-    description: "In-depth preview article analyzing US Open 2026 betting favorites: Jannik Sinner and Aryna Sabalenka lead the field. Expert analysis of title paths, form, historical trends, and value picks for both men's and women's draws. Updated with Cincinnati Open results.",
-    area: "tennis",
+    date: "2026-08-19",
+    title: "Enhanced Internal Linking",
+    description: "Improved site navigation with comprehensive footer sitemap organized by Tennis, Events, About, and Legal sections. Added Related Pages sections to major ranking pages for easier discovery of related content.",
+    area: "site",
   },
   {
     date: "2026-08-18",

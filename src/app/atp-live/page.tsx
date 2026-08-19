@@ -4,6 +4,7 @@ import LiveRankingView from "@/components/LiveRankingView";
 import YouTubeHighlights from "@/components/YouTubeHighlights";
 import WimbledonCallout from "@/components/WimbledonCallout";
 import Breadcrumb from "@/components/Breadcrumb";
+import RelatedLinks from "@/components/RelatedLinks";
 import { YOUTUBE_HIGHLIGHTS } from "@/config/youtube";
 import {
   generateBreadcrumbSchema,
@@ -138,6 +139,30 @@ export default async function AtpLivePage() {
           <YouTubeHighlights
             videoId={YOUTUBE_HIGHLIGHTS.atp.videoId}
             title={YOUTUBE_HIGHLIGHTS.atp.title}
+          />
+          <RelatedLinks
+            links={[
+              {
+                href: "/wta-live",
+                title: "WTA Live Rankings",
+                description: "Live women's tennis rankings with real-time tournament updates",
+              },
+              {
+                href: "/atp-race",
+                title: "ATP Race to Turin",
+                description: "Year-to-date points race for ATP Finals qualification",
+              },
+              {
+                href: "/atp-doubles",
+                title: "ATP Doubles Rankings",
+                description: "Live doubles team rankings and points",
+              },
+              {
+                href: "/us-open-2026",
+                title: "US Open 2026",
+                description: "Complete US Open coverage with draws, live scores, and results",
+              },
+            ]}
           />
         </div>
       </div>
