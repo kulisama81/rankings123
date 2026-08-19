@@ -1,15 +1,22 @@
 ---
 id: perf-share-button-bloat
-title: "WTA Live: ShareButton optimization needs further work (ATP SEPARATE REGRESSION)"
 status: open
-priority: 1
-tags:
-  - perf
-  - performance
-parent: rankings123
 created: 2026-07-27
+priority: 1
+parent: rankings123
+tags: []
+title: "WTA Live: ShareButton optimization needs further work (ATP SEPARATE REGRESSION)"
 updated: 2026-08-18
 ---
+# Untitled ticket
+
+## Acceptance Criteria
+
+- [ ] WTA Live page size < 200KB (currently 313KB, need -36% reduction / -113KB, WORSENING)
+- [ ] ATP Live page size < 300KB (was ✅ DONE 2026-08-14-17, now 🔴 REGRESSED 557KB — see separate ticket)
+- [x] Social sharing feature still works (test on top 10 players) — ✅ Feature intact, preview removed
+- [ ] Re-run `npm run check:performance` to verify budgets met — 🔴 WTA failing, ATP new regression
+- [ ] Update docs/perf-baseline.md with new measurements — 🔴 Needs 2026-08-18 update
 
 ## Problem
 
@@ -62,14 +69,6 @@ Pick one or combine:
 4. **Code-split**: extract ShareButton to separate chunk, load on interaction
 5. **CSS content-visibility**: hide off-screen rows from render tree — low effort, moderate impact
 6. **Consider reverting CSS additions** if bloat continues and US Open deadline approaches
-
-## Acceptance Criteria
-
-- [ ] WTA Live page size < 200KB (currently 313KB, need -36% reduction / -113KB, WORSENING)
-- [ ] ATP Live page size < 300KB (was ✅ DONE 2026-08-14-17, now 🔴 REGRESSED 557KB — see separate ticket)
-- [x] Social sharing feature still works (test on top 10 players) — ✅ Feature intact, preview removed
-- [ ] Re-run `npm run check:performance` to verify budgets met — 🔴 WTA failing, ATP new regression
-- [ ] Update docs/perf-baseline.md with new measurements — 🔴 Needs 2026-08-18 update
 
 ## Measurement
 

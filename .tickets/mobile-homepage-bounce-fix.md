@@ -1,6 +1,6 @@
 ---
 id: mobile-homepage-bounce-fix
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-16T13:50:32Z
