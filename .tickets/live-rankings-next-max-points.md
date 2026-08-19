@@ -1,6 +1,6 @@
 ---
 id: live-rankings-next-max-points
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-19T13:51:41Z

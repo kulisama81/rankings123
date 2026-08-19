@@ -14,6 +14,12 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-08-20",
+    title: "Next Points & Max Points Projection Columns",
+    description: "ATP and WTA live rankings now show ranking projection scenarios: Next Points (projected Monday ranking) and Max Points (if player wins current tournament). Desktop view includes tooltips; mobile shows projections for active tournament players. See what rank a player could reach if they win their current tournament.",
+    area: "tennis",
+  },
+  {
+    date: "2026-08-20",
     title: "US Open 2026 Betting Favorites Analysis",
     description: "In-depth preview article analyzing US Open 2026 betting favorites: Jannik Sinner and Aryna Sabalenka lead the field. Expert analysis of title paths, form, historical trends, and value picks for both men's and women's draws. Updated with Cincinnati Open results.",
     area: "tennis",
