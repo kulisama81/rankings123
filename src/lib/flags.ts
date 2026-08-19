@@ -6,7 +6,7 @@ export const IOC_TO_ISO2: Record<string, string> = {
   BRA: "BR", BUL: "BG", CAN: "CA", CHI: "CL", CHN: "CN", COL: "CO", CRO: "HR",
   CYP: "CY", CZE: "CZ", DEN: "DK", DOM: "DO", ECU: "EC", EGY: "EG", ESP: "ES",
   EST: "EE", FIN: "FI", FRA: "FR", GBR: "GB", GEO: "GE", GER: "DE", GRE: "GR",
-  HKG: "HK", HUN: "HU", IND: "IN", IRL: "IE", ISR: "IL", ITA: "IT", JPN: "JP",
+  HKG: "HK", HUN: "HU", INA: "ID", IND: "IN", IRL: "IE", ISR: "IL", ITA: "IT", JPN: "JP",
   KAZ: "KZ", KOR: "KR", LAT: "LV", LIB: "LB", LTU: "LT", LUX: "LU", MAR: "MA",
   MDA: "MD", MEX: "MX", MON: "MC", NED: "NL", NOR: "NO", NZL: "NZ", PAR: "PY",
   PER: "PE", PHI: "PH", POL: "PL", POR: "PT", ROM: "RO", ROU: "RO", RSA: "ZA", RUS: "RU",
