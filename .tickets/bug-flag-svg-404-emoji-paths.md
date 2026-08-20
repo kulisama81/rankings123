@@ -1,6 +1,6 @@
 ---
 id: bug-flag-svg-404-emoji-paths
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-19T18:04:07Z

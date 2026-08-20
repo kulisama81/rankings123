@@ -14,6 +14,12 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-08-20",
+    title: "Fixed Flag Image Loading Errors",
+    description: "Resolved technical issue causing flag images to fail loading (404 errors) on ATP/WTA ranking pages. All country flags now load correctly across tennis rankings.",
+    area: "tennis",
+  },
+  {
+    date: "2026-08-20",
     title: "Top 10 Player Ranking Articles",
     description: "Added 7 new player ranking articles (Świątek, Djokovic, Gauff, Medvedev, Rybakina, Tsitsipas, Pegula) with live ranking data, US Open 2026 predictions, H2H records, and playing style analysis. All 10 articles update daily with real-time tournament points.",
     area: "tennis",
