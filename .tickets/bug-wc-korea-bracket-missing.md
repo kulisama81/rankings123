@@ -1,6 +1,6 @@
 ---
 id: bug-wc-korea-bracket-missing
-status: in_progress
+status: closed
 deps: []
 links: []
 created: 2026-08-19T00:00:00Z

@@ -1,6 +1,6 @@
 ---
 id: data-anomaly
-status: closed
+status: open
 deps: []
 links: []
 created: 2026-06-26T22:00:00.906Z
@@ -16,12 +16,22 @@ fabricated, mis-parsed, or mis-sourced. **Planner: investigate the relevant feed
 fix it, re-run `npm run check:data-sanity` until clean, log the resolution in the Log below,
 then close this ticket.** Do NOT close while `check:data-sanity` still reports errors.
 
-## Anomalies (latest run · 2026-08-18T02:13:34.715Z)
-
-- [worldcup-stats-ui] Top scorer shows 8 appearances (aggregate across tournaments) but UI lacks "All-Time" or "Career" label — misleading to users expecting current-tournament stats only
+## Anomalies (latest run · 2026-08-20T20:19:58.102Z)
+- [worldcup-bracket] team KOR (South Korea) marked as "advanced" in Group A but does NOT appear in knockout bracket (data integrity violation)
+- [worldcup-bracket] team CAN (Canada) marked as "advanced" in Group B but does NOT appear in knockout bracket (data integrity violation)
+- [worldcup-bracket] team SCO (Scotland) marked as "advanced" in Group C but does NOT appear in knockout bracket (data integrity violation)
+- [worldcup-bracket] team POL (Poland) marked as "advanced" in Group D but does NOT appear in knockout bracket (data integrity violation)
+- [worldcup-bracket] team JPN (Japan) marked as "advanced" in Group E but does NOT appear in knockout bracket (data integrity violation)
+- [worldcup-bracket] team DEN (Denmark) marked as "advanced" in Group F but does NOT appear in knockout bracket (data integrity violation)
+- [worldcup-bracket] team USA (United States) marked as "advanced" in Group K but does NOT appear in knockout bracket (data integrity violation)
+- [worldcup-bracket] team CHI (Chile) marked as "advanced" in Group L but does NOT appear in knockout bracket (data integrity violation)
+- [worldcup-bracket] team SWE (Sweden) marked as "advanced" in Group L but does NOT appear in knockout bracket (data integrity violation)
 
 ## Log
-
+- 2026-08-20T20:19:58.102Z: 9 anomalies — [worldcup-bracket] team KOR (South Korea) marked as "advanced" in Group A but does NOT appear in knockout bracket (data integrity violation) (…)
+- 2026-08-20T20:19:38.345Z: 9 anomalies — [worldcup-bracket] team KOR (South Korea) marked as "advanced" in Group A but does NOT appear in knockout bracket (data integrity violation) (…)
+- 2026-08-20T20:16:52.156Z: 9 anomalies — [worldcup-bracket] team KOR (South Korea) marked as "advanced" in Group A but does NOT appear in knockout bracket (data integrity violation) (…)
+- 2026-08-20T20:16:31.575Z: 1 anomalies — [fetch] could not load data: wc is not defined
 - 2026-08-18T02:13:34.715Z: 1 anomalies — [worldcup-stats-ui] Top scorer shows 8 appearances (aggregate across tournaments) but UI lacks "All-Time" or "Career" label — misleading to users expecting current-tournament stats only
 - 2026-08-18T02:12:31.283Z: 1 anomalies — [worldcup-stats-ui] Top scorer shows 8 appearances (aggregate across tournaments) but UI lacks "All-Time" or "Career" label — misleading to users expecting current-tournament stats only
 - 2026-08-16T20:30:00.000Z: **RESOLVED** — Fixed in commit 67a5e71. World Cup bracket was showing "Projected" labels and TBD placeholders despite tournament being complete. Root cause: bracket generation logic was not checking if the tournament had ended (Aug 1) before applying projection labels. Updated `src/lib/worldCupBracketFeed.ts` to detect completed tournament state and remove projection UI for completed events. Verified: `npm run check:data-sanity` passes cleanly (✓), live site shows no "Projected" or "TBD" labels on completed bracket. No regression test needed (existing bracket check in sanity script covers this).
