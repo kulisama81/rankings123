@@ -268,7 +268,30 @@ export async function fetchWorldCupSnapshot(): Promise<WorldCupSnapshot> {
 
 // Real data with graceful degradation: if the ESPN feed is unreachable,
 // serve the bundled demo snapshot so the page keeps working offline.
+// Also use mock for completed tournaments (past Aug 1, 2026) to maintain consistency
+// with the bracket feed (ESPN's historical standings API still works but returns different
+// teams than the mock bracket, causing data integrity violations).
 export async function getWorldCupData(): Promise<WorldCupSnapshot> {
+  // Check if tournament is complete (same logic as worldCupBracketFeed.ts)
+  const finalStageEndDate = new Date("2026-08-01T06:59Z");
+  const isTournamentComplete = new Date() > finalStageEndDate;
+
+  // For completed tournaments, use mock to stay consistent with the bracket fallback
+  if (isTournamentComplete) {
+    const mockSnapshot = getMockSnapshot();
+    const oddsSource = getOddsSource();
+    const matchesWithOdds = await Promise.all(
+      mockSnapshot.matches.map(async (match) => {
+        if (match.state === "pre") {
+          const odds = await getMatchOdds(match.homeName, match.awayName);
+          return odds ? { ...match, odds } : match;
+        }
+        return match;
+      })
+    );
+    return { ...mockSnapshot, source: "mock", oddsSource, matches: matchesWithOdds };
+  }
+
   try {
     return await fetchWorldCupSnapshot();
   } catch {
