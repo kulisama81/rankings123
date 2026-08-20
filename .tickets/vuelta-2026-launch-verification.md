@@ -1,6 +1,6 @@
 ---
 id: vuelta-2026-launch-verification
-status: open
+status: in_progress
 deps: []
 links: []
 created: 2026-08-20T13:51:05Z

@@ -258,9 +258,18 @@ export default async function CyclingPage() {
           {/* Data source notice */}
           <div className="mb-12 rounded-xl border border-edge bg-surface p-4 text-sm text-secondary">
             <p>
-              <strong className="text-primary">Data Source:</strong> Stage information sourced from Wikipedia.
-              {raceStatus === "upcoming" && ` General Classification will update once the race begins on ${formatISODate(race.startDate)}.`}
-              {raceStatus === "active" && " General Classification updates as the race progresses."}
+              <strong className="text-primary">Data Source:</strong>{" "}
+              {source === "wikipedia" ? (
+                <>
+                  Stage information sourced from Wikipedia.
+                  {raceStatus === "upcoming" && ` General Classification will update once the race begins on ${formatISODate(race.startDate)}.`}
+                  {raceStatus === "active" && " General Classification updates as the race progresses."}
+                </>
+              ) : (
+                <>
+                  Live data temporarily unavailable. Showing race schedule only. Data will refresh automatically when the source is available.
+                </>
+              )}
             </p>
             <p className="mt-2">
               <strong className="text-primary">Last updated:</strong>{" "}

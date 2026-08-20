@@ -87,7 +87,9 @@ export default function TdfJerseys({ jerseys, raceStatus }: TdfJerseysProps) {
                 )}
               </>
             ) : (
-              <div className="mt-3 h-6"></div>
+              <div className="mt-3 text-xs text-muted">
+                {raceStatus === "active" ? "Awaiting results" : "TBD"}
+              </div>
             )}
           </div>
         );
