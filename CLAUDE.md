@@ -20,9 +20,13 @@ with future plans for cycling and Olympics. Live in production at **https://rank
 
 Autoresearch + planner should drive Phase 1 to done first, then weight Phase 2/3.
 
-**Tournament windows** (time-sensitive): When major tournaments are active or upcoming (US Open
-Aug 27-Sep 13, Cincinnati Open Aug 11-23, Vuelta Aug 22-Sep 13), prioritize tournament-specific
-content for SEO and betting revenue capture.
+**Tournament windows** (time-sensitive): When major tournaments are active or upcoming, prioritize
+tournament-specific content for SEO and betting revenue capture.
+
+**CURRENT PRIORITIES (Aug-Sep 2026):**
+- **US Open** (Aug 27 - Sep 13) — biggest tennis SEO window of the year, 150K+ daily searches
+- **Vuelta a España** (Aug 22 - Sep 13) — cycling betting opportunity, 21-day revenue window
+- **Phase 1 Parity** — close feature gaps vs live-tennis.eu (H2H, points to defend, race rankings, player pages)
 
 ## Tech stack
 - **Next.js 16 (App Router)** · TypeScript · Tailwind CSS v4

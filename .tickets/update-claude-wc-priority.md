@@ -1,6 +1,6 @@
 ---
 id: update-claude-wc-priority
-status: open
+status: in_progress
 deps: []
 links: []
 created: 2026-08-17T00:00:00Z
@@ -10,6 +10,21 @@ parent: rankings123
 tags: [task, process, documentation]
 ---
 # Update CLAUDE.md — Remove stale World Cup priority rule
+
+## Acceptance Criteria
+
+1. **Files updated**:
+   - CLAUDE.md reflects current tournament priorities (US Open, Vuelta)
+   - `.claude/agents/autoresearch.md` removes World Cup ≥half capacity rule
+   - Both files mention current date context (Aug-Sep 2026)
+
+2. **Git commit**:
+   - Clear commit message: "Update priorities: remove stale World Cup rule, add US Open + Vuelta focus"
+   - No `Co-Authored-By` trailer (per user preference)
+
+3. **Verification**:
+   - Read both files and confirm World Cup capacity rule is gone
+   - Confirm US Open + Vuelta are mentioned as current priorities
 
 ## Context
 
@@ -68,21 +83,6 @@ time-sensitive tournament content (≥30% capacity during major events). Current
 - **US Open** (Aug 27 - Sep 13) — tennis SEO peak
 - **Vuelta** (Aug 22 - Sep 13) — cycling betting window
 ```
-
-## Acceptance Criteria
-
-1. **Files updated**:
-   - CLAUDE.md reflects current tournament priorities (US Open, Vuelta)
-   - `.claude/agents/autoresearch.md` removes World Cup ≥half capacity rule
-   - Both files mention current date context (Aug-Sep 2026)
-
-2. **Git commit**:
-   - Clear commit message: "Update priorities: remove stale World Cup rule, add US Open + Vuelta focus"
-   - No `Co-Authored-By` trailer (per user preference)
-
-3. **Verification**:
-   - Read both files and confirm World Cup capacity rule is gone
-   - Confirm US Open + Vuelta are mentioned as current priorities
 
 ## Impact
 

@@ -1,6 +1,6 @@
 ---
 id: tennis-ranking-points-reference
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-19T13:50:35Z
