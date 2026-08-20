@@ -1,74 +1,79 @@
-# Inspector Report — 2026-08-19
+# Inspector Report — 2026-08-19 (Second Run)
 
-**Run time:** 11:02 UTC  
+**Run time:** ~19:00 UTC  
 **Agent:** inspector (automated via cron)
 
 ## Summary
 
-Inspected live production site (rankings123.com) across 5 primary routes plus mobile viewport. Found **1 confirmed bug** (flag SVG 404 errors) affecting homepage and ATP Live page. All core features present, data sanity checks pass.
+Inspected live production site (rankings123.com) across all major routes. Found **2 confirmed bugs** and filed tickets. Previous flag SVG 404 bug has been fixed.
 
 ## Routes Checked
-
-✅ All routes returned 200 status:
-- `/` (Homepage)
-- `/atp-live` (ATP Live Rankings)
-- `/wta-live` (WTA Live Rankings)
-- `/world-cup` (World Cup)
-- `/privacy` (Privacy Policy)
-- `/world-cup/match/mock-r32-1` (sample match detail)
-- `/world-cup/team/GER` (sample team page)
+- ✓ `/` (Home)
+- ✓ `/atp-live` (ATP Live Rankings)
+- ✓ `/wta-live` (WTA Live Rankings)
+- ✓ `/world-cup` (World Cup)
+- ✓ `/privacy` (Privacy page)
 
 ## Automated Checks
-
-✅ **Core features check** (`npm run check:core-features`): PASS
-- All 5 protected features present (WC knockout bracket R32, WC group standings, ATP live ranking + pagination, WTA live ranking, home multi-sport)
-
-✅ **Data sanity check** (`npm run check:data-sanity`): PASS
-- All per-sport invariants hold
+- ✓ `npm run check:core-features` — PASSED (all 5 core features present)
+- ✓ `npm run check:data-sanity` — PASSED (1 warning: World Cup using mock fallback)
 
 ## Bugs Found
 
-### 1. Flag SVG 404 errors: emoji-encoded paths instead of ISO codes
-**Ticket:** `bug-flag-svg-404-emoji-paths` (p1)  
-**Affects:** Homepage, ATP Live page (likely WTA too)
+### 1. World Cup: 8 FIFA country codes missing mappings → emoji fallback flags
+**Ticket:** `bug-wc-fifa-codes-missing`  
+**Severity:** P2 (visual)  
+**Status:** Filed
 
-**Details:**
-- Flag image paths use emoji Unicode characters (e.g., `/flags/%F0%9F%87%A9%F0%9F%87%AA.svg` for Germany 🇩🇪) instead of ISO country codes
-- Results in multiple 404 errors on every page load
-- Homepage: 3 console errors, 3 network failures
-- ATP Live: 22 console errors, 22 network failures
-- Degrades performance and causes broken/missing flag images
+**Issue:** Eight countries on the World Cup page show 🏳️ white flag emoji instead of proper SVG flags because their FIFA codes are missing from the `SOCCER_TO_ISO2` mapping in `worldCupFlags.ts`.
 
-**Root cause:** Flag component or path generation using emoji flag characters instead of ISO 3166-1 alpha-2 codes.
+**Affected countries:** Scotland, Haiti, Iceland, Costa Rica, Nigeria, England, Cameroon, Uganda
 
-## Functional Testing
+**Root cause:** The flag mapping chain breaks when FIFA codes (SCO, HAI, ISL, CRC, NGA, ENG, CMR, UGA) don't have entries in `SOCCER_TO_ISO2`. The function returns the 3-letter code unchanged, FlagIcon tries to convert it to ISO2, fails, and falls back to emoji.
 
-✅ **Ranking tables:** Present on both ATP and WTA pages with correct row counts (50 rows each)  
-✅ **World Cup content:** Sections and bracket content present  
-✅ **Mobile responsiveness:** Homepage renders correctly on mobile viewport (375x667)  
-✅ **Theme toggle:** Works (dark mode screenshots captured)  
-✅ **Internal links:** Navigation structure intact
-
-## Console & Network Monitoring
-
-⚠️ **Network failures detected:**
-- Homepage: 3 failed requests (flag SVGs)
-- ATP Live: 22 failed requests (flag SVGs)
-- WTA Live: 0 failures
-- World Cup: 0 failures
-
-⚠️ **Console errors:**
-- Primarily "Failed to load resource: 404" messages related to flag SVGs
-- No JavaScript runtime errors or other critical console issues
-
-## Visual Inspection
-
-📸 Screenshots captured for all routes in both light and dark themes. No visual layout issues, overflow, or broken images observed beyond the flag 404s.
-
-## Next Steps
-
-The planner should prioritize `bug-flag-svg-404-emoji-paths` as it affects multiple high-traffic pages and causes significant network noise. Fix involves converting flag path generation from emoji Unicode to ISO country codes (DE, US, IT, etc.).
+**Fix required:** Add ISO2 mappings for all 8 FIFA codes. Note: Scotland and England are special cases (FIFA treats them separately but ISO uses GB).
 
 ---
 
-**Clean status:** Core features intact, no data fabrication, no critical functional bugs. One p1 bug filed for network performance degradation.
+### 2. World Cup mock data: South Korea marked "advanced" but missing from R32 bracket
+**Ticket:** `bug-wc-korea-bracket-missing`  
+**Severity:** P1 (data integrity)  
+**Status:** Filed
+
+**Issue:** Group A standings show South Korea (KOR) with W:1 D:0 L:0 marked as "advanced", but South Korea is completely absent from the Round of 32 bracket. This violates tournament structure integrity.
+
+**Verification:**
+- API check: `/api/worldcup/live` shows KOR with `outlook: "advanced"` in Group A
+- API check: `/api/worldcup/bracket` has no "KOR" in any bracket stage
+- Similar to recently-fixed bug-wc-italy-bracket-group-mismatch (commit 7d672ce) but for a different team
+
+**Root cause:** Mock data in `src/data/worldCup.ts` has inconsistent groups vs bracket. Recent Italy fix didn't catch South Korea.
+
+**Fix required:**
+1. Either add South Korea to R32 bracket OR mark them as "out" in groups
+2. Enhance `check-data-sanity.mjs` to check bidirectionally: not just "bracket teams in groups" but also "advanced teams in bracket"
+
+---
+
+## Clean Areas
+- ✅ Home page: All sport navigation links working, no broken images, no placeholder content
+- ✅ ATP Live: Ranking table present with 50+ players, pagination working, columns correct (Rank, Player, Age, Live Points, Δ, Next, Max, Official, Tournament)
+- ✅ WTA Live: Ranking table present with 50 players, structure mirrors ATP, no missing features
+- ✅ Core features: All 5 protected features verified present (WC bracket R32 column, WC groups, ATP live + pagination, WTA live, home multi-sport)
+- ✅ Data sanity: All tennis rankings show realistic values, no fabricated data, no duplicate ranks
+- ✅ Privacy page: Loads successfully
+- ✅ Flag SVG 404 bug from earlier today has been FIXED (commit b07be2c)
+
+## Notes
+- World Cup is serving from mock fallback (expected - live feed unavailable)
+- Recent commits addressed flag SVG 404s and World Cup data integrity (Italy), but new issues found
+- No console errors detected on main routes
+- All routes return 200 status codes
+
+## Tickets Filed
+1. `bug-wc-fifa-codes-missing` (P2) - 8 FIFA codes missing ISO2 mappings
+2. `bug-wc-korea-bracket-missing` (P1) - South Korea group-bracket data mismatch
+
+**Inspector:** automated QA agent  
+**Inspection date:** 2026-08-19 (second run)  
+**Next inspection:** scheduled via cron (2×/day)
