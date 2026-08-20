@@ -54,11 +54,11 @@ const WTA_DOUBLES_TEAMS = [
 ];
 
 const flags: Record<string, string> = {
-  USA: "🇺🇸", ESP: "🇪🇸", GBR: "🇬🇧", FRA: "🇫🇷", ITA: "🇮🇹", GER: "🇩🇪",
-  AUS: "🇦🇺", CAN: "🇨🇦", ARG: "🇦🇷", BRA: "🇧🇷", NED: "🇳🇱", CZE: "🇨🇿",
-  POL: "🇵🇱", JPN: "🇯🇵", CHN: "🇨🇳", HRV: "🇭🇷", FIN: "🇫🇮", NZL: "🇳🇿",
-  MEX: "🇲🇽", MON: "🇲🇨", IND: "🇮🇳", TPE: "🇹🇼", BEL: "🇧🇪", UKR: "🇺🇦",
-  LAT: "🇱🇻", RUS: "🇷🇺", INA: "🇮🇩", ESA: "🇸🇻",
+  USA: "USA", ESP: "ESP", GBR: "GBR", FRA: "FRA", ITA: "ITA", GER: "GER",
+  AUS: "AUS", CAN: "CAN", ARG: "ARG", BRA: "BRA", NED: "NED", CZE: "CZE",
+  POL: "POL", JPN: "JPN", CHN: "CHN", HRV: "HRV", FIN: "FIN", NZL: "NZL",
+  MEX: "MEX", MON: "MON", IND: "IND", TPE: "TPE", BEL: "BEL", UKR: "UKR",
+  LAT: "LAT", RUS: "RUS", INA: "INA", ESA: "ESA",
 };
 
 // Generate realistic mock doubles data (100 teams) using real player names
@@ -71,7 +71,7 @@ function generateMockDoubles(tour: "ATP" | "WTA"): DoublesTeam[] {
     const teamIndex = (i - 1) % baseTeams.length;
     const team = baseTeams[teamIndex];
     const countryParts = team.country.split("/");
-    const flag = flags[countryParts[0]] || "🌐";
+    const flag = flags[countryParts[0]] || countryParts[0];
 
     teams.push({
       rank: i,

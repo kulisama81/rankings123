@@ -114,6 +114,59 @@ test("atpDeepRanking.ts doesn't use flagEmoji()", () => {
   );
 });
 
+test("atpLive.ts uses ISO codes, not emoji flags", () => {
+  const atpLivePath = join(__dirname, "../src/data/atpLive.ts");
+  const content = readFileSync(atpLivePath, "utf-8");
+
+  // Check that file doesn't contain emoji flag assignments
+  const emojiInFlag = content.match(/flag:\s*["'][\uD83C][\uDDE6-\uDDFF]/);
+  assert.ok(
+    !emojiInFlag,
+    `atpLive.ts contains emoji in flag field: ${emojiInFlag ? emojiInFlag[0] : ""}`
+  );
+
+  // Check that flag assignments use ISO codes (same as countryCode)
+  const flagAssignments = content.matchAll(/flag:\s*["']([A-Z]{2,3})["']/g);
+  let count = 0;
+  for (const match of flagAssignments) {
+    count++;
+    assert.ok(
+      isValidCountryCode(match[1]),
+      `Invalid flag code: ${match[1]}`
+    );
+  }
+
+  assert.ok(count > 50, "atpLive.ts should have many flag assignments");
+});
+
+test("doublesFeed.ts flags Record uses ISO codes, not emoji flags", () => {
+  const doublesFeedPath = join(__dirname, "../src/lib/doublesFeed.ts");
+  const content = readFileSync(doublesFeedPath, "utf-8");
+
+  // Check that the flags Record doesn't contain emoji values
+  const flagsRecordMatch = content.match(/const flags:\s*Record<string,\s*string>\s*=\s*{([^}]+)}/s);
+  if (flagsRecordMatch) {
+    const flagsContent = flagsRecordMatch[1];
+    assert.ok(
+      !containsEmoji(flagsContent),
+      "doublesFeed.ts flags Record should not contain emoji values"
+    );
+  }
+
+  // Check that flag values in the Record use ISO codes
+  const flagValueMatches = content.matchAll(/([A-Z]{2,3}):\s*["']([A-Z]{2,3})["']/g);
+  let count = 0;
+  for (const match of flagValueMatches) {
+    count++;
+    assert.ok(
+      isValidCountryCode(match[2]),
+      `Invalid flag value for ${match[1]}: ${match[2]}`
+    );
+  }
+
+  assert.ok(count > 10, "doublesFeed.ts should have flag mappings");
+});
+
 test("Emoji-encoded URLs would result in 404 (validation)", () => {
   // Demonstrate that emoji-encoded paths don't work
   const emojiFlag = "🇺🇸";
