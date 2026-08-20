@@ -290,6 +290,23 @@ function checkBracket(bracket, groups) {
     }
   }
 
+  // BIDIRECTIONAL CHECK: Every team marked "advanced" in groups MUST appear in the bracket
+  // (regression guard for bug-wc-korea-bracket-missing).
+  const advancedTeamCodes = [];
+  for (const group of groups ?? []) {
+    for (const team of group.teams ?? []) {
+      if (team.outlook === "advanced") {
+        advancedTeamCodes.push({ code: team.code, name: team.name, group: group.name });
+      }
+    }
+  }
+
+  for (const team of advancedTeamCodes) {
+    if (!bracketTeamCodes.has(team.code)) {
+      err("worldcup-bracket", `team ${team.code} (${team.name}) marked as "advanced" in ${team.group} but does NOT appear in knockout bracket (data integrity violation)`);
+    }
+  }
+
   const r32 = (bracket?.stages ?? []).find((s) => s.name === "Round of 32");
   const projected = (r32?.matches ?? []).filter((m) => String(m.id).startsWith("projected-"));
   if (!projected.length) return; // no projection right now — nothing to check
