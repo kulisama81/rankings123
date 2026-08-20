@@ -18,6 +18,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/wta-race`, lastModified: now, changeFrequency: "always", priority: 0.9 },
     { url: `${BASE}/atp-doubles`, lastModified: now, changeFrequency: "daily", priority: 0.8 },
     { url: `${BASE}/wta-doubles`, lastModified: now, changeFrequency: "daily", priority: 0.8 },
+    { url: `${BASE}/tennis/ranking-points`, lastModified: now, changeFrequency: "monthly", priority: 0.85 },
     { url: `${BASE}/tournaments/wimbledon-2026`, lastModified: now, changeFrequency: "always", priority: 0.9 },
     { url: `${BASE}/us-open-2026`, lastModified: now, changeFrequency: "always", priority: 0.95 },
     { url: `${BASE}/articles/jannik-sinner-ranking-2026`, lastModified: now, changeFrequency: "daily", priority: 0.85 },

@@ -143,6 +143,11 @@ export default async function AtpLivePage() {
           <RelatedLinks
             links={[
               {
+                href: "/tennis/ranking-points",
+                title: "ATP Ranking Points Explained",
+                description: "Learn how ATP ranking points work by tournament tier and round",
+              },
+              {
                 href: "/wta-live",
                 title: "WTA Live Rankings",
                 description: "Live women's tennis rankings with real-time tournament updates",

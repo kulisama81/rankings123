@@ -134,6 +134,11 @@ export default async function WtaLivePage() {
           <RelatedLinks
             links={[
               {
+                href: "/tennis/ranking-points",
+                title: "WTA Ranking Points Explained",
+                description: "Learn how WTA ranking points work by tournament tier and round",
+              },
+              {
                 href: "/atp-live",
                 title: "ATP Live Rankings",
                 description: "Live men's tennis rankings with real-time tournament updates",

@@ -13,6 +13,12 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-08-19",
+    title: "Tennis Ranking Points Reference Guide",
+    description: "New comprehensive guide explaining ATP and WTA ranking points by tournament tier. Learn how many points each Grand Slam, Masters, ATP/WTA 500, and 250 tournament awards, with round-by-round breakdowns, doubles points, qualifying points, and FAQ section covering how the ranking system works.",
+    area: "tennis",
+  },
+  {
     date: "2026-08-20",
     title: "Fixed Indonesia Flag Rendering",
     description: "Fixed visual bug where Indonesian players (e.g., Janice Tjen) were displaying a white flag instead of the Indonesian flag 🇮🇩 on WTA rankings. All country flags now render correctly.",

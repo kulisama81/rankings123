@@ -3,6 +3,7 @@ import { getRaceData } from "@/lib/raceFeed";
 import LiveRankingView from "@/components/LiveRankingView";
 import YouTubeHighlights from "@/components/YouTubeHighlights";
 import Breadcrumb from "@/components/Breadcrumb";
+import RelatedLinks from "@/components/RelatedLinks";
 import { YOUTUBE_HIGHLIGHTS } from "@/config/youtube";
 import { generateBreadcrumbSchema, JsonLd } from "@/lib/structuredData";
 
@@ -91,6 +92,25 @@ export default async function AtpRacePage() {
             <YouTubeHighlights
               videoId={YOUTUBE_HIGHLIGHTS.atp.videoId}
               title={YOUTUBE_HIGHLIGHTS.atp.title}
+            />
+            <RelatedLinks
+              links={[
+                {
+                  href: "/tennis/ranking-points",
+                  title: "ATP Ranking Points Explained",
+                  description: "Learn how ATP ranking points work by tournament tier and round",
+                },
+                {
+                  href: "/atp-live",
+                  title: "ATP Live Rankings",
+                  description: "Real-time ATP rankings with live tournament updates",
+                },
+                {
+                  href: "/wta-race",
+                  title: "WTA Race to Finals",
+                  description: "Year-to-date WTA points race",
+                },
+              ]}
             />
           </div>
         </div>
