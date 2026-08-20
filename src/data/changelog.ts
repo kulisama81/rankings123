@@ -14,6 +14,12 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-08-20",
+    title: "Top 10 Player Ranking Articles",
+    description: "Added 7 new player ranking articles (Świątek, Djokovic, Gauff, Medvedev, Rybakina, Tsitsipas, Pegula) with live ranking data, US Open 2026 predictions, H2H records, and playing style analysis. All 10 articles update daily with real-time tournament points.",
+    area: "tennis",
+  },
+  {
+    date: "2026-08-20",
     title: "World Cup Data Integrity Fix",
     description: "Fixed data consistency issue where teams appeared in knockout bracket but not in group standings. Both group and bracket data now use the same source (historical fallback for completed tournament) ensuring all teams are properly accounted for.",
     area: "worldcup",
