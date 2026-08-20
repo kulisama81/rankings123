@@ -13,10 +13,10 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
-    date: "2026-08-19",
-    title: "Tennis Ranking Points Reference Guide",
-    description: "New comprehensive guide explaining ATP and WTA ranking points by tournament tier. Learn how many points each Grand Slam, Masters, ATP/WTA 500, and 250 tournament awards, with round-by-round breakdowns, doubles points, qualifying points, and FAQ section covering how the ranking system works.",
-    area: "tennis",
+    date: "2026-08-20",
+    title: "World Cup Data Integrity Fix",
+    description: "Fixed data consistency issue where teams appeared in knockout bracket but not in group standings. Both group and bracket data now use the same source (historical fallback for completed tournament) ensuring all teams are properly accounted for.",
+    area: "worldcup",
   },
   {
     date: "2026-08-20",
@@ -34,6 +34,12 @@ export const changelog: ChangelogEntry[] = [
     date: "2026-08-20",
     title: "US Open 2026 Betting Favorites Analysis",
     description: "In-depth preview article analyzing US Open 2026 betting favorites: Jannik Sinner and Aryna Sabalenka lead the field. Expert analysis of title paths, form, historical trends, and value picks for both men's and women's draws. Updated with Cincinnati Open results.",
+    area: "tennis",
+  },
+  {
+    date: "2026-08-19",
+    title: "Tennis Ranking Points Reference Guide",
+    description: "New comprehensive guide explaining ATP and WTA ranking points by tournament tier. Learn how many points each Grand Slam, Masters, ATP/WTA 500, and 250 tournament awards, with round-by-round breakdowns, doubles points, qualifying points, and FAQ section covering how the ranking system works.",
     area: "tennis",
   },
   {

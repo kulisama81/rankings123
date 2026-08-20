@@ -257,10 +257,39 @@ function checkWorldCupGoldenBoot(stats) {
 function checkBracket(bracket, groups) {
   // Map each team name → its actual group letter (from the live standings).
   const groupOf = new Map();
+  // Also track all teams by code for the bracket-to-group consistency check
+  const teamCodeInGroups = new Set();
   for (const g of groups) {
     const letter = String(g.name).replace(/group/i, "").trim().toUpperCase();
-    for (const t of g.teams ?? []) groupOf.set(t.name, letter);
+    for (const t of g.teams ?? []) {
+      groupOf.set(t.name, letter);
+      teamCodeInGroups.add(t.code);
+    }
   }
+
+  // NEW: Check that all teams in the knockout bracket appear in group standings
+  // (regression guard for bug-wc-italy-bracket-group-mismatch).
+  // Collect all unique team codes from all bracket stages
+  const bracketTeamCodes = new Set();
+  for (const stage of bracket?.stages ?? []) {
+    for (const match of stage.matches ?? []) {
+      // Skip TBD placeholders and projected future matches
+      if (match.homeCode && match.homeCode !== "—" && match.homeName !== "TBD") {
+        bracketTeamCodes.add(match.homeCode);
+      }
+      if (match.awayCode && match.awayCode !== "—" && match.awayName !== "TBD") {
+        bracketTeamCodes.add(match.awayCode);
+      }
+    }
+  }
+
+  // Every team in the bracket MUST appear in the group standings
+  for (const code of bracketTeamCodes) {
+    if (!teamCodeInGroups.has(code)) {
+      err("worldcup-bracket", `team ${code} appears in knockout bracket but NOT in any group standings (data integrity violation)`);
+    }
+  }
+
   const r32 = (bracket?.stages ?? []).find((s) => s.name === "Round of 32");
   const projected = (r32?.matches ?? []).filter((m) => String(m.id).startsWith("projected-"));
   if (!projected.length) return; // no projection right now — nothing to check

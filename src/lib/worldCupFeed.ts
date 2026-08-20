@@ -196,6 +196,30 @@ export async function fetchWorldCupSnapshot(): Promise<WorldCupSnapshot> {
     getCachedScoreboardFull(),
   ]);
 
+  // Check if tournament is complete (same logic as bracket feed for consistency).
+  // World Cup 2026 Final ended August 1, 2026. ESPN often stops providing detailed
+  // standings/matches data after tournament completion, so we fall back to mock to
+  // ensure groups and bracket use the same data source (avoiding Italy-in-bracket-
+  // but-not-in-groups type mismatches).
+  const finalStageEndDate = new Date("2026-08-01T06:59Z");
+  const isTournamentComplete = new Date() > finalStageEndDate;
+
+  if (isTournamentComplete) {
+    // Tournament is over — use mock for both groups and matches to match bracket feed.
+    const mockSnapshot = getMockSnapshot();
+    const oddsSource = getOddsSource();
+    const matchesWithOdds = await Promise.all(
+      mockSnapshot.matches.map(async (match) => {
+        if (match.state === "pre") {
+          const odds = await getMatchOdds(match.homeName, match.awayName);
+          return odds ? { ...match, odds } : match;
+        }
+        return match;
+      })
+    );
+    return { ...mockSnapshot, source: "mock", oddsSource, matches: matchesWithOdds };
+  }
+
   const groups = parseStandings(standingsData);
   if (groups.length === 0) throw new Error("ESPN standings feed returned no groups");
   const matches = parseMatches(scoreboard);

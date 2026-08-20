@@ -79,6 +79,60 @@ const groups: WorldCupGroup[] = [
     { code: "BRA", name: "Brazil", w: 0, d: 1, l: 0, gf: 1, ga: 1, outlook: "alive", status: "" },
     { code: "HAI", name: "Haiti", w: 0, d: 0, l: 1, gf: 0, ga: 1, outlook: "out", status: "" },
   ]),
+  buildGroup("Group D", [
+    { code: "ARG", name: "Argentina", w: 2, d: 1, l: 0, gf: 5, ga: 1, outlook: "advanced", status: "" },
+    { code: "POL", name: "Poland", w: 1, d: 1, l: 1, gf: 3, ga: 3, outlook: "advanced", status: "" },
+    { code: "AUS", name: "Australia", w: 1, d: 0, l: 2, gf: 2, ga: 4, outlook: "out", status: "" },
+    { code: "TUN", name: "Tunisia", w: 0, d: 2, l: 1, gf: 1, ga: 3, outlook: "out", status: "" },
+  ]),
+  buildGroup("Group E", [
+    { code: "ESP", name: "Spain", w: 2, d: 1, l: 0, gf: 6, ga: 2, outlook: "advanced", status: "" },
+    { code: "JPN", name: "Japan", w: 2, d: 0, l: 1, gf: 4, ga: 3, outlook: "advanced", status: "" },
+    { code: "SEN", name: "Senegal", w: 1, d: 0, l: 2, gf: 3, ga: 5, outlook: "alive", status: "" },
+    { code: "ISL", name: "Iceland", w: 0, d: 1, l: 2, gf: 2, ga: 5, outlook: "out", status: "" },
+  ]),
+  buildGroup("Group F", [
+    { code: "FRA", name: "France", w: 2, d: 0, l: 1, gf: 5, ga: 3, outlook: "advanced", status: "" },
+    { code: "DEN", name: "Denmark", w: 1, d: 2, l: 0, gf: 3, ga: 2, outlook: "advanced", status: "" },
+    { code: "PER", name: "Peru", w: 1, d: 0, l: 2, gf: 2, ga: 4, outlook: "out", status: "" },
+    { code: "NZL", name: "New Zealand", w: 0, d: 2, l: 1, gf: 2, ga: 3, outlook: "out", status: "" },
+  ]),
+  buildGroup("Group G", [
+    { code: "BEL", name: "Belgium", w: 2, d: 0, l: 1, gf: 4, ga: 2, outlook: "advanced", status: "" },
+    { code: "CRO", name: "Croatia", w: 1, d: 2, l: 0, gf: 3, ga: 2, outlook: "advanced", status: "" },
+    { code: "EGY", name: "Egypt", w: 1, d: 0, l: 2, gf: 2, ga: 4, outlook: "out", status: "" },
+    { code: "CIV", name: "Ivory Coast", w: 0, d: 2, l: 1, gf: 2, ga: 3, outlook: "out", status: "" },
+  ]),
+  buildGroup("Group H", [
+    { code: "POR", name: "Portugal", w: 2, d: 1, l: 0, gf: 6, ga: 2, outlook: "advanced", status: "" },
+    { code: "URU", name: "Uruguay", w: 2, d: 0, l: 1, gf: 4, ga: 3, outlook: "advanced", status: "" },
+    { code: "GHA", name: "Ghana", w: 1, d: 0, l: 2, gf: 3, ga: 5, outlook: "out", status: "" },
+    { code: "ALG", name: "Algeria", w: 0, d: 1, l: 2, gf: 1, ga: 4, outlook: "out", status: "" },
+  ]),
+  buildGroup("Group I", [
+    { code: "GER", name: "Germany", w: 2, d: 1, l: 0, gf: 7, ga: 2, outlook: "advanced", status: "" },
+    { code: "COL", name: "Colombia", w: 1, d: 2, l: 0, gf: 4, ga: 3, outlook: "advanced", status: "" },
+    { code: "SRB", name: "Serbia", w: 1, d: 0, l: 2, gf: 3, ga: 5, outlook: "out", status: "" },
+    { code: "CRC", name: "Costa Rica", w: 0, d: 1, l: 2, gf: 2, ga: 6, outlook: "out", status: "" },
+  ]),
+  buildGroup("Group J", [
+    { code: "NED", name: "Netherlands", w: 2, d: 1, l: 0, gf: 5, ga: 2, outlook: "advanced", status: "" },
+    { code: "ITA", name: "Italy", w: 1, d: 2, l: 0, gf: 3, ga: 2, outlook: "advanced", status: "" },
+    { code: "NGA", name: "Nigeria", w: 0, d: 2, l: 1, gf: 2, ga: 3, outlook: "alive", status: "" },
+    { code: "PAR", name: "Paraguay", w: 0, d: 1, l: 2, gf: 1, ga: 4, outlook: "out", status: "" },
+  ]),
+  buildGroup("Group K", [
+    { code: "ENG", name: "England", w: 2, d: 1, l: 0, gf: 6, ga: 1, outlook: "advanced", status: "" },
+    { code: "USA", name: "United States", w: 2, d: 0, l: 1, gf: 4, ga: 3, outlook: "advanced", status: "" },
+    { code: "CMR", name: "Cameroon", w: 1, d: 0, l: 2, gf: 3, ga: 5, outlook: "out", status: "" },
+    { code: "SVK", name: "Slovakia", w: 0, d: 1, l: 2, gf: 2, ga: 6, outlook: "out", status: "" },
+  ]),
+  buildGroup("Group L", [
+    { code: "CHI", name: "Chile", w: 1, d: 1, l: 1, gf: 3, ga: 3, outlook: "advanced", status: "" },
+    { code: "SWE", name: "Sweden", w: 1, d: 1, l: 1, gf: 3, ga: 3, outlook: "advanced", status: "" },
+    { code: "ECU", name: "Ecuador", w: 1, d: 1, l: 1, gf: 3, ga: 3, outlook: "alive", status: "" },
+    { code: "UGA", name: "Uganda", w: 1, d: 1, l: 1, gf: 3, ga: 3, outlook: "out", status: "" },
+  ]),
 ];
 
 interface MockMatch {

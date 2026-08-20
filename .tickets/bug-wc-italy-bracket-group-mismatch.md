@@ -1,6 +1,6 @@
 ---
 id: bug-wc-italy-bracket-group-mismatch
-status: open
+status: in_progress
 deps: []
 links: []
 created: 2026-08-18T00:00:00Z
