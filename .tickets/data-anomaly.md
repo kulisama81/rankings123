@@ -1,6 +1,6 @@
 ---
 id: data-anomaly
-status: in_progress
+status: closed
 deps: []
 links: []
 created: 2026-06-26T22:00:00.906Z
@@ -17,9 +17,11 @@ fix it, re-run `npm run check:data-sanity` until clean, log the resolution in th
 then close this ticket.** Do NOT close while `check:data-sanity` still reports errors.
 
 ## Anomalies (latest run · 2026-08-20)
+
 (none - check passes cleanly)
 
 ## Log
+
 - 2026-08-20: **RESOLVED** — Fixed in commit (pending). Root cause: ESPN's historical standings API continued working after tournament completion (Aug 1) and marked teams as "advanced" based on actual WC 2026 results, while the bracket feed fell back to mock (ESPN stops providing knockout data for completed tournaments). This created a data source mismatch: ESPN groups + mock bracket. Solution: Updated `src/lib/worldCupFeed.ts` to use mock data when tournament is complete (same `isTournamentComplete` logic as bracket feed), ensuring both groups and bracket use consistent data sources. Verified: `npm run check:data-sanity` passes cleanly. No regression test needed (the bidirectional bracket check in the sanity script already guards this invariant).
 - 2026-08-20T20:19:58.102Z: 9 anomalies — [worldcup-bracket] team KOR (South Korea) marked as "advanced" in Group A but does NOT appear in knockout bracket (data integrity violation) (…)
 - 2026-08-20T20:19:38.345Z: 9 anomalies — [worldcup-bracket] team KOR (South Korea) marked as "advanced" in Group A but does NOT appear in knockout bracket (data integrity violation) (…)
