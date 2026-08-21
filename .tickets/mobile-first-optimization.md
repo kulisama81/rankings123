@@ -2,7 +2,7 @@
 id: mobile-first-optimization
 status: open
 deps: []
-links: []
+links: [bug-wc-mobile-overflow]
 created: 2026-08-02T13:50:13Z
 type: feature
 priority: 0
