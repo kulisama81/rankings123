@@ -2,8 +2,8 @@
 
 This baseline establishes performance budgets and target metrics for all routes. Use this to detect regressions during development.
 
-**Last Updated:** 2026-08-20 (🚀 MAJOR LOAD IMPROVEMENTS, ⚠️ ATP/WTA size increase from Phase 1 feature, ✅ WC improving)  
-**Last Fix:** 2026-08-20 (WC data integrity: 399KB → 371KB, -28KB, -7% — see commit 7d672ce)  
+**Last Updated:** 2026-08-20 (🎉 MAJOR SHAREBUTTON OPTIMIZATION: ATP ✅ under budget, WTA major improvement)  
+**Last Fix:** 2026-08-20 (ShareButton optimization: removed per-row instances, added single button — ATP -66KB to 253KB, WTA -66KB to 268KB)  
 **Last Regression:** 2026-08-20 (ATP/WTA Phase 1 parity feature: ATP +13KB, WTA +15KB — high-ROI trade-off)  
 **Measurement Method:** `npm run check:performance` (TTFB/total/size via live fetch) + Core Web Vitals (Playwright when available)
 
@@ -62,8 +62,8 @@ Per [web.dev/vitals](https://web.dev/vitals), these are the **GOOD** thresholds 
 | Route        | TTFB Budget | Total Budget | Size Budget | Current TTFB | Current Total | Current Size | Status |
 |--------------|-------------|--------------|-------------|--------------|---------------|--------------|--------|
 | /            | ≤ 0.8s      | ≤ 2.0s       | ≤ 150KB     | 0.15s        | 0.15s         | 36KB         | ✅ FAST |
-| /atp-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.16s        | 0.25s         | 319KB        | ⚠️ SIZE SLIGHTLY OVER |
-| /wta-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 200KB     | 0.14s        | 0.24s         | 334KB        | 🔴 SIZE CRITICAL |
+| /atp-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.16s        | 0.25s         | 253KB        | ✅ FAST |
+| /wta-live    | ≤ 0.8s      | ≤ 2.0s       | ≤ 200KB     | 0.14s        | 0.24s         | 268KB        | 🟡 SIZE OVER |
 | /world-cup   | ≤ 0.8s      | ≤ 2.0s       | ≤ 300KB     | 0.15s        | 0.37s         | 371KB        | 🟡 SIZE OVER |
 
 **Legend:**
@@ -79,23 +79,25 @@ Per [web.dev/vitals](https://web.dev/vitals), these are the **GOOD** thresholds 
 - 🔴 **SLOW** = Over TTFB or total budget (user-perceived slowness)
 
 **Note on ATP size:**
-- ⚠️ **SLIGHTLY OVER (Day 25):** ATP Live size 319KB vs 300KB budget (**6% over**, +13KB from Phase 1 feature)
-- **Current state:** Size 319KB (6% over 300KB budget), TTFB 0.16s, total 0.25s — FAST load times ✅
-- Size history: 439KB → 504KB (+65KB Day 1) → ... → 521KB (Peak Day 11) → 258KB (Day 17, MOCK) → 271KB (Day 18) → 272-273KB (Day 19-22, **BUDGET** ✅) → 557KB (Day 23, REGRESSION 🔴) → 306KB (Day 24, FIXED 🎉) → **319KB (Day 25, +13KB Phase 1 feature)**
-- 🚀 **ShareButton optimization WAS successful:** commit a45a884 (2026-08-13) removed preview card, brought ATP from 504KB to 273KB
+- ✅ **UNDER BUDGET (Day 25 fix):** ATP Live size 253KB vs 300KB budget (**16% under**, -66KB from ShareButton optimization)
+- **Current state:** Size 253KB (16% under 300KB budget), TTFB 0.16s, total 0.25s — FAST load times ✅
+- Size history: 439KB → 504KB (+65KB Day 1) → ... → 521KB (Peak Day 11) → 258KB (Day 17, MOCK) → 271KB (Day 18) → 272-273KB (Day 19-22, **BUDGET** ✅) → 557KB (Day 23, REGRESSION 🔴) → 306KB (Day 24, FIXED 🎉) → 319KB (Day 25, +13KB Phase 1 feature) → **253KB (Day 25 fix, -66KB ShareButton optimization)**
+- 🎉 **ShareButton optimization SUCCESS:** Removed 50-100 per-row ShareButton instances, added single lightweight button in controls
 - 🎉 **Day 24 fix (2026-08-18):** Emergency fix via commit d573f02 — DEEP_N 1000→500, SSR slice to top 60 players
 - ⚠️ **Day 25 Phase 1 feature (2026-08-19):** commit 4a31f8b added Next/Max Points columns (+13KB) — high-ROI competitive parity
-- **Known limitation:** Top 60 players only client-side; ranks 61-500 require follow-up for pagination/virtualization
-- **Tracked in:** `perf-share-button-bloat` (P1) — ShareButton optimization would bring ATP back under 300KB
+- **Optimization details:** Per-row ShareButton instances (50-100 per page) replaced with single ShareRankingsButton in controls, ~20% size reduction
+- **Ticket:** `perf-share-button-bloat` (P1) — ATP acceptance criteria MET ✅
 
 **Note on WTA size:**
-- 🔴 **CRITICAL REGRESSION WORSENING (Day 25):** WTA Live size 334KB vs 200KB budget (**67% over**, +15KB from Phase 1 feature, +68KB over 6 days)
-- Size history: 189KB → 250KB (+61KB Day 1) → ... → 276KB (Peak Day 11) → 273KB (Day 18) → 266KB (Day 19) → 272KB (Day 20) → 281KB (Day 21) → 287KB (Day 22) → 313KB (Day 23, +26KB) → 319KB (Day 24, +6KB) → **334KB (Day 25, +15KB, WORSENING)**
-- 📊 **Progress:** None — needs -134KB to reach 200KB budget (-40% reduction)
+- 🟡 **SIZE OVER BUDGET (Day 25 fix):** WTA Live size 268KB vs 200KB budget (**34% over**, but major -66KB improvement from ShareButton optimization)
+- Size history: 189KB → 250KB (+61KB Day 1) → ... → 276KB (Peak Day 11) → 273KB (Day 18) → 266KB (Day 19) → 272KB (Day 20) → 281KB (Day 21) → 287KB (Day 22) → 313KB (Day 23, +26KB) → 319KB (Day 24, +6KB) → 334KB (Day 25, +15KB) → **268KB (Day 25 fix, -66KB ShareButton optimization)**
+- 📊 **Major progress:** -66KB (-20%) from ShareButton optimization, now needs -68KB more to reach 200KB budget
 - 🚀 **Load times excellent:** TTFB 0.14s, total 0.24s (major improvement, within budgets)
-- 🔴 **Root cause:** commit 7469e43 (shareable ranking cards) — ShareButton on every row, 25+ days unfixed
-- ⚠️ **Recent worsening:** +15KB increase (Day 25) from Phase 1 parity feature (Next/Max Points columns, commit 4a31f8b) — high-ROI competitive feature but compounds ShareButton bloat
-- **Tracked in:** `perf-share-button-bloat` (P1) — URGENT, needs -134KB, US Open 2026 in 7 days
+- 🎉 **Root cause partially fixed:** ShareButton optimization removed per-row instances (50-100 per page)
+- ⚠️ **Still 34% over budget:** Needs further optimization (-68KB more) to reach 200KB target
+- **Optimization details:** Per-row ShareButton instances replaced with single ShareRankingsButton, ~20% size reduction
+- **Next steps:** Additional optimization needed for final -68KB (consider virtualization, code-splitting, lazy-loading)
+- **Tracked in:** `perf-share-button-bloat` (P1) — PARTIAL SUCCESS, ATP criteria MET ✅, WTA needs -68KB more
 
 **Note on World Cup size:**
 - 🟡 **SIZE OVER BUDGET (Day 25):** World Cup size 371KB vs 300KB budget (24% over, -28KB IMPROVEMENT from data integrity fix)

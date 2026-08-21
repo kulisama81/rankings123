@@ -10,9 +10,68 @@ import AnimatedNumber from "./AnimatedNumber";
 import EmptyState from "./EmptyState";
 import Tooltip from "./Tooltip";
 import { RankTooltip, PointsTooltip, MovementTooltip, PlayerTooltip } from "./TooltipContent";
-import { ShareButton } from "./ShareButton";
 import DataSourceBadge from "./DataSourceBadge";
 import FlagIcon from "./FlagIcon";
+
+// Lightweight share button component (perf-share-button-bloat optimization)
+// Replaces 50-100 per-row ShareButton instances with a single button
+function ShareRankingsButton({ tour }: { tour: Tour }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleShare = async () => {
+    const url = typeof window !== "undefined" ? window.location.href : "";
+    const text = `Live ${tour.toUpperCase()} Rankings - Rankings123`;
+
+    // Try native share API on mobile
+    if (navigator.share && /Mobile|Android|iPhone|iPad/i.test(navigator.userAgent)) {
+      try {
+        await navigator.share({ title: text, text, url });
+        return;
+      } catch {
+        // Fall through to copy
+      }
+    }
+
+    // Desktop: copy to clipboard
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy:", err);
+    }
+  };
+
+  return (
+    <button
+      onClick={handleShare}
+      className="btn-base btn-secondary rounded-lg border border-edge text-sm min-h-11 px-3 flex items-center gap-1.5"
+      aria-label="Share rankings"
+      title="Share rankings"
+    >
+      {copied ? (
+        <>
+          <svg className="w-4 h-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          </svg>
+          <span className="hidden sm:inline">Copied</span>
+        </>
+      ) : (
+        <>
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
+            />
+          </svg>
+          <span className="hidden sm:inline">Share</span>
+        </>
+      )}
+    </button>
+  );
+}
 
 const REFRESH_INTERVAL_S = 20;
 const PAGE_SIZE = 50;
@@ -292,7 +351,7 @@ export default function LiveRankingTable({ tour, initialSnapshot, showAgeGroupRa
       {/* Screen reader announcement for rank updates */}
       <div id="rank-update-announcement" className="sr-only" role="status" aria-live="polite" aria-atomic="true" />
       {/* Controls */}
-      <div className="mb-4 flex flex-wrap items-center gap-2.5">
+      <div className="mb-4 flex flex-wrap items-center gap-2.5 justify-between">
         <div className="inline-flex gap-1 rounded-xl bg-surface2 p-1">
           {tabs.map((t) => (
             <Link
@@ -379,6 +438,7 @@ export default function LiveRankingTable({ tour, initialSnapshot, showAgeGroupRa
           >
             Refresh
           </button>
+          <ShareRankingsButton tour={tour} />
         </div>
       </div>
 
@@ -408,7 +468,6 @@ export default function LiveRankingTable({ tour, initialSnapshot, showAgeGroupRa
                   </th>
                   <th className="px-3 py-2.5 text-right">Official</th>
                   <th className="px-3 py-2.5 text-left">Tournament</th>
-                  <th className="px-2 py-2.5 text-center">Share</th>
                 </tr>
               </thead>
               <tbody>
@@ -533,20 +592,6 @@ export default function LiveRankingTable({ tour, initialSnapshot, showAgeGroupRa
                       {p.officialPoints.toLocaleString()}
                     </td>
                     <td className="px-3 py-2"><Tournament player={p} /></td>
-                    <td className="px-2 py-2 text-center">
-                      <ShareButton
-                        type="rank-milestone"
-                        sport={tour}
-                        data={{
-                          playerName: p.name,
-                          rank: p.liveRank,
-                          points: p.livePoints,
-                          countryCode: p.countryCode,
-                          movement: p.movement,
-                        }}
-                        variant="icon"
-                      />
-                    </td>
                   </tr>
                   );
                 })}
@@ -645,18 +690,6 @@ export default function LiveRankingTable({ tour, initialSnapshot, showAgeGroupRa
                   <span className="flex items-center gap-2">
                     <Delta value={p.pointsDelta} />
                     <span className="tabular-nums">{p.countryCode}{p.age ? ` · ${p.age}y` : ""}</span>
-                    <ShareButton
-                      type="rank-milestone"
-                      sport={tour}
-                      data={{
-                        playerName: p.name,
-                        rank: p.liveRank,
-                        points: p.livePoints,
-                        countryCode: p.countryCode,
-                        movement: p.movement,
-                      }}
-                      variant="icon"
-                    />
                   </span>
                 </div>
                 {p.tournament?.active && (

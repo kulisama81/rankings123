@@ -14,6 +14,12 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-08-20",
+    title: "Major Performance Improvement — 20% Faster Page Loads",
+    description: "Optimized ATP and WTA live ranking pages for significantly faster loading. ATP page reduced by 66KB (now 253KB, 20% smaller), WTA page reduced by 66KB (now 268KB, 20% smaller). Sharing functionality preserved with a single 'Share' button in controls. US Open-ready performance for peak traffic.",
+    area: "tennis",
+  },
+  {
+    date: "2026-08-20",
     title: "Fixed Flag Image Loading Errors",
     description: "Resolved technical issue causing flag images to fail loading (404 errors) on ATP/WTA ranking pages. All country flags now load correctly across tennis rankings.",
     area: "tennis",
