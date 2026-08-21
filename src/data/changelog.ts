@@ -13,6 +13,12 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-08-21",
+    title: "US Open 2026 Draw Page Live",
+    description: "New dedicated draw page for US Open 2026 featuring live countdown to draw ceremony (Aug 27), projected seeding for top 32 players in both ATP and WTA draws, draw format explainer, and links to betting analysis. Page will update with official bracket once draw is released.",
+    area: "tennis",
+  },
+  {
     date: "2026-08-20",
     title: "Major Performance Improvement — 20% Faster Page Loads",
     description: "Optimized ATP and WTA live ranking pages for significantly faster loading. ATP page reduced by 66KB (now 253KB, 20% smaller), WTA page reduced by 66KB (now 268KB, 20% smaller). Sharing functionality preserved with a single 'Share' button in controls. US Open-ready performance for peak traffic.",

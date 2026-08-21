@@ -26,3 +26,19 @@ US Open draw ceremony Aug 27 (6 days). Need /us-open-2026/draw page BEFORE draw.
 
 Effort: 4-6 hours
 ROI: 10/10 — US Open = 150K+ daily searches, draw page captures peak Aug 27-30
+
+## Log
+
+**2026-08-21T17:00:00Z**
+
+Implemented /us-open-2026/draw page with:
+- Live countdown to draw ceremony (Aug 27, 2:00 PM ET)
+- Projected seeding (top 32 ATP/WTA based on current rankings)
+- Link to betting analysis article (no fabricated odds per CX-first rule)
+- Post-draw logic to show official bracket link when draw releases
+- Mobile-optimized responsive design
+- SportsEvent schema JSON-LD
+- SEO metadata targeting "us open 2026 draw" keywords
+- Added to site changelog
+
+**Indexing (criterion 7):** Will be submitted to Google Search Console manually post-deploy. Page includes proper metadata and sitemap will auto-update on build.
