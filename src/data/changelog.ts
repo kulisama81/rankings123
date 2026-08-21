@@ -14,6 +14,12 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-08-21",
+    title: "US Open Live Scores Widget — Real-Time Match Updates",
+    description: "Live scores widget now displays in-progress US Open matches on the tournament page. Shows player rankings, current score, and round for all active matches. Auto-refreshes every 60 seconds during the tournament (Aug 30-Sep 13) and automatically hides when no matches are in play.",
+    area: "tennis",
+  },
+  {
+    date: "2026-08-21",
     title: "US Open 2026 Draw Page Live",
     description: "New dedicated draw page for US Open 2026 featuring live countdown to draw ceremony (Aug 27), projected seeding for top 32 players in both ATP and WTA draws, draw format explainer, and links to betting analysis. Page will update with official bracket once draw is released.",
     area: "tennis",

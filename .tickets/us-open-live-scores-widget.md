@@ -1,6 +1,6 @@
 ---
 id: us-open-live-scores-widget
-status: open
+status: in_progress
 deps: []
 links: []
 created: 2026-08-16T13:50:25Z

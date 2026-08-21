@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { AtpLiveSnapshot } from "@/types";
 import HeroBanner from "./HeroBanner";
 import LiveRankingTable from "./LiveRankingTable";
+import LiveScoresWidget from "./LiveScoresWidget";
 
 interface UsOpenTournamentViewProps {
   atpSnapshot: AtpLiveSnapshot;
@@ -117,6 +118,13 @@ export default function UsOpenTournamentView({
           WTA Women
         </button>
       </div>
+
+      {/* Live Scores Widget */}
+      <LiveScoresWidget
+        initialAtpSnapshot={atpSnapshot}
+        initialWtaSnapshot={wtaSnapshot}
+        tournamentName="US Open"
+      />
 
       {/* Tournament concluded message */}
       {isTournamentConcluded && (atpChampion || wtaChampion) && (
