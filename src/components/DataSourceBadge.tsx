@@ -31,7 +31,7 @@ export default function DataSourceBadge({ source, className = "", showLiveDot = 
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-md border border-edge bg-surface2 px-2 py-0.5 text-xs font-medium text-muted ${className}`}
+      className={`inline-flex items-center gap-1.5 rounded-md border border-edge bg-surface2 px-2 py-0.5 text-xs font-medium text-muted depth-badge ${className}`}
     >
       {showLiveDot && <LiveDot />}
       {label}

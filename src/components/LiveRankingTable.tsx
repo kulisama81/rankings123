@@ -150,9 +150,12 @@ function RankBadge({ rank }: { rank: number }) {
             ? "min-w-[34px] h-9 px-1.5" // Mid-tier: medium
             : "min-w-[30px] h-8 px-1.5"; // Base: compact
 
+  // Selective skeuomorphic depth (Clay 2026): podium #1-3 get depth, rest stay flat
+  const depthClass = rank <= 3 ? "depth-podium" : "";
+
   return (
     <span
-      className={`rank-hover-scale inline-flex items-center justify-center rounded-lg tabular-nums ${scaleClass} ${sizeClass} ${tint}`}
+      className={`rank-hover-scale inline-flex items-center justify-center rounded-lg tabular-nums ${scaleClass} ${sizeClass} ${tint} ${depthClass}`}
     >
       {rank}
     </span>

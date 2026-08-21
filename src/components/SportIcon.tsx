@@ -2,6 +2,7 @@
  * Custom SVG sport icon system
  * Line-style icons matching the clean Rankings123 aesthetic
  * Auto-colored via currentColor to inherit per-sport accent
+ * Selective skeuomorphic depth applied per Clay 2026 guidance
  */
 
 type SportIconType = 'trophy' | 'tennis' | 'football' | 'cycling' | 'team-tt' | 'individual-tt' | 'mountain' | 'uphill-finish' | 'flat' | 'finish' | 'jersey-yellow' | 'jersey-green' | 'jersey-polkadot' | 'jersey-white';
@@ -13,6 +14,9 @@ interface SportIconProps {
 }
 
 export default function SportIcon({ type, size = 24, className = '' }: SportIconProps) {
+  // Apply selective skeuomorphic depth to icons in nav/hero (Clay 2026 guidance)
+  const iconClassName = `${className} depth-icon rounded-lg p-1.5 bg-surface/50`;
+
   const icons = {
     trophy: (
       <svg
@@ -24,7 +28,7 @@ export default function SportIcon({ type, size = 24, className = '' }: SportIcon
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
-        className={className}
+        className={iconClassName}
         aria-hidden="true"
       >
         {/* Trophy cup */}
@@ -46,7 +50,7 @@ export default function SportIcon({ type, size = 24, className = '' }: SportIcon
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
-        className={className}
+        className={iconClassName}
         aria-hidden="true"
       >
         {/* Tennis racket */}
@@ -68,7 +72,7 @@ export default function SportIcon({ type, size = 24, className = '' }: SportIcon
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
-        className={className}
+        className={iconClassName}
         aria-hidden="true"
       >
         {/* Soccer ball */}
@@ -87,7 +91,7 @@ export default function SportIcon({ type, size = 24, className = '' }: SportIcon
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
-        className={className}
+        className={iconClassName}
         aria-hidden="true"
       >
         {/* Bicycle */}
@@ -100,36 +104,36 @@ export default function SportIcon({ type, size = 24, className = '' }: SportIcon
       </svg>
     ),
     'team-tt': (
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={iconClassName} aria-hidden="true">
         <circle cx="9" cy="7" r="2" />
         <circle cx="15" cy="7" r="2" />
         <path d="M9 10v5M15 10v5M6 15h12M7 19h10" />
       </svg>
     ),
     'individual-tt': (
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={iconClassName} aria-hidden="true">
         <circle cx="12" cy="12" r="10" />
         <path d="M12 6v6l4 2" />
       </svg>
     ),
     mountain: (
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={iconClassName} aria-hidden="true">
         <path d="M3 20l5-9 4 6 5-11 4 7" />
       </svg>
     ),
     'uphill-finish': (
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={iconClassName} aria-hidden="true">
         <path d="M3 20l18-12" />
         <path d="M19 10v6h-6" opacity="0.5" />
       </svg>
     ),
     flat: (
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={iconClassName} aria-hidden="true">
         <path d="M3 12h18" />
       </svg>
     ),
     finish: (
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={iconClassName} aria-hidden="true">
         <path d="M4 15l5-5 5 5 5-5" />
         <rect x="4" y="4" width="3" height="3" fill="currentColor" />
         <rect x="9" y="4" width="3" height="3" opacity="0.3" />
@@ -138,17 +142,17 @@ export default function SportIcon({ type, size = 24, className = '' }: SportIcon
       </svg>
     ),
     'jersey-yellow': (
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={iconClassName} aria-hidden="true">
         <path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.47a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V10h2.15a1 1 0 00.99-.84l.58-3.47a2 2 0 00-1.34-2.23z" fill="currentColor" opacity="0.2" />
       </svg>
     ),
     'jersey-green': (
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={iconClassName} aria-hidden="true">
         <path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.47a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V10h2.15a1 1 0 00.99-.84l.58-3.47a2 2 0 00-1.34-2.23z" fill="currentColor" opacity="0.15" />
       </svg>
     ),
     'jersey-polkadot': (
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={iconClassName} aria-hidden="true">
         <path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.47a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V10h2.15a1 1 0 00.99-.84l.58-3.47a2 2 0 00-1.34-2.23z" fill="currentColor" opacity="0.1" />
         <circle cx="10" cy="12" r="1.5" fill="currentColor" />
         <circle cx="14" cy="12" r="1.5" fill="currentColor" />
@@ -156,7 +160,7 @@ export default function SportIcon({ type, size = 24, className = '' }: SportIcon
       </svg>
     ),
     'jersey-white': (
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={iconClassName} aria-hidden="true">
         <path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.47a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V10h2.15a1 1 0 00.99-.84l.58-3.47a2 2 0 00-1.34-2.23z" fill="none" />
       </svg>
     ),
