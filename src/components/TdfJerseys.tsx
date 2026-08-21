@@ -44,6 +44,8 @@ const jerseyIconColors: Record<string, string> = {
 
 export default function TdfJerseys({ jerseys, raceStatus }: TdfJerseysProps) {
   const preRace = raceStatus === "upcoming";
+  // Check if ANY jersey has a rider (indicates stage data is available)
+  const hasAnyLeader = jerseys.some(j => j.rider);
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -88,7 +90,11 @@ export default function TdfJerseys({ jerseys, raceStatus }: TdfJerseysProps) {
               </>
             ) : (
               <div className="mt-3 text-xs text-muted">
-                {raceStatus === "active" ? "Awaiting results" : "TBD"}
+                {raceStatus === "active" && !hasAnyLeader
+                  ? "Leaders determined after Stage 1"
+                  : raceStatus === "active"
+                    ? "Awaiting results"
+                    : "TBD"}
               </div>
             )}
           </div>

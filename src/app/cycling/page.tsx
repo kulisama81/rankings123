@@ -169,17 +169,31 @@ export default async function CyclingPage() {
           </section>
 
           {/* General Classification */}
-          {gc.length > 0 && (
-            <section id="gc" className="mb-12">
-              <h2 className="mb-6 text-3xl font-bold text-primary">
-                General Classification
-                <span className="ml-3 text-sm font-normal text-secondary">
-                  Overall standings
-                </span>
-              </h2>
+          <section id="gc" className="mb-12">
+            <h2 className="mb-6 text-3xl font-bold text-primary">
+              General Classification
+              <span className="ml-3 text-sm font-normal text-secondary">
+                Overall standings
+              </span>
+            </h2>
+            {gc.length > 0 ? (
               <TdfGCTable riders={gc} />
-            </section>
-          )}
+            ) : raceStatus === "active" ? (
+              <div className="animate-entrance-table rounded-2xl border border-edge bg-surface p-8 text-center text-secondary">
+                <p className="text-lg">General Classification will update after Stage 1 completes.</p>
+                <p className="mt-2 text-sm text-muted">
+                  Results typically appear within 1-2 hours of stage finish.
+                </p>
+              </div>
+            ) : raceStatus === "upcoming" ? (
+              <div className="animate-entrance-table rounded-2xl border border-edge bg-surface p-8 text-center text-secondary">
+                <p className="text-lg">General Classification will be available once the race begins.</p>
+                <p className="mt-2 text-sm text-muted">
+                  The race starts on {formatISODate(race.startDate)}.
+                </p>
+              </div>
+            ) : null}
+          </section>
 
           {/* UCI Ranking Links */}
           <section className="mb-12">
