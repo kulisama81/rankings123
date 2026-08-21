@@ -393,6 +393,16 @@ export default function WorldCupTable({
     return map;
   };
   const activeMatches = scheduleTab === "upcoming" ? upcomingMatches : resultMatches;
+
+  // Detect tournament completion: all matches are finished AND latest match is >1 day old
+  const allMatchesComplete = snapshot.matches.length > 0 && snapshot.matches.every((m) => m.state === "post");
+  const latestMatch = snapshot.matches.length > 0
+    ? snapshot.matches.reduce((latest, m) => new Date(m.date) > new Date(latest.date) ? m : latest)
+    : null;
+  const daysSinceLatestMatch = latestMatch
+    ? (Date.now() - new Date(latestMatch.date).getTime()) / (1000 * 60 * 60 * 24)
+    : 0;
+  const isTournamentComplete = allMatchesComplete && daysSinceLatestMatch > 1;
   const activeByDate = groupByDate(activeMatches);
 
   return (
@@ -543,7 +553,9 @@ export default function WorldCupTable({
               }
               description={
                 scheduleTab === "upcoming"
-                  ? "Check back as the tournament schedule is announced"
+                  ? isTournamentComplete
+                    ? "Tournament concluded July 19, 2026. View results above for all matches."
+                    : "Check back as the tournament schedule is announced"
                   : "Results will appear here as matches finish"
               }
             />
