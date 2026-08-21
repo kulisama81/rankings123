@@ -8,6 +8,9 @@ const SOCCER_TO_ISO2: Record<string, string> = {
   JOR: "JO", KSA: "SA", NZL: "NZ", PAN: "PA", POR: "PT", QAT: "QA", RSA: "ZA",
   SEN: "SN", TUN: "TN", USA: "US", UZB: "UZ", CUW: "CW", BEL: "BE", AUT: "AT",
   COL: "CO", ECU: "EC", EGY: "EG", SWE: "SE", URU: "UY",
+  // Additional FIFA codes → ISO2 mappings
+  SCO: "gb-sct", HAI: "ht", ISL: "is", CRC: "cr", NGA: "ng",
+  ENG: "gb-eng", CMR: "cm", UGA: "ug",
 };
 
 /**
