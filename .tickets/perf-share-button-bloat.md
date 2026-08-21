@@ -1,6 +1,6 @@
 ---
 id: perf-share-button-bloat
-status: open
+status: closed
 created: 2026-07-27
 priority: 1
 parent: rankings123
