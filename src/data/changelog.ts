@@ -14,6 +14,12 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-08-21",
+    title: "Vuelta a España 2026 Live Coverage Ready",
+    description: "Enhanced Vuelta coverage launching Aug 22 with real-time stage results and GC standings from Wikipedia. Improved messaging clarity: jersey leaders and GC show helpful status updates during Stage 1, with results appearing within 1-2 hours of stage finish. All 21 stages tracked with full classification details.",
+    area: "cycling",
+  },
+  {
+    date: "2026-08-21",
     title: "US Open Live Scores Widget — Real-Time Match Updates",
     description: "Live scores widget now displays in-progress US Open matches on the tournament page. Shows player rankings, current score, and round for all active matches. Auto-refreshes every 60 seconds during the tournament (Aug 30-Sep 13) and automatically hides when no matches are in play.",
     area: "tennis",
