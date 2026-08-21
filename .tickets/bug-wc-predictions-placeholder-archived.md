@@ -1,6 +1,6 @@
 ---
 id: bug-wc-predictions-placeholder-archived
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-18T00:00:00Z
