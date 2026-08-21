@@ -1,6 +1,6 @@
 ---
 id: us-open-draw-bracket-tracker
-status: open
+status: in_progress
 deps: []
 links: []
 created: 2026-08-19T13:49:51Z

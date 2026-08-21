@@ -1,6 +1,6 @@
 ---
 id: bug-wc-fifa-codes-missing
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-19T00:00:00Z

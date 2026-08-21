@@ -44,3 +44,7 @@ ROI: HIGH - Retention play, converts one-time WC visitors to recurring tennis us
 ✓ SEO: 'Spain World Cup 2026 Tennis', 'Carlos Alcaraz ATP Ranking'
 ✓ CTA: 'Follow Live ATP/WTA Rankings'
 ✓ Builds green
+
+**2026-08-21T00:12:00Z**
+
+FAILED attempt (Aug 20): Built article but fabricated World Cup result (claimed Spain won when Argentina actually won 3-1 vs Switzerland). Critical CX-first violation. Reverted. Article requires careful sourcing from worldCupBracketFeed data or avoiding specific match results.
