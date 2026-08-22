@@ -14,6 +14,12 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-08-21",
+    title: "Vuelta 2026 GC Predictions & Betting Analysis",
+    description: "New in-depth article analyzing the 2026 Vuelta a España general classification battle. Features betting odds for Pogačar's quest to complete the Grand Tour triple crown, detailed breakdowns of top 5 contenders (Pogačar, Almeida, Mas, Onley, Roglič), Stage 1 Monaco time trial preview, and value betting analysis. Article launches with the race tomorrow (Aug 22).",
+    area: "cycling",
+  },
+  {
+    date: "2026-08-21",
     title: "Vuelta a España 2026 Live Coverage Ready",
     description: "Enhanced Vuelta coverage launching Aug 22 with real-time stage results and GC standings from Wikipedia. Improved messaging clarity: jersey leaders and GC show helpful status updates during Stage 1, with results appearing within 1-2 hours of stage finish. All 21 stages tracked with full classification details.",
     area: "cycling",
