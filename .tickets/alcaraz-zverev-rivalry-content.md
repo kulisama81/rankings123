@@ -1,6 +1,6 @@
 ---
 id: alcaraz-zverev-rivalry-content
-status: in_progress
+status: closed
 deps: []
 links: []
 created: 2026-08-22T13:48:31Z

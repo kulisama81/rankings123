@@ -1,6 +1,6 @@
 ---
 id: us-open-2026-preview
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-07-19T13:48:59Z
@@ -34,3 +34,7 @@ ROI (First Principles): Traffic = US Open is the highest-traffic tennis event in
 **2026-08-19T00:15:58Z**
 
 Article already exists at /articles/us-open-2026-betting-favorites (published Aug 20). This ticket may be a duplicate or already completed. Needs human review to determine if additional content is required or if ticket can be closed.
+
+**2026-08-22T16:12:04Z**
+
+Closing as duplicate - article already exists at /articles/us-open-2026-betting-favorites (published Aug 20). The Alcaraz-Zverev rivalry article (published Aug 22) also covers US Open preview content post-Sinner withdrawal.
