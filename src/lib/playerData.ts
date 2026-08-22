@@ -249,6 +249,24 @@ export const PLAYER_PROFILES: Record<string, PlayerArticleInfo> = {
       "pegula wta ranking",
     ],
   },
+  "alexander-zverev": {
+    fullName: "Alexander Zverev",
+    tour: "atp",
+    nationality: "German",
+    birthYear: 1997,
+    playingStyle: "Power baseliner",
+    surface: "Hard courts",
+    grandSlams: {
+      total: 1,
+      titles: ["French Open 2026"],
+    },
+    keywords: [
+      "alexander zverev ranking",
+      "zverev tennis",
+      "alexander zverev us open",
+      "zverev atp ranking",
+    ],
+  },
 };
 
 export type PlayerSlug = keyof typeof PLAYER_PROFILES;
