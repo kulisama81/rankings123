@@ -1,6 +1,6 @@
 ---
 id: vuelta-stage1-live-coverage
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-21T13:48:49Z

@@ -1,6 +1,6 @@
 ---
 id: bug-wc-mobile-overflow
-status: open
+status: in_progress
 deps: []
 links: [mobile-first-optimization, mobile-ux-audit-findings]
 created: 2026-08-21T05:08:00Z

@@ -1,6 +1,6 @@
 ---
 id: realtime-data-indicators
-status: open
+status: closed
 deps: []
 links: []
 created: 2026-08-02T00:00:00Z
