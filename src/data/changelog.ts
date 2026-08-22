@@ -13,6 +13,12 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-08-22",
+    title: "US Open 2026: Alcaraz vs Zverev Rivalry Analysis",
+    description: "New in-depth article analyzing the reshuffled US Open landscape after Sinner's withdrawal. Covers Alcaraz's path as defending champion (+140 favorite), Zverev's first-Slam momentum (+300), detailed H2H history (7-6), draw implications, and betting value analysis. Captures the new tournament narrative post-Aug 21 withdrawal.",
+    area: "tennis",
+  },
+  {
     date: "2026-08-21",
     title: "Enhanced Mobile Performance — WTA Rankings 21% Faster",
     description: "Further optimized WTA live rankings for mobile users. Initial page load now 21% faster with smart on-demand loading: top 40 players load instantly, full rankings (all 200+) fetch automatically when you scroll beyond rank 40. Improved mobile experience especially on 3G/4G connections.",
