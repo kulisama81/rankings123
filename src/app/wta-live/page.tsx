@@ -55,7 +55,15 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function WtaLivePage() {
-  const snapshot = await getLiveData("wta");
+  const fullSnapshot = await getLiveData("wta");
+
+  // For SSR payload optimization: send top 40 players (200KB page budget, stricter than ATP's 300KB).
+  // Top 40 = high-traffic segment (most users focus on top ranks).
+  // Client-side API fetch from /api/wta-live handles on-demand loading for ranks 41+.
+  const snapshot = {
+    ...fullSnapshot,
+    players: fullSnapshot.players.slice(0, 40),
+  };
 
   // Structured data for SEO
   const breadcrumbSchema = generateBreadcrumbSchema([

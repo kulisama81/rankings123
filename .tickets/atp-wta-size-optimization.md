@@ -1,6 +1,6 @@
 ---
 id: atp-wta-size-optimization
-status: open
+status: closed
 deps: []
 links: [perf-atp-page-size]
 created: 2026-07-15T13:58:00Z

@@ -208,9 +208,47 @@ export default function LiveRankingTable({ tour, initialSnapshot, showAgeGroupRa
   const [autoRefreshEnabled, setAutoRefreshEnabled] = useState(true);
   const [, setCurrentTime] = useState(Date.now());
   const [isRefreshing, setIsRefreshing] = useState(false);
+  // Detect if we have full data based on initial player count (ATP: 60, WTA: 40)
+  const initialPlayerCount = initialSnapshot.players.length;
+  const [hasFullData, setHasFullData] = useState(initialPlayerCount > 100); // Unlikely to have >100 in initial SSR
+  const [loadingFullData, setLoadingFullData] = useState(false);
   const fetching = useRef(false);
   const mounted = useRef(false);
   const prevRanksRef = useRef<Map<string, number>>(new Map());
+
+  // Load full data on demand when user navigates beyond rank 60
+  const loadFullData = useCallback(async () => {
+    if (hasFullData || loadingFullData || fetching.current) return;
+    setLoadingFullData(true);
+    try {
+      const res = await fetch(`/api/${tour}-live`, { cache: "no-store" });
+      if (res.ok) {
+        const fullSnapshot = await res.json();
+        setSnapshot(fullSnapshot);
+        setHasFullData(true);
+        // Initialize prevRanks for all players
+        fullSnapshot.players.forEach((p: AtpLivePlayer) => {
+          prevRanksRef.current.set(p.name, p.liveRank);
+        });
+      }
+    } catch {
+      /* keep current snapshot */
+    } finally {
+      setLoadingFullData(false);
+    }
+  }, [tour, hasFullData, loadingFullData]);
+
+  // Trigger full data load when user navigates beyond initial data
+  useEffect(() => {
+    // Calculate if current page needs more data than we have
+    const neededPlayers = (page + 1) * PAGE_SIZE;
+    const needsMoreData = neededPlayers > initialPlayerCount;
+
+    // Only load if we need more data and don't have it yet
+    if (needsMoreData && !hasFullData && !loadingFullData) {
+      void loadFullData();
+    }
+  }, [page, hasFullData, loadingFullData, loadFullData, initialPlayerCount]);
 
   // Load auto-refresh preference from localStorage on mount
   useEffect(() => {
@@ -260,7 +298,7 @@ export default function LiveRankingTable({ tour, initialSnapshot, showAgeGroupRa
     fetching.current = true;
     setIsRefreshing(true);
     try {
-      const res = await fetch(`/api/${tour}/live`, { cache: "no-store" });
+      const res = await fetch(`/api/${tour}-live`, { cache: "no-store" });
       if (res.ok) {
         const newSnapshot = await res.json();
 
@@ -275,6 +313,7 @@ export default function LiveRankingTable({ tour, initialSnapshot, showAgeGroupRa
         });
 
         setSnapshot(newSnapshot);
+        setHasFullData(true); // Auto-refresh fetches full data
 
         // Announce to screen readers on every refresh
         const announcement = document.getElementById("rank-update-announcement");
@@ -772,6 +811,16 @@ export default function LiveRankingTable({ tour, initialSnapshot, showAgeGroupRa
               Next →
             </button>
           </div>
+        </div>
+      )}
+
+      {loadingFullData && (
+        <div className="mt-3 flex items-center justify-center gap-2 text-sm text-muted">
+          <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+          </svg>
+          Loading full rankings…
         </div>
       )}
 

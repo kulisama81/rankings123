@@ -14,6 +14,12 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     date: "2026-08-21",
+    title: "Enhanced Mobile Performance — WTA Rankings 21% Faster",
+    description: "Further optimized WTA live rankings for mobile users. Initial page load now 21% faster with smart on-demand loading: top 40 players load instantly, full rankings (all 200+) fetch automatically when you scroll beyond rank 40. Improved mobile experience especially on 3G/4G connections.",
+    area: "tennis",
+  },
+  {
+    date: "2026-08-21",
     title: "Vuelta 2026 GC Predictions & Betting Analysis",
     description: "New in-depth article analyzing the 2026 Vuelta a España general classification battle. Features betting odds for Pogačar's quest to complete the Grand Tour triple crown, detailed breakdowns of top 5 contenders (Pogačar, Almeida, Mas, Onley, Roglič), Stage 1 Monaco time trial preview, and value betting analysis. Article launches with the race tomorrow (Aug 22).",
     area: "cycling",
