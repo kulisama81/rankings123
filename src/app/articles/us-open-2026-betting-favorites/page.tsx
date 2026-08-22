@@ -83,6 +83,26 @@ export default function UsOpen2026BettingFavoritesPage() {
             </div>
           </header>
 
+          <div className="not-prose my-8 rounded-lg border-2 border-accent bg-accent/10 p-6">
+            <div className="mb-2 flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-accent">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+              Update (August 22)
+            </div>
+            <p className="text-fg">
+              <strong>Jannik Sinner withdrew from the US Open on August 21</strong> due to a knee injury, dramatically reshaping the tournament landscape. For updated analysis reflecting the new Alcaraz vs Zverev showdown, see our{" "}
+              <Link
+                href="/articles/us-open-2026-alcaraz-zverev-rivalry"
+                className="font-semibold text-accent hover:underline"
+              >
+                latest US Open 2026 rivalry breakdown →
+              </Link>
+            </p>
+          </div>
+
           <p className="lead">
             <strong>NEW YORK</strong> — The 2026 US Open is set to begin on
             August 30 at Flushing Meadows, and the betting markets have
