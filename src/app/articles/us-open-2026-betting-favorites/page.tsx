@@ -6,41 +6,41 @@ export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title:
-    "US Open 2026 Betting Favorites: Sinner, Sabalenka Lead Odds | Rankings123",
+    "US Open 2026 Betting Favorites: Alcaraz, Sabalenka Lead After Sinner Withdrawal | Rankings123",
   description:
-    "Expert analysis of US Open 2026 betting favorites. Jannik Sinner and Aryna Sabalenka lead odds after dominant hard-court seasons. Complete betting guide with value picks, form analysis, and title paths for men's and women's draws.",
+    "Expert analysis of US Open 2026 betting favorites. After Sinner's withdrawal, Carlos Alcaraz (+140) and Aryna Sabalenka lead odds. Complete betting guide with value picks, form analysis, and title paths for men's and women's draws.",
   keywords: [
     "us open 2026 predictions",
     "us open betting favorites",
     "us open 2026 odds",
-    "jannik sinner us open",
+    "carlos alcaraz us open",
     "aryna sabalenka us open",
     "us open betting guide",
     "tennis betting predictions",
     "us open 2026 picks",
   ],
   openGraph: {
-    title: "US Open 2026 Betting Favorites: Sinner, Sabalenka Lead Odds",
+    title: "US Open 2026 Betting Favorites: Alcaraz, Sabalenka Lead Odds",
     description:
-      "Expert betting analysis for US Open 2026. Sinner and Sabalenka favorites after dominant hard-court form. Value picks and title paths.",
+      "Expert betting analysis for US Open 2026. Alcaraz and Sabalenka favorites after Sinner withdrawal. Value picks and title paths.",
     type: "article",
   },
   twitter: {
     card: "summary_large_image",
-    title: "US Open 2026 Betting Favorites: Sinner, Sabalenka Lead Odds",
+    title: "US Open 2026 Betting Favorites: Alcaraz, Sabalenka Lead Odds",
     description:
-      "Expert US Open 2026 betting analysis. Sinner and Sabalenka lead odds. Value picks and predictions inside.",
+      "Expert US Open 2026 betting analysis. Alcaraz and Sabalenka lead odds post-Sinner withdrawal. Value picks and predictions inside.",
   },
 };
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Article",
-  headline: "US Open 2026 Betting Favorites: Sinner, Sabalenka Lead Odds",
+  headline: "US Open 2026 Betting Favorites: Alcaraz, Sabalenka Lead Odds After Sinner Withdrawal",
   description:
-    "Expert analysis of US Open 2026 betting favorites including Jannik Sinner, Aryna Sabalenka, Carlos Alcaraz, and Coco Gauff with form analysis and value picks.",
+    "Expert analysis of US Open 2026 betting favorites. Carlos Alcaraz and Aryna Sabalenka lead odds following Jannik Sinner's withdrawal. Complete form analysis and value picks.",
   datePublished: "2026-08-20",
-  dateModified: "2026-08-20",
+  dateModified: "2026-08-22",
   author: {
     "@type": "Organization",
     name: "Rankings123",
@@ -70,8 +70,7 @@ export default function UsOpen2026BettingFavoritesPage() {
               US Open 2026 Betting Preview
             </div>
             <h1 className="mb-4 text-4xl font-bold tracking-tight text-fg sm:text-5xl">
-              US Open 2026 Betting Favorites: Sinner and Sabalenka Lead the
-              Field
+              US Open 2026 Betting Favorites: Alcaraz and Sabalenka Lead After Sinner Withdrawal
             </h1>
             <p className="text-xl text-muted-hover">
               Expert analysis of the betting favorites for the year&apos;s
@@ -79,7 +78,7 @@ export default function UsOpen2026BettingFavoritesPage() {
               paths for both draws.
             </p>
             <div className="mt-4 text-sm text-muted">
-              August 20, 2026 · Updated with Cincinnati Open results
+              August 20, 2026 · Updated August 22 for Sinner withdrawal
             </div>
           </header>
 
@@ -132,21 +131,33 @@ export default function UsOpen2026BettingFavoritesPage() {
             </div>
           </div>
 
-          <h2>Men&apos;s Draw: Sinner&apos;s Championship to Lose</h2>
+          <h2>Men&apos;s Draw: Alcaraz vs Zverev for the Title</h2>
 
-          <h3>Jannik Sinner — The Favorite</h3>
+          <div className="not-prose my-6 rounded-lg bg-surface2 p-4">
+            <p className="text-sm text-muted-hover">
+              <strong className="text-fg">Note:</strong> The analysis below was written before Sinner&apos;s August 21 withdrawal and is preserved for historical context. For updated analysis reflecting the new Alcaraz-Zverev landscape, see our{" "}
+              <Link
+                href="/articles/us-open-2026-alcaraz-zverev-rivalry"
+                className="font-semibold text-accent hover:underline"
+              >
+                US Open 2026 rivalry breakdown
+              </Link>.
+            </p>
+          </div>
+
+          <h3>Jannik Sinner — The Former Favorite (Withdrawn)</h3>
 
           <p>
-            Jannik Sinner enters the US Open as the clear betting favorite
-            after a dominant 2026 season that has seen him win Wimbledon and
+            <em>Before his August 21 withdrawal,</em> Jannik Sinner entered the US Open as the clear betting favorite
+            after a dominant 2026 season that saw him win Wimbledon and
             establish himself as the most consistent player on tour. The
-            22-year-old Italian has reached the last two US Open finals,
-            winning the title in 2024, and his hard-court credentials are
+            22-year-old Italian had reached the last two US Open finals,
+            winning the title in 2024, and his hard-court credentials were
             impeccable.
           </p>
 
           <p>
-            <strong>Why Sinner is the favorite:</strong>
+            <strong>Why Sinner was the favorite (pre-withdrawal):</strong>
           </p>
 
           <ul>
@@ -173,23 +184,21 @@ export default function UsOpen2026BettingFavoritesPage() {
           </ul>
 
           <p>
-            <strong>The concern:</strong> Physical fatigue. Sinner has played a
+            <strong>The concern (that proved prescient):</strong> Physical fatigue. Sinner had played a
             grueling schedule in 2026, and the transition from grass at
-            Wimbledon to hard courts in the summer heat could test his stamina
-            in late-round matches.
+            Wimbledon to hard courts ultimately led to the right knee injury that forced his withdrawal.
           </p>
 
-          <h3>Carlos Alcaraz — The Youth Edge</h3>
+          <h3>Carlos Alcaraz — Now the Clear Favorite</h3>
 
           <p>
-            Carlos Alcaraz represents the biggest threat to Sinner&apos;s
-            coronation. The 23-year-old Spaniard already owns multiple Grand
+            With Sinner&apos;s withdrawal, Carlos Alcaraz becomes the overwhelming favorite at +140. The 23-year-old Spaniard already owns multiple Grand
             Slam titles and possesses an athleticism and shot-making ability
-            that can overwhelm any opponent on any surface.
+            that can overwhelm any opponent on any surface. His main challenger is now Alexander Zverev (+300).
           </p>
 
           <p>
-            <strong>Alcaraz&apos;s path to the title:</strong>
+            <strong>Why Alcaraz is now the favorite:</strong>
           </p>
 
           <ul>
@@ -223,7 +232,32 @@ export default function UsOpen2026BettingFavoritesPage() {
             opponents in early rounds.
           </p>
 
-          <h3>Dark Horses: Medvedev, Zverev, and Djokovic</h3>
+          <h3>Alexander Zverev — The Main Challenger</h3>
+
+          <p>
+            With Sinner out, Alexander Zverev (+300) emerges as the clear second favorite and Alcaraz&apos;s primary challenger. The German just won his first Grand Slam at the 2026 French Open and is riding momentum into New York.
+          </p>
+
+          <p>
+            <strong>Why Zverev is a legitimate title threat:</strong>
+          </p>
+
+          <ul>
+            <li>
+              <strong>First-time Slam winner momentum:</strong> Winning Roland Garros removed the psychological burden that plagued Zverev in previous major finals. He now knows he can close out the biggest matches.
+            </li>
+            <li>
+              <strong>US Open redemption narrative:</strong> Zverev infamously collapsed from two sets up in the 2020 US Open final. Winning here would complete his redemption arc.
+            </li>
+            <li>
+              <strong>Big-server advantage:</strong> Zverev&apos;s powerful serve suits the fast courts at Flushing Meadows, and his ability to hold serve under pressure is elite.
+            </li>
+            <li>
+              <strong>Competitive H2H vs Alcaraz:</strong> The head-to-head stands at 7-6 in Alcaraz&apos;s favor — essentially even. Zverev has proven he can beat the Spaniard.
+            </li>
+          </ul>
+
+          <h3>Dark Horses: Medvedev and Djokovic</h3>
 
           <p>
             Beyond the top two favorites, several players possess the game and
@@ -242,19 +276,6 @@ export default function UsOpen2026BettingFavoritesPage() {
                 victories over both Sinner and Alcaraz on hard courts. The
                 question is whether his 30-year-old body can sustain seven
                 best-of-five matches.
-              </p>
-            </div>
-
-            <div className="rounded-lg bg-surface2 p-4">
-              <h4 className="mb-2 text-lg font-bold text-fg">
-                Alexander Zverev
-              </h4>
-              <p className="text-sm text-muted-hover">
-                Zverev&apos;s powerful serve and baseline consistency make him
-                a threat in any draw. He&apos;s reached US Open finals before
-                and his big-server profile suits New York. However, his
-                five-set record and Grand Slam title drought raise questions
-                about his ability to close out the biggest matches.
               </p>
             </div>
 
@@ -282,21 +303,20 @@ export default function UsOpen2026BettingFavoritesPage() {
 
           <ul>
             <li>
+              <strong>Zverev at +300 offers value:</strong> With the H2H essentially even (7-6) and Zverev riding French Open momentum, +300 represents better value than Alcaraz at +140 if you believe in the German&apos;s form.
+            </li>
+            <li>
               <strong>Draw-dependent plays:</strong> Wait for the draw release
               (expected around August 25) to identify players landing in easier
               quarters. A favorable draw can dramatically increase
               championship odds for players ranked 5-15.
             </li>
             <li>
-              <strong>Head-to-head matchups:</strong> Medvedev&apos;s
-              historical success against Sinner makes him a live underdog in a
-              potential semifinal matchup.
+              <strong>Medvedev dark horse value:</strong> At +800, the 2021 US Open champion is being underpriced given his hard-court pedigree and ability to challenge both Alcaraz and Zverev.
             </li>
             <li>
-              <strong>Early-round upsets:</strong> Both Sinner and Alcaraz can
-              be vulnerable in first-week matches if they haven&apos;t fully
-              adjusted to conditions. Consider first-round and second-round
-              upset opportunities against heavy favorites.
+              <strong>Early-round upsets:</strong> Alcaraz returning from injury could be vulnerable in first-week matches if he hasn&apos;t fully adjusted to conditions. Consider first-round and second-round
+              upset opportunities.
             </li>
           </ul>
 
@@ -562,14 +582,12 @@ export default function UsOpen2026BettingFavoritesPage() {
 
           <ul>
             <li>
-              <strong>How did Sinner transition from grass to hard courts?</strong>{" "}
-              His Cincinnati results will show whether he&apos;s comfortable on
-              the faster surface after his Wimbledon run.
+              <strong>Is Alcaraz match-sharp after injury?</strong>{" "}
+              Returning from a wrist injury that forced him to miss the French Open and Wimbledon, can he hit peak form immediately or will he need matches to find rhythm?
             </li>
             <li>
-              <strong>Can Alcaraz maintain consistency?</strong> Watch for
-              early-round performance in Canada and Cincinnati. If he cruises
-              through, his title odds improve. Shock losses raise red flags.
+              <strong>Can Zverev sustain his French Open form?</strong> Watch for
+              his Cincinnati performance. If he maintains momentum from his first Slam title, he&apos;s a genuine threat. Early losses might indicate a post-Slam letdown.
             </li>
             <li>
               <strong>Is Sabalenka&apos;s form peaking at the right time?</strong>{" "}
@@ -671,10 +689,9 @@ export default function UsOpen2026BettingFavoritesPage() {
                 <div className="mb-1 text-sm font-semibold uppercase tracking-wide text-muted">
                   Men&apos;s Champion
                 </div>
-                <div className="text-2xl font-bold text-fg">Jannik Sinner</div>
+                <div className="text-2xl font-bold text-fg">Carlos Alcaraz</div>
                 <p className="mt-1 text-sm text-muted-hover">
-                  The favorite for good reason. Hard-court excellence, US Open
-                  pedigree, and championship form make Sinner the safest pick.
+                  The defending champion and now overwhelming favorite at +140 after Sinner&apos;s withdrawal. Completed career Grand Slam, fresh legs after missing summer, and proven US Open pedigree make Alcaraz the safest pick.
                   Wait for draw before locking in large positions.
                 </p>
               </div>
@@ -693,13 +710,20 @@ export default function UsOpen2026BettingFavoritesPage() {
               </div>
               <div>
                 <div className="mb-1 text-sm font-semibold uppercase tracking-wide text-muted">
-                  Value Dark Horse (Men)
+                  Value Pick (Men)
                 </div>
-                <div className="text-xl font-bold text-fg">Daniil Medvedev</div>
+                <div className="text-xl font-bold text-fg">Alexander Zverev (+300)</div>
                 <p className="mt-1 text-sm text-muted-hover">
-                  Former champion with favorable head-to-head record against
-                  Sinner. If the draw puts him in the opposite half from Sinner
-                  and Alcaraz, his path to the final opens up.
+                  First-time Slam winner with momentum from French Open, redemption narrative at the US Open, and an even H2H (7-6) against Alcaraz. At +300, Zverev offers better value than the favorite.
+                </p>
+              </div>
+              <div>
+                <div className="mb-1 text-sm font-semibold uppercase tracking-wide text-muted">
+                  Dark Horse (Men)
+                </div>
+                <div className="text-xl font-bold text-fg">Daniil Medvedev (+800)</div>
+                <p className="mt-1 text-sm text-muted-hover">
+                  Former US Open champion who thrives on these courts. At +800, significantly underpriced given his hard-court pedigree and ability to challenge both favorites.
                 </p>
               </div>
               <div>

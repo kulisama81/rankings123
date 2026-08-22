@@ -85,9 +85,15 @@ export const changelog: ChangelogEntry[] = [
     area: "tennis",
   },
   {
+    date: "2026-08-22",
+    title: "US Open 2026 Betting Update: Sinner Withdrawal",
+    description: "Updated all US Open betting content following Jannik Sinner's withdrawal (Aug 21). Carlos Alcaraz now overwhelming favorite at +140, with Alexander Zverev second at +300. New rivalry analysis article added covering the post-Sinner landscape.",
+    area: "tennis",
+  },
+  {
     date: "2026-08-20",
     title: "US Open 2026 Betting Favorites Analysis",
-    description: "In-depth preview article analyzing US Open 2026 betting favorites: Jannik Sinner and Aryna Sabalenka lead the field. Expert analysis of title paths, form, historical trends, and value picks for both men's and women's draws. Updated with Cincinnati Open results.",
+    description: "In-depth preview article analyzing US Open 2026 betting favorites with expert analysis of title paths, form, historical trends, and value picks for both men's and women's draws. Updated with Cincinnati Open results.",
     area: "tennis",
   },
   {

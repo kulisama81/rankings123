@@ -151,8 +151,28 @@ export default async function JannikSinnerRankingPage() {
 
           <h2>US Open 2026 Predictions</h2>
 
+          <div className="not-prose my-6 rounded-lg border-2 border-accent bg-accent/10 p-6">
+            <div className="mb-2 flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-accent">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+              Update (August 22)
+            </div>
+            <p className="text-fg">
+              <strong>Jannik Sinner withdrew from the US Open on August 21</strong> due to a knee injury. The analysis below was written before his withdrawal. For updated US Open 2026 predictions, see our{" "}
+              <Link
+                href="/articles/us-open-2026-alcaraz-zverev-rivalry"
+                className="font-semibold text-accent hover:underline"
+              >
+                Alcaraz vs Zverev rivalry breakdown →
+              </Link>
+            </p>
+          </div>
+
           <p>
-            Heading into the 2026 US Open (August 30 – September 13), Sinner enters as the clear betting favorite
+            <em>Before his August 21 withdrawal,</em> heading into the 2026 US Open (August 30 – September 13), Sinner was entering as the clear betting favorite
             and for good reason:
           </p>
 
@@ -195,10 +215,10 @@ export default async function JannikSinnerRankingPage() {
             </div>
           </div>
 
-          <h3>Key Challengers</h3>
+          <h3>Key Challengers (Pre-Withdrawal Analysis)</h3>
 
           <p>
-            While Sinner is the favorite, several players pose legitimate threats to his US Open title defense:
+            <em>This analysis was written before Sinner's withdrawal.</em> The field of challengers included:
           </p>
 
           <ul>
@@ -316,11 +336,11 @@ export default async function JannikSinnerRankingPage() {
             </li>
           </ul>
 
-          <h2>Betting Odds & Value Analysis</h2>
+          <h2>Betting Odds & Value Analysis (Pre-Withdrawal)</h2>
 
           <p>
-            As the clear favorite for the US Open 2026, Sinner's odds reflect his dominant form and
-            tournament pedigree. For bettors considering positions on Sinner:
+            <em>Note: Sinner withdrew from the US Open on August 21, 2026. The analysis below was written before his withdrawal.</em> Before withdrawing, as the clear favorite for the US Open 2026, Sinner's odds reflected his dominant form and
+            tournament pedigree:
           </p>
 
           <div className="not-prose my-6 rounded-lg border border-accent bg-surface2 p-6">

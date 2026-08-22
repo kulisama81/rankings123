@@ -59,7 +59,7 @@ const allBettingArticles: BettingArticle[] = [
     title: "US Open 2026 Betting Favorites",
     href: "/articles/us-open-2026-betting-favorites",
     description:
-      "Jannik Sinner and Aryna Sabalenka lead odds after dominant hard-court seasons. Complete betting guide with value picks and title paths.",
+      "Carlos Alcaraz and Aryna Sabalenka lead odds after Sinner's withdrawal. Complete betting guide with value picks and title paths.",
     tournament: "US Open",
     date: "Aug 30 – Sep 13",
     status: "upcoming",
